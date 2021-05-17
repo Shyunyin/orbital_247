@@ -1,6 +1,6 @@
 # Team Name: Twenty-four Seven (24/7)
 
-# Level of achievement: Vostok
+Level of achievement: Vostok
 
 # Milestone 1: Ideation
 

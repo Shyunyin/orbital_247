@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title> Login </title>
+        
+        <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap');
+            
+            .body{
+                position: fixed;
+                overflow-y: scroll;
+                width: 100%;
+                top: -20px;
+                right: - 40px;
+                width: auto;
+                height: auto; 
+                background-color:black;
+            }
+
+            .head{
+                position: absolute;
+                top: calc(50% - 35px);
+                left: calc(50% -255px);
+            }
+            /* This is for the big 24/7 symbol at the top left hand corner. */
+            .header div{
+                position: absolute;
+                top: calc(30% - 75px);
+                left: calc(51% - 50px);
+                color:black;
+                font-family:'Signika Negative', sans-serif;
+                font-size: 50px;
+                font-weight: 200;
+            }
+
+            .login{
+                position: absolute;
+                top: calc(50% - 75px);
+                left: calc(45% - 50px);
+                height: 150px;
+                width: 350px;
+                padding: 10px; 
+            }
+
+            .google_icon {
+                position: absolute;
+                top: calc(0% - 100px);
+                left: calc(20% - 50px);
+            }
+
+            /* For the Google login button. */
+			.google[type="button"] {
+                position: absolute;
+                top: calc(10% - 100px);
+                width: 250px;
+                height: 30px;
+                background: #e3aba1;
+                border: 1px black;
+                cursor: pointer;
+                border-radius: 2px;
+                color: black;
+                font-family: 'Signika Negative', sans-serif;
+                font-size: 16px;
+                font-weight: 400;
+                padding: 6px;
+                margin-top: 10px;
+			}
+
+            /* For the username box. */
+            .login input[type=text]{
+                width: 250px;
+                height: 30px;
+                background: #96d6ed;
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                border-radius: 2px;
+                color: black;
+                font-family: 'Signika Negative', sans-serif;
+                font-size: 16px;
+                font-weight: 400;
+                padding: 4px;
+            }
+
+            /* For the password box. */
+            .login input[type=password]{
+                width: 250px;
+                height: 30px;
+                background: #96d6ed;
+                border: 1px solid rgba(255,255,255,0.6);
+                border-radius: 2px;
+                color: black;
+                font-family: 'Signika Negative', sans-serif;
+                font-size: 16px;
+                font-weight: 400;
+                padding: 4px;
+                margin-top: 10px;
+            }
+        
+
+            /* For the login button. */
+            .login input[type=button]{
+                width: 260px;
+                height: 35px;
+                background: #e3aba1;
+                border: 1px black;
+                cursor: pointer;
+                border-radius: 2px;
+                color: black;
+                font-family: 'Signika Negative', sans-serif;
+                font-size: 16px;
+                font-weight: 400;
+                padding: 6px;
+                margin-top: 10px;
+            }
+
+            .login input[type=button]:hover{
+                opacity: 0.8;
+            }
+
+            .login input[type=google_button]:hover{
+                opacity: 0.8;
+            }
+
+            .login input[type=button]:active{
+                opacity: 0.6;
+            }
+
+            .login input[type=google_button]:active{
+                opacity: 0.6;
+            }
+
+            .login input[type=text]:focus{
+                outline: none;
+                border: 1px solid rgba(255,255,255,0.9);
+            }
+
+            .login input[type=password]:focus{
+                outline: none;
+                border: 1px solid rgba(255,255,255,0.9);
+            }
+
+            .login input[type=button]:focus{
+                outline: none;
+            }
+
+            .login input[type=google_button]:focus{
+                outline: none;
+            }
+               
+            .btn span.icon {
+                background: url(https://images.app.goo.gl/6YGurJvGD7Rvz4Rr9) no-repeat;
+                position: absolute;
+                top: calc(67% - 50px);
+                left: calc(50.5% - 50px);
+                width: 10px;
+                height: 40px;
+            }
+
+            .forgotten {
+                position: absolute;
+                top: calc(67% - 50px);
+                left: calc(50.5% - 50px);
+                font-family: 'Signika Negative', sans-serif;
+            }
+                
+            .create {
+                position: absolute;
+                top: calc(71% - 50px);
+                left: calc(49.3% - 50px);
+                font-family: 'Signika Negative', sans-serif;
+            }
+
+            .or {
+                position: absolute;
+                top: calc(18% - 50px);
+                left: calc(43% - 50px);
+                font-family: 'Signika Negative', sans-serif;
+            }
+
+            /* For the word 'username' and 'password' in the username and password boxes. */
+            ::-webkit-input-placeholder{
+            color: rgba(50,50,50,0.3);
+            }
+
+            ::-moz-input-placeholder{
+            color: rgba(255,255,255,0.6);
+            }
+        </style>
+
+    
+
+    </head>
+
+    <body style="background-color:#f7f6f1;"oncontextmenu="return false">
+
+    
+
+    <div class="body"></div>
+        <div class="grad"></div>
+        <div class="header">
+            <div>24/7</div>
+        </div>
+        <br>
+
+        <form name="login">
+            <div class="login">
+                <div class="or"> ---- or ---- </div>
+                <input type="text" placeholder="Username" name="userid"><br>
+                <input type="password" placeholder="Password" name="pwd"><br>
+                <input type="button" onclick="check(this.form)" value="Log In"/>
+            </div>
+
+            <footer class="footer">
+                <a class="create" href="http://127.0.0.1:5500/local_sign_up.html">Don't have an account?</a>
+                 <a class="forgotten" href="https://example.com">Forgot password?</a>
+            </footer>
+        </form>
+
+        <script language="javascript">
+            function check(form) {
+                if(form.userid.value == "hello" && form.pwd.value == "world") {
+                    window.open('https://example.com')
+                } else {
+                    alert("Incorrect username or password! Please try again")
+                }
+            }
+        </script>
+
+    </body>
+
+</html>
+
+
+
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://apis.google.com/js/api:client.js"></script>
+  <script>
+  var googleUser = {};
+  var startApp = function() {
+    gapi.load('auth2', function(){
+      // Retrieve the singleton for the GoogleAuth library and set up the client.
+      auth2 = gapi.auth2.init({
+        client_id: '459091456870-vsec9m9brdthtt54su12pol6gsm0ulp5.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        // Request scopes in addition to 'profile' and 'email'
+        //scope: 'additional_scope'
+      });
+      attachSignin(document.getElementById('customBtn'));
+    });
+  };
+
+  function attachSignin(element) {
+    console.log(element.id);
+    auth2.attachClickHandler(element, {},
+        function(googleUser) {
+          document.getElementById('name').innerText = "Signed in: " +
+              googleUser.getBasicProfile().getName();
+        }, function(error) {
+          alert(JSON.stringify(error, undefined, 2));
+        });
+  }
+  </script>
+  <style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap');
+
+    #customBtn {
+        position: absolute;
+        top: calc(37% - 50px);
+        left: calc(45.5% - 50px);
+        width: 250px;
+        height: 30px;
+        border: 1px black;
+        cursor: pointer;
+        border-radius: 2px;
+        color: black;
+        font-family: 'Signika Negative', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 6px;
+        margin-top: 10px;
+        display: inline-block;
+        background: #e3aba1; /* colour of google button */
+        white-space: nowrap;
+      
+    }
+    #customBtn:hover {
+      cursor: pointer;
+    }
+    span.label {
+      font-family: 'Signika Negative', sans-serif;
+      color: black;
+      font-family: 'Signika Negative', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+    }
+    span.buttonText {
+      position: absolute;
+      top: calc(15%);
+      left: calc(47% - 50px);
+      padding: 6px;
+      font-size: 16px;
+      font-weight: 400;
+      font-family: 'Signika Negative', sans-serif;
+    }
+    .google_icon {
+        position: absolute;
+        top: calc(15%);
+        left: calc(25% - 50px);
+    }
+  </style>
+  </head>
+  <body>
+    <!-- In the callback, you would hide the gSignInWrapper element on a
+    successful sign in -->
+    <div id="gSignInWrapper">
+        <div id="customBtn" class="customGPlusSignIn">
+        <div class="google_icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png" height="29px" width="29px"> 
+        </div>
+        <span class="buttonText" data-onsuccess="onSignIn">Log in with Google</span>
+        </div>
+    </div>
+    <div id="name"></div>
+    <script>startApp();</script>
+</body>
+</html>

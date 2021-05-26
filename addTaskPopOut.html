@@ -6,9 +6,9 @@
       @import url('https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap');
       .title{
           color: #1e5353;
-          position: absolute;
           padding-top: 50px;
           padding-left: 300px;
+          position: absolute;
           z-index: 3; /*Text as top layer*/ 
       }
       .popOut {
@@ -25,6 +25,45 @@
         border-style: solid;
         z-index: 1; /*base layer*/
       }   
+      .categories {
+        position: absolute;
+        z-index: 3; /*Text as top layer*/ 
+      }
+      .taskName {
+        position: absolute;
+        z-index: 3; /*Text as top layer*/           
+      }
+      .sessions {
+        position: absolute;
+        z-index: 3; /*Text as top layer*/ 
+      }
+      .timeAndDuration {
+        position: absolute;
+        z-index: 3; /*Text as top layer*/ 
+      }
+      .startTime {
+        position: absolute;
+        z-index: 3; /*Text as top layer*/ 
+      }
+      .endTime {
+        position: absolute;
+        z-index: 3; /*Text as top layer*/           
+      }
+      .hourAndMinute {
+        position: absolute;
+        z-index: 3; /*Text as top layer*/ 
+      }
+      .hourAndMinute li {
+        display: inline-block;
+        font-size: 20px;
+        padding: 40px;
+        position: absolute;
+        z-index: 3; /*Text as top layer*/ 
+      }
+      .question {
+        position: absolute;
+        z-index: 3; /*Text as top layer*/ 
+      }
 
     </style>
   </head>
@@ -35,16 +74,31 @@
     </div>
     <div class="popOut"></div>
     <!-- All headers on second layer-->
-    <div class="categories"></div>
-    <div class="taskName"></div>
-    <div class="sessions"></div>
-    <div class="time"></div>
-    <div class="duration"></div>
-    <div class="startTime"></div>
-    <div class="endTime"></div>
-    <div class="hr"></div>
-    <div class="min"></div>
-    <div class="Question"></div>
+    <div class="categories">
+        <h3>Category:</h3>
+    </div>
+    <div class="taskName">
+        <h3>Task Name:</h3>
+    </div>
+    <div class="sessions">
+        <h3>Number of Sessions:</h3>
+    </div>
+    <div class="timeAndDuration">
+        <h3>Time:&emsp;&emsp;&emsp;&emsp;OR&emsp;&emsp;&emsp;&emsp;Duration:</h3>
+    </div>
+    <div class="startTime">
+        <h3>Start time:</h3>
+    </div>
+    <div class="endTime">
+        <h3>End time:</h3>
+    </div>
+    <ul class="hourAndMinute">
+        <li>hr</li>
+        <li>min</li>
+    </ul>
+    <div class="question">
+        <h3>Does this task follow another task?</h3>
+    </div>
 
     <!-- Buttons-->
 

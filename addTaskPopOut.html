@@ -32,12 +32,16 @@
         padding-left: 350px;
       }
       .btn-group button {
-        background-color: #e3aba1; /* Red background */
-        border: 1px solid #C4C4C4; /* Grey border */
+        background-color: #ffffff; /* White background */
+        border: 1px solid #e3aba1; /* Red border */
+        border-width: 2px;
         color: black; /* Black text */
-        padding: 10px 24px; /* Some padding */
+        padding: 15px 32px; /* Some padding */
         cursor: pointer; /* Pointer/hand icon */
         float: left; /* Float the buttons side by side */
+        transition-duration: 0.4s;
+        margin-top: 90px;
+        z-index: 3; /*Text as top layer*/
       }
       .btn-group button:not(:last-child) {
         border-right: none; /* Prevent double borders */
@@ -50,7 +54,7 @@
       }
       /* Add a background color on hover */
       .btn-group button:hover {
-          background-color: #ECEDEA;
+          background-color: #e3aba1;
       }
       .taskName {
         position: absolute;

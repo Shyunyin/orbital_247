@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap");
+        .body {
+            position: fixed;
+			overflow-y: scroll;
+			width: 100%;
+			top: -20px;
+			right: -40px;
+			width: auto;
+			height: auto;
+            background-color: black;
+        }
+
+        .message {
+            font-family: "Signika Negative", sans-serif;
+            padding-top: calc(25% - 50px);
+            padding-left: calc(45% - 50px);
+        }
+
+        .message input[type="button"] {
+				width: 130px;
+				height: 35px;
+				background: #e3aba1;
+				border: 1px black;
+				cursor: pointer;
+				border-radius: 2px;
+				color: black;
+				font-family: "Signika Negative", sans-serif;
+				font-size: 16px;
+				font-weight: 400;
+				padding: 6px;
+				margin-top: 10px;
+                margin-left: 85px;
+		}
+        .message input[type="button"]:hover {
+				opacity: 0.8;
+		}
+        .message input[type="button"]:active {
+				opacity: 0.6;
+		}
+        .message input[type="button"]:focus {
+				outline: none;
+		}
+    </style>
+    <!--<head> After Login </head>-->
+
+    <body style="background-color: #f7f6f1">
+        <div class="message">
+            <h1> Welcome Orbital247! </h1>
+            <form>
+                <input class="logout"type="button" onclick=check(this.form) value="Logout" href="http://127.0.0.1:5502/login.html"/>
+            </form>
+        </div>
+
+        <script>
+            function check(form) {
+                window.alert("You have signed out.")
+                return ("http://127.0.0.1:5502/login.html");
+                firebase.auth().signOut().then(() => {
+                    // Sign-out successful.
+                    window.alert("You have signed out.")
+                    }).catch((error) => {
+                    // An error happened.
+                    window.alert("Error: " + error)
+                    });
+            }
+        </script>
+        
+    </body>
+
+</html>

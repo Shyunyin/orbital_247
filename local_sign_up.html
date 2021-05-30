@@ -174,10 +174,10 @@
 
 		<form name="login">
 			<div class="login">
-				<input type="text" placeholder="Username" name="userid" />
+				<input type="text" placeholder="Username" name="userid" id="name"/>
 				<br />
-				<input type="text" placeholder="Email" name="email" /><br />
-				<input type="password" placeholder="Password" name="pwd" /><br />
+				<input type="text" placeholder="Email" name="email" id="email_id" /><br />
+				<input type="password" placeholder="Password" name="pwd" id="pwd"/><br />
 				<input
 					type="password"
 					placeholder="Confirm Password"
@@ -187,7 +187,7 @@
 			</div>
 
 			<footer class="footer">
-				<a class="member" href="http://127.0.0.1:5500/login.html">Already have an account?</a>
+				<a class="member" href="http://127.0.0.1:5501/login.html">Already have an account?</a>
 			</footer>
 
 		</form>
@@ -195,12 +195,69 @@
 		<script language="javascript">
 			function check(form) {
 				if (form.pwd.value == form.cfm_pwd.value) {
-					window.open("https://example.com");
+					return register();
 				} else {
 					alert("Passwords do not match. Please re-enter them.");
 				}
 			}
 		</script>
+		<!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-auth.js"></script>
+
+        <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
+
+        <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
+            authDomain: "orbital-24-7.firebaseapp.com",
+            projectId: "orbital-24-7",
+            storageBucket: "orbital-24-7.appspot.com",
+            messagingSenderId: "459091456870",
+            appId: "1:459091456870:web:21134477e94d50e25ecea7",
+            measurementId: "G-WQMCMBMFCK"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        
+            firebase.auth().onAuthStateChanged(function(user) {
+                //User is signed ni
+                if(user) {
+                
+                //User is signed out
+                } else {
+
+                }
+            });
+
+            function register() {
+                //Must use web v8
+                var userName = document.getElementById("name").value;
+				var userEmail = document.getElementById("email_id").value;
+				var userPassword = document.getElementById("pwd").value;
+
+				//Username can't be stored in firebase
+				firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword)
+					.then((userCredential) => {
+						// Signed in 
+						var user = userCredential.user;
+						window.alert("Welcome " + userName + "!")
+					})
+					.catch((error) => {
+						var errorCode = error.code;
+						var errorMessage = error.message;
+						window.alert("Error: " + errorMessage)
+					});
+            }
+        </script>
+
 
 	</body>
 	

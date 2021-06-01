@@ -45,30 +45,7 @@
 				padding: 10px;
 			}
 
-			/* css for google logo in 'Log in with Google' button */
-			.google_icon {
-				position: absolute;
-				top: calc(0% - 100px);
-				left: calc(20% - 50px);
-			}
 
-			/* For the Google login button. */
-			.google[type="button"] {
-				position: absolute;
-				top: calc(10% - 100px);
-				width: 250px;
-				height: 30px;
-				background: #e3aba1;
-				border: 1px black;
-				cursor: pointer;
-				border-radius: 2px;
-				color: black;
-				font-family: "Signika Negative", sans-serif;
-				font-size: 16px;
-				font-weight: 400;
-				padding: 6px;
-				margin-top: 10px;
-			}
 
 			/* For the username box. */
 			.login input[type="text"] {
@@ -214,6 +191,7 @@
 		</div>
 		<br />
 
+
 		<form name="login">
 			<div class="login">
 				<div class="or">---- or ----</div>
@@ -227,7 +205,7 @@
 				<a class="create" href="http://127.0.0.1:5501/local_sign_up.html"
 					>Don't have an account?</a
 				>
-				<a class="forgotten" href="https://example.com">Forgot password?</a>
+				<a class="forgotten" href="http://127.0.0.1:5501/forgot_password.html">Forgot password?</a>
 			</footer>
 		</form>
 
@@ -286,26 +264,26 @@
                     });
             }
 
-			//var provider = new firebase.auth.GoogleAuthProvider();
+			
+			var provider = new firebase.auth.GoogleAuthProvider();
             //Google authentication
             function google_sign_in() {
-				var provider = new firebase.auth.GoogleAuthProvider();
 				//window.alert("i am clicked")
                 firebase.auth()
                     .signInWithPopup(provider)
-                    .then((result) => {
+                    .then(result=>{
 						console.log(result)
                         //firebase.auth.OAuthCredential = T7dI67VIadLbD8mzBzUkTkpG;
-                        var credential = result.credential;
+                        //var credential = result.credential;
 
                         // This gives you a Google Access Token. You can use it to access the Google API.
-                        var token = credential.accessToken;
+                        //var token = credential.accessToken;
                         // The signed-in user info.
-                        var user = result.user;
+                        //var user = result.user;
                         // ...
-						window.alert("You have logged in successfully!")
-						return ("http://127.0.0.1:5502/afterlogin.html");
-                    }).catch((error) => {
+						//window.alert("You have logged in successfully!")
+						//return ("http://127.0.0.1:5502/afterlogin.html");
+                    }).catch(error=>{
 						console.log(error)
                         // Handle Errors here.
                         var errorCode = error.code;
@@ -324,48 +302,6 @@
 </html>
 
 
-<!--
-<html>
-	<head>
-		<link
-			href="https://fonts.googleapis.com/css?family=Roboto"
-			rel="stylesheet"
-			type="text/css"
-		/>
-		<scrip src="https://apis.google.com/js/platform.js" async defer></scrip>
-		<scrip src="https://apis.google.com/js/api:client.js"></scrip>
-		<script>
-			var googleUser = {};
-			var startApp = function () {
-				gapi.load("auth2", function () {
-					// Retrieve the singleton for the GoogleAuth library and set up the client.
-					auth2 = gapi.auth2.init({
-						client_id:
-							"459091456870-vsec9m9brdthtt54su12pol6gsm0ulp5.apps.googleusercontent.com",
-						cookiepolicy: "single_host_origin",
-						// Request scopes in addition to 'profile' and 'email'
-						//scope: 'additional_scope'
-					});
-					attachSignin(document.getElementById("customBtn"));
-				});
-			};
-
-			function attachSignin(element) {
-				console.log(element.id);
-				auth2.attachClickHandler(
-					element,
-					{},
-					function (googleUser) {
-						document.getElementById("name").innerText =
-							"Signed in: " + googleUser.getBasicProfile().getName();
-					},
-					function (error) {
-						alert(JSON.stringify(error, undefined, 2));
-					}
-				);
-			}
-		</script>
-	-->
 		<style type="text/css">
 			@import url("https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap");
 
@@ -427,13 +363,13 @@
 					/>
 				</div>
 				<!--data-onsuccess="onSignIn"-->
-				<span class="buttonText" >Log in with Google</span>
+				<span class="buttonText">Log in with Google</span>
 			</div>
 		</div>
 		<div id="name"></div>
 		<script>
 			//startApp();
 		</script>
-	</body>
+	</body> -->
 </html>
 

@@ -1,4 +1,5 @@
 //import Date
+// remember to add getter and setter methods where necessary
 
 class Task {
     task_name;

@@ -1,47 +1,79 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Add task for the day</title>
+    <title>Add daily task</title>
+    <script type="module" src=add_daily_task.js></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap');
-      link rel="stylesheet" href="add_daily_task.css";
     </style>
+    <!--<link rel="stylesheet" href="add_daily_task.css" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
+
   
-  <body style="background-color: #ffffff;"oncontextmenu="return false">
+  <body>
     <div class="title">
-      <h2> Add a task for today! </h2>
+      <h2> Add a task: </h2>
     </div>
-    <div class="popOut"></div>
+
+    <!-- INPUT for taskName-->
+    <form>
+        <input type="text" id="taskName" name="taskName"><br>
+    </form>
+
 
     <!-- All headers on second layer-->
     <div class="categories">
         <h3>Category:</h3>
     </div>
     <!-- Buttons for categories-->
-    <div class="btn-group">
+    <div class="btn-group-category">
       <button>Work</button>
       <button>Exercise</button>
       <button>Miscellanous</button>
     </div>
     
-    <div class="taskName">
-        <h3>Task Name:</h3>
+    <!--For INPUT DROPDOWN date-->
+    <!--Find a shorter way for numerical drop downs and how to link to javascript-->
+    <div class="Date">
+      <h3>Date:</h3>
     </div>
+    <input type="date">
+
+
+    <!-- Number of sessions -->
     <div class="sessions">
         <h3>Number of Sessions:</h3>
     </div>
 
+    <div class="btn-group-sessions">
+      <button>x1</button>
+      <button>x2</button>
+      <button>x3</button>
+    </div>
+
+    <!-- Checkboxes for either TIME task or DURATION task-->
+    <!-- Make checkboxes either or-->
+    <div class="selectTime">
+      <input type="checkbox" id="timeTask" name="Time">
+      <label for="Time"> Time </label><br>
+      <div class="startTime">
+        <h3>Start time:</h3>
+      </div>
+      <div class="endTime">
+        <h3>End time:</h3>
+      </div>
+    </div>
     <div class="or">
       <h3>OR</h3>
     </div>
+    <div class="selectDuration">
+      <input type="checkbox" id="durationTask" name="Duration">
+      <label for="Duration"> Duration </label><br>
+      
+    </div>
 
-    <div class="startTime">
-      <h3>Start time:</h3>
-    </div>
-    <div class="endTime">
-      <h3>End time:</h3>
-    </div>
+
 
 
  

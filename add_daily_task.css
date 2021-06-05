@@ -1,0 +1,101 @@
+title {
+  color: #1e5353;
+  padding-top: 50px;
+  padding-left: 300px;
+  position: absolute;
+  z-index: 3; /*Text as top layer*/
+}
+popOut {
+  /*code to centre box */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f6f7f1;
+  width: 1000px;
+  height: 600px;
+  border-width: 5px;
+  border-color: #c4c4c4;
+  border-style: solid;
+  z-index: 1; /*base layer*/
+}
+categories {
+  position: absolute;
+  z-index: 3; /*Text as top layer*/
+  padding-top: 90px;
+  padding-left: 350px;
+}
+btn-group button {
+  background-color: #ffffff; /* White background */
+  border: 1px solid #e3aba1; /* Red border */
+  border-width: 2px;
+  color: black; /* Black text */
+  padding: 15px 32px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+  transition-duration: 0.4s;
+  margin-top: 90px;
+  z-index: 3; /*Text as top layer*/
+}
+btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+/* Clear floats (clearfix hack) */
+btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+/* Add a background color on hover */
+btn-group button:hover {
+  background-color: #e3aba1;
+}
+taskName {
+  position: absolute;
+  z-index: 3; /*Text as top layer*/
+  padding-top: 150px;
+  padding-left: 350px;
+}
+sessions {
+  position: absolute;
+  z-index: 3; /*Text as top layer*/
+  padding-top: 210px;
+  padding-left: 350px;
+}
+timeAndDuration {
+  position: absolute;
+  z-index: 3; /*Text as top layer*/
+}
+or {
+  position: absolute;
+  z-index: 3; /*Text as top layer*/
+  padding-top: 280px;
+  padding-left: 750px;
+}
+startTime {
+  position: absolute;
+  z-index: 3; /*Text as top layer*/
+  padding-top: 310px;
+  padding-left: 350px;
+}
+endTime {
+  position: absolute;
+  z-index: 3; /*Text as top layer*/
+  padding-top: 390px;
+  padding-left: 350px;
+}
+hourAndMinute {
+  position: absolute;
+  z-index: 3; /*Text as top layer*/
+}
+hourAndMinute li {
+  display: inline-block;
+  font-size: 20px;
+  padding: 40px;
+  position: absolute;
+  z-index: 3; /*Text as top layer*/
+}
+question {
+  position: absolute;
+  z-index: 3; /*Text as top layer*/
+}

@@ -15,12 +15,119 @@ font-family: 'Signika Negative', sans-serif;
   margin-left: 20px;
   align-content: center;
 }
-.taskName {
+#taskName {
   align-content: center;
-  padding: 50px;
-  border: 50px;
+  text-align: center;
   font-family: "Signika Negative", sans-serif;
   width: max-content;
+  border-radius: 7px; /*make button rounded*/
+}
+
+/*Make both parent and child have the same font*/
+#categories > li {
+  font-family: "Signika Negative", sans-serif;
+  display: inline-block;
+}
+
+/*Code for category buttons, can try to shorten if possible!*/
+#work {
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  border-radius: 5px; /*make button rounded*/
+}
+#exercise {
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  border-radius: 5px; /*make button rounded*/
+}
+#misc {
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  border-radius: 5px; /*make button rounded*/
+}
+#work:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
+}
+#exercise:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
+}
+#misc:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
+}
+
+/*For date section*/
+#date > li {
+  font-family: "Signika Negative", sans-serif;
+  display: inline-block;
+}
+#date > li:last-child {
+  margin-left: 67px;
+}
+#dateInput {
+  border-radius: 5px; /*make button rounded*/
+  font-weight: bold;
+}
+
+/*For number of sections section*/
+#sessions > li {
+  display: inline-block;
+}
+#onesession {
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  width: 50px;
+  border-radius: 5px; /*make button rounded*/
+}
+#twosessions {
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  width: 50px;
+  border-radius: 5px; /*make button rounded*/
+}
+#threesessions {
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  width: 50px;
+  border-radius: 5px; /*make button rounded*/
+}
+#onesession:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
+}
+#twosessions:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
+}
+#threesessions:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
 }
 
 /*FOR FOLLOW UP TASK DROPDOWN*/

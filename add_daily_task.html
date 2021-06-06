@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Add daily task</title>
-    <script type="module" src=add_daily_task.js></script>
+    <script type = "text/javascript" type="module" src="add_daily_task.js"></script>
     <link rel="stylesheet" href="add_daily_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
@@ -12,61 +12,62 @@
 
   
   <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
-    <!-- Parent name is id-->
+    <!-- Parent-child relationship for inline-->
     <div id="title">
-      <li><h2>Add a task:</h2></li>
+      <li><h3>Add a task:</h3></li>
     <!-- INPUT for taskName-->
     <li><form>
-        <input type="text" id="taskName" name="taskName" size="100"><br>
+        <input type="text" id="taskName" name="taskName" size="100" style="background-color: #96d6ed;font-family: Signika Negative, sans-serif;font-size:medium"><br>
     </form></li>
     </div>
 
-
-    <!-- All headers on second layer-->
-    <div class="categories">
-        <h3>Category:</h3>
-    </div>
+    <!-- Parent-child relationship for inline-->
+    <div id="categories">
+        <li><h3>Category:</h3></li>
     <!-- Buttons for categories-->
-    <div class="btn-group-category">
-      <button>Work</button>
-      <button>Exercise</button>
-      <button>Miscellanous</button>
-    </div>
+    <li><form class="btn-group-category">
+        <input type="button" id="work" onclick="catFunction(1)" value="Work"></button>
+        <input type="button" id="exercise" onclick="catFunction(2)" value="Exercise"></button>
+        <input type="button" id="misc" onclick="catFunction(3)" value="Miscellaneous"></button>
+    </form></li>
+  </div>
     
     <!--For INPUT DROPDOWN date-->
     <!--Find a shorter way for numerical drop downs and how to link to javascript-->
-    <div class="Date">
-      <h3>Date:</h3>
+    <div id="date">
+      <li><h3>Date:</h3></li>
+      <li><input id="dateInput" type="date" style="background-color: #96d6ed"></li>
     </div>
-    <input type="date">
 
 
     <!-- Number of sessions -->
-    <div class="sessions">
-        <h3>Number of Sessions:</h3>
+    <div id="sessions">
+      <li><h3>Number of Sessions:</h3></li>
+      <li><form class="numSessions">
+        <input type="button" id="onesession" onclick="sessionsFunction(1)" value="x1"></button>
+        <input type="button" id="twosessions" onclick="sessionsFunction(2)" value="x2"></button>
+        <input type="button" id="threesessions" onclick="sessionsFunction(3)" value="x3"></button>
+    </form></li>
     </div>
-
-    <div class="btn-group-sessions">
-      <button>x1</button>
-      <button>x2</button>
-      <button>x3</button>
-    </div>
+  </div>
 
     <!-- Checkboxes for either TIME task or DURATION task-->
     <!-- Make checkboxes either or-->
-    <div class="selectTime">
-      <input type="checkbox" id="timeTask" name="Time">
-      <label for="Time">Time</label><br>
-      <div class="startTime">
-        <h3>Start time:</h3>
-        <input type="time" id="startTime">
+    <div id="selectTime">
+      <li>
+        <input type="checkbox" id="timeTask" name="Time">
+        <label for="Time">Time</label><br>
+        <div class="startTime">
+          <h3>Start time:</h3>
+          <input type="time" id="startTime">
+        </div>
+        <div class="endTime">
+          <h3>End time:</h3>
+          <input type="time" id="endTime">
+        </div>
       </div>
-      <div class="endTime">
-        <h3>End time:</h3>
-        <input type="time" id="endTime">
-      </div>
-    </div>
-    <div class="or">
+      </li>
+      <div class="or"></div>
       <h3>OR</h3>
     </div>
     <div class="selectDuration">

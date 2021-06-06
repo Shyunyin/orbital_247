@@ -53,31 +53,37 @@
 
     <!-- Checkboxes for either TIME task or DURATION task-->
     <!-- Make checkboxes either or-->
-    <div id="selectTime">
-      <li>
+    <nav>
+      <element id="selectTime">
         <input type="checkbox" id="timeTask" name="Time">
-        <label for="Time">Time</label><br>
-        <div class="startTime">
-          <h3>Start time:</h3>
-          <input type="time" id="startTime">
-        </div>
-        <div class="endTime">
-          <h3>End time:</h3>
-          <input type="time" id="endTime">
-        </div>
-      </div>
-      </li>
-      <div class="or"></div>
-      <h3>OR</h3>
-    </div>
-    <div class="selectDuration">
-      <input type="checkbox" id="durationTask" name="Duration">
-      <label for="Duration">Duration </label><br>
-      <input type="number" min="0" max="8" id="hour" name="hour">
-      <label for="hour">hr</label>
-      <input type="number" min="0" max="8" id="minute" name="minute">
-      <label for="minute">min</label>
-    </div>
+        <label for="Time" style="font-size:large;font-family:Signika Negative, sans-serif;">Time</label><br>
+      </element>
+      <element id="or">
+        <h3>OR</h3>
+      </element>
+      <element id="selectDuration">
+        <input type="checkbox" id="durationTask" name="Duration">
+        <label for="Duration" style="font-size:large;font-family:Signika Negative, sans-serif;">Duration</label><br>
+      </element>
+    </nav>
+
+        <!--Time checkbox-->
+            <div class="startTime">
+              <h3>Start time:</h3>
+              <input type="time" id="startTime">
+            </div>
+            <div class="endTime">
+              <h3>End time:</h3>
+              <input type="time" id="endTime">
+            </div>
+
+      <!--Duration checkbox-->
+          <input type="number" min="0" max="8" id="hour" name="hour">
+          <label for="hour">hr</label>
+          <input type="number" min="0" max="8" id="minute" name="minute">
+          <label for="minute">min</label>
+
+
 
     <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
     <div class="counter">

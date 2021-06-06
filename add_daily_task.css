@@ -81,11 +81,13 @@ font-family: 'Signika Negative', sans-serif;
 #dateInput {
   border-radius: 5px; /*make button rounded*/
   font-weight: bold;
+  text-align: center;
 }
 
 /*For number of sections section*/
 #sessions > li {
   display: inline-block;
+  font-family: "Signika Negative", sans-serif;
 }
 #onesession {
   font-family: "Signika Negative", sans-serif;
@@ -128,6 +130,23 @@ font-family: 'Signika Negative', sans-serif;
 #threesessions:hover {
   background-color: #fedcce;
   transition-duration: 0.3s;
+}
+
+/*flexbox for TIME vs DURATION*/ /*in javascript have to link checkbox to content*/
+nav {
+  display: flex;
+  align-items: center;
+  width: 600px;
+  margin: 0 -5px;
+}
+#or {
+  margin: 10px;
+  padding-left: 150px;
+}
+
+#selectDuration {
+  margin-top: 7px;
+  padding-left: 150px;
 }
 
 /*FOR FOLLOW UP TASK DROPDOWN*/

@@ -59,3 +59,16 @@ function myFunction() {
       document.querySelector("body div#sessions li:last-child input#threesessions").style.backgroundColor="#e3aba1";
     }
   }
+
+  /*Calculation for number of hours min left -> Convert to MINUTES for calculation*/
+  let totalRemaining = 8; /*Arbitrary value, must link to formular for breaks and stuff in algorithm*/ 
+  let enterHour = 0;
+  let enterMin = 0;
+  /*To calculate remaining hours and minute*/ 
+  function calculationDuration() {
+    enterHour = document.querySelector("body form.class input#hour");
+  }
+
+  function calculationTime() {
+
+  }

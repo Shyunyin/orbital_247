@@ -140,13 +140,38 @@ nav {
   margin: 0 -5px;
 }
 #or {
+  font-family: "Signika Negative", sans-serif;
   margin: 10px;
   padding-left: 150px;
 }
-
 #selectDuration {
   margin-top: 7px;
   padding-left: 150px;
+}
+.durationOption {
+  font-family: "Signika Negative", sans-serif;
+  padding-left: 410px;
+  position: absolute;
+  top: 380px;
+}
+#hour {
+  font-size: large;
+  font-family: Signika Negative, sans-serif;
+  background-color: #fdfd96;
+  width: 50px;
+}
+#minute {
+  font-size: large;
+  font-family: Signika Negative, sans-serif;
+  background-color: #fdfd96;
+  width: 50px;
+}
+.counter {
+  font-family: "Signika Negative", sans-serif;
+  font-size: large;
+  position: absolute;
+  margin-left: 180px;
+  top: 370px;
 }
 
 /*FOR FOLLOW UP TASK DROPDOWN*/

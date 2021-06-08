@@ -12,9 +12,9 @@ function daysInMonth(month, year) {
 }
 
 class Task {
-    task_name;
-    task_category;
-    duration;
+    //task_name;
+    //task_category;
+    //duration;
     
     /*
     constructor(task_name, task_category, duration) {
@@ -27,6 +27,7 @@ class Task {
     */
 }
 
+
 //I don't think a child class can be an abstract class as well
 class RoutineTask extends Task {
     constructor(start_time, end_time, freq) {
@@ -38,8 +39,6 @@ class RoutineTask extends Task {
         this.freq = freq;
     }
 
-    static freq = ['Daily', 'Weekly', 'Biweekly', 'Monthly'];
-
     static freq(index) {
         if (index < 0 || index > 3) {
             throw new Error('Invalid index')
@@ -48,6 +47,8 @@ class RoutineTask extends Task {
         }
     }
 }
+
+RoutineTask.prototype.freq = ['Daily', 'Weekly', 'Biweekly', 'Monthly'];
 
 class DailyTask extends RoutineTask {
 

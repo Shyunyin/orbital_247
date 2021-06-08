@@ -28,6 +28,8 @@ class MonthlyTask extends RoutineTask {
                         // To ensure that 29, 30 and 31 is not scheduled for all months 
                         if (!currTime.isPast() && (this.date <= RoutineTask.daysInMonth(m, y))) {
                             currTime.scheduleTask();
+                        } else {
+                            throw new Error('This time is occupied by another task.');
                         }
                     }
 

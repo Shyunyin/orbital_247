@@ -94,6 +94,8 @@ class BiweeklyTask extends RoutineTask {
                             if (!currTime.isPast()) {
                                 currTime.scheduleTask();
                                 previousDate = d
+                            } else {
+                                throw new Error('This time is occupied by another task.');
                             }
                         }
 

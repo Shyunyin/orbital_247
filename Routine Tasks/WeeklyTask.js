@@ -46,6 +46,8 @@ class WeeklyTask extends RoutineTask {
                             // Only scheduling tasks for the present and the future
                             if (!currTime.isPast()) {
                                 currTime.scheduleTask();
+                            } else {
+                                throw new Error('This time is occupied by another task.');
                             }
                         }
 

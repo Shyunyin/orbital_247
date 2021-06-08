@@ -85,14 +85,13 @@
       <label for="minute">min</label>
     </form>
 
-
+    
     <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
+    <!-- QUESTION: idk how to include javascript element into html isit ${}?-->
     <div class="counter">
       <li><p>Remaining</p></li>
-      <li><p>Hours:</p></li>
-      <element class="numHours"></element>
-      <li><p>Minute: </p></li>
-      <element class="numHours"></element>
+      <element class="numHours">Hours: <!--Fetch from javascript--></element> <script type ="text/javascript">calculatehoursLeft</script>
+      <element class="numMinutes">Minutes: <!--Fetch from javascript--></element>
     </div>
 
 

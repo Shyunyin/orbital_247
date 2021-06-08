@@ -61,12 +61,27 @@ function myFunction() {
   }
 
   /*Calculation for number of hours min left -> Convert to MINUTES for calculation*/
-  let totalRemaining = 8; /*Arbitrary value, must link to formular for breaks and stuff in algorithm*/ 
-  let enterHour = 0;
-  let enterMin = 0;
+  let totalRemaining = 8; /*Arbitrary value, must link to formular for breaks and stuff in algorithm [IN MINUTES]*/ 
+
+  durationHour(hour) {
+    return hour;
+  }
+  
+  durationMinute(x) {
+    return x;
+  }
+
   /*To calculate remaining hours and minute*/ 
   function calculationDuration() {
-    enterHour = document.querySelector("body form.class input#hour");
+    let enterHour = document.querySelector("body form.durationOption input#hour"); /*Number of hours entered*/
+    let enterMin = document.querySelector("body form.durationOption input#minute");
+    let totalToDeduct = enterMin + (enterHour*60); /*convert hour to minute*/
+    let hoursLeft = document.querySelector("body div.counter element.numHours").innerHTML;
+    let minutesLeft = document.querySelector("body div.counter element.numMinutes").innerHTML;
+    hoursLeft = Math.trunc(totalToDeduct / 60);
+    minutesLeft = totalToDeduct - (hoursLeft * 60);
+    durationHour(hoursleft)
+    durationMinute(minutesLeft)
   }
 
   function calculationTime() {

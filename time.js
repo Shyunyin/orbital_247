@@ -20,9 +20,53 @@ class Time {
         this.task = null; // To indicate that initially there is no task scheduled at this      timing
     }
 
+    /**
+     * Calculates the number of days in a particular month
+     * @param {Number} month The month for which the number of days is requires (1-12)
+     * @param {Number} year  The respective year (Format: yyyy)
+     * @returns              The number of days in the respective month
+     */
     static daysInMonth(month, year) {
         let x = new Date(year, month + 1, 0);
         return d.getDate();
+    }
+
+    /**
+     * Calculates the duration of a task in hours and minutes
+     * @param {Time} startTime Time at which the task starts
+     * @param {Time} endTime   Time at which the task ends
+     * @returns                An array, where the first element represents the hours and 
+     *                         second element represents the minutes
+     */
+     static duration(startTime, endTime) {
+        let elapsed = endTime.date.getTime() - startTime.date.getTime(); 
+        let elapsedMins = Math.floor(elapsed / 60000);
+        let elapsedHours = Math.floor(elapsedMins / 60);
+        elapsedMins = elapsedMins - (elapsedHours * 60);
+        return [elapsedHours, elapsedMins];
+    }
+    getYear() {
+        return this.date.getYear();
+    }
+
+    getMonth() {
+        return this.date.getMonth();
+    }
+
+    getDate() {
+        return this.date.getDate();
+    }
+
+    getHours() {
+        return this.date.getHours();
+    }
+
+    getMins() {
+        return this.date.getMinutes();
+    }
+
+    getTime() {
+        return this.date.getTime(); // Returns in milliseconds
     }
 
     /**

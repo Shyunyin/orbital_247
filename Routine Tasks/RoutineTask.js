@@ -10,8 +10,8 @@ class RoutineTask {
      * @param {String} taskName      Name of task
      * @param {Number} taskCategory  Category of task (0-2; To be chosen from category 
      *                               array below)
-     * @param {Date} startTime       Time at which the task starts
-     * @param {Date} endTime         Time at which the task ends
+     * @param {Time} startTime       Time at which the task starts
+     * @param {Time} endTime         Time at which the task ends
      * @param {Number} freq          Frequency of the recurring task
      */
     constructor(taskName, taskCategory, startTime, endTime, freq) {
@@ -36,32 +36,6 @@ class RoutineTask {
         } else {
             return RoutineTask.prototype.freq[index];
         }
-    }
-
-    /**
-     * Calculates the duration of a task in hours and minutes
-     * @param {Date} startTime Time at which the task starts
-     * @param {Date} endTime   Time at which the task ends
-     * @returns                An array, where the first element represents the hours and 
-     *                         second element represents the minutes
-     */
-    duration(startTime, endTime) {
-        let elapsed = endTime.getTime() - startTime.getTime(); 
-        let elapsedMins = Math.floor(elapsed / 60000);
-        let elapsedHours = Math.floor(elapsedMins / 60);
-        elapsedMins = elapsedMins - (elapsedHours * 60);
-        return [elapsedHours, elapsedMins];
-    }
-
-    /**
-     * Calculates the number of days in a particular month
-     * @param {Number} month The month for which the number of days is requires (1-12)
-     * @param {Number} year  The respective year (Format: yyyy)
-     * @returns              The number of days in the respective month
-     */
-    static daysInMonth(month, year) {
-        let x = new Date(year, month + 1, 0);
-        return x.getDate();
     }
 }
 

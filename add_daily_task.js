@@ -66,29 +66,60 @@ function myFunction() {
 
 
   /*To calculate remaining hours and minute*/ 
-  function calculationDuration() {
-    let enterHour = document.getElementById("hour").innerHTML; /*Number of hours entered*/
-    let enterMin = document.getElementById("minute").innerHTML;
-    let totalToDeduct = enterMin + (enterHour*60); /*convert hour to minute*/
-    let hoursLeft = Math.trunc((totalRemaining - totalToDeduct) / 60); /*Final number for hours*/ 
-    let minutesLeft = (totalRemaining - totalToDeduct - (hoursLeft * 60)); /*Final number for minutes*/
-    document.querySelector("body div.counter element.numHours").innerHTML = hoursLeft;
-    document.querySelector("body div.counter element.numMinutes").innerHTML = minutesLeft;
-    durationHour(hoursleft)
-    durationMinute(minutesLeft)
-  }
-
-  durationHour(hour) {
-    return hour;
-  }
+  function calculationDuration(check) {
+    if (check === true) { /*only do something if it is true*/
+      let enterHour = document.querySelector("body form.durationOption input#hour"); /*Number of hours entered*/
+      let enterMin = document.querySelector("body form.durationOption input#minute"); /*Number of minutes entered*/
+      let totalToDeduct = enterMin + (enterHour*60); /*convert hour to minute*/
+      let hoursLeft = Math.trunc((totalRemaining - totalToDeduct) / 60); /*Final number for hours*/ 
+      let minutesLeft = (totalRemaining - totalToDeduct - (hoursLeft * 60)); /*Final number for minutes*/
   
-  durationMinute(x) {
-    return x;
+      const newer = document.createElement("h3");
+      newer.text = "newer";
+      document.getElementsByClassName("counter").appendChild(newer).innerHTML = "Hour: " + hoursLeft + " " + "Minute: " + minutesLeft;
+    }
   }
 
+ 
 
 
   function calculationTime() {
 
   }
 
+
+/*For appending to the dropdownlist*/
+// function appendDropDown {
+//   let newVariable = document.getElementById("taskName").innerHTML; /*to get task name*/
+//   let placeholder = document.createElement("option");
+// }
+
+var taskList = ["Cook dinner for family"]; /*global scope*/
+
+/*Need to get value from php? To append tasks to taskList*/
+// function addToList() { /*when done button or add another task button is pressed*/
+//   let newVariable = document.getElementById("taskName").innerHTML; /*to get task name*/
+//   taskList.push(newVariable); /*Add to array to be output as options*/
+// }
+
+document.getElementById("generate").onclick = function() {
+  var taskList = ["Cook dinner for family", "blah"];
+  var select = document.createElement("select"); /*creating the select element to create dropdown*/
+  select.name = "tasks";
+  select.id = "tasks";
+
+  for (const task of taskList) /*for loop for every element in taskList*/
+  {
+      var op = document.createElement("option");
+      /*appending to option to create the task*/
+      op.value = task;
+      op.text = task.charAt(0).toUpperCase() + task.slice(1); /*to capitalise first letter*/
+      select.option.add(op).innerHTML;
+  }
+  /*creating a label for the dropdowns*/
+  var label = document.createElement("label");
+  label.innerHTML = "Follow up tasks";
+  label.htmlFor = "tasks"; /*specifies which form the label is bound to*/
+
+  document.getElementById("container").appendChild(label).appendChild(select);
+}

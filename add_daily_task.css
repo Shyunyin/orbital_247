@@ -24,7 +24,14 @@ font-family: 'Signika Negative', sans-serif;
   border-width: 2px;
   border-color: black;
 }
-
+input[type="text"] {
+  background-color: #96d6ed;
+  font-family: Signika Negative, sans-serif;
+  font-size: medium;
+}
+input[type="text"]:hover {
+  background-color: #a1e6ff;
+}
 /*Make both parent and child have the same font*/
 #categories > li {
   font-family: "Signika Negative", sans-serif;
@@ -152,17 +159,31 @@ nav {
 #or {
   font-family: "Signika Negative", sans-serif;
   margin: 10px;
-  padding-left: 100px;
+  padding-left: 80px;
 }
 #selectDuration {
   margin-top: 7px;
-  padding-left: 110px;
+  padding-left: 80px;
 }
 .durationOption {
   font-family: "Signika Negative", sans-serif;
-  padding-left: 320px;
+  padding-left: 270px;
   position: absolute;
   top: 380px;
+}
+#doneDuration {
+  font-family: "Signika Negative", sans-serif;
+  background-color: #317575ff;
+  color: white;
+  position: absolute;
+  top: 60px;
+  right: 70px;
+  border-color: black;
+  border-width: 2px;
+  border-radius: 5px;
+}
+#doneDuration:hover {
+  background-color: #52c4c4;
 }
 #hour {
   font-size: large;
@@ -245,12 +266,27 @@ nav {
   border-radius: 5px;
   width: 80px;
   height: 30px;
-  margin-left: 20px;
+  margin-left: 400px;
+  position: absolute;
+  top: 100px;
   border-width: 2px;
   border-color: black;
 }
+#sequence:hover {
+  background-color: #a1e6ff;
+}
 /*Follow up task dropdown*/
-#followUpTask {
+/* #followUpTask {
+  font-family: Signika Negative, sans-serif;
+  font-size: 15px;
+  background-color: #96d6ed;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
+  width: 350px;
+  height: 30px;
+} */
+#generate {
   font-family: Signika Negative, sans-serif;
   font-size: 15px;
   background-color: #96d6ed;
@@ -260,11 +296,17 @@ nav {
   width: 350px;
   height: 30px;
 }
+#generate:hover {
+  background-color: #a1e6ff;
+}
 
 /*Buttons*/
 .btn-group-actions {
   position: absolute;
-  top: 660px;
+  top: 180px;
+}
+.btn-group-actions > li {
+  display: inline-block;
 }
 #delete {
   font-family: Signika Negative, sans-serif;
@@ -278,7 +320,7 @@ nav {
   background-color: #e3aba1;
   border-radius: 5px;
   font-size: medium;
-  margin-left: 120px;
+  margin-left: 100px;
   height: 35px;
 }
 #done {
@@ -286,8 +328,11 @@ nav {
   background-color: #e3aba1;
   border-radius: 5px;
   font-size: medium;
-  margin-left: 120px;
   height: 35px;
+  width: 200px;
+  position: absolute;
+  top: 1px;
+  margin-left: 100px;
 }
 #delete:hover {
   background-color: #fedcce;

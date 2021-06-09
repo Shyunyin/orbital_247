@@ -17,7 +17,7 @@
       <li><h3>Add a task:</h3></li>
     <!-- INPUT for taskName-->
     <li><form>
-        <input type="text" id="taskName" name="taskName" size="70" style="background-color: #96d6ed;font-family: Signika Negative, sans-serif;font-size:medium"><br>
+        <input type="text" id="taskName" name="taskName" size="70"><br>
     </form></li>
     </div>
 
@@ -55,14 +55,14 @@
     <!-- Make checkboxes either or-->
     <nav>
       <element id="selectTime">
-        <input type="checkbox" id="timeTask" name="Time" onclick="calculationTime()">
+        <input type="checkbox" id="timeTask" name="Time" onclick="calculationTime(true)">
         <label for="Time" style="font-size:large;font-family:Signika Negative, sans-serif;">Time</label><br>
       </element>
       <element id="or">
         <h3>OR</h3>
       </element>
       <element id="selectDuration">
-        <input type="checkbox" id="durationTask" name="Duration" onclick="calculationDuration()">
+        <input type="checkbox" id="durationTask" name="Duration"">
         <label for="Duration" style="font-size:large;font-family:Signika Negative, sans-serif;">Duration</label><br>
       </element>
     </nav>
@@ -83,17 +83,15 @@
       <label for="hour">hr</label>
       <input type="number" min="0" id="minute" name="minute">
       <label for="minute">min</label>
+      <input type="button" id="doneDuration" value="Done!"  onclick="calculationDuration(true)">
     </form>
 
     
     <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
     <!-- QUESTION: idk how to include javascript element into html isit ${}?-->
     <div class="counter">
-      <li><p>Remaining</p></li>
-      <element class="numHours">Hours: <!--Fetch from javascript--></element> 
-      <element class="numMinutes">Minutes: <!--Fetch from javascript--></element>
+      <p>Remaining</p>
     </div>
-
 
 
     <!-- For follow up task-->
@@ -107,23 +105,26 @@
       </br>
 
       <!--Code for dropdown menu linked to javascript, database of other tasknames-->
-      <div class="followUp">
-        <select name="followUpTask" id="followUpTask">
-          
-        </select>
-        <!--Before and after-->
-        <select name="sequence" id="sequence">
-          <option value="before">Before</option>
-          <option value="after">After</option>
-        </select>
-      </div>
-    </div>
+  <div class="followUp">
+    <!--Container to contain the dynamically added elements-->
+    <div id="container"></div>
+      <br>
+    <div>
+      <button id="generate">Pick a task</button>
+    </div>  
+    <!--Before and after-->
+    <select name="sequence" id="sequence">
+      <option value="before">Before</option>
+      <option value="after">After</option>
+    </select>
+  </div>
+ 
 
     <!--Buttons for DELETE, ADD, DONE-->
     <div class="btn-group-actions">
-      <button id="delete">Delete task</button>
-      <button id="add">Add another task</button>
-      <button id="done">Back to main schedule</button>
+      <li><button id="delete">Delete task</button></li>
+      <li><button id="add" onclick=addToList()>Add another task</button></li>
+      <li><button id="done" onclick=addToList()>Back to main schedule</button></li>
     </div>
    </body>
 </html>

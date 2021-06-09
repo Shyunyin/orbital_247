@@ -17,7 +17,7 @@
       <li><h3>Add a task:</h3></li>
     <!-- INPUT for taskName-->
     <li><form>
-        <input type="text" id="taskName" name="taskName" size="100" style="background-color: #96d6ed;font-family: Signika Negative, sans-serif;font-size:medium"><br>
+        <input type="text" id="taskName" name="taskName" size="70" style="background-color: #96d6ed;font-family: Signika Negative, sans-serif;font-size:medium"><br>
     </form></li>
     </div>
 
@@ -90,7 +90,7 @@
     <!-- QUESTION: idk how to include javascript element into html isit ${}?-->
     <div class="counter">
       <li><p>Remaining</p></li>
-      <element class="numHours">Hours: <!--Fetch from javascript--></element> <script type ="text/javascript">calculatehoursLeft</script>
+      <element class="numHours">Hours: <!--Fetch from javascript--></element> 
       <element class="numMinutes">Minutes: <!--Fetch from javascript--></element>
     </div>
 
@@ -99,22 +99,18 @@
     <!-- For follow up task-->
     <div class="followTask">
       <br>
-        <h3>Does this task follow another task?</h3>
-        <input type="checkbox" id="yes" name="yes">
-        <label for="yes">Yes</label>
-        <input type="checkbox" id="no" name="no">
-        <label for="no">No</label><br>
-    </br>
+        <li><h3>Does this task follow another task?</h3></li>
+        <li><input type="checkbox" id="yes" name="yes">
+          <label class="yes" for="yes">Yes</label></li>
+        <li><input type="checkbox" id="no" name="no">
+          <label class="no" for="no">No</label><br></li>
+      </br>
 
       <!--Code for dropdown menu linked to javascript, database of other tasknames-->
       <div class="followUp">
-        <button onclick="myFunction()" class="followUpBtn">Task</button>
-        <div id="followUpTask" class="followUp-content">
-          <!--Extract taskname-->
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
-        </div><br>
+        <select name="followUpTask" id="followUpTask">
+          
+        </select>
         <!--Before and after-->
         <select name="sequence" id="sequence">
           <option value="before">Before</option>

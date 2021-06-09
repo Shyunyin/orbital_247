@@ -21,6 +21,8 @@ font-family: 'Signika Negative', sans-serif;
   font-family: "Signika Negative", sans-serif;
   width: max-content;
   border-radius: 7px; /*make button rounded*/
+  border-width: 2px;
+  border-color: black;
 }
 
 /*Make both parent and child have the same font*/
@@ -38,6 +40,7 @@ font-family: 'Signika Negative', sans-serif;
   font-size: medium;
   padding: 8px;
   border-radius: 5px; /*make button rounded*/
+  border-width: medium;
 }
 #exercise {
   font-family: "Signika Negative", sans-serif;
@@ -47,6 +50,7 @@ font-family: 'Signika Negative', sans-serif;
   font-size: medium;
   padding: 8px;
   border-radius: 5px; /*make button rounded*/
+  border-width: medium;
 }
 #misc {
   font-family: "Signika Negative", sans-serif;
@@ -56,6 +60,7 @@ font-family: 'Signika Negative', sans-serif;
   font-size: medium;
   padding: 8px;
   border-radius: 5px; /*make button rounded*/
+  border-width: medium;
 }
 #work:hover {
   background-color: #fedcce;
@@ -80,6 +85,8 @@ font-family: 'Signika Negative', sans-serif;
 }
 #dateInput {
   border-radius: 5px; /*make button rounded*/
+  border-width: 2px;
+  border-color: black;
   font-weight: bold;
   text-align: center;
 }
@@ -98,6 +105,7 @@ font-family: 'Signika Negative', sans-serif;
   padding: 8px;
   width: 50px;
   border-radius: 5px; /*make button rounded*/
+  border-width: medium;
 }
 #twosessions {
   font-family: "Signika Negative", sans-serif;
@@ -108,6 +116,7 @@ font-family: 'Signika Negative', sans-serif;
   padding: 8px;
   width: 50px;
   border-radius: 5px; /*make button rounded*/
+  border-width: medium;
 }
 #threesessions {
   font-family: "Signika Negative", sans-serif;
@@ -118,6 +127,7 @@ font-family: 'Signika Negative', sans-serif;
   padding: 8px;
   width: 50px;
   border-radius: 5px; /*make button rounded*/
+  border-width: medium;
 }
 #onesession:hover {
   background-color: #fedcce;
@@ -142,15 +152,15 @@ nav {
 #or {
   font-family: "Signika Negative", sans-serif;
   margin: 10px;
-  padding-left: 150px;
+  padding-left: 100px;
 }
 #selectDuration {
   margin-top: 7px;
-  padding-left: 150px;
+  padding-left: 110px;
 }
 .durationOption {
   font-family: "Signika Negative", sans-serif;
-  padding-left: 410px;
+  padding-left: 320px;
   position: absolute;
   top: 380px;
 }
@@ -158,50 +168,143 @@ nav {
   font-size: large;
   font-family: Signika Negative, sans-serif;
   background-color: #fdfd96;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
   width: 50px;
 }
 #minute {
   font-size: large;
   font-family: Signika Negative, sans-serif;
   background-color: #fdfd96;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
   width: 50px;
 }
 .counter {
   font-family: "Signika Negative", sans-serif;
   font-size: large;
   position: absolute;
-  margin-left: 180px;
-  top: 370px;
+  margin-left: 500px;
+  top: 420px;
 }
-
-/*FOR FOLLOW UP TASK DROPDOWN*/
-/* Dropdown Content (Hidden by Default) */
-.followUp-content {
-  font-family: "Signika Negative", sans-serif;
-  display: none;
+.startTime {
+  font-family: Signika Negative, sans-serif;
   position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  top: 340px;
+}
+#startTime {
+  background-color: #fdfd96;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
+  position: absolute;
+  top: 50px;
+}
+.endTime {
+  font-family: Signika Negative, sans-serif;
+  position: absolute;
+  top: 410px;
+}
+#endTime {
+  background-color: #fdfd96;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
+  position: absolute;
+  top: 50px;
 }
 
-/* Links inside the dropdown */
-.followUp-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  font-family: "Signika Negative", sans-serif;
+/*Follow another task*/
+.followTask {
+  font-family: Signika Negative, sans-serif;
+  position: absolute;
+  top: 500px;
+}
+.followTask > li {
+  display: inline-block;
+}
+#yes {
+  margin-left: 30px;
+}
+.yes {
+  font-size: 18px;
+}
+#no {
+  margin-left: 30px;
+  font-size: medium;
+}
+.no {
+  font-size: 18px;
+}
+#sequence {
+  font-family: Signika Negative, sans-serif;
+  font-size: 15px;
+  background-color: #96d6ed;
+  border-radius: 5px;
+  width: 80px;
+  height: 30px;
+  margin-left: 20px;
+  border-width: 2px;
+  border-color: black;
+}
+/*Follow up task dropdown*/
+#followUpTask {
+  font-family: Signika Negative, sans-serif;
+  font-size: 15px;
+  background-color: #96d6ed;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
+  width: 350px;
+  height: 30px;
 }
 
-/* Change color of dropdown links on hover */
-.followUp-content a:hover {
-  background-color: #ddd;
-  font-family: "Signika Negative", sans-serif;
+/*Buttons*/
+.btn-group-actions {
+  position: absolute;
+  top: 660px;
+}
+#delete {
+  font-family: Signika Negative, sans-serif;
+  background-color: #e3aba1;
+  border-radius: 5px;
+  font-size: medium;
+  height: 35px;
+}
+#add {
+  font-family: Signika Negative, sans-serif;
+  background-color: #e3aba1;
+  border-radius: 5px;
+  font-size: medium;
+  margin-left: 120px;
+  height: 35px;
+}
+#done {
+  font-family: Signika Negative, sans-serif;
+  background-color: #e3aba1;
+  border-radius: 5px;
+  font-size: medium;
+  margin-left: 120px;
+  height: 35px;
+}
+#delete:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
+}
+#add:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
+}
+#done:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
 }
 
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {
-  display: block;
+/*For checkboxes*/
+input[type="checkbox"] {
+  zoom: 1.2;
+  border-width: 2px;
+  border-color: black;
 }

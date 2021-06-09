@@ -5,12 +5,12 @@ class DailyTask extends RoutineTask {
      * @param {String} taskName     Name of task
      * @param {Number} taskCategory Category of task (0-2; To be chosen from category 
      *                              array below)
-     * @param {Date} startTime      Time at which the task starts
-     * @param {Date} endTime        Time at which the task ends
+     * @param {Time} startTime      Time at which the task starts
+     * @param {Time} endTime        Time at which the task ends
      */
     constructor(taskName, taskCategory, startTime, endTime) {
         super(taskName, taskCategory, startTime, endTime, RoutineTime.freq(0));
-        this.duration = duration(this.startTime, this.endTime);
+        //this.duration = Time.duration(this.startTime, this.endTime);
     }
     
     /**
@@ -19,9 +19,9 @@ class DailyTask extends RoutineTask {
     addTask() { 
         for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
             for (m = 0; m < 12; m++) {
-                for (d = 1; d <= RoutineTask.daysInMonth(m, y); d++) {
-                    for (h = 0; h < this.duration[0]; h++) {
-                        for (min = 0; min < this.duration[1]; min++) {
+                for (d = 1; d <= Time.daysInMonth(m, y); d++) {
+                    for (h = this.startTime.getHours(); h <= this.endTime.getHours(); h++) {
+                        for (min = this.startTime.getMins(); min <= this.endTime.getMins(); min++) {
                             let currTime = new Time(y, m, d, h, min, 0);
                             // Only scheduling tasks for the present and the future
                             if (!currTime.isPast()) {

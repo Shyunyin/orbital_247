@@ -5,15 +5,15 @@ class WeeklyTask extends RoutineTask {
      * @param {String} taskName     Name of the task
      * @param {Number} taskCategory Category of task (0-2; To be chosen from category 
      *                              array below)
-     * @param {Date} startTime      Time at which the task starts
-     * @param {Date} endTime        Time at which the task ends
+     * @param {Time} startTime      Time at which the task starts
+     * @param {Time} endTime        Time at which the task ends
      * @param {Number} day          The day of the week on which the task occurs 
      *                              (0-6, Sun-Sat)
      */
     constructor(taskName, taskCategory, startTime, endTime, day) {
         super(taskName, taskCategory, startTime, endTime, RoutineTime.freq(1));
         this.day = day;
-        this.duration = duration(this.startTime, this.endTime);
+        //this.duration = Time.duration(this.startTime, this.endTime);
     }
 
     /**
@@ -39,9 +39,9 @@ class WeeklyTask extends RoutineTask {
     addTask() { 
         for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
             for (m = 0; m < 12; m++) {
-                for (d = WeeklyTask.startingDate(y, m, this.day); d <= RoutineTask.daysInMonth(m, y); d += 7) {
-                    for (h = 0; h < this.duration[0]; h++) {
-                        for (min = 0; min < this.duration[1]; min++) {
+                for (d = WeeklyTask.startingDate(y, m, this.day); d <= Time.daysInMonth(m, y); d += 7) {
+                    for (h = this.startTime.getHours(); h <= this.endTime.getHours(); h++) {
+                        for (min = this.startTime.getMins(); min <= this.endTime.getMins(); min++) {
                             let currTime = new Time(y, m, d, h, min, 0);
                             // Only scheduling tasks for the present and the future
                             if (!currTime.isPast()) {

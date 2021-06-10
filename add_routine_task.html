@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add routine task</title>
+        <script type = "text/javascript" type="module" src="add_routine_task.js"></script>
+        <link rel="stylesheet" href="add_routine_task.css" />
+    </head>
+    <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
+    <!-- Parent-child relationship for inline-->
+    <div id="title">
+        <li><h3>Add a task:</h3></li>
+        <!-- INPUT for taskName-->
+        <li><form>
+          <input type="text" id="taskName" name="taskName" size="70"><br>
+        </form></li>
+    </div>
+
+    <div id="categories">
+        <li><h3>Category:</h3></li>
+        <!-- Buttons for categories-->
+        <li><form class="btn-group-category">
+            <input type="button" id="work" onclick="catFunction(1)" value="Work"></button>
+            <input type="button" id="exercise" onclick="catFunction(2)" value="Exercise"></button>
+            <input type="button" id="misc" onclick="catFunction(3)" value="Miscellaneous"></button>
+            <input type="button" id="meal" onclick="catFunction(4)" value="Meal Times"></button>
+        </form></li>
+    </div>
+
+    <!-- For frequency-->
+    <div class="frequency">
+        <h3>Recurring frequency: </h3>
+        <div class="ul">
+            <li>
+                <input type="checkbox" id="daily" name="daily">
+                <label for="daily">Daily</label>  
+            </li>
+            <li>
+                <input type="checkbox" id="weekly" name="weekly">
+                <label for="weekly">Weekly</label>
+            </li>          
+            <li>
+                <input type="checkbox" id="biweekly" name="biweekly">
+                <label for="biweekly">Biweekly</label>
+            </li>
+            <li>
+                <input type="checkbox" id="monthly" name="monthly">
+                <label for="monthly">Monthly</label>
+            </li>
+        </div>
+
+        <!--For the dropdown lists--> <!--Use javascript to replace??-->
+        <div class="dropdown">
+            <li>
+                <select class="dailydropdown">
+                    <!--Can replace w javascript??-->
+                    <options value="mon">Monday</options>
+                    <options value="tue">Tuesday</options>
+                    <options value="wed">Wednesday</options>
+                    <options value="thur">Thursday</options>
+                    <options value="fri">Friday</options>
+                    <options value="sat">Saturday</options>
+                    <options value="sun">Sunday</options>
+                </select>
+            </li>
+            <li>
+                <select class="weeklydropdown">
+                    <!--Can replace w javascript??-->
+                    <options value="mon">Monday</options>
+                    <options value="tue">Tuesday</options>
+                    <options value="wed">Wednesday</options>
+                    <options value="thur">Thursday</options>
+                    <options value="fri">Friday</options>
+                    <options value="sat">Saturday</options>
+                    <options value="sun">Sunday</options>
+                </select>
+            </li>
+            <li>
+                <select class="biweeklydropdown">
+                    <!--Can replace w javascript??-->
+                    <options value="mon">Monday</options>
+                    <options value="tue">Tuesday</options>
+                    <options value="wed">Wednesday</options>
+                    <options value="thur">Thursday</options>
+                    <options value="fri">Friday</options>
+                    <options value="sat">Saturday</options>
+                    <options value="sun">Sunday</options>
+                </select>
+            </li>
+            <li><input type="number" max="31" id="date" name="date"></li>
+        </div>
+    </div>
+
+
+    </body>
+</html>

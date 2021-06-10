@@ -1,0 +1,123 @@
+/*For the title section*/
+#title {
+  font-family: "Signika Negative", sans-serif;
+  margin: 0px;
+}
+#title > li {
+  display: inline-block;
+  font-family: "Signika Negative", sans-serif;
+}
+#title > li:last-child {
+  margin-left: 20px;
+  align-content: center;
+}
+#taskName {
+  align-content: center;
+  text-align: center;
+  font-family: "Signika Negative", sans-serif;
+  width: max-content;
+  border-radius: 7px; /*make button rounded*/
+  border-width: 2px;
+  border-color: black;
+}
+input[type="text"] {
+  background-color: #96d6ed;
+  font-family: Signika Negative, sans-serif;
+  font-size: medium;
+}
+input[type="text"]:hover {
+  background-color: #a1e6ff;
+}
+
+/*Make both parent and child have the same font*/
+#categories > li {
+  font-family: "Signika Negative", sans-serif;
+  display: inline-block;
+}
+
+/*Code for category buttons, can try to shorten if possible!*/
+#work {
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  border-radius: 5px; /*make button rounded*/
+  border-width: medium;
+}
+#exercise {
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  border-radius: 5px; /*make button rounded*/
+  border-width: medium;
+}
+#misc {
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  border-radius: 5px; /*make button rounded*/
+  border-width: medium;
+}
+#meal {
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  border-radius: 5px; /*make button rounded*/
+  border-width: medium;
+}
+
+#work:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
+}
+#exercise:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
+}
+#misc:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
+}
+#meal:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
+}
+
+/*For the frequency and options*/
+.frequency {
+  font-family: "Signika Negative", sans-serif;
+}
+label[for="daily"],
+label[for="weekly"],
+label[for="biweekly"],
+label[for="monthly"] {
+  font-family: "Signika Negative", sans-serif;
+  font-weight: bold;
+}
+.ul > li {
+  display: flex;
+  margin-top: 30px;
+}
+
+/*For checkboxes*/
+input[type="checkbox"] {
+  zoom: 1.2;
+  border-width: 2px;
+  border-color: black;
+}
+.dropdown > li {
+  display: flex;
+  margin-left: 150px;
+  margin-top: 20px;
+}

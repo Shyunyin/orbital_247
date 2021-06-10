@@ -32,6 +32,7 @@ input[type="text"] {
 input[type="text"]:hover {
   background-color: #a1e6ff;
 }
+
 /*Make both parent and child have the same font*/
 #categories > li {
   font-family: "Signika Negative", sans-serif;

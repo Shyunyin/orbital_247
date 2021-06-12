@@ -16,13 +16,12 @@ class BiweeklyTask extends RoutineTask {
         super(taskName, taskCategory, startTime, endTime, RoutineTask.freq(2));
         this.day = day;
         this.startWeek = startWeek; 
-        //this.duration = Time.duration(this.startTime, this.endTime);
     }
 
     /**
      * Calculate the first date of the current month on which this task takes place based on last date it took place in the previous month
      * @param {Number} year             The current year (Format: yyyy)
-     * @param {Number} month            The current month (1-12, Jan-Dec)
+     * @param {Number} month            The current month (0-11, Jan-Dec)
      * @param {Number} day              The day of the week on which the task occurs 
      *                                  (0-6, Sun-Sat)
      * @param {Number} previousDate     The date at which the task was last scheduled in the 
@@ -82,26 +81,19 @@ class BiweeklyTask extends RoutineTask {
     /**
      * To add a biweekly task to the user's schedule
      */
-    addTask() { 
+    scheduleTask() { 
         let previousDate = this.previousDate();
         for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
             for (m = 0; m < 12; m++) {
                 for (d = BiweeklyTask.startingDate(y, m, this.day, previousDate); d <= Time.daysInMonth(m, y); d += 14) {
-                    for (h = this.startTime.getHours(); h <= this.endTime.getMins(); h++) {
-                        for (min = this.startTime.getHours(); min <= this.endTime.getMins(); min++) {
-                            let currTime = new Time(y, m, d, h, min, 0);
-                            // Only scheduling tasks for the present and the future
-                            if (!currTime.isPast()) {
-                                currTime.scheduleTask();
-                                previousDate = d
-                            } else {
-                                throw new Error('This time is occupied by another task.');
-                            }
-                        }
-
+                    let newTask = new Window(y, m, d, this.startTime, this.endTime, 1);
+                      // Only scheduling tasks for the present and the future
+                    if (!currTime.isPast()) {
+                        newTask.insertWindow();
+                        previousDate = d
                     }
-                }                
-            }
+                }
+            }                
         }
     }
 }

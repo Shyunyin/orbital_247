@@ -36,21 +36,14 @@ class WeeklyTask extends RoutineTask {
     /**
      * To add a weekly task to the user's schedule
      */
-    addTask() { 
+    scheduleTask() { 
         for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
             for (m = 0; m < 12; m++) {
                 for (d = WeeklyTask.startingDate(y, m, this.day); d <= Time.daysInMonth(m, y); d += 7) {
-                    for (h = this.startTime.getHours(); h <= this.endTime.getHours(); h++) {
-                        for (min = this.startTime.getMins(); min <= this.endTime.getMins(); min++) {
-                            let currTime = new Time(y, m, d, h, min, 0);
-                            // Only scheduling tasks for the present and the future
-                            if (!currTime.isPast()) {
-                                currTime.scheduleTask();
-                            } else {
-                                throw new Error('This time is occupied by another task.');
-                            }
-                        }
-
+                    let newTask = new Window(y, m, d, this.startTime, this.endTime, 1);
+                    // Only scheduling tasks for the present and the future
+                    if (!currTime.isPast()) {
+                        newTask.insertWindow();
                     }
                 }                
             }

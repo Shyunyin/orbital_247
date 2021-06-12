@@ -19,21 +19,15 @@ class MonthlyTask extends RoutineTask {
     /**
      * To add a monthly task to the user's schedule
      */
-    addTask() {
+    scheduleTask() {
         for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
             for (m = 0; m < 12; m++) {
-                for (h = this.startTime.getHours(); h <= this.endTime.getHours(); h++) {
-                    for (min = this.startTime.getMins(); min <= this.endTime.getMins(); min++) {
-                        let currTime = new Time(y, m, this.date, h, min, 0);
-                        // To ensure that 29, 30 and 31 is not scheduled for all months 
-                        if (!currTime.isPast() && (this.date <= Time.daysInMonth(m, y))) {
-                            currTime.scheduleTask();
-                        } else {
-                            throw new Error('This time is occupied by another task.');
-                        }
+                if (this.date <= Time.daysInMonth(m, y)) {
+                    let newTask = new Window(y, m, d, this.startTime, this.endTime, 1);
+                    if (!currTime.isPast()) {
+                        newTask.insertWindow();
                     }
-
-                }               
+                }              
             }
         }
     }

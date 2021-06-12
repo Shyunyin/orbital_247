@@ -6,4 +6,8 @@ class NonFixedTask extends OneTimeTask {
         this.numOfSess = numOfSess;
         this.durOfSess = durOfSess;
     }
+
+    addTask() {
+        
+    }
 }

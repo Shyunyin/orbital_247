@@ -100,13 +100,17 @@ input[type="text"]:hover {
 }
 
 /*For number of sections section*/
-#sessions > li {
-  display: inline-block;
+#sessions {
+  font-family: "Signika Negative", sans-serif;
+  margin-top: 5px;
+  font-size: 13px;
+}
+.numSessions {
   font-family: "Signika Negative", sans-serif;
 }
 #onesession {
   font-family: "Signika Negative", sans-serif;
-  margin-left: 30px;
+  margin-left: 10px;
   background-color: #e3aba1;
   font-weight: bold;
   font-size: medium;
@@ -117,7 +121,7 @@ input[type="text"]:hover {
 }
 #twosessions {
   font-family: "Signika Negative", sans-serif;
-  margin-left: 30px;
+  margin-left: 10px;
   background-color: #e3aba1;
   font-weight: bold;
   font-size: medium;
@@ -128,7 +132,7 @@ input[type="text"]:hover {
 }
 #threesessions {
   font-family: "Signika Negative", sans-serif;
-  margin-left: 30px;
+  margin-left: 10px;
   background-color: #e3aba1;
   font-weight: bold;
   font-size: medium;
@@ -170,18 +174,34 @@ nav {
   font-family: "Signika Negative", sans-serif;
   padding-left: 270px;
   position: absolute;
-  top: 380px;
+  top: 310px;
 }
-#doneDuration {
+.numSessions {
+  margin-right: 20px;
+}
+#doneDurationBtn {
   font-family: "Signika Negative", sans-serif;
   background-color: #317575ff;
   color: white;
-  position: absolute;
-  top: 60px;
-  right: 70px;
   border-color: black;
   border-width: 2px;
   border-radius: 5px;
+  width: 60px;
+  height: 30px;
+  margin-left: 338px;
+  margin-top: 150px;
+}
+#doneTimeBtn {
+  font-family: "Signika Negative", sans-serif;
+  background-color: #317575ff;
+  color: white;
+  border-color: black;
+  border-width: 2px;
+  border-radius: 5px;
+  width: 60px;
+  height: 30px;
+  margin-left: 338px;
+  margin-top: 150px;
 }
 #doneDuration:hover {
   background-color: #52c4c4;
@@ -204,7 +224,7 @@ nav {
   border-color: black;
   width: 50px;
 }
-.counter {
+#counter {
   font-family: "Signika Negative", sans-serif;
   font-size: large;
   position: absolute;
@@ -214,7 +234,8 @@ nav {
 .startTime {
   font-family: Signika Negative, sans-serif;
   position: absolute;
-  top: 340px;
+  top: 280px;
+  font-size: 13px;
 }
 #startTime {
   background-color: #fdfd96;
@@ -222,12 +243,13 @@ nav {
   border-width: 2px;
   border-color: black;
   position: absolute;
-  top: 50px;
+  top: 40px;
 }
 .endTime {
   font-family: Signika Negative, sans-serif;
   position: absolute;
-  top: 410px;
+  top: 360px;
+  font-size: 13px;
 }
 #endTime {
   background-color: #fdfd96;
@@ -235,14 +257,14 @@ nav {
   border-width: 2px;
   border-color: black;
   position: absolute;
-  top: 50px;
+  top: 40px;
 }
 
 /*Follow another task*/
 .followTask {
   font-family: Signika Negative, sans-serif;
   position: absolute;
-  top: 500px;
+  top: 480px;
 }
 .followTask > li {
   display: inline-block;

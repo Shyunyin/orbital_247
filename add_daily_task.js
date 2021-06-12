@@ -65,20 +65,21 @@ function myFunction() {
 
 
 
-  /*To calculate remaining hours and minute*/ 
-  function calculationDuration(check) {
-    if (check === true) { /*only do something if it is true*/
-      let enterHour = document.querySelector("body form.durationOption input#hour"); /*Number of hours entered*/
-      let enterMin = document.querySelector("body form.durationOption input#minute"); /*Number of minutes entered*/
+  /*To calculate remaining hours and minute*/ /*FUNCTION IS WORKING YAYYY*/
+  function calculationDuration() {
+      let enterHour = parseInt(document.getElementById("hour").value); /*Number of hours entered*/
+      let enterMin = parseInt(document.getElementById("minute").value); /*Number of minutes entered*/
       let totalToDeduct = enterMin + (enterHour*60); /*convert hour to minute*/
       let hoursLeft = Math.trunc((totalRemaining - totalToDeduct) / 60); /*Final number for hours*/ 
       let minutesLeft = (totalRemaining - totalToDeduct - (hoursLeft * 60)); /*Final number for minutes*/
   
-      const newer = document.createElement("h3");
-      newer.text = "newer";
-      document.getElementsByClassName("counter").appendChild(newer).innerHTML = "Hour: " + hoursLeft + " " + "Minute: " + minutesLeft;
-    }
+      // const newer = document.createElement("h3");
+      // newer.text = "newer";
+      const text = "Hour: " + hoursLeft + " " + "Minute: " + minutesLeft;
+      return text;
   }
+
+  document.getElementById("counterOutput").value = calculationDuration();
 
  
 

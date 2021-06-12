@@ -39,18 +39,6 @@
       <li><input id="dateInput" type="date" style="background-color: #96d6ed"></li>
     </div>
 
-
-    <!-- Number of sessions -->
-    <div id="sessions">
-      <li><h3>Number of Sessions:</h3></li>
-      <li><form class="numSessions">
-        <input type="button" id="onesession" onclick="sessionsFunction(1)" value="x1"></button>
-        <input type="button" id="twosessions" onclick="sessionsFunction(2)" value="x2"></button>
-        <input type="button" id="threesessions" onclick="sessionsFunction(3)" value="x3"></button>
-    </form></li>
-    </div>
-  </div>
-
     <!-- Checkboxes for either TIME task or DURATION task-->
     <!-- Make checkboxes either or-->
     <nav>
@@ -63,7 +51,7 @@
       </element>
       <element id="selectDuration">
         <input type="checkbox" id="durationTask" name="Duration"">
-        <label for="Duration" style="font-size:large;font-family:Signika Negative, sans-serif;">Duration</label><br>
+        <label for="Duration" style="font-size:large;font-family:Signika Negative, sans-serif;">Duration (per session)</label><br>
       </element>
     </nav>
 
@@ -76,6 +64,7 @@
     <h3>End time:</h3>
       <input type="time" id="endTime">
     </div>
+    <input type="button" id="doneTimeBtn" value="Done!"  onclick="calculationDuration()">
 
     <!--Duration options-->
     <form class="durationOption">
@@ -83,14 +72,23 @@
       <label for="hour">hr</label>
       <input type="number" min="0" id="minute" name="minute">
       <label for="minute">min</label>
-      <input type="button" id="doneDuration" value="Done!"  onclick="calculationDuration(true)">
+          <!-- Number of sessions -->
+    <div id="sessions">
+      <h3>Number of Sessions:</h3>
+    </div>
+    <form class="numSessions">
+        <input type="button" id="onesession" onclick="sessionsFunction(1)" value="x1"></button>
+        <input type="button" id="twosessions" onclick="sessionsFunction(2)" value="x2"></button>
+        <input type="button" id="threesessions" onclick="sessionsFunction(3)" value="x3"></button>
     </form>
+      <input type="button" id="doneDurationBtn" value="Done!"  onclick="calculationDuration()">
 
     
     <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
     <!-- QUESTION: idk how to include javascript element into html isit ${}?-->
-    <div class="counter">
+    <div id="counter">
       <p>Remaining</p>
+      <output id="counterOutput"></output>
     </div>
 
 

@@ -188,7 +188,7 @@ nav {
   border-radius: 5px;
   width: 60px;
   height: 30px;
-  margin-left: 338px;
+  margin-left: 260px;
   margin-top: 150px;
 }
 #doneTimeBtn {
@@ -200,10 +200,13 @@ nav {
   border-radius: 5px;
   width: 60px;
   height: 30px;
-  margin-left: 338px;
+  margin-left: 15px;
   margin-top: 150px;
 }
-#doneDuration:hover {
+#doneDurationBtn:hover {
+  background-color: #52c4c4;
+}
+#doneTimeBtn:hover {
   background-color: #52c4c4;
 }
 #hour {
@@ -244,6 +247,8 @@ nav {
   border-color: black;
   position: absolute;
   top: 40px;
+  height: 25px;
+  text-align: center;
 }
 .endTime {
   font-family: Signika Negative, sans-serif;
@@ -258,6 +263,8 @@ nav {
   border-color: black;
   position: absolute;
   top: 40px;
+  height: 25px;
+  text-align: center;
 }
 
 /*Follow another task*/

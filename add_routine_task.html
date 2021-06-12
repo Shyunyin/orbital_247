@@ -51,7 +51,7 @@
         <!--For the dropdown lists--> <!--Use javascript to replace??-->
         <div class="dropdown">
             <li>
-                <select class="dailydropdown">
+                <select name="weeklydropdown" class="weeklydropdown">
                     <!--Can replace w javascript??-->
                     <options value="mon">Monday</options>
                     <options value="tue">Tuesday</options>
@@ -63,19 +63,7 @@
                 </select>
             </li>
             <li>
-                <select class="weeklydropdown">
-                    <!--Can replace w javascript??-->
-                    <options value="mon">Monday</options>
-                    <options value="tue">Tuesday</options>
-                    <options value="wed">Wednesday</options>
-                    <options value="thur">Thursday</options>
-                    <options value="fri">Friday</options>
-                    <options value="sat">Saturday</options>
-                    <options value="sun">Sunday</options>
-                </select>
-            </li>
-            <li>
-                <select class="biweeklydropdown">
+                <select name="biweeklydropdown" class="biweeklydropdown">
                     <!--Can replace w javascript??-->
                     <options value="mon">Monday</options>
                     <options value="tue">Tuesday</options>
@@ -90,6 +78,27 @@
         </div>
     </div>
 
+    <!--Time options-->
+    <div id="timeOptions">
+        <li>
+            <div class="startTime">
+                <h3>Start time:</h3>
+                    <input type="time" id="startTime">
+            </div>
+        </li>
+        <li>
+            <div class="endTime">
+                <h3>End time:</h3>
+                  <input type="time" id="endTime">
+              </div>
+        </li>
+    </div>
+    
+    <!--Buttons for ADD, DONE-->
+    <div class="btn-group-actions">
+       <button id="add">Add another routine task</button>
+        <button id="done">Done adding ALL routine tasks</button>
+    </div>
 
     </body>
 </html>

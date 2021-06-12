@@ -24,7 +24,11 @@ class MonthlyTask extends RoutineTask {
             for (m = 0; m < 12; m++) {
                 if (this.date <= Time.daysInMonth(m, y)) {
                     let newTask = new Window(y, m, d, this.startTime, this.endTime, 1);
-                    if (!currTime.isPast()) {
+                    if (newTask.duringSleep()) {
+                        window.alert("Do you really want to schedule tasks during your sleep time? :(")
+                        //if yes, continue. if yes, return
+                    }
+                    if (!newTime.isPast()) {
                         newTask.insertWindow();
                     }
                 }              

@@ -21,6 +21,10 @@ class DailyTask extends RoutineTask {
             for (m = 0; m < 12; m++) {
                 for (d = 1; d <= Time.daysInMonth(m, y); d++) {
                     let newTask = new Window(y, m, d, this.startTime, this.endTime, 1);
+                    if (newTask.duringSleep()) {
+                        window.alert("Do you really want to schedule tasks during your sleep time? :(")
+                        //if yes, continue. if yes, return
+                    }
                     if (!newTask.isPast()) {
                         newTask.insertWindow();
                     }

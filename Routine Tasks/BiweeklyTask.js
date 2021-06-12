@@ -87,8 +87,12 @@ class BiweeklyTask extends RoutineTask {
             for (m = 0; m < 12; m++) {
                 for (d = BiweeklyTask.startingDate(y, m, this.day, previousDate); d <= Time.daysInMonth(m, y); d += 14) {
                     let newTask = new Window(y, m, d, this.startTime, this.endTime, 1);
-                      // Only scheduling tasks for the present and the future
-                    if (!currTime.isPast()) {
+                    if (newTask.duringSleep()) {
+                        window.alert("Do you really want to schedule tasks during your sleep time? :(")
+                        //if yes, continue. if yes, return
+                    }
+                    // Only scheduling tasks for the present and the future
+                    if (!newTask.isPast()) {
                         newTask.insertWindow();
                         previousDate = d
                     }

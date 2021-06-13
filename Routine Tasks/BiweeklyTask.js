@@ -3,8 +3,8 @@ class BiweeklyTask extends RoutineTask {
     /**
      * Constructor to create biweekly tasks
      * @param {String} taskName     Name of task
-     * @param {String} taskCategory Category of task (0-2; To be chosen from category 
-     *                              array below)
+     * @param {Number} taskCategory Category of task (0-2; To be chosen from category 
+     *                              array in RoutineTask class)
      * @param {Time} startTime      Time at which the task starts
      * @param {Time} endTime        Time at which the task ends
      * @param {Number} day          The day of the week on which the task occurs 
@@ -13,7 +13,7 @@ class BiweeklyTask extends RoutineTask {
      *                              Next week)
      */
     constructor(taskName, taskCategory, startTime, endTime, day, startWeek) {
-        super(taskName, taskCategory, startTime, endTime, RoutineTask.freq(2));
+        super(taskName, taskCategory, startTime, endTime, 2);
         this.day = day;
         this.startWeek = startWeek; 
     }
@@ -26,7 +26,7 @@ class BiweeklyTask extends RoutineTask {
      *                                  (0-6, Sun-Sat)
      * @param {Number} previousDate     The date at which the task was last scheduled in the 
      *                                  previous month
-     * @returns                         The first date of the current month on which this task 
+     * @returns {Number}                The first date of the current month on which this task 
      *                                  takes place
      */
     static startingDate(year, month, day, previousDate) {
@@ -45,7 +45,7 @@ class BiweeklyTask extends RoutineTask {
 
     /**
      * Calculates the date on which this task is to be first scheduled
-     * @returns The date that is 14 days before the actual date that this task is to be first 
+     * @returns {Number} The date that is 14 days before the actual date that this task is to be first 
      *          scheduled
      */
     previousDate() {
@@ -86,10 +86,9 @@ class BiweeklyTask extends RoutineTask {
         for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
             for (m = 0; m < 12; m++) {
                 for (d = BiweeklyTask.startingDate(y, m, this.day, previousDate); d <= Time.daysInMonth(m, y); d += 14) {
-                    let newTask = new Window(y, m, d, this.startTime, this.endTime, 1);
+                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1);
                     if (newTask.duringSleep()) {
-                        window.alert("Do you really want to schedule tasks during your sleep time? :(")
-                        //if yes, continue. if yes, return
+                        //TODO: window.alert("Do you really want to schedule tasks during your sleep time?"); Basically if yes, continue. If no, return.
                     }
                     // Only scheduling tasks for the present and the future
                     if (!newTask.isPast()) {

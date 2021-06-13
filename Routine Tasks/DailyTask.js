@@ -30,4 +30,8 @@ class DailyTask extends RoutineTask {
             }
         }
     }
+
+    deleteTask() {
+        //TODO
+    }
 }

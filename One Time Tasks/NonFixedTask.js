@@ -22,6 +22,10 @@ class NonFixedTask extends OneTimeTask {
         //TODO: Haven't decided what is the best way to store these tasks (Probably only after algorithm is confirmed)
     }
 
+    deleteTask() {
+        //TODO
+    }
+
     /**
      * To retrieve the name of the task
      * @returns {String} The name of the task

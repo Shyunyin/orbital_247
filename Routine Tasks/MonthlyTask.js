@@ -33,4 +33,8 @@ class MonthlyTask extends RoutineTask {
             }
         }
     }
+
+    deleteTask() {
+        //TODO
+    }
 }

@@ -34,5 +34,8 @@ class FixedTask extends OneTimeTask {
         }
     }
 
+    deleteTask() {
+        //TODO
+    }
 
 }

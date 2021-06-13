@@ -52,4 +52,8 @@ class WeeklyTask extends RoutineTask {
         }
     }
 
+    deleteTask() {
+        //TODO
+    }
+
 }

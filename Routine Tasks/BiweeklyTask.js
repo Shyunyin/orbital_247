@@ -99,4 +99,8 @@ class BiweeklyTask extends RoutineTask {
             }                
         }
     }
+
+    deleteTask() {
+        //TODO
+    }
 }

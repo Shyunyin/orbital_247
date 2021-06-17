@@ -110,12 +110,6 @@ label[for="monthly"] {
   margin-top: 30px;
 }
 
-/*For checkboxes*/
-input[type="checkbox"] {
-  zoom: 1.2;
-  border-width: 2px;
-  border-color: black;
-}
 .dropdown > li {
   display: flex;
 }
@@ -125,6 +119,7 @@ input[type="checkbox"] {
   top: 290px;
 }
 .weeklydropdown {
+  font-family: "Signika Negative", sans-serif;
   width: 150px;
   height: 25px;
   border-radius: 5px;
@@ -133,7 +128,8 @@ input[type="checkbox"] {
   border-color: black;
 }
 .biweeklydropdown {
-  margin-top: 30px;
+  font-family: "Signika Negative", sans-serif;
+  margin-top: 23px;
   width: 150px;
   height: 25px;
   border-radius: 5px;
@@ -142,13 +138,19 @@ input[type="checkbox"] {
   border-color: black;
 }
 #date {
-  margin-top: 25px;
+  font-family: "Signika Negative", sans-serif;
+  margin-top: 20px;
   border-radius: 5px;
-  height: 25px;
+  height: 23px;
   width: 30px;
   border-width: 2px;
   background-color: #96d6ed;
   border-color: black;
+}
+.instruction {
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 120px;
+  margin-top: 14px;
 }
 
 /*For time options*/

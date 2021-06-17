@@ -39,24 +39,29 @@ function myFunction() {
     }
   }
 
+  let numOfSessions = 1; /*To use as multiplier for the hours calculated*/
+
 /*CSS purpose: For selection of number of sessions to only 1*/
   function sessionsFunction(click_switch){
     if (click_switch === 1) {
-      document.querySelector("body div#sessions li:last-child input#onesession").style.backgroundColor="white";
-      document.querySelector("body div#sessions li:last-child input#twosessions").style.backgroundColor="#e3aba1";
-      document.querySelector("body div#sessions li:last-child input#threesessions").style.backgroundColor="#e3aba1";
+      document.querySelector("body input#onesession").style.backgroundColor="white";
+      document.querySelector("body input#twosessions").style.backgroundColor="#e3aba1";
+      document.querySelector("body input#threesessions").style.backgroundColor="#e3aba1";
+      numOfSessions = 1;
     } else if (click_switch === 2) {
-      document.querySelector("body div#sessions li:last-child input#onesession").style.backgroundColor="#e3aba1";
-      document.querySelector("body div#sessions li:last-child input#twosessions").style.backgroundColor="white";
-      document.querySelector("body div#sessions li:last-child input#threesessions").style.backgroundColor="#e3aba1";
+      document.querySelector("body input#onesession").style.backgroundColor="#e3aba1";
+      document.querySelector("body input#twosessions").style.backgroundColor="white";
+      document.querySelector("body input#threesessions").style.backgroundColor="#e3aba1";
+      numOfSessions = 2;
     } else if (click_switch === 3) {
-      document.querySelector("body div#sessions li:last-child input#onesession").style.backgroundColor="#e3aba1";
-      document.querySelector("body div#sessions li:last-child input#twosessions").style.backgroundColor="#e3aba1";
-      document.querySelector("body div#sessions li:last-child input#threesessions").style.backgroundColor="white";
+      document.querySelector("body input#onesession").style.backgroundColor="#e3aba1";
+      document.querySelector("body input#twosessions").style.backgroundColor="#e3aba1";
+      document.querySelector("body input#threesessions").style.backgroundColor="white";
+      numOfSessions = 3;
     } else {
-      document.querySelector("body div#sessions li:last-child input#onesession").style.backgroundColor="#e3aba1";
-      document.querySelector("body div#sessions li:last-child input#twosessions").style.backgroundColor="#e3aba1";
-      document.querySelector("body div#sessions li:last-child input#threesessions").style.backgroundColor="#e3aba1";
+      document.querySelector("body input#onesession").style.backgroundColor="#e3aba1";
+      document.querySelector("body input#twosessions").style.backgroundColor="#e3aba1";
+      document.querySelector("body input#threesessions").style.backgroundColor="#e3aba1";
     }
   }
 
@@ -67,26 +72,49 @@ function myFunction() {
 
   /*To calculate remaining hours and minute*/ /*FUNCTION IS WORKING YAYYY*/
   function calculationDuration() {
-      let enterHour = parseInt(document.getElementById("hour").value); /*Number of hours entered*/
-      let enterMin = parseInt(document.getElementById("minute").value); /*Number of minutes entered*/
+      let enterHour = parseInt((document.getElementById("hour").value)*numOfSessions); /*Number of hours entered*/
+      let enterMin = parseInt((document.getElementById("minute").value)*numOfSessions); /*Number of minutes entered*/
       let totalToDeduct = enterMin + (enterHour*60); /*convert hour to minute*/
       let hoursLeft = Math.trunc((totalRemaining - totalToDeduct) / 60); /*Final number for hours*/ 
       let minutesLeft = (totalRemaining - totalToDeduct - (hoursLeft * 60)); /*Final number for minutes*/
-  
-      // const newer = document.createElement("h3");
-      // newer.text = "newer";
       const text = "Hour: " + hoursLeft + " " + "Minute: " + minutesLeft;
       return text;
   }
 
-  document.getElementById("counterOutput").value = calculationDuration();
 
- 
+
+  const count = document.getElementById("counterOutput");
+  document.getElementById("doneDurationBtn").addEventListener("click", (event) => {
+    // count.innerText = calculationDuration;
+    console.log(event);
+  });
+
+  
 
 
   function calculationTime() {
 
   }
+
+
+/*Logic for only allowing either checkboxes to be checked*/
+//if both false is okay, but if one of them is true then cannot
+const timeBox = document.getElementById("timeTask")
+const durationBox = document.getElementById("durationTask")
+
+function onlyOne(num) {
+  if (num === 1) {
+    timeBox.setAttribute('checked', 'checked')
+    durationBox.checked = false;
+  } else if (num === 2) {
+    durationBox.setAttribute('checked', 'checked')
+    timeBox.checked = false;
+  }
+  }
+} 
+
+
+
 
 
 /*For appending to the dropdownlist*/

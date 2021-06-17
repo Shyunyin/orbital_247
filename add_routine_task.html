@@ -31,20 +31,21 @@
         <h3>Recurring frequency: </h3>
         <div class="ul">
             <li>
-                <input type="checkbox" id="daily" name="daily">
+                <input type="radio" id="daily" name="choose">
                 <label for="daily">Daily</label>  
             </li>
             <li>
-                <input type="checkbox" id="weekly" name="weekly">
+                <input type="radio" id="weekly" name="choose">
                 <label for="weekly">Weekly</label>
             </li>          
             <li>
-                <input type="checkbox" id="biweekly" name="biweekly">
+                <input type="radio" id="biweekly" name="choose">
                 <label for="biweekly">Biweekly</label>
             </li>
             <li>
-                <input type="checkbox" id="monthly" name="monthly">
+                <input type="radio" id="monthly" name="choose">
                 <label for="monthly">Monthly</label>
+                <h5 class="instruction">Please key in a number from 1-31</h5>
             </li>
         </div>
 
@@ -74,7 +75,9 @@
                     <options value="sun">Sunday</options>
                 </select>
             </li>
-            <li><input type="number" max="31" id="date" name="date"></li>
+            <li>
+                <input type="number" id="date" name="date" min="1" max="31">
+            </li>
         </div>
     </div>
 

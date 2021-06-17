@@ -107,6 +107,7 @@ input[type="text"]:hover {
 }
 .numSessions {
   font-family: "Signika Negative", sans-serif;
+  margin-right: 20px;
 }
 #onesession {
   font-family: "Signika Negative", sans-serif;
@@ -175,9 +176,6 @@ nav {
   padding-left: 270px;
   position: absolute;
   top: 310px;
-}
-.numSessions {
-  margin-right: 20px;
 }
 #doneDurationBtn {
   font-family: "Signika Negative", sans-serif;

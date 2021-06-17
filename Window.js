@@ -1,7 +1,12 @@
-// what is the starting time of a window is in the past but the ending time is in the future
+//In this class, we will be creating window objects which represent windows of time during which a particular task is to be done, a break is to be taken, etc. Empty windows are periods of time where nothing is schedule (no tasks or breaks)
+/*
+Additional questions:
+1. What if the starting time of a window is in the past but the ending time is in the future?
+*/
 class Window {
     /**
      * Constructor to create window objects
+     * @param {String} taskName Name of the task ('null' for empty windows)
      * @param {Number} year Year of the window
      * @param {Number} month Month of the window
      * @param {Number} date Date of the window
@@ -9,7 +14,8 @@ class Window {
      * @param {Time} endTime Time at which the window ends
      * @param {Number} type 0 - Empty, 1 - Task within 7 days, 2 - Fixed tasks for the future, 3 - Non-Fixed tasks for the future
      */
-    constructor(year, month, date, startTime, endTime, type) {
+    constructor(taskName, year, month, date, startTime, endTime, type) {
+        this.taskName = taskName;
         this.year = year;
         this.month = month;
         this.date = date;
@@ -19,8 +25,16 @@ class Window {
     }
 
     /**
+     * To retrieve the name of the task corresponding to the window
+     * @returns {String} The name of the task corresponding to the window ('null' for empty windows)
+     */
+    getTaskName() {
+        return this.taskName;
+    }
+
+    /**
      * To retrieve the year of a window 
-     * @returns The year of a window 
+     * @returns {Number} The year of a window (Format: Full year)
      */
     getYear() {
         return this.year;
@@ -28,7 +42,7 @@ class Window {
 
     /**
      * To retrieve the month of a window 
-     * @returns The month of a window 
+     * @returns {Number} The month of a window (0-11, Jan-Dec)
      */
     getMonth() {
         return this.month;
@@ -36,7 +50,7 @@ class Window {
 
     /**
      * To retrieve the date of a window 
-     * @returns The date of a window 
+     * @returns {Number} The date of a window (1-31)
      */
     getDate() {
         return this.date;
@@ -44,7 +58,7 @@ class Window {
 
     /**
      * To retrieve the start time of a window 
-     * @returns The start time of a window (Format: [hours, mins])
+     * @returns {Time} The start time of a window
      */
     getStartTime() {
         return this.startTime;
@@ -52,7 +66,7 @@ class Window {
 
     /**
      * To retrieve the end time of a window 
-     * @returns The end time of a window (Format: [hours, mins])
+     * @returns {Time} The end time of a window
      */
     getEndTime() {
         return this.endTime;
@@ -60,7 +74,7 @@ class Window {
 
     /**
      * To retrieve the start time of a window in milliseconds
-     * @returns The start time of a window in milliseconds
+     * @returns {Number} The start time of a window in milliseconds
      */
     getStartTimeInMs() {
         let currWindowStart = new Date(this.year, this.month, this.date, this.startTime.getHours(), this.startTime.getMins());
@@ -69,7 +83,7 @@ class Window {
 
     /**
      * To retrieve the end time of a window in milliseconds
-     * @returns The end time of a window in milliseconds
+     * @returns {Number} The end time of a window in milliseconds
      */
     getEndTimeInMs() {
         let currWindowEnd = new Date(this.year, this.month, this.date, this.endTime.getHours(), this.endTime.getMins());
@@ -78,7 +92,7 @@ class Window {
 
     /**
      * To retrieve the hours of the start time of a window
-     * @returns The hours of the start time of a window (in 24h format)
+     * @returns {Number} The hours of the start time of a window (in 24h format)
      */
     getStartTimeHours() {
         return this.startTime.getHours();
@@ -86,7 +100,7 @@ class Window {
 
     /**
      * To retrieve the minutes of the start time of a window
-     * @returns The minutes of the start time of a window (in 24h format)
+     * @returns {Number} The minutes of the start time of a window (in 24h format)
      */
     getStartTimeMins() {
         return this.startTime.getMins();
@@ -94,7 +108,7 @@ class Window {
 
     /**
      * To retrieve the hours of the end time of a window
-     * @returns The hours of the end time of a window (in 24h format)
+     * @returns {Number} The hours of the end time of a window (in 24h format)
      */
     getEndTimeHours() {
         return this.endTime.getHours();
@@ -102,7 +116,7 @@ class Window {
 
     /**
      * To retrieve the minutes of the end time of a window
-     * @returns The minutes of the end time of a window (in 24h format)
+     * @returns {Number} The minutes of the end time of a window (in 24h format)
      */
     getEndTimeMins() {
         return this.endTime.getMins();
@@ -127,7 +141,7 @@ class Window {
     /**
      * To check if 2 windows are exactly the same
      * @param {Window} window 
-     * @returns True if they are the same window, false if otherwise
+     * @returns {Boolean} True if they are the same window, false if otherwise
      */
     equals(window) {
         return (this.getStartTimeInMs() == window.getStartTimeInMs && this.getEndTimeInMs == window.getEndTimeInMs());
@@ -146,39 +160,48 @@ class Window {
     }
 
     /**
-     * Checks if a window has already passed
-     * @returns True if the window has already passed, false if otherwise
+     * Checks if a window has already passed in time
+     * @returns {Boolean} True if the window has already passed, false if otherwise
      */
     isPast() {
         let now = new Date();
-        return this.getStartTimeInMs() < now.getTime();
+        return this.getEndTimeInMs() < now.getTime();
     }
 
     /**
-     * Check if a given window starts after 'window'
-     * @param {Window} window 
-     * @returns True if given window starts after 'window', false if otherwise
+     * Checks if a given window starts after 'window'
+     * @param {Window} window The window to be compared with
+     * @returns {Boolean} True if given window starts after 'window', false if otherwise
      */
     startsAfter(window) {
         return this.getStartTimeInMs() > window.getStartTimeInMs();
     }
 
     /**
-     * Check if a given window end after 'window'
-     * @param {Window} window 
-     * @returns True if given window ends after 'window', false if otherwise
+     * Checks if a given window end after 'window'
+     * @param {Window} window The window to be compared with
+     * @returns {Boolean} True if given window ends after 'window', false if otherwise
      */
     endsAfter(window) {
         return this.getEndTimeInMs() > window.getEndTimeInMs();
     }
 
     /**
-     * Check if a given window partially overlaps with 'window'
-     * @param {Window} window 
-     * @returns True if given window partially overlaps with 'window', false if otherwise
+     * Checks if a given window only starts after 'window' ends
+     * @param {Window} window The window to be compared with
+     * @returns {Boolean} True if a given window starts after 'window' ends, false otherwise
+     */
+    isCompletelyAfter(window) {
+        return this.getStartTimeInMs() > window.getEndTimeInMs();
+    }
+
+    /**
+     * Checks if a given window partially overlaps with 'window'
+     * @param {Window} window The window to be compared with
+     * @returns {Boolean} True if given window partially overlaps with 'window', false if otherwise
      */
     partiallyOverlaps(window) {
-        // If the start time of a given window is before the start time of 'window' and the end time //of a given window is before the end time of 'window' but after the start time of 'window'
+        // If the start time of a given window is before the start time of 'window' and the end time of a given window is before the end time of 'window' but after the start time of 'window'
         if (this.getStartTimeInMs() < window.getStartTimeInMs() && window.getStartTimeInMs() < this.getEndTimeInMs() && this.getEndTimeInMs() < window.getEndTimeInMs()) {
             return true;
         // If the start time of a given window is after the start time of 'window' but before the end time of 'window' and the end time of a given window is after the end time of 'window'
@@ -190,35 +213,35 @@ class Window {
     }
 
     /**
-     * Check if a given window occurs completely during 'window'
+     * Checks if a given window occurs completely during 'window'
      * @param {Window} window 
-     * @returns True if a given window occurs completely during 'window', false if otherwise
+     * @returns {Boolean} True if a given window occurs completely during 'window', false if otherwise
      */
     isCompletelyDuring(window) {
+        // If a given window starts after 'window' and ends before 'window'
         return this.startsAfter(window) && window.endsAfter(this);
     }
 
     /**
      * To insert a window into the correct array in chronological order
-     * @returns Errors if there are any clashes in the start and end timings of a given window with existing windows
+     * @returns Errors if there are any clashes in the start and end timings of a given window with existing windows in the array
      */
     insertWindow() {
-        let currDate = new Date().getDate();
-        currDate = new Date(this.year, this.month, currDate);
+        // To locate the array that represents that day of the given window. Array in position 0 of 'collection' arrays will represent the current day, while every slot to the right will represent each subsequent day
+        let now = new Date();
+        currDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         let expectedDate = new Date(this.year, this.month, this.date);
         let index = (expectedDate - currDate)/86400000;
 
-        if (index > 6) {
-            return new Error('Tasks can only be inserted in the schedule for the next 6 days.');
-            //what if you want to schdule beyond that? what do you do?
-        } else if (index < 0) {
+        if (index < 0) {
             return new Error('Invalid index.')
         }
 
-        if (this.type == 0) {
+        if (this.type == 0) { // To insert empty windows
             let currArr = Window.prototype.emptyCollection[index];
             newIndex = 0;
-            while (newIndex < currArr.length && this.getStartTimeInMs() > currArr[newIndex].getEndTimeInMs()) {
+            // Doing checks to ensure that task does not clash with any existing empty windows.
+            while (newIndex < currArr.length && this.isCompletelyAfter(currArr[newIndex])) {
                 newIndex++;
             }
             if (newIndex == currArr.length) {
@@ -229,14 +252,16 @@ class Window {
             } else {
                 return new Error("Cannot schedule empty window as it clashes with an existing empty window. Please adjust the start and end times of other windows accordingly.");
             }
-        } else {
-            if (type == 1) {
-                let currArr = Window.prototype.occupiedCollection[index];
-            } else if (type == 2) {
-                let currArr = Window.prototype.fixedFutureArr;
+        } else { // To insert tasks for the current day and furture days
+            let currArr = Window.prototype.fixedFutureArr; // For tasks to be schedule beyong 7 days from now
+            if (type == 1 && index < 8) { 
+                currArr = Window.prototype.occupiedCollection[index];
+            } else {
+                //TODO: This is for type 2: non-fixed tasks. Need to figure how to do this for non-fixed tasks.
             }
+            // Doing checks to ensure that task does not clash with any existing fixed, future tasks.
             let newIndex = 0;
-            while (newIndex < currArr.length && this.getStartTimeInMs() > currArr[newIndex].getEndTimeInMs()) {
+            while (newIndex < currArr.length && this.isCompletelyAfter(currArr[newIndex])) {
                 newIndex++;
             }
             if (newIndex == currArr.length) {
@@ -257,32 +282,21 @@ class Window {
      * @returns Errors if there are no such existing windows to be removed
      */
     removeWindow() {
+        // To locate the array that represents that day of the given window. Array in position 0 of 'collection' arrays will represent the current day, while every slot to the right will represent each subsequent day
         let currDate = new Date().getDate();
         currDate = new Date(this.year, this.month, currDate);
         let expectedDate = new Date(this.year, this.month, this.date);
         let index = (expectedDate - currDate)/86400000;
-        if (index > 6) {
-            return new Error('Tasks can only be removed from the schedule for the next 6 days.');
-            //what if you want to remove beyond that? what do you do?
-        } else if (index < 0) {
+
+        if (index < 0) {
             return new Error('Invalid index.')
         }
 
-        if (this.type == 1) {
-            let currArr = Window.prototype.occupiedCollection[index];
-            let i;
-            for (i = 0; i < currArr.length; i++) {
-                if (this.equals(currArr[i])) {
-                    currArr.splice(i, 1);
-                    return;
-                }
-            }
-            return new Error('No such task to be removed!');
-        } else{
+        if (this.type == 0) {
             let currArr = Window.prototype.emptyCollection[index];
             let startIndex = 0;
-            // while start time of given window is after the end time of the current window
-            while (startIndex < currArr.length && this.getStartTimeInMs() > currArr[startIndex].getEndTimeInMs()) {
+            //While start time of given window is after the end time of the current window
+            while (startIndex < currArr.length && this.isCompletelyAfter(currArr[startIndex])) {
                 startIndex++;
             }
             let endIndex = startIndex;
@@ -290,45 +304,54 @@ class Window {
                 endIndex++;
             }
         
-            var i;
+            //Removing the empty window correctly by adjusting the start and end times of the previous and subsequent windows if necessary.
+            let i;
             for (i = startIndex; i <= endIndex; i++) {
-                if (this.getStartTimeInMs() > curr[i].getStartTimeInMs() && currArr[i].getEndTimeInMs() > this.getEndTimeInMs()) {
-                    let newWindow1 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), currArr[i].getStartTime(),  newEndTime, 0); //calc newEndTime
+                let newWindow1 = null;
+                let newWindow2 = null;
+                if (this.startsAfter(currArr[i])) {
+                    newWindow1 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), currArr[i].getStartTime(),  newEndTime, 0); //calc newEndTime
                     currArr[i].changeStartTime = this.startTime;
-
-                    let newWindow2 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), newStartTime, currArr[i].getEndTime(), 0); //calc newStartTime
+                }
+                if (currArr[i].getEndTimeInMs() > this.getEndTimeInMs()) {
+                    newWindow2 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), newStartTime, currArr[i].getEndTime(), 0); //calc newStartTime
                     currArr[i].changeEndTime = this.endTime;
+                }
 
-                    currArr.splice(i, 1);
+                currArr.splice(i, 1);
+                if (newWindow1 != null) {
                     newWindow1.insertWindow();
+                }
+                if (newWindow2 != null) {
                     newWindow2.insertWindow();
-
-                } else if (this.getStartTimeInMs() > curr[i].getStartTimeInMs()) {
-                    let newWindow1 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), currArr[i].getStartTime(),  newEndTime, 0); //calc newEndTime
-                    currArr[i].changeStartTime = this.startTime;
-
-                    currArr.splice(i, 1);
-                    newWindow1.insertWindow();
-                } else if (currArr[i].getEndTimeInMs() > this.getEndTimeInMs()) {
-                    let newWindow2 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), newStartTime, currArr[i].getEndTime(), 0); //calc newStartTime
-                    currArr[i].changeEndTime = this.endTime;
-
-                    currArr.splice(i, 1);
-                    newWindow2.insertWindow();
-                } else {
-                    currArr.splice(i, 1);
                 }
             }
+        } else {
+            let currArr = Window.prototype.fixedFutureArr;
+            if (this.type == 1 && index < 8) {
+                currArr = Window.prototype.occupiedCollection[index];
+            } else {
+                //TODO: This is for type 2: non-fixed tasks. Need to figure how to do this for non-fixed tasks.
+            }
+            //Check if the task to be removed exists. Once task is identified, it is removed.
+            let i;
+            for (i = 0; i < currArr.length; i++) {
+                if (this.equals(currArr[i])) {
+                    currArr.splice(i, 1);
+                    let newWindow = new Window(this.year, this.month, this.date, this.startTime, this.endTime, 0);
+                    return newWindow.insertWindow(); //Inserting back the empty window corresponding to the window of the deleted task
+                }
+            }
+            return new Error('No such task to be removed!');
         }
-        
     }
 
     /**
      * Checks if a window falls during a user's sleeping hours so as to warn users against scheduling tasks at those timings
-     * @returns True if window falls during user's sleeping hours, false if otherwise
+     * @returns {Boolean} True if window falls during user's sleeping hours, false if otherwise
      */
     duringSleep() {
-        let sleepStartTime = new Time(Info.getSleepTimeHours, Info.getSleepTimeMins)
+        let sleepStartTime = new Time(Info.getSleepTimeHours(), Info.getSleepTimeMins())
         let sleepEndTime = new Time(Info.getWakeUpTimeHours(), Info.getWakeUpTimeMins());
 
         if (sleepEndTime.getHours() > sleepStartTime.getHours()) {
@@ -346,10 +369,32 @@ class Window {
      */
     static newDay() {
         Window.prototype.occupiedCollection.splice(0, 1);
+        Window.prototype.occupiedCollection.push(Window.prototype.occupiedArr);
+        let now = new Date();
+        // Calculating the date of the newly added array
+        let currDate = now.getDate();
+        let currMonth = now.getMonth();
+        let currYear = now.getYear();
+        if (currDate + 7 > Time.daysInMonth(currMonth, currYear)) {
+            currDate = currDate + 7 - Time.daysInMonth(currMonth, currYear);
+            currMonth++;
+            if (currMonth > 11) {
+                currMonth = 0;
+                currYear++;
+            }
+        }
+        let newlyAddedDate = [new Date(currYear, currMonth, currDate, 0, 0).getTime(), new Date(currYear, currMonth, currDate, 23, 59).getTime()];
+        let index = 0;
+        let currArr = Window.prototype.fixedFutureArr;
+        // Identifying fixed tasks that were scheduled long time ago and are to take place in the current week. These tasks are then added to the relevant array and removed from the fixedFutureArr.
+        while (newlyAddedDate[0] <= currArr[index].getStartTimeInMs && newlyAddedDate[1] >= currArr[index].getEndTimeInMs) {
+            Window.prototype.occupiedCollection[7].push(currArr[index]);
+            currArr.splice(index, 1);
+        }
+        
+        // Updating the empty windows in a similar manner
         Window.prototype.emptyoCollection.splice(0, 1);
         Window.prototype.emptyCollection.push(Window.prototype.emptyArr);
-        //write program to update from the future array list
-        Window.prototype.occupiedCollection.push(Window.prototype.occupiedArr);
     }
 
     /**
@@ -359,8 +404,9 @@ class Window {
         let currTime = new Date();
         let startTime = new Time(Info.getWakeUpTime.getHours(), Info.getWakeUpTime.getMins());
         let endTime = new Time(Info.getSleepTime.getHours(), Info.getSleepTime.getMins());
+        // Creating window arrays for the first week
         var i;
-        for (i = 0; i < 7; i++) {
+        for (i = 0; i < 8; i++) {
             Window.prototype.emptyCollection.push(Window.prototype.emptyArr);
             Window.prototype.occupiedCollection.push(Window.prototype.occupiedArr);
             Window.prototype.nonFixedCollection.push(Window.prototype.nonFixedArr);
@@ -371,11 +417,12 @@ class Window {
     }
 
 }
-Window.prototype.occupiedCollection = [];
-Window.prototype.occupiedArr = [];
-Window.prototype.emptyCollection = [];
-Window.prototype.emptyArr = [];
-Window.prototype.fixedFutureArr = [];
-Window.prototype.nonFixedFutureArr = [];
-Window.prototype.nonFixedCollection = [];
-Window.prototype.nonFixedFutureArr = [];
+
+Window.prototype.occupiedCollection = []; // Contains 7 'Window.prototype.occupiedArr' 
+Window.prototype.occupiedArr = []; // Represents a single day's fixed tasks
+Window.prototype.fixedFutureArr = []; // Represents fixed tasks that are scheduled for > 7 days from now
+Window.prototype.emptyCollection = []; // Contains 7 'Window.prototype.emptyArr'
+Window.prototype.emptyArr = []; // Represents a single day's empty windows
+Window.prototype.nonFixedCollection = []; // Contains 7 'Window.prototype.nonFixedFutureArr'
+Window.prototype.nonFixedFutureArr = []; // Represents a single day's non-fixed tasks
+Window.prototype.nonFixedFutureArr = []; // Represents non-fixed tasks that are scheduled for > 7 days from now

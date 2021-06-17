@@ -1,11 +1,4 @@
-// Time objects can be organised in a tree? --> Seems/Feels super complex
-// Testing yet to be done
-
-
-/**
- * Class to create time objects to keep track of when tasks are scheduled and what times are
- * free
- */
+//Class to create time objects to keep track of when tasks are scheduled and what times are free
 class Time {
     /**
      * Constructor to create Time objects
@@ -21,7 +14,7 @@ class Time {
      * Calculates the number of days in a particular month
      * @param {Number} month The month for which the number of days is requires (0-11, Jan-Dec)
      * @param {Number} year  The respective year (Format: yyyy)
-     * @returns              The number of days in the respective month
+     * @returns {Number}     The number of days in the respective month
      */
     static daysInMonth(month, year) {
         let x = new Date(year, month + 1, 0);
@@ -32,8 +25,8 @@ class Time {
      * Calculates the duration of a task in hours and minutes
      * @param {Time} startTime Time at which the task starts
      * @param {Time} endTime   Time at which the task ends
-     * @returns                An array, where the first element represents the hours and 
-     *                         second element represents the minutes
+     * @returns {Number} An array, where the first element represents the hours and 
+     *                   second element represents the minutes
      */
      static durationOfTask(startTime, endTime) {
         let elapsed = (this.endTime.hours * 60) + (this.endTime.mins) - (this.startTime.hours * 60) - (this.startTime.mins); 
@@ -45,14 +38,27 @@ class Time {
         return [elapsedHours, elapsedMins];
     }
 
+    /**
+     * To retrieve the number of hours for a given time
+     * @returns {Number} The number of hours for a given time
+     */
     getHours() {
         return this.hours;
     }
 
+    /**
+     * To retrieve the number of minutes for a given time
+     * @returns {Number} The number of hours for a given time
+     */
     getMins() {
         return this.mins;
     }
 
+    /**
+     * Checks if a given time is exactly the same at 'time'
+     * @param {Time} time 
+     * @returns {Boolean} True if the 2 timings are exactly the same, false if otherwise
+     */
     equals(time) {
         return (this.hours == time.getHours() && this.mins == time.getMins());
     }

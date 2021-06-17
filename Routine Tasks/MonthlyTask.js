@@ -3,17 +3,16 @@ class MonthlyTask extends RoutineTask {
     /**
      * Constructor to create monthly tasks
      * @param {String} taskName     Name of task
-     * @param {String} taskCategory Category of task (0-2; To be chosen from category 
-     *                              array below)
+     * @param {Number} taskCategory Category of task (0-2; To be chosen from category 
+     *                              array in RoutineTask class)
      * @param {Time} startTime      Time at which the task starts
      * @param {Time} endTime        Time at which the task ends
      * @param {Number} date         The date on which the task occurs 
-     *                              (1-28/29/30/31)
+     *                              (1-31)
      */
     constructor(taskName, taskCategory, startTime, endTime, date) {
-        super(taskName, taskCategory, startTime, endTime, RoutineTask.freq(3));
+        super(taskName, taskCategory, startTime, endTime, 3);
         this.date = date;
-        //this.duration = Time.duration(this.startTime, this.endTime);
     }
 
     /**
@@ -23,10 +22,9 @@ class MonthlyTask extends RoutineTask {
         for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
             for (m = 0; m < 12; m++) {
                 if (this.date <= Time.daysInMonth(m, y)) {
-                    let newTask = new Window(y, m, d, this.startTime, this.endTime, 1);
+                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1);
                     if (newTask.duringSleep()) {
-                        window.alert("Do you really want to schedule tasks during your sleep time? :(")
-                        //if yes, continue. if yes, return
+                        //TODO: window.alert("Do you really want to schedule tasks during your sleep time?"); Basically if yes, continue. If no, return.
                     }
                     if (!newTime.isPast()) {
                         newTask.insertWindow();
@@ -34,5 +32,9 @@ class MonthlyTask extends RoutineTask {
                 }              
             }
         }
+    }
+
+    deleteTask() {
+        //TODO
     }
 }

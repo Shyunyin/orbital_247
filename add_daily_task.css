@@ -232,10 +232,13 @@ nav {
   margin-left: 500px;
   top: 420px;
 }
+.counterOutput {
+  color: #1e5353;
+}
 .startTime {
   font-family: Signika Negative, sans-serif;
   position: absolute;
-  top: 280px;
+  top: 290px;
   font-size: 13px;
 }
 #startTime {
@@ -247,6 +250,7 @@ nav {
   top: 40px;
   height: 25px;
   text-align: center;
+  z-index: 1; /*to bring to front of page*/
 }
 .endTime {
   font-family: Signika Negative, sans-serif;
@@ -263,6 +267,7 @@ nav {
   top: 40px;
   height: 25px;
   text-align: center;
+  z-index: 1; /*to bring to front of page*/
 }
 
 /*Follow another task*/

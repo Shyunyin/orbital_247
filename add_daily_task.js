@@ -21,21 +21,21 @@ function myFunction() {
 /*CSS purpose: For selection of buttons to only happen once*/
   function catFunction(button_switch){
     if (button_switch === 1) {
-      document.querySelector("body div#categories li:last-child input#work").style.backgroundColor="white";
-      document.querySelector("body div#categories li:last-child input#exercise").style.backgroundColor="#e3aba1";
-      document.querySelector("body div#categories li:last-child input#misc").style.backgroundColor="#e3aba1";
+      document.getElementById("work").style.backgroundColor="white";
+      document.getElementById("exercise").style.backgroundColor="#e3aba1";
+      document.getElementById("misc").style.backgroundColor="#e3aba1";
     } else if (button_switch === 2) {
-      document.querySelector("body div#categories li:last-child input#work").style.backgroundColor="#e3aba1";
-      document.querySelector("body div#categories li:last-child input#exercise").style.backgroundColor="white";
-      document.querySelector("body div#categories li:last-child input#misc").style.backgroundColor="#e3aba1";
+      document.getElementById("work").style.backgroundColor="#e3aba1";
+      document.getElementById("exercise").style.backgroundColor="white";
+      document.getElementById("misc").style.backgroundColor="#e3aba1";
     } else if (button_switch === 3) {
-      document.querySelector("body div#categories li:last-child input#work").style.backgroundColor="#e3aba1";
-      document.querySelector("body div#categories li:last-child input#exercise").style.backgroundColor="#e3aba1";
-      document.querySelector("body div#categories li:last-child input#misc").style.backgroundColor="white";
+      document.getElementById("work").style.backgroundColor="#e3aba1";
+      document.getElementById("exercise").style.backgroundColor="#e3aba1";
+      document.getElementById("misc").style.backgroundColor="white";
     } else {
-      document.querySelector("body div#categories li:last-child input#work").style.backgroundColor="#e3aba1";
-      document.querySelector("body div#categories li:last-child input#exercise").style.backgroundColor="#e3aba1";
-      document.querySelector("body div#categories li:last-child input#misc").style.backgroundColor="#e3aba1";
+      document.getElementById("work").style.backgroundColor="#e3aba1";
+      document.getElementById("exercise").style.backgroundColor="#e3aba1";
+      document.getElementById("misc").style.backgroundColor="#e3aba1";
     }
   }
 
@@ -65,10 +65,20 @@ function myFunction() {
     }
   }
 
-  /*Calculation for number of hours min left -> Convert to MINUTES for calculation*/
+  /*Calculation for number of hours min left -> Convert to MINUTES for calculation*/  
   let totalRemaining = 720; /*Arbitrary value, must link to formular for breaks and stuff in algorithm [IN MINUTES]*/ 
 
+  function initial() {
+    let hours = (totalRemaining / 60);
+    let minutes = totalRemaining - (hours * 60);
+    var text = "Hour: " + hours + " " + "Minute: " + minutes;
+    displayDuration(text); /*initial display*/
+  }
 
+
+  function displayDuration(text) {
+    document.getElementById("counterOutput").innerHTML = text;
+  }
 
   /*To calculate remaining hours and minute*/ /*FUNCTION IS WORKING YAYYY*/
   function calculationDuration() {
@@ -77,41 +87,30 @@ function myFunction() {
       let totalToDeduct = enterMin + (enterHour*60); /*convert hour to minute*/
       let hoursLeft = Math.trunc((totalRemaining - totalToDeduct) / 60); /*Final number for hours*/ 
       let minutesLeft = (totalRemaining - totalToDeduct - (hoursLeft * 60)); /*Final number for minutes*/
-      const text = "Hour: " + hoursLeft + " " + "Minute: " + minutesLeft;
-      return text;
+      var text = "Hour: " + hoursLeft + " " + "Minute: " + minutesLeft;
+      displayDuration(text);
   }
 
-
-
-  const count = document.getElementById("counterOutput");
-  document.getElementById("doneDurationBtn").addEventListener("click", (event) => {
-    // count.innerText = calculationDuration;
-    console.log(event);
-  });
-
-  
-
-
+  /*Even though html input is in 12 hours format, it is saved as 24 hours format, use substr to extract*/
   function calculationTime() {
-
+    let start = document.getElementById("startTime").value
+    let startHour = parseInt(start.substr(0,2));
+    let startMin = parseInt(start.substr(3,4));
+    let end = document.getElementById("endTime").value
+    let endHour = parseInt(end.substr(0,2));
+    let endMin = parseInt(end.substr(3,4));
+    let hours = (totalRemaining / 60);
+    let minutes = totalRemaining - (hours * 60);
+    let finalHour = hours - (endHour - startHour);
+    let finalMin = minutes - (endMin - startMin);
+    var text = "Hour: " + finalHour + " " + "Minute: " + finalMin;
+    displayDuration(text);
   }
 
 
-/*Logic for only allowing either checkboxes to be checked*/
-//if both false is okay, but if one of them is true then cannot
-const timeBox = document.getElementById("timeTask")
-const durationBox = document.getElementById("durationTask")
-
-function onlyOne(num) {
-  if (num === 1) {
-    timeBox.setAttribute('checked', 'checked')
-    durationBox.checked = false;
-  } else if (num === 2) {
-    durationBox.setAttribute('checked', 'checked')
-    timeBox.checked = false;
+  function displayDuration(text) {
+    document.getElementById("counterOutput").innerHTML = text;
   }
-  }
-} 
 
 
 

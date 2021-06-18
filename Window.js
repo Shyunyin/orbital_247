@@ -450,6 +450,14 @@ Window.prototype.fixedFutureArr = []; // Represents fixed tasks that are schedul
 Window.prototype.emptyCollection = []; // Contains 7 'Window.prototype.emptyArr'
 Window.prototype.emptyArr = []; // Represents a single day's empty windows
 Window.prototype.nonFixedCollection = []; // Contains 7 'Window.prototype.nonFixedFutureArr'
+<<<<<<< HEAD
 Window.prototype.nonFixedArr = []; // Represents a single day's non-fixed tasks
 Window.prototype.nonFixedFutureArr = []; // Represents non-fixed tasks that are scheduled for > 7 days from now
 Window.prototype.group = 0; //Tracks the number of groups (non-fixed, connected tasks) for the day. Reset at the end of every day.
+=======
+Window.prototype.nonFixedFutureArr = []; // Represents a single day's non-fixed tasks
+Window.prototype.nonFixedFutureArr = []; // Represents non-fixed tasks that are scheduled for > 7 days from now
+
+
+export default Window; //to export to other js files (e.g add_routine_task.js)
+>>>>>>> eb7b9ded59dd59c0ad84c6e312f1a613d61d5e62

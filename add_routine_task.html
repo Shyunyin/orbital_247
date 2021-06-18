@@ -3,6 +3,7 @@
     <head>
         <title>Add routine task</title>
         <script type = "text/javascript" type="module" src="add_routine_task.js"></script>
+        <script type = "text/javascript" type="module" src="Window.js"></script>
         <link rel="stylesheet" href="add_routine_task.css" />
     </head>
     <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
@@ -31,20 +32,21 @@
         <h3>Recurring frequency: </h3>
         <div class="ul">
             <li>
-                <input type="checkbox" id="daily" name="daily">
+                <input type="radio" id="daily" name="choose" value="daily">
                 <label for="daily">Daily</label>  
             </li>
             <li>
-                <input type="checkbox" id="weekly" name="weekly">
+                <input type="radio" id="weekly" name="choose" value="weekly">
                 <label for="weekly">Weekly</label>
             </li>          
             <li>
-                <input type="checkbox" id="biweekly" name="biweekly">
+                <input type="radio" id="biweekly" name="choose" value="biweekly">
                 <label for="biweekly">Biweekly</label>
             </li>
             <li>
-                <input type="checkbox" id="monthly" name="monthly">
+                <input type="radio" id="monthly" name="choose" value="monthly">
                 <label for="monthly">Monthly</label>
+                <h5 class="instruction">Please key in a number from 1-31</h5>
             </li>
         </div>
 
@@ -53,28 +55,30 @@
             <li>
                 <select name="weeklydropdown" class="weeklydropdown">
                     <!--Can replace w javascript??-->
-                    <options value="mon">Monday</options>
-                    <options value="tue">Tuesday</options>
-                    <options value="wed">Wednesday</options>
-                    <options value="thur">Thursday</options>
-                    <options value="fri">Friday</options>
-                    <options value="sat">Saturday</options>
-                    <options value="sun">Sunday</options>
+                    <options value="0">Monday</options>
+                    <options value="1">Tuesday</options>
+                    <options value="2">Wednesday</options>
+                    <options value="3">Thursday</options>
+                    <options value="4">Friday</options>
+                    <options value="5">Saturday</options>
+                    <options value="6">Sunday</options>
                 </select>
             </li>
             <li>
                 <select name="biweeklydropdown" class="biweeklydropdown">
                     <!--Can replace w javascript??-->
-                    <options value="mon">Monday</options>
-                    <options value="tue">Tuesday</options>
-                    <options value="wed">Wednesday</options>
-                    <options value="thur">Thursday</options>
-                    <options value="fri">Friday</options>
-                    <options value="sat">Saturday</options>
-                    <options value="sun">Sunday</options>
+                    <options value="0">Monday</options>
+                    <options value="1">Tuesday</options>
+                    <options value="2">Wednesday</options>
+                    <options value="3">Thursday</options>
+                    <options value="4">Friday</options>
+                    <options value="5">Saturday</options>
+                    <options value="6">Sunday</options>
                 </select>
             </li>
-            <li><input type="number" max="31" id="date" name="date"></li>
+            <li>
+                <input type="number" id="date" name="date" min="1" max="31">
+            </li>
         </div>
     </div>
 
@@ -96,8 +100,8 @@
     
     <!--Buttons for ADD, DONE-->
     <div class="btn-group-actions">
-       <button id="add">Add another routine task</button>
-        <button id="done">Done adding ALL routine tasks</button>
+       <button id="add" onclick="finalAction(1)">Add another routine task</button>
+        <button id="done" onclick="finalAction(2)">Done adding ALL routine tasks</button>
     </div>
 
     </body>

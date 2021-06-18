@@ -44,3 +44,5 @@ class DailyTask extends RoutineTask {
         }
     }
 }
+
+export default DailyTask;

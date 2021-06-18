@@ -39,7 +39,7 @@ class WeeklyTask extends RoutineTask {
         for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
             for (m = 0; m < 12; m++) {
                 for (d = WeeklyTask.startingDate(y, m, this.day); d <= Time.daysInMonth(m, y); d += 7) {
-                    let newTask = new Window(this,taskName, y, m, d, this.startTime, this.endTime, 1);
+                    let newTask = new Window(this,taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
                     if (newTask.duringSleep()) {
                         //TODO: window.alert("Do you really want to schedule tasks during your sleep time?"); Basically if yes, continue. If no, return.
                     }
@@ -53,7 +53,17 @@ class WeeklyTask extends RoutineTask {
     }
 
     deleteTask() {
-        //TODO
+        for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
+            for (m = 0; m < 12; m++) {
+                for (d = WeeklyTask.startingDate(y, m, this.day); d <= Time.daysInMonth(m, y); d += 7) {
+                    let newTask = new Window(this,taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
+                    // Only deleting tasks from the present and the future
+                    if (!newTime.isPast()) {
+                        newTask.removeWindow();
+                    }
+                }                
+            }
+        }
     }
 
 }

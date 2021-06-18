@@ -2,8 +2,8 @@
 class Time {
     /**
      * Constructor to create Time objects
-     * @param {Number} hours     Hour of the time object (0-23)
-     * @param {Number} mins      Minute of the time object (0-59)
+     * @param {Number} hours     Hours of the time object (0-23)
+     * @param {Number} mins      Minutes of the time object (0-59)
      */
     constructor(hours, mins) {
         this.hours = hours;
@@ -28,7 +28,7 @@ class Time {
      * @returns {Number} An array, where the first element represents the hours and 
      *                   second element represents the minutes
      */
-     static durationOfTask(startTime, endTime) {
+     static duration(startTime, endTime) {
         let elapsed = (this.endTime.hours * 60) + (this.endTime.mins) - (this.startTime.hours * 60) - (this.startTime.mins); 
         if (elapsed < 0) {
             return new Error('Start time is after end time!')

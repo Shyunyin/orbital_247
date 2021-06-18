@@ -22,7 +22,7 @@ class MonthlyTask extends RoutineTask {
         for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
             for (m = 0; m < 12; m++) {
                 if (this.date <= Time.daysInMonth(m, y)) {
-                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1);
+                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
                     if (newTask.duringSleep()) {
                         //TODO: window.alert("Do you really want to schedule tasks during your sleep time?"); Basically if yes, continue. If no, return.
                     }
@@ -35,6 +35,15 @@ class MonthlyTask extends RoutineTask {
     }
 
     deleteTask() {
-        //TODO
+        for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
+            for (m = 0; m < 12; m++) {
+                if (this.date <= Time.daysInMonth(m, y)) {
+                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
+                    if (!newTime.isPast()) {
+                        newTask.removeWindow();
+                    }
+                }              
+            }
+        }
     }
 }

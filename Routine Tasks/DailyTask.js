@@ -19,7 +19,7 @@ class DailyTask extends RoutineTask {
         for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
             for (m = 0; m < 12; m++) {
                 for (d = 1; d <= Time.daysInMonth(m, y); d++) {
-                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1);
+                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
                     if (newTask.duringSleep()) {
                         //TODO: window.alert("Do you really want to schedule tasks during your sleep time?"); Basically if yes, continue. If no, return.
                     }
@@ -32,6 +32,15 @@ class DailyTask extends RoutineTask {
     }
 
     deleteTask() {
-        //TODO
+        for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
+            for (m = 0; m < 12; m++) {
+                for (d = 1; d <= Time.daysInMonth(m, y); d++) {
+                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
+                    if (!newTask.isPast()) {
+                        newTask.removeWindow();
+                    }
+                }                
+            }
+        }
     }
 }

@@ -20,10 +20,10 @@
         <li><h3>Category:</h3></li>
         <!-- Buttons for categories-->
         <li><form class="btn-group-category">
-            <input type="button" id="work" onclick="catFunction(1)" value="Work"></button>
-            <input type="button" id="exercise" onclick="catFunction(2)" value="Exercise"></button>
-            <input type="button" id="misc" onclick="catFunction(3)" value="Miscellaneous"></button>
-            <input type="button" id="meal" onclick="catFunction(4)" value="Meal Times"></button>
+            <input type="button" id="work" onclick="catFunction(0)" value="Work"></button>
+            <input type="button" id="exercise" onclick="catFunction(1)" value="Exercise"></button>
+            <input type="button" id="misc" onclick="catFunction(2)" value="Miscellaneous"></button>
+            <input type="button" id="meal" onclick="catFunction(3)" value="Meal Times"></button>
         </form></li>
     </div>
 
@@ -53,7 +53,7 @@
         <!--For the dropdown lists--> <!--Use javascript to replace??-->
         <div class="dropdown">
             <li>
-                <select name="weeklydropdown" class="weeklydropdown">
+                <select id="weeklydropdown" name="weeklydropdown">
                     <!--Can replace w javascript??-->
                     <options value="0">Monday</options>
                     <options value="1">Tuesday</options>
@@ -65,7 +65,7 @@
                 </select>
             </li>
             <li>
-                <select name="biweeklydropdown" class="biweeklydropdown">
+                <select id="biweeklydropdown" name="biweeklydropdown">
                     <!--Can replace w javascript??-->
                     <options value="0">Monday</options>
                     <options value="1">Tuesday</options>
@@ -74,6 +74,10 @@
                     <options value="4">Friday</options>
                     <options value="5">Saturday</options>
                     <options value="6">Sunday</options>
+                </select>
+                <select id="chooseWeeks" name="chooseWeeks">
+                    <option value="0">Even</option>
+                    <option value="1">Odd</option>
                 </select>
             </li>
             <li>

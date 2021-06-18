@@ -104,3 +104,5 @@ class BiweeklyTask extends RoutineTask {
         //TODO
     }
 }
+
+export default BiweeklyTask;

@@ -38,3 +38,5 @@ class MonthlyTask extends RoutineTask {
         //TODO
     }
 }
+
+export default MonthlyTask;

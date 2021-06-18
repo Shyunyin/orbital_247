@@ -20,15 +20,15 @@ function myFunction() {
 
 /*CSS purpose: For selection of buttons to only happen once*/
   function catFunction(button_switch){
-    if (button_switch === 1) {
+    if (button_switch === 0) {
       document.getElementById("work").style.backgroundColor="white";
       document.getElementById("exercise").style.backgroundColor="#e3aba1";
       document.getElementById("misc").style.backgroundColor="#e3aba1";
-    } else if (button_switch === 2) {
+    } else if (button_switch === 1) {
       document.getElementById("work").style.backgroundColor="#e3aba1";
       document.getElementById("exercise").style.backgroundColor="white";
       document.getElementById("misc").style.backgroundColor="#e3aba1";
-    } else if (button_switch === 3) {
+    } else if (button_switch === 2) {
       document.getElementById("work").style.backgroundColor="#e3aba1";
       document.getElementById("exercise").style.backgroundColor="#e3aba1";
       document.getElementById("misc").style.backgroundColor="white";

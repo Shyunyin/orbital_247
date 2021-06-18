@@ -57,3 +57,5 @@ class WeeklyTask extends RoutineTask {
     }
 
 }
+
+export default WeeklyTask;

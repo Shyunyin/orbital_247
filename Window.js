@@ -426,3 +426,6 @@ Window.prototype.emptyArr = []; // Represents a single day's empty windows
 Window.prototype.nonFixedCollection = []; // Contains 7 'Window.prototype.nonFixedFutureArr'
 Window.prototype.nonFixedFutureArr = []; // Represents a single day's non-fixed tasks
 Window.prototype.nonFixedFutureArr = []; // Represents non-fixed tasks that are scheduled for > 7 days from now
+
+
+export default Window; //to export to other js files (e.g add_routine_task.js)

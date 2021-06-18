@@ -35,3 +35,5 @@ class DailyTask extends RoutineTask {
         //TODO
     }
 }
+
+export default DailyTask;

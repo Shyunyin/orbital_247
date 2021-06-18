@@ -19,6 +19,7 @@
   border-radius: 7px; /*make button rounded*/
   border-width: 2px;
   border-color: black;
+  height: 25px;
 }
 input[type="text"] {
   background-color: #96d6ed;
@@ -44,7 +45,8 @@ input[type="text"]:hover {
   font-size: medium;
   padding: 8px;
   border-radius: 5px; /*make button rounded*/
-  border-width: medium;
+  border-width: 2px;
+  border-color: black;
 }
 #exercise {
   font-family: "Signika Negative", sans-serif;
@@ -55,6 +57,8 @@ input[type="text"]:hover {
   padding: 8px;
   border-radius: 5px; /*make button rounded*/
   border-width: medium;
+  border-width: 2px;
+  border-color: black;
 }
 #misc {
   font-family: "Signika Negative", sans-serif;
@@ -65,6 +69,8 @@ input[type="text"]:hover {
   padding: 8px;
   border-radius: 5px; /*make button rounded*/
   border-width: medium;
+  border-width: 2px;
+  border-color: black;
 }
 #meal {
   font-family: "Signika Negative", sans-serif;
@@ -75,6 +81,8 @@ input[type="text"]:hover {
   padding: 8px;
   border-radius: 5px; /*make button rounded*/
   border-width: medium;
+  border-width: 2px;
+  border-color: black;
 }
 
 #work:hover {
@@ -117,6 +125,7 @@ label[for="monthly"] {
   position: absolute;
   left: 200px;
   top: 290px;
+  z-index: 1;
 }
 .weeklydropdown {
   font-family: "Signika Negative", sans-serif;
@@ -126,31 +135,46 @@ label[for="monthly"] {
   background-color: #96d6ed;
   border-width: 2px;
   border-color: black;
+  position: absolute;
+  z-index: 999;
+}
+.weeklydropdown:hover {
+  background-color: #a1e6ff;
 }
 .biweeklydropdown {
   font-family: "Signika Negative", sans-serif;
-  margin-top: 23px;
+  margin-top: 50px;
   width: 150px;
   height: 25px;
   border-radius: 5px;
   background-color: #96d6ed;
   border-width: 2px;
   border-color: black;
+  position: absolute;
+  z-index: 999;
+}
+.biweeklydropdown:hover {
+  background-color: #a1e6ff;
 }
 #date {
   font-family: "Signika Negative", sans-serif;
-  margin-top: 20px;
+  margin-top: 90px;
   border-radius: 5px;
   height: 23px;
   width: 30px;
   border-width: 2px;
   background-color: #96d6ed;
   border-color: black;
+  position: absolute;
+  z-index: 999;
+}
+#date:hover {
+  background-color: #a1e6ff;
 }
 .instruction {
   font-family: "Signika Negative", sans-serif;
   margin-left: 120px;
-  margin-top: 14px;
+  margin-top: 8px;
 }
 
 /*For time options*/
@@ -169,6 +193,8 @@ label[for="monthly"] {
   width: 100px;
   height: 25px;
   text-align: center;
+  border-width: 2px;
+  border-color: black;
 }
 #endTime {
   font-family: "Signika Negative", sans-serif;
@@ -177,6 +203,8 @@ label[for="monthly"] {
   width: 100px;
   height: 25px;
   text-align: center;
+  border-width: 2px;
+  border-color: black;
 }
 
 /*For end button options*/
@@ -189,6 +217,7 @@ label[for="monthly"] {
   height: 35px;
   margin-top: 50px;
   font-weight: bold;
+  border-color: black;
 }
 #done {
   font-family: Signika Negative, sans-serif;
@@ -198,4 +227,13 @@ label[for="monthly"] {
   height: 35px;
   font-weight: bold;
   margin-left: 250px;
+  border-color: black;
+}
+#add:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
+}
+#done:hover {
+  background-color: #fedcce;
+  transition-duration: 0.3s;
 }

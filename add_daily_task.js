@@ -142,7 +142,7 @@ document.getElementById("generate").onclick = function() {
       /*appending to option to create the task*/
       op.value = task;
       op.text = task.charAt(0).toUpperCase() + task.slice(1); /*to capitalise first letter*/
-      select.option.add(op).innerHTML;
+      select.op.add(op).innerHTML;
   }
   /*creating a label for the dropdowns*/
   var label = document.createElement("label");

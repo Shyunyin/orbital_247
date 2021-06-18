@@ -8,13 +8,15 @@ class Window {
      * Constructor to create window objects
      * @param {String} taskName Name of the task ('null' for empty windows)
      * @param {Number} year Year of the window
-     * @param {Number} month Month of the window
+     * @param {Number} month Month of the window (0-11, Jan-Dec)
      * @param {Number} date Date of the window
      * @param {Time} startTime Time at which the window starts
      * @param {Time} endTime Time at which the window ends
-     * @param {Number} type 0 - Empty, 1 - Task within 7 days, 2 - Fixed tasks for the future, 3 - Non-Fixed tasks for the future
+     * @param {Number} type 0 - Empty, 1 - Task within 7 days, 2 - Fixed tasks for the future
+     * @param {String} taskAfterThis Name of the task that is to follow after this
+     * @param {Number} accumulatedDuration The total duration of the connected tasks
      */
-    constructor(taskName, year, month, date, startTime, endTime, type) {
+    constructor(taskName, year, month, date, startTime, endTime, type, taskAfterThis, accumulatedDuration) {
         this.taskName = taskName;
         this.year = year;
         this.month = month;
@@ -22,6 +24,13 @@ class Window {
         this.startTime = startTime;
         this.endTime = endTime;
         this.type = type;
+        this.taskAfterThis = taskAfterThis;
+        this.accumulatedDuration = accumulatedDuration;
+        if (taskAfterThis == null) {
+            this.group = -1;
+        } else {
+            this.group = Window.prototype.group;
+        }
     }
 
     /**
@@ -100,7 +109,7 @@ class Window {
 
     /**
      * To retrieve the minutes of the start time of a window
-     * @returns {Number} The minutes of the start time of a window (in 24h format)
+     * @returns {Number} The minutes of the start time of a window
      */
     getStartTimeMins() {
         return this.startTime.getMins();
@@ -116,7 +125,7 @@ class Window {
 
     /**
      * To retrieve the minutes of the end time of a window
-     * @returns {Number} The minutes of the end time of a window (in 24h format)
+     * @returns {Number} The minutes of the end time of a window
      */
     getEndTimeMins() {
         return this.endTime.getMins();
@@ -136,6 +145,22 @@ class Window {
      */
     changeEndTime(newEndTime) {
         this.endTime = newEndTime;
+    }
+
+    /**
+     * To update the accumulated duration of an existing window to a new duration
+     * @param {Number} newDuration The new accumulated duration in hours and minutes (Format: [hours, mins])
+     */
+    changeAccumulateDuration(newDuration) {
+        this.accumulatedDuration = newDuration;
+    }
+
+    /**
+     * To update the group number fo an existing window to a new number
+     * @param {Number} newGroup The new group number (based on Window.prototype.group)
+     */
+    changeGroup(newGroup) {
+        this.group = newGroup;
     }
 
     /**
@@ -205,7 +230,7 @@ class Window {
         if (this.getStartTimeInMs() < window.getStartTimeInMs() && window.getStartTimeInMs() < this.getEndTimeInMs() && this.getEndTimeInMs() < window.getEndTimeInMs()) {
             return true;
         // If the start time of a given window is after the start time of 'window' but before the end time of 'window' and the end time of a given window is after the end time of 'window'
-        } else if (this.getStartTimeInMs() > window.getStartTimeInMs() && this.getStartTimeInMs() < window.getEndTimeInMs() && this.getEndTimeInMs() > window.getEndTimeInMs()) {
+        } else if (this.startsAfter(window) && this.getStartTimeInMs() < window.getEndTimeInMs() && this.endsAfter(window)) {
             return true;
         } else {
             return false;
@@ -395,6 +420,7 @@ class Window {
         // Updating the empty windows in a similar manner
         Window.prototype.emptyoCollection.splice(0, 1);
         Window.prototype.emptyCollection.push(Window.prototype.emptyArr);
+        //TODO: Update for non-fixed arrays as well
     }
 
     /**
@@ -424,8 +450,14 @@ Window.prototype.fixedFutureArr = []; // Represents fixed tasks that are schedul
 Window.prototype.emptyCollection = []; // Contains 7 'Window.prototype.emptyArr'
 Window.prototype.emptyArr = []; // Represents a single day's empty windows
 Window.prototype.nonFixedCollection = []; // Contains 7 'Window.prototype.nonFixedFutureArr'
+<<<<<<< HEAD
+Window.prototype.nonFixedArr = []; // Represents a single day's non-fixed tasks
+Window.prototype.nonFixedFutureArr = []; // Represents non-fixed tasks that are scheduled for > 7 days from now
+Window.prototype.group = 0; //Tracks the number of groups (non-fixed, connected tasks) for the day. Reset at the end of every day.
+=======
 Window.prototype.nonFixedFutureArr = []; // Represents a single day's non-fixed tasks
 Window.prototype.nonFixedFutureArr = []; // Represents non-fixed tasks that are scheduled for > 7 days from now
 
 
 export default Window; //to export to other js files (e.g add_routine_task.js)
+>>>>>>> eb7b9ded59dd59c0ad84c6e312f1a613d61d5e62

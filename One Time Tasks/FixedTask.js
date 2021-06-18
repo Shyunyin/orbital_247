@@ -18,7 +18,7 @@ class FixedTask extends OneTimeTask {
      * @param {Time} endTime The time at which the task is to end
      */
     constructor(taskName, taskCategory, year, month, date, startTime, endTime) {
-        super(taskName, taskCategory, year, month, date, taskBeforeIt);
+        super(taskName, taskCategory, year, month, date);
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -28,14 +28,17 @@ class FixedTask extends OneTimeTask {
      */
     scheduleTask() {
         //TODO: Pop up window if it is during sleep
-        let newTask = new Window(this.year, this.month, this.date, this.startTime, this.endTime, 1);
+        let newTask = new Window(this.year, this.month, this.date, this.startTime, this.endTime, 1, null, null);
         if (!newTask.isPast()) {
             newTask.insertWindow();
         }
     }
 
     deleteTask() {
-        //TODO
+        let newTask = new Window(this.year, this.month, this.date, this.startTime, this.endTime, 1, null, null);
+        if (!newTask.isPast()) {
+            newTask.removeWindow();
+        }
     }
 
 }

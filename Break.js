@@ -22,6 +22,22 @@ class Break {
         }
     }
 
+    static calculateBreakFromDuration(duration) {
+        if (duration.getHours() > 1) {
+            totalMins = (duration.getHours() * 60) + duration.getMins();
+            breakMins = totalMins / 6;
+            remainder = breakMins % 5
+            if (remainder < 2.5) {
+                breakMins = breakMins - remainder;
+            } else {
+                breakMins = breakMins - remainder + 5;
+            }
+            return breakMins;
+        } else {
+            return 0;
+        }
+    }
+
     static accumulateWorkTime(startTime, endTime) {
         duration = Time.duration(startTime, endTime);
         Break.prototype.accumulatedWorkTime += (duration.getHours() * 60) + duration.getMins();

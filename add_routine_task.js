@@ -93,7 +93,7 @@ function displayRadioValue() {
       category_num;
       startTime,
       endTime,
-      //day
+      parseInt(document.getElementById("weeklydropdown").value)
     )
 
   } else if (mode === "biweekly") {
@@ -102,8 +102,8 @@ function displayRadioValue() {
       category_num;
       startTime,
       endTime,
-      //day
-      //even or odd
+      parseInt(document.getElementById("biweeklydropdown").value)
+      parseInt(document.getElementById("chooseWeeks").value)
     )
 
   } else { //mode === "monthly"   

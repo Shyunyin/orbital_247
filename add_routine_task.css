@@ -136,14 +136,13 @@ label[for="monthly"] {
   border-width: 2px;
   border-color: black;
   position: absolute;
-  z-index: 999;
 }
 #weeklydropdown:hover {
   background-color: #a1e6ff;
 }
 #biweeklydropdown {
   font-family: "Signika Negative", sans-serif;
-  margin-top: 50px;
+  margin-top: 43px;
   width: 150px;
   height: 25px;
   border-radius: 5px;
@@ -156,9 +155,20 @@ label[for="monthly"] {
 #biweeklydropdown:hover {
   background-color: #a1e6ff;
 }
+#chooseWeeks {
+  font-family: "Signika Negative", sans-serif;
+  width: 100px;
+  height: 25px;
+  margin-top: 43px;
+  margin-left: 180px;
+  border-radius: 5px;
+  border-color: black;
+  border-width: 2px;
+  background-color: #96d6ed;
+}
 #date {
   font-family: "Signika Negative", sans-serif;
-  margin-top: 90px;
+  margin-top: 20px;
   border-radius: 5px;
   height: 23px;
   width: 30px;
@@ -174,7 +184,7 @@ label[for="monthly"] {
 .instruction {
   font-family: "Signika Negative", sans-serif;
   margin-left: 120px;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 /*For time options*/

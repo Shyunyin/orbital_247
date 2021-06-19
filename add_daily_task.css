@@ -48,7 +48,8 @@ input[type="text"]:hover {
   font-size: medium;
   padding: 8px;
   border-radius: 5px; /*make button rounded*/
-  border-width: medium;
+  border-width: 2px;
+  border-color: black;
 }
 #exercise {
   font-family: "Signika Negative", sans-serif;
@@ -58,7 +59,8 @@ input[type="text"]:hover {
   font-size: medium;
   padding: 8px;
   border-radius: 5px; /*make button rounded*/
-  border-width: medium;
+  border-width: 2px;
+  border-color: black;
 }
 #misc {
   font-family: "Signika Negative", sans-serif;
@@ -68,7 +70,8 @@ input[type="text"]:hover {
   font-size: medium;
   padding: 8px;
   border-radius: 5px; /*make button rounded*/
-  border-width: medium;
+  border-width: 2px;
+  border-color: black;
 }
 #work:hover {
   background-color: #fedcce;
@@ -118,7 +121,8 @@ input[type="text"]:hover {
   padding: 8px;
   width: 50px;
   border-radius: 5px; /*make button rounded*/
-  border-width: medium;
+  border-width: 2px;
+  border-color: black;
 }
 #twosessions {
   font-family: "Signika Negative", sans-serif;
@@ -129,7 +133,8 @@ input[type="text"]:hover {
   padding: 8px;
   width: 50px;
   border-radius: 5px; /*make button rounded*/
-  border-width: medium;
+  border-width: 2px;
+  border-color: black;
 }
 #threesessions {
   font-family: "Signika Negative", sans-serif;
@@ -140,7 +145,8 @@ input[type="text"]:hover {
   padding: 8px;
   width: 50px;
   border-radius: 5px; /*make button rounded*/
-  border-width: medium;
+  border-width: 2px;
+  border-color: black;
 }
 #onesession:hover {
   background-color: #fedcce;
@@ -297,7 +303,7 @@ nav {
   font-size: 15px;
   background-color: #96d6ed;
   border-radius: 5px;
-  width: 80px;
+  width: 110px;
   height: 30px;
   margin-left: 400px;
   position: absolute;
@@ -345,6 +351,8 @@ nav {
   font-family: Signika Negative, sans-serif;
   background-color: #e3aba1;
   border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
   font-size: medium;
   height: 35px;
 }
@@ -352,6 +360,8 @@ nav {
   font-family: Signika Negative, sans-serif;
   background-color: #e3aba1;
   border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
   font-size: medium;
   margin-left: 100px;
   height: 35px;
@@ -360,6 +370,8 @@ nav {
   font-family: Signika Negative, sans-serif;
   background-color: #e3aba1;
   border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
   font-size: medium;
   height: 35px;
   width: 200px;

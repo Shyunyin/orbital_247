@@ -1,0 +1,52 @@
+/* Must copy this font-family for all sections
+font-family: 'Signika Negative', sans-serif;
+*/
+
+.main {
+  background-color: #f6f7f1;
+  border-color: #c4c4c4;
+  border-width: 5px;
+  height: 800px;
+  width: 1500px;
+  /* position: absolute;
+  z-index: 1; */
+}
+#background {
+  /* align-items: center; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.btn-group .button {
+  font-family: "Signika Negative", sans-serif;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  color: #1e5353;
+  padding: 12px 29px;
+  display: inline-block;
+  font-size: large;
+  cursor: pointer;
+  float: left;
+  width: 200px;
+  /* border-width: 1px;
+  border-color: #ECEDEA;
+  border-bottom: none; */
+  border-top: none;
+  border-left: none;
+  border-bottom: none;
+  border-right-width: 2px;
+  border-right-color: #ecedea;
+}
+/*To change for the different main pages*/
+.btn-group .button:first-child {
+  border-right: none;
+  background-color: #f6f7f1;
+}
+.btn-group .button:not(:first-child) {
+  background-color: #c4c4c4;
+}
+.btn-group .button:last-child {
+  border-right: none;
+}
+/*End of stuff that needs to be edited*/

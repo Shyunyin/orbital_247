@@ -113,41 +113,17 @@ function myFunction() {
   }
 
 
+/* To create a dynamic dropdown list*/
+let taskList = ["Test1", "Test2", "Test3"]; //this will be imported from where all tasks in the day are stored
 
-
-
-/*For appending to the dropdownlist*/
-// function appendDropDown {
-//   let newVariable = document.getElementById("taskName").innerHTML; /*to get task name*/
-//   let placeholder = document.createElement("option");
-// }
-
-var taskList = ["Cook dinner for family"]; /*global scope*/
-
-/*Need to get value from php? To append tasks to taskList*/
-// function addToList() { /*when done button or add another task button is pressed*/
-//   let newVariable = document.getElementById("taskName").innerHTML; /*to get task name*/
-//   taskList.push(newVariable); /*Add to array to be output as options*/
-// }
-
-document.getElementById("generate").onclick = function() {
-  var taskList = ["Cook dinner for family", "blah"];
-  var select = document.createElement("select"); /*creating the select element to create dropdown*/
-  select.name = "tasks";
-  select.id = "tasks";
-
-  for (const task of taskList) /*for loop for every element in taskList*/
-  {
-      var op = document.createElement("option");
-      /*appending to option to create the task*/
-      op.value = task;
-      op.text = task.charAt(0).toUpperCase() + task.slice(1); /*to capitalise first letter*/
-      select.op.add(op).innerHTML;
+window.onload = function createDropdown() { //ensure that dropdown list loads once page is loaded up
+  for (let i=0; i < taskList.length; i++) {
+    let option = document.createElement("option");
+    option.value = taskList[i]; //add a value attribute
+    option.text = taskList[i];
+    option.classList.add(taskList[i]); //add a class attribute
+    document.getElementById("dropdownList").append(option); //appending options to the select
   }
-  /*creating a label for the dropdowns*/
-  var label = document.createElement("label");
-  label.innerHTML = "Follow up tasks";
-  label.htmlFor = "tasks"; /*specifies which form the label is bound to*/
-
-  document.getElementById("container").appendChild(label).appendChild(select);
 }
+
+

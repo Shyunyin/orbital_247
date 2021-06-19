@@ -307,26 +307,17 @@ nav {
   height: 30px;
   margin-left: 400px;
   position: absolute;
-  top: 100px;
+  top: 80px;
   border-width: 2px;
   border-color: black;
 }
 #sequence:hover {
   background-color: #a1e6ff;
 }
-/*Follow up task dropdown*/
-/* #followUpTask {
+
+#dropdownList {
   font-family: Signika Negative, sans-serif;
-  font-size: 15px;
-  background-color: #96d6ed;
-  border-radius: 5px;
-  border-width: 2px;
-  border-color: black;
-  width: 350px;
-  height: 30px;
-} */
-#generate {
-  font-family: Signika Negative, sans-serif;
+  text-align: center;
   font-size: 15px;
   background-color: #96d6ed;
   border-radius: 5px;
@@ -335,14 +326,14 @@ nav {
   width: 350px;
   height: 30px;
 }
-#generate:hover {
+#dropdownList:hover {
   background-color: #a1e6ff;
 }
 
 /*Buttons*/
 .btn-group-actions {
   position: absolute;
-  top: 180px;
+  top: 150px;
 }
 .btn-group-actions > li {
   display: inline-block;

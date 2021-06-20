@@ -228,6 +228,7 @@ label[for="monthly"] {
   margin-top: 50px;
   font-weight: bold;
   border-color: black;
+  cursor: pointer;
 }
 #done {
   font-family: Signika Negative, sans-serif;
@@ -238,6 +239,7 @@ label[for="monthly"] {
   font-weight: bold;
   margin-left: 250px;
   border-color: black;
+  cursor: pointer;
 }
 #add:hover {
   background-color: #fedcce;

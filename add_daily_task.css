@@ -346,6 +346,7 @@ nav {
   border-color: black;
   font-size: medium;
   height: 35px;
+  cursor: pointer;
 }
 #add {
   font-family: Signika Negative, sans-serif;
@@ -356,6 +357,7 @@ nav {
   font-size: medium;
   margin-left: 100px;
   height: 35px;
+  cursor: pointer;
 }
 #done {
   font-family: Signika Negative, sans-serif;
@@ -369,6 +371,7 @@ nav {
   position: absolute;
   top: 1px;
   margin-left: 100px;
+  cursor: pointer;
 }
 #delete:hover {
   background-color: #fedcce;

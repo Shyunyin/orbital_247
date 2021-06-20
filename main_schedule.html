@@ -3,6 +3,8 @@
     <title>Main Schedule Page</title>
     <link rel="stylesheet" href="main_schedule.css" />
     <script type = "text/javascript" type="module" src="main_schedule.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -16,4 +18,38 @@
         </div>
         <div class="main"></div>
     </div>
+
+    <!--Heading content using javascript-->
+    <div id="heading">
+        <input type="text" id="currentDate" readonly="readonly">
+        <input type="text" id="currentTime" readonly="readonly">
+        <input type="text" id="currentUser" readonly="readonly">
+        <input type="text" id="currentSchedule" readonly="readonly"> 
+    </div>
+
+    <!--Just a stand in rectangle for the progress bar-->
+    <div id="progress">
+        <input type="text" id="progressBar" readonly="readonly" value="Progress Bar">
+    </div>
+
+    <!--Stand in for schedule-->
+    <div id="schedule">
+    </div>
+
+    <!--For array of tasks-->
+    <div id="postit">
+        <input type="text" id="title" readonly="readonly" value="Tasks not included in schedule yet">
+    </div>
+
+    <!--For the instructions on how to perform actions on tasks-->
+    <div id="instruction">
+    </div>
+    <div class="instruction">
+        <h3>Click on any task to</h3>
+        <h3>start, reschedule,</h3>
+        <h3> edit or delete a task</h3>
+    </div>
+
+    <button id="addTask" name="addTask">+</button>
+    <button id="generateSchedule" name="generateSchedule">Generate Schedule!</button>
 </body>

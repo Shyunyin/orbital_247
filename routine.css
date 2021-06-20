@@ -1,5 +1,12 @@
 /* Must copy this font-family for all sections
-font-family: 'Signika Negative', sans-serif;
+ *font-family: 'Signika Negative', sans-serif;
+ * To bring to the top of the page in front of the background
+    for items -
+    position: absolute;
+    z-index: 2; 
+    for background - 
+    position: absolute;
+    z-index: 1;
 */
 
 .main {
@@ -8,14 +15,14 @@ font-family: 'Signika Negative', sans-serif;
   border-width: 5px;
   height: 800px;
   width: 1500px;
-  /* position: absolute;
-    z-index: 1; */
 }
 #background {
   /* align-items: center; */
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: absolute;
+  z-index: 1;
 }
 .btn-group .button {
   font-family: "Signika Negative", sans-serif;
@@ -25,7 +32,7 @@ font-family: 'Signika Negative', sans-serif;
   color: #1e5353;
   padding: 12px 29px;
   display: inline-block;
-  font-size: large;
+  font-size: 20px;
   cursor: pointer;
   float: left;
   width: 200px;

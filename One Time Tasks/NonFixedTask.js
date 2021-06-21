@@ -9,7 +9,7 @@ class NonFixedTask extends OneTimeTask {
      * @param {Number} date Date of the current year for which the task is scheduled
      * @param {Number} numOfSess Number of sessions
      * @param {Number} durOfSess Duration of each session (Format: [Hours, Minutes])
-     * @param {String} taskBeforeIt Name of the task that is to be scheduled sometime before it
+     * @param {String} taskAfterIt Name of the task that is to be scheduled sometime before it
      */
     constructor(taskName, taskCategory, month, date, numOfSess, durOfSess, taskAfterIt) {
         super(taskName, taskCategory, new Date().getFullYear(), month, date);

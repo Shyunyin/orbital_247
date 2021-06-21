@@ -3,6 +3,8 @@
 // Don't add breaks after the last activity for the day (and before sleeping)
 
 // Need to consider the following case: Lets say both task A and task B individually dont require breaks. So they somehow got scheduled back to back and now they required a break due to the accumulated time. Or even if task B alr has a break, it now needs to be extended bc of task A. Solution that can be implemented: for the else block for the break calculating methods, consider if there are tasks immediately before and after this task. Then get the accumulated time and edit the break accordingly. To think about: How do you edit the breaks accordingly? What if the break cannot be extended? In this case, where will the carried over break be added?
+
+// Reminder: Don't splice empty windows. They are are automatically removed by the insert and remove functions.
 class Scheduling {
     static generateSchedule(emptyWindowArr, fixedWindowArr, nonFixedWindowArr, nonFixedWindowPriorityArr) {
         this.emptyWindowArr = emptyWindowArr;
@@ -66,7 +68,7 @@ class Scheduling {
                     }
                 }
             }
-
+        }
 
         // PART 2: SCHEDULING THE NON-FIXED TASKS CONNECTED TO FIXED TASKS
         let currArr = this.nonFixedWindowPriorityArr;
@@ -169,29 +171,217 @@ class Scheduling {
 
 
         //PART 3: SCHEDULING ALL NON-FIXED TASKS
-        let j;
-        for (j = 0; j < this.emptyWindowArr.length; j++) {
-            let chosenTask;
-            let currEmpty = this.emptyWindowArr[j];
+        //TODO: Change the for loop into a while loop
+        while (this.emptyWindowArr.length != 0 && this.nonFixedWindowArr.length != 0) {
+            let index = 0;
+            let chosenTask = this.nonFixedWindowArr[index];
+            let currEmpty = this.emptyWindowArr[0];
             let currEmptyDuration = Time.duration(currEmpty.getStartTime(), currEmpty.getEndTime());
-            
+
+            while (chosenTask.getAccumulatedDuration() + Break.calculateBreakFromDuration(taskDuration) > currEmptyDuration) {
+                while (index < this.nonFixedWindowArr.length && chosenTask.getTaskAfterIt() == this.nonFixedWindowArr[index + 1].getTaskAfterIt()) {
+                    index++;
+                    chosenTask = this.nonFixedWindowArr[index];
+                }
+                index++; //Bc the last connected task won't have a name for the 'getTaskAfterIt' field
+            }
+
+            // If all tasks + break combinations can't be fit into the curr window 
+            if (index >= this.nonFixedWindowArr.length) {
+                let taskIndex = 0;
+                // If the curr empty window falls during the productivity period
+                //TODO: Create the duringProductivePeriod() method
+                if (this.emptyWindowArr[0].duringProductivePeriod()) {
+                    // Check if the curr task type if "Fully work"/"Work". If you can't find that, try to find a "Partially work" type. Otherwise any type is okay. Do this in one traversal.
+                    //chosenTask = this.nonFixedWindowArr[taskIndex];
+                    if (chosenTask.getType() == "Partially work") {
+                        while (this.nonFixedWindowArr[taskIndex].getType() != "Fully work" || this.nonFixedWindowArr[taskIndex].getType() != "Work") {
+                            while (this.nonFixedWindowArr[taskIndex].getTaskAfterIt() == this.nonFixedWindowArr[taskIndex + 1].getTaskAfterIt()) {
+                                taskIndex++;
+                            }
+                            taskIndex++;
+                        }
+                        if (taskIndex >= this.nonFixedWindowArr.length) {
+                            taskIndex = 0;
+                        }
+                    } else if (this.nonFixedWindowArr[taskIndex].getType() != "Partially work" || this.nonFixedWindowArr[taskIndex].getType() != "Fully work" || this.nonFixedWindowArr[taskIndex].getType() != "Work") {
+                        while (this.nonFixedWindowArr[taskIndex].getType() != "Fully work" || chosenTask.getType() != "Work") {
+                            while (this.nonFixedWindowArr[taskIndex].getTaskAfterIt() == this.nonFixedWindowArr[taskIndex + 1].getTaskAfterIt()) {
+                                taskIndex++;
+                            }
+                            taskIndex++;
+                        }
+                        if (taskIndex >= this.nonFixedWindowArr.length) {
+                            taskIndex = 0;
+                        }
+                        while (chosenTask.getType() != "Partially work") {
+                            while (this.nonFixedWindowArr[taskIndex].getTaskAfterIt() == this.nonFixedWindowArr[taskIndex + 1].getTaskAfterIt()) {
+                                taskIndex++;
+                            }
+                            taskIndex++;
+                        }
+                        if (taskIndex >= this.nonFixedWindowArr.length) {
+                            taskIndex = 0;
+                        }
+                    }
+                // If non-productive period
+                } else {
+                    if (this.nonFixedWindowArr[taskIndex].getType() == "Partially work" || this.nonFixedWindowArr[taskIndex].getType() == "Fully work" || this.nonFixedWindowArr[taskIndex].getType() == "Work") {
+                        while (this.nonFixedWindowArr[taskIndex].getType() == "Partially work" || this.nonFixedWindowArr[taskIndex].getType() == "Fully work" || this.nonFixedWindowArr[taskIndex].getType() == "Work") {
+                            while (this.nonFixedWindowArr[taskIndex].getTaskAfterIt() == this.nonFixedWindowArr[taskIndex + 1].getTaskAfterIt()) {
+                                taskIndex++;
+                            }
+                            taskIndex++;
+                        }
+                        if (taskIndex >= this.nonFixedWindowArr.length) {
+                            taskIndex = 0;
+                        }
+                        while (this.nonFixedWindowArr[taskIndex].getType() == "Fully work" || this.nonFixedWindowArr[taskIndex].getType() == "Work") {
+                            while (this.nonFixedWindowArr[taskIndex].getTaskAfterIt() == this.nonFixedWindowArr[taskIndex + 1].getTaskAfterIt()) {
+                                taskIndex++;
+                            }
+                            taskIndex++;
+                        }
+                        if (taskIndex >= this.nonFixedWindowArr.length) {
+                            taskIndex = 0;
+                        }
+                    }
+                }
+            // If there is at least a pair of task + break that can fit
+            //TODO: I think can be simplified
+            } else {
+                let taskIndex = index;
+                // If the curr empty window falls during the productivity period
+                //TODO: Create the duringProductivePeriod() method
+                if (this.emptyWindowArr[0].duringProductivePeriod()) {
+                    // Check if the curr task type if "Fully work"/"Work". If you can't find that, try to find a "Partially work" type. Otherwise any type is okay. Do this in one traversal.
+                    //chosenTask = this.nonFixedWindowArr[taskIndex];
+                    if (chosenTask.getType() == "Partially work") {
+                        while (this.nonFixedWindowArr[taskIndex].getType() != "Fully work" || this.nonFixedWindowArr[taskIndex].getType() != "Work") {
+                            while (this.nonFixedWindowArr[taskIndex].getTaskAfterIt() == this.nonFixedWindowArr[taskIndex + 1].getTaskAfterIt()) {
+                                taskIndex++;
+                            }
+                            taskIndex++;
+                        }
+                        if (taskIndex >= this.nonFixedWindowArr.length) {
+                            taskIndex = index;
+                        }
+                    } else if (this.nonFixedWindowArr[taskIndex].getType() != "Partially work" || this.nonFixedWindowArr[taskIndex].getType() != "Fully work" || this.nonFixedWindowArr[taskIndex].getType() != "Work") {
+                        while (this.nonFixedWindowArr[taskIndex].getType() != "Fully work" || chosenTask.getType() != "Work") {
+                            while (this.nonFixedWindowArr[taskIndex].getTaskAfterIt() == this.nonFixedWindowArr[taskIndex + 1].getTaskAfterIt()) {
+                                taskIndex++;
+                            }
+                            taskIndex++;
+                        }
+                        if (taskIndex >= this.nonFixedWindowArr.length) {
+                            taskIndex = index;
+                        }
+                        while (chosenTask.getType() != "Partially work") {
+                            while (this.nonFixedWindowArr[taskIndex].getTaskAfterIt() == this.nonFixedWindowArr[taskIndex + 1].getTaskAfterIt()) {
+                                taskIndex++;
+                            }
+                            taskIndex++;
+                        }
+                        if (taskIndex >= this.nonFixedWindowArr.length) {
+                            taskIndex = index;
+                        }
+                    }
+                // If non-productive period
+                } else {
+                    if (this.nonFixedWindowArr[taskIndex].getType() == "Partially work" || this.nonFixedWindowArr[taskIndex].getType() == "Fully work" || this.nonFixedWindowArr[taskIndex].getType() == "Work") {
+                        while (this.nonFixedWindowArr[taskIndex].getType() == "Partially work" || this.nonFixedWindowArr[taskIndex].getType() == "Fully work" || this.nonFixedWindowArr[taskIndex].getType() == "Work") {
+                            while (this.nonFixedWindowArr[taskIndex].getTaskAfterIt() == this.nonFixedWindowArr[taskIndex + 1].getTaskAfterIt()) {
+                                taskIndex++;
+                            }
+                            taskIndex++;
+                        }
+                        if (taskIndex >= this.nonFixedWindowArr.length) {
+                            taskIndex = index;
+                        }
+                        while (this.nonFixedWindowArr[taskIndex].getType() == "Fully work" || this.nonFixedWindowArr[taskIndex].getType() == "Work") {
+                            while (this.nonFixedWindowArr[taskIndex].getTaskAfterIt() == this.nonFixedWindowArr[taskIndex + 1].getTaskAfterIt()) {
+                                taskIndex++;
+                            }
+                            taskIndex++;
+                        }
+                        if (taskIndex >= this.nonFixedWindowArr.length) {
+                            taskIndex = index;
+                        }
+                    }
+                }
+            }
+            chosenTask = this.nonFixedWindowArr[taskIndex];
+            //let chosenTaskAccumulatedDuration = chosenTask.getAccumulatedDuration();
+            let startIndex = taskIndex;
+            let endIndex = startIndex;
+            while (this.nonFixedWindowArr[startIndex].getTaskAfterIt() == this.nonFixedWindowArr[startIndex + 1].getTaskAfterIt()) {
+                endIndex++;
+            }
+            let h;
+            for (h = startIndex; h <= endIndex; h++) {
+            //TODO: Create the method getIndivDuration
+                let currEmptyWindowDuration = Time.duration(this.emptyWindowArr[0].getStartTime(), this.emptyWindowArr[0].getEndTime());
+                let chosenTaskIndivDuration = this.nonFixedWindowArr[h].getIndivDuration();
+                Break.prototype.accumulatedBreakTime += Break.calculateBreakFromDuration(chosenTaskIndivDuration);
+                let breakDuration = Break.prototype.accumulatedBreakTime;
+                if (breakDuration > 30) {
+                    breakDuration = 30;
+                }
+
+                // Check if the duration of the chosen task + break <= duration of empty window (if connected task, just check for the very first task). If <=, schedule the task and break. Pop off the task. 
+                if (chosenTaskIndivDuration + breakDuration  <= currEmptyWindowDuration) {
+                    //TODO: Create the methods findEndTime and getIndivDuration
+                    let taskEndTime = Time.findEndTime(this.emptyWindowArr[0].getStartTime(), chosenTaskIndivDuration);
+                    let breakEndTime = Time.findEndTime(taskEndTime, breakDuration);
+
+                    let newTask = new Window(this.nonFixedWindowArr[h].getTaskName(), this.nonFixedWindowArr[h].getTaskName().getYear(), this.nonFixedWindowArr[h].getMonth(), this.nonFixedWindowArr[h].getDate(), this.emptyWindowArr[0].getStartTime(), taskEndTime, 1);
+                    let newBreak = new Window("Break", this.nonFixedWindowArr[h].getYear(), this.nonFixedWindowArr[h].getMonth(), this.nonFixedWindowArr[h].getDate(), taskEndTime, breakEndTime, 1);
+
+                    newTask.insertWindow();
+                    newBreak.insertWindow();
+
+                    if (h == endIndex) {
+                        this.nonFixedWindowArr.splice(h, endIndex - startIndex + 1);
+                        h++;
+                    } else {
+                        h++;
+                    }
+                    Break.prototype.accumulatedBreakTime -= breakDuration;
+
+                // chosenTaskAccumulatedDuration + breakDuration  > currEmptyDuration
+                } else {
+                    // 5/6 of the empty window would be for work, 1/6 for break. Do the necessary round ups. Update the task duration for this non-fixed task and the accumulated break time variable.
+                    let workDuration = (currEmptyWindowDuration / 6) * 5;
+                    let remainder = workDuration % 5;
+                    if (workDuration % 5 < 2.5) {
+                        workDuration = workDuration - remainder;
+                    } else {
+                        workDuration = workDuration - remainder + 5;
+                    }
+                    breakDuration = currEmptyWindowDuration - workDuration;
+                    let taskEndTime = Time.findEndTime(this.emptyWindowArr[0].getStartTime(), workDuration);
+
+                    // Scheduling the task and break
+                    let newTask = new Window(this.nonFixedWindowArr[h].getTaskName(), this.nonFixedWindowArr[h].getYear(), this.nonFixedWindowArr[h].getMonth(), this.nonFixedWindowArr[h].getDate(), this.emptyWindowArr[0].getStartTime(), taskEndTime, 1);
+                    let newBreak = new Window("Break", this.nonFixedWindowArr[h].getYear(), this.nonFixedWindowArr[h].getMonth(), this.nonFixedWindowArr[h].getDate(), taskEndTime, this.emptyWindowArr[0].getEndTime(), 1);
+
+                    newTask.insertWindow();
+                    newBreak.insertWindow();
+
+                    // Updating the work duration and accumulated break duration accordingly
+                    //TODO: Create the changeDuration method and pass in the correct argument
+                    this.nonFixedWindowArr[h].changeDuration(currWorkDuration - workDuration);
+                    Break.prototype.accumulatedBreakTime -= breakDuration;
+
+                    if (h == endIndex) {
+                        this.nonFixedWindowArr.splice(h, endIndex - startIndex + 1);
+                        h++;
+                    }
+                }
+            }
         }
-
-
-
-
-
-
-
-
-
-
+    }
 }
-
-
-
-
-
 
 //PREVIOUS PART 2 WORKING FOR REFERENCE JIC
 /*
@@ -228,4 +418,4 @@ class Scheduling {
                     currTask--;
                     currEndTime = startTime;
                 }
-                */
+*/

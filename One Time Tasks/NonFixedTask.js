@@ -21,7 +21,6 @@ class NonFixedTask extends OneTimeTask {
     }
 
     addTask() {
-        //TODO: Haven't decided what is the best way to store these tasks (Probably only after algorithm is confirmed)
         let now = new Date();
         let currDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         let expectedDate = new Date(this.year, this.month, this.date);

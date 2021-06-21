@@ -1,32 +1,83 @@
 // Dont need to do the group thing if you can just copy and past the name of the task that you are following (meaning all the tasks in the same group will have the same 'taskAfterIt')
+
+// Don't add breaks after the last activity for the day (and before sleeping)
+
+// Need to consider the following case: Lets say both task A and task B individually dont require breaks. So they somehow got scheduled back to back and now they required a break due to the accumulated time. Or even if task B alr has a break, it now needs to be extended bc of task A. Solution that can be implemented: for the else block for the break calculating methods, consider if there are tasks immediately before and after this task. Then get the accumulated time and edit the break accordingly. To think about: How do you edit the breaks accordingly? What if the break cannot be extended? In this case, where will the carried over break be added?
 class Scheduling {
     static generateSchedule(emptyWindowArr, fixedWindowArr, nonFixedWindowArr, nonFixedWindowPriorityArr) {
-        //TODO: Setting up of breaks for fixed tasks
         this.emptyWindowArr = emptyWindowArr;
         this.fixedWindowArr = fixedWindowArr;
         this.nonFixedWindowArr = nonFixedWindowArr;
         this.nonFixedWindowPriorityArr = nonFixedWindowPriorityArr;
 
+        //PART 1: SETTING UP BREAKS FOR FIXED TASKS
         let k;
-        //TODO: Need to redo this. A break might not be added after every fixed task and what if you need to carry over the break time?
         for (k = 0; k < this.fixedWindowArr.length; k++) {
+            // Curr fixed task for which the break is to be added
             let currWindow = this.fixedWindowArr[k];
-            let breakDuration = Time.calculateBreak(currWindow.getStartTime(), currWindow.getEndTime());
-            let endTime = Time.findEndTime(currWindow.getEndTime, breakDuration);
-            //TODO: Create the findEndTime method
+            // Curr fixed task start and end time
+            let currStartTime = currWindow.getStartTime();
+            let currEndTime = currWindow.getEndTime();
+            // Calculating the break duration for the curr fixed task
+            let currBreakDuration = Time.calculateBreak(currStartTime, currEndTime);
+            // Adding the break duration to the accumulated break time
+            Break.accumulatedBreakTime += currBreakDuration; //TODO: Update according to the format of the durations
 
-            let newBreak = new Window("Break", currWindow.getYear(), currWindow.getMonth(), currWindow.getDate(), currWindow.getEndTime, endTime, 1);
-            newBreak.insertWindow();
-        }
-        // Settling non-fixed tasks connected to first tasks first
-        let i;
+            let a;
+            for (a = 0; a < this.emptyWindowArr.length; a++) {
+                // Checking if there is a break immediately after this fixed task
+                if (currEndTime.equals(this.emptyWindowArr[a].getStartTime())) {
+                    // If the accumulated break time is > 30 mins, we can only allocate a max of 30 mins break at any one time
+                    if (Break.accumulatedBreakTime > 30) { //TODO: Update according to the format of the durations
+                        // If the curr empty window itself is < 30 mins
+                        if (Time.duration(this.emptyWindowArr[a].getStartTime(), this.emptyWindowArr[a].getEndTime()) < 30) {
+                            let newBreak = new Window("Break", currWindow.getYear(), currWindow.getMonth(), currWindow.getDate(), this.emptyWindowArr[a].getStartTime(), this.emptyWindowArr[a].getEndTime(), 1);
+                        
+                            newBreak.insertWindow();
+    
+                            Break.prototype.accumulatedBreakTime -= Time.duration(this.emptyWindowArr[a].getStartTime(), this.emptyWindowArr[a].getEndTime());
+                        // Just schedule a 30 mins break
+                        } else {
+                            // TODO: Update the duration format accordingly. Create the findEndTime method
+                            let endTime = Time.findEndTime(this.emptyWindowArr[a].getStartTime(), 30);
+                            let newBreak = new Window("Break", currWindow.getYear(), currWindow.getMonth(), currWindow.getDate(), this.emptyWindowArr[a].getStartTime(), endTime, 1);
+
+                            newBreak.insertWindow();
+
+                            Break.prototype.accumulatedBreakTime -= 30;
+                        }
+                    // If accumulated break time is <= 30 mins but the empty window is < than the accumualted break time
+                    } else if (Time.duration(this.emptyWindowArr[a].getStartTime(), this.emptyWindowArr[a].getEndTime()) < Break.accumulatedBreakTime) {
+                        let newBreak = new Window("Break", currWindow.getYear(), currWindow.getMonth(), currWindow.getDate(), this.emptyWindowArr[a].getStartTime(), this.emptyWindowArr[a].getEndTime(), 1);
+                        
+                        newBreak.insertWindow();
+
+                        Break.prototype.accumulatedBreakTime -= Time.duration(this.emptyWindowArr[a].getStartTime(), this.emptyWindowArr[a].getEndTime());
+                    // If accumulated break time is <= 30 mins and empty window >= accumulated break time
+                    } else {
+                        // TODO: Update the duration format accordingly. Create the findEndTime method
+                        let endTime = Time.findEndTime(this.emptyWindowArr[a].getStartTime(), Break.prototype.accumulatedBreakTime);
+
+                        let newBreak = new Window("Break", currWindow.getYear(), currWindow.getMonth(), currWindow.getDate(), this.emptyWindowArr[a].getStartTime(), endTime, 1);
+
+                        newBreak.insertWindow();
+
+                        Break.prototype.accumulatedBreakTime = 0;
+                    }
+                }
+            }
+
+
+        // PART 2: SCHEDULING THE NON-FIXED TASKS CONNECTED TO FIXED TASKS
         let currArr = this.nonFixedWindowPriorityArr;
-        for (i = 0; i < currArr.length; i++) {
+        // For every non-fixed task connected to a fixed task
+        while (currArr.length != 0) {
             let index = 0;
-            while (this.fixedWindowArr[index].getTaskName() != currArr[i].getTaskName()) {
+            // Finding the position of the fixed task
+            while (this.fixedWindowArr[index].getTaskName() != currArr[0].getTaskName()) {
                 index++;
             }
-            // Start time of the fixed task that is connected to the current non-fixed task
+            // Start time of the fixed task 
             let startTime = this.fixedWindowArr[index].getStartTimeinMs;
             let endIndex = 0;
             // Finding the empty window right before this task (strictly < than or can be = to ??)
@@ -35,17 +86,18 @@ class Scheduling {
             }
             let startIndex = endIndex;
 
+            // Duration of the current empty window
             let durOfCurrWindow = Time.duration(this.emptyWindowArr[startIndex].getStartTime(), this.emptyWindowArr[startIndex].getEndTime());
             // Finding the range of empty windows needs to schedule the connected non-fixed tasks
-            while (startIndex > 0 && durOfCurrWindow < currArr[i].getAccumulatedDuration() + Break.calculateBreakFromDuration(currArr[i].getAccumulatedDuration())) {
+            while (startIndex > 0 && durOfCurrWindow < currArr[0].getAccumulatedDuration() + Break.calculateBreakFromDuration(currArr[i].getAccumulatedDuration())) {
                 durOfCurrWindow = durOfCurrWindow + Time.duration(this.emptyWindowArr[startIndex - 1].getStartTime(), this.emptyWindowArr[startIndex - 1].getEndTime())
                 startIndex--;
             }
 
             let firstTask = i;
             let lastTask = firstTask;
-            //TODO: Create the getTaskAfterIt method
             // Finding the range of non-fixed tasks connected to the fixed task
+            //TODO: Create the getTaskAfterIt method. Must make sure that the 'getTaskAfterIt' is updated accordingly
             while (currArr[lastTask].getTaskAfterIt() == currArr[lastTask + 1].getTaskAfterIt()) {
                 lastTask++;
             }
@@ -53,10 +105,99 @@ class Scheduling {
             let currTask = lastTask;
             // For every connected non-fixed task
                 //for (currTask = lastTask; currTask >= firstTask; currTask--) {
+            //TODO: May not be able to just track using the indices as we will add and remove the empty windows, instead might need to track using the start time of the current window
             while (currTask >= firstTask && endIndex >= startIndex) {
-                let currWindow = this.emptyWindowArr[endIndex];
-                let currEndTime = currWindow.getEndTime();
+                // Curr empty window
+                let currEmptyWindow = this.emptyWindowArr[endIndex];
+                let currTaskWindow = this.nonFixedWindowPriorityArr[currTask];
+                // Start and end time of the curr empty window
+                let currEmptyStartTime = currWindow.getStartTime();
+                let currEmptyEndTime = currWindow.getEndTime();
+                let currEmptyWindowDuration = Time.duration(currEmptyWindow.getStartTime(), currEmptyWindow.getEndTime());
+                // Calculating the duration of the curr work window
+                let currWorkDuration = Time.duration(currTaskWindow.getStartTime(), currTaskWindow.getEndTime());
+                // Adding the break duration to the accumulated break time variable
+                Break.prototype.accumulatedBreakTime += Time.calculateBreakFromDuration(currWorkDuration);
+                // If the duration of the curr work window + its break > duration of the empty window 
+                if (currWorkDuration + Break.prototype.accumulatedBreakTime > currEmptyWindowDuration) {
+                    // 5/6 of the empty window would be for work, 1/6 for break. Do the necessary round ups. Update the task duration for this non-fixed task and the accumulated break time variable.
+                    let workDuration = (currEmptyWindowDuration / 6) * 5;
+                    let remainder = workDuration % 5;
+                    if (workDuration % 5 < 2.5) {
+                        workDuration = workDuration - remainder;
+                    } else {
+                        workDuration = workDuration - remainder + 5;
+                    }
+                    let breakDuration = currEmptyWindowDuration - workDuration;
+                    let startTimeBreak = Time.findStartTime(currEmptyEndTime, breakDuration);
+
+                    // Scheduling the task and break
+                    let newBreak = new Window("Break", currTaskWindow.getYear(), currTaskWindow.getMonth(), currTaskWindow.getDate(), startTimeBreak, currEmptyEndTime, 1);
+                    let newTask = new Window(currTaskWindow.getTaskName(), currTaskWindow.getYear(), currTaskWindow.getMonth(), currTaskWindow.getDate(), currEmptyStartTime, startTimeBreak, 1);
+
+                    newTask.insertWindow();
+                    newBreak.insertWindow();
+
+                    // Updating the work duration and accumulated break duration accordingly
+                    //TODO: Create the changeDuration method and pass in the correct argument
+                    currTaskWindow.changeDuration(currWorkDuration - workDuration);
+                    Break.prototype.accumulatedBreakTime -= breakDuration;
+                    // Decrease the end index for empty windows by 1
+                    endIndex--;
+
+                // If the duration of the curr work window + its break <= duration of the empty window 
+                } else {
+                    let startTimeBreak = Time.findStartTime(currEmptyEndTime, Break.prototype.accumulatedBreakTime);
+                    let startTimeTask = Time.findStartTime(startTimeBreak, workDuration);
+                    // Schedule the task and break
+                    let newBreak = new Window("Break", currTaskWindow.getYear(), currTaskWindow.getMonth(), currTaskWindow.getDate(), startTimeBreak, currEmptyEndTime, 1);
+                    let newTask = new Window(currTaskWindow.getTaskName(), currTaskWindow.getYear(), currTaskWindow.getMonth(), currTaskWindow.getDate(), startTimeTask, startTimeBreak, 1);
+
+                    newTask.insertWindow();
+                    newBreak.insertWindow();
+
+                    // Pop out the task from the array, decrease the end index for tasks by 1 and update the break time variable to 0
+                    this.nonFixedWindowPriorityArr.splice(currTask, 1);
+                    currTask--;
+                    if (startTimeTask.equals(currEmptyStartTime)) {
+                        endIndex--;
+                    }
+                    Break.prototype.accumulatedBreakTime = 0;
+                }
+            }
+        }
+
+
+        //PART 3: SCHEDULING ALL NON-FIXED TASKS
+        let j;
+        for (j = 0; j < this.emptyWindowArr.length; j++) {
+            let chosenTask;
+            let currEmpty = this.emptyWindowArr[j];
+            let currEmptyDuration = Time.duration(currEmpty.getStartTime(), currEmpty.getEndTime());
+            
+        }
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+//PREVIOUS PART 2 WORKING FOR REFERENCE JIC
+/*
+                // Start time of the current empty window in ms
                 let windowStartTimeInMs = currWindow.getStartTimeinMs();
+                // Calculating the start time of the non-fixed task to be scheduled
                 let currStartTime = Time.findStartTime(currEndTime, currArr[currTask].getAccumulatedDuration() + Break.calculateBreakFromDuration(currArr[currTask].getAccumulatedDuration())); //TODO: Create the findStartTime and Break.calculateBreakFromDuration methods
 
                 let currStartTimeInMs = new Date(currWindow.getYear(), currArr[currTask].getMonth(), currArr[currTask].getDate(), currStartTime[0], currStartTime[1]); // Assuming startTime = [hours, mins]
@@ -87,7 +228,4 @@ class Scheduling {
                     currTask--;
                     currEndTime = startTime;
                 }
-            }
-        }
-    }
-}
+                */

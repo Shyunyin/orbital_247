@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <head>
     <title>Main Schedule Page</title>
     <link rel="stylesheet" href="main_schedule.css" />
@@ -39,10 +40,11 @@
     <!--For array of tasks-->
     <div id="postit">
         <input type="text" id="title" readonly="readonly" value="Tasks not included in schedule yet">
+        <br>
     </div>
 
     <!--For the instructions on how to perform actions on tasks-->
-    <div id="instruction">
+    <div id="instruction"> <!--For the background box-->
     </div>
     <div class="instruction">
         <h3>Click on any task to</h3>
@@ -50,6 +52,12 @@
         <h3> edit or delete a task</h3>
     </div>
 
-    <button id="addTask" name="addTask">+</button>
-    <button id="generateSchedule" name="generateSchedule">Generate Schedule!</button>
+    <button type="button" id="addTask" name="addTask" onclick="return popup('add_daily_task.html', dailyTask)">+</button> <!--Link to pop up for add daily task page-->
+    <button id="generateSchedule" name="generateSchedule">Generate Schedule now!</button>
+
+    <!--Buttons to go to previous and next-->
+    <!--Probably must create previous button using javascript as it only appears if schedule day != current day-->
+    <button type="button" id="nextDay" name="nextDay"></button>
+    <div id="textNextDay">Go to Next day's schedule</div>
 </body>
+</html>

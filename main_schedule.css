@@ -96,7 +96,7 @@
 #currentSchedule {
   font-family: "Signika Negative", sans-serif;
   font-size: 25px;
-  width: 300px;
+  width: 450px;
   background-color: #f6f7f1;
   border: none;
   color: #1e5353;
@@ -182,4 +182,69 @@
   border-width: 2px;
   margin-top: 300px;
   margin-left: 80px;
+}
+
+/*Buttons*/
+#addTask {
+  font-family: "Signika Negative", sans-serif;
+  font-size: 50px;
+  position: absolute;
+  z-index: 10;
+  background-color: #e3aba1;
+  color: #1e5353;
+  border-radius: 50%;
+  border-color: black;
+  border-width: 2px;
+  height: 70px;
+  width: 70px;
+  margin-left: 1400px;
+  margin-top: 600px;
+}
+#addTask:hover {
+  background-color: #fedcce;
+}
+
+#generateSchedule {
+  font-family: "Signika Negative", sans-serif;
+  font-size: 20px;
+  position: absolute;
+  z-index: 10;
+  background-color: #e3aba1;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
+  width: 200px;
+  height: 60px;
+  margin-left: 1180px;
+  margin-top: 660px;
+}
+#generateSchedule:hover {
+  background-color: #fedcce;
+}
+
+#nextDay {
+  width: 0;
+  height: 0;
+  border-top: 40px solid transparent;
+  border-left: 70px solid #1e5353;
+  border-bottom: 40px solid transparent;
+  position: absolute;
+  z-index: 2;
+  margin-top: 750px;
+  margin-left: 1400px;
+  background: none;
+  cursor: pointer;
+}
+#nextDay:hover {
+  border-left-color: #52c4c4;
+}
+
+#textNextDay {
+  position: absolute;
+  z-index: 2;
+  font-family: "Signika Negative", sans-serif;
+  font-size: 20px;
+  margin-top: 750px;
+  margin-left: 1300px;
+  width: 90px;
 }

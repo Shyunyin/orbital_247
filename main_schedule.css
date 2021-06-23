@@ -15,11 +15,10 @@
   border-width: 5px;
   height: 800px;
   width: 1500px;
-  /* position: absolute;
-  z-index: 1; */
+  position: absolute;
+  z-index: 1;
 }
 #background {
-  /* align-items: center; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,7 +64,7 @@
   border: none;
   color: #1e5353;
   position: absolute;
-  z-index: 2;
+  z-index: 5;
   margin-top: 60px;
   margin-left: 20px;
 }

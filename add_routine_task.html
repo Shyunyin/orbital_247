@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Add routine task</title>
-        <script type = "text/javascript" type="module" src="add_routine_task.js"></script>
-        <script type = "text/javascript" type="module" src="Window.js"></script>
-        <link rel="stylesheet" href="add_routine_task.css" />
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
+
+<head>
+    <title>Add routine task</title>
+    <script type="text/javascript" type="module" src="add_routine_task.js"></script>
+    <script type="text/javascript" type="module" src="Window.js"></script>
+    <link rel="stylesheet" href="add_routine_task.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
     <!-- Parent-child relationship for inline-->
     <div id="title">
-        <li><h3>Add a task:</h3></li>
+        <li>
+            <h3>Add a task:</h3>
+        </li>
         <!-- INPUT for taskName-->
-        <li><form>
-          <input type="text" id="taskName" name="taskName" size="70"><br>
-        </form></li>
+        <li>
+            <form>
+                <input type="text" id="taskName" name="taskName" size="70"><br>
+            </form>
+        </li>
     </div>
 
     <div id="categories">
-        <li><h3>Category:</h3></li>
+        <li>
+            <h3>Category:</h3>
+        </li>
         <!-- Buttons for categories-->
-        <li><form class="btn-group-category">
-            <input type="button" id="work" onclick="catFunction(0)" value="Work"></button>
-            <input type="button" id="exercise" onclick="catFunction(1)" value="Exercise"></button>
-            <input type="button" id="misc" onclick="catFunction(2)" value="Miscellaneous"></button>
-            <input type="button" id="meal" onclick="catFunction(3)" value="Meal Times"></button>
-        </form></li>
+        <li>
+            <form class="btn-group-category">
+                <input type="button" id="work" onclick="catFunction(0)" value="Work"></button>
+                <input type="button" id="exercise" onclick="catFunction(1)" value="Exercise"></button>
+                <input type="button" id="misc" onclick="catFunction(2)" value="Miscellaneous"></button>
+                <input type="button" id="meal" onclick="catFunction(3)" value="Meal Times"></button>
+            </form>
+        </li>
     </div>
 
     <!-- For frequency-->
@@ -36,12 +46,12 @@
         <div class="ul">
             <li>
                 <input type="radio" id="daily" name="choose" value="daily">
-                <label for="daily">Daily</label>  
+                <label for="daily">Daily</label>
             </li>
             <li>
                 <input type="radio" id="weekly" name="choose" value="weekly">
                 <label for="weekly">Weekly</label>
-            </li>          
+            </li>
             <li>
                 <input type="radio" id="biweekly" name="choose" value="biweekly">
                 <label for="biweekly">Biweekly</label>
@@ -53,7 +63,8 @@
             </li>
         </div>
 
-        <!--For the dropdown lists--> <!--Use javascript to replace??-->
+        <!--For the dropdown lists-->
+        <!--Use javascript to replace??-->
         <div class="dropdown">
             <li>
                 <select id="weeklydropdown" name="weeklydropdown">
@@ -80,9 +91,9 @@
                     <option value="6">Sunday</option>
                 </select>
                 <select id="chooseWeeks" name="chooseWeeks">
-                    <option value="" selected disabled hidden>Even/Odd</option>
-                    <option value="0">Even Weeks</option>
-                    <option value="1">Odd Weeks</option>
+                    <option value="" selected disabled hidden>Current/Next</option>
+                    <option value="0">Current Week</option>
+                    <option value="1">Next Week</option>
                 </select>
             </li>
             <li>
@@ -96,22 +107,23 @@
         <li>
             <div class="startTime">
                 <h3>Start time:</h3>
-                    <input type="time" id="startTime">
+                <input type="time" id="startTime">
             </div>
         </li>
         <li>
             <div class="endTime">
                 <h3>End time:</h3>
-                  <input type="time" id="endTime">
-              </div>
+                <input type="time" id="endTime">
+            </div>
         </li>
     </div>
-    
+
     <!--Buttons for ADD, DONE-->
     <div class="btn-group-actions">
-       <button id="add" onclick="finalAction(1)">Add another routine task</button>
+        <button id="add" onclick="finalAction(1)">Add another routine task</button>
         <button id="done" onclick="finalAction(2)">Done adding ALL routine tasks</button>
     </div>
 
-    </body>
+</body>
+
 </html>

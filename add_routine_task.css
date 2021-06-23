@@ -157,7 +157,7 @@ label[for="monthly"] {
 }
 #chooseWeeks {
   font-family: "Signika Negative", sans-serif;
-  width: 100px;
+  width: 110px;
   height: 25px;
   margin-top: 43px;
   margin-left: 180px;
@@ -168,7 +168,7 @@ label[for="monthly"] {
 }
 #date {
   font-family: "Signika Negative", sans-serif;
-  margin-top: 20px;
+  margin-top: 30px;
   border-radius: 5px;
   height: 23px;
   width: 30px;

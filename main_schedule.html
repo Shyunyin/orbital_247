@@ -54,8 +54,11 @@
         <h3> edit or delete a task</h3>
     </div>
 
-    <button type="button" id="addTask" name="addTask"
-        onclick="return popup('add_daily_task.html', dailyTask)">+</button>
+    <!--Add task pop-out-->
+    <button type="button" id="addTask" name="addTask">+</button>
+    <input type="button" id="addTask" value="+" onclick="OpenPopupWindow()";>
+
+
     <!--Link to pop up for add daily task page-->
     <button id="generateSchedule" name="generateSchedule">Generate Schedule now!</button>
 

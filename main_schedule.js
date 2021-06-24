@@ -72,19 +72,18 @@ window.onload = function getHeading() {
         append.style.marginTop = topText;
         let ele = document.getElementById("postit");
         ele.appendChild(append);
+
     }
 }
 
 /*For popup*/
-function popup(mylink, windowname) {
-    if (!window.focus) return true;
-    var href;
-    if (typeof (mylink) == "string") href = mylink;
-    else href = mylink.href;
-    window.open(href, windowname, 'width=400, height=200, scrollbars=yes');
-    return false;
+function OpenPopupWindow() {
+    var url = "http://127.0.0.1:5501/add_daily_task.html";
+    myRef = window.open(url, 'mywin', 'left=20, top=20, width=750, height=700, toolbar=1, resizable=0');
+    myRef.focus();
+    myRef.getElementById("done").onclick = ClosePopup();
 }
 
-
-
-
+function ClosePopup() {
+    myRef.close();
+}

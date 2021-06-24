@@ -10,13 +10,11 @@
 */
 
 .main {
-  background-color: #f6f7f1;
   border-color: #c4c4c4;
   border-width: 5px;
   height: 800px;
   width: 1500px;
-  position: absolute;
-  z-index: 1;
+  background-color: #f6f7f1;
 }
 #background {
   display: flex;
@@ -89,7 +87,7 @@
   color: #1e5353;
   position: absolute;
   z-index: 2;
-  margin-left: 600px;
+  margin-left: 580px;
   margin-top: 75px; /*In the middle of currentDate and currentTime*/
 }
 #currentSchedule {
@@ -101,7 +99,7 @@
   color: #1e5353;
   position: absolute;
   z-index: 2;
-  margin-left: 580px;
+  margin-left: 580px; /*Same as current user*/
   margin-top: 130px; /*In the middle of currentDate and currentTime*/
 }
 
@@ -114,7 +112,7 @@
   width: 720px;
   position: absolute;
   z-index: 2;
-  margin-left: 350px;
+  margin-left: 320px;
   margin-top: 190px;
 }
 #progressBar {
@@ -124,7 +122,7 @@
   border: none;
   position: absolute;
   z-index: 5;
-  margin-left: 280px;
+  margin-left: 290px;
   margin-top: 2px;
 }
 

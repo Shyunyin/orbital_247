@@ -2,7 +2,7 @@
 
 // Don't add breaks after the last activity for the day (and before sleeping)
 
-// Need to consider the following case: Lets say both task A and task B individually dont require breaks. So they somehow got scheduled back to back and now they required a break due to the accumulated time. Or even if task B alr has a break, it now needs to be extended bc of task A. Solution that can be implemented: for the else block for the break calculating methods, consider if there are tasks immediately before and after this task. Then get the accumulated time and edit the break accordingly. To think about: How do you edit the breaks accordingly? What if the break cannot be extended? In this case, where will the carried over break be added?
+//TODO: Need to consider the following case: Lets say both task A and task B individually dont require breaks. So they somehow got scheduled back to back and now they required a break due to the accumulated time. Or even if task B alr has a break, it now needs to be extended bc of task A. Solution that can be implemented: for the else block for the break calculating methods, consider if there are tasks immediately before and after this task. Then get the accumulated time and edit the break accordingly. To think about: How do you edit the breaks accordingly? What if the break cannot be extended? In this case, where will the carried over break be added?
 
 // Reminder: Don't splice empty windows. They are are automatically removed by the insert and remove functions.
 

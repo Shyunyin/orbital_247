@@ -27,6 +27,7 @@ class RoutineTask {
         this.freq = RoutineTask.prototype.freq[freq];
     }
 
+    getTas
     /**
      * Selecting the frequency of the task
      * @param {Number} index 0 - Daily, 1 - Weekly, 2 - Biweekly, 3 - Monthly 

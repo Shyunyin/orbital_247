@@ -66,19 +66,31 @@ function myFunction() {
   }
 
   /*Calculation for number of hours min left -> Convert to MINUTES for calculation*/  
-  let totalRemaining = 720; /*Arbitrary value, must link to formular for breaks and stuff in algorithm [IN MINUTES]*/ 
+   let totalRemaining = 720; /*Arbitrary value, must link to formular for breaks and stuff in algorithm [IN MINUTES]*/ 
 
-  function displayDuration(text) {
+  function displayDuration(text) { /*This function works*/
     document.getElementById("counterOutput").innerHTML = text;
   }
 
-  function initial() {
+  function initial() { /*This function is not working, nothing is printed. Function is defined*/
     let hours = (totalRemaining / 60);
     let minutes = totalRemaining - (hours * 60);
-    var text = "Hour: " + hours + " " + "Minute: " + minutes;
+    let text = "Hour: " + hours + " " + "Minute: " + minutes;
     displayDuration(text); /*initial display*/
   }
 
+  /*This function is to trigger the initial function when an option is selected*/
+  var checkTime = document.getElementById("timeTask");
+  var checkDuration = document.getElementById("durationTask");
+
+  function check() {
+    if (checkTime.checked) {
+      initial();
+    }
+    if (checkDuration.checked) {
+      initial();
+    }
+  }
 
   /*To calculate remaining hours and minute*/ /*FUNCTION IS NOT WORKING NOOOOO*/
   function calculationDuration() {
@@ -100,9 +112,10 @@ function myFunction() {
     let end = document.getElementById("endTime").value
     let endHour = parseInt(end.substr(0,2));
     let endMin = parseInt(end.substr(3,4));
+
     if (endMin < startMin) { //eat into the hours
       let totalToMinus = (endHour - startHour) * 60; //contains minutes that needs to be deducted from totalRemaining
-      totalToMinus = totalToMinus - (endMin - startMin); //in minutes (minus a negative)
+      totalToMinus = totalToMinus - (endMin - startMin); //in minutes (minus a negative to add)
       let finalHour = Math.trunc(totalRemaining - totalToMinus) / 60);
       let finalMin = totalRemaining - (finalHour * 60); 
       var textNew = "Hour: " + finalHour + " " + "Minute: " + finalMin;
@@ -130,6 +143,7 @@ window.onload = function createDropdown() { //ensure that dropdown list loads on
   }
 }
 
+
 function closeMe() {
   try {
     window.close();
@@ -139,6 +153,6 @@ function closeMe() {
   } catch (e) { console.log(e) }
 }
 
-
+document.getElementById("done").addEventListener("click", closeMe);
 
 

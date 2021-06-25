@@ -43,14 +43,14 @@
     <!-- Make checkboxes either or, have the same name to be in the same group, have diff values to make distinct--> 
     <nav>
       <element id="selectTime">
-        <input type="radio" class="timeTask" name="select" value="time" onclick="initial()">
+        <input type="radio" id="timeTask" name="select" value="time"> 
         <label for="timeTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Time</label><br>
       </element>
       <element id="or">
         <h3>OR</h3>
       </element>
       <element id="selectDuration">
-        <input type="radio" class="durationTask" name="select" value="duration" onclick="initial()">
+        <input type="radio" id="durationTask" name="select" value="duration">
         <label for="durationTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Duration (per session)</label><br>
       </element>
     </nav>
@@ -81,7 +81,7 @@
         <input type="button" id="twosessions" onclick="sessionsFunction(2)" value="x2"></button>
         <input type="button" id="threesessions" onclick="sessionsFunction(3)" value="x3"></button>
     </form>
-      <input type="button" id="doneDurationBtn" value="Done!" onclick="calculationDuration();">
+      <input type="button" id="doneDurationBtn" value="Done!" onclick="calculationDuration()">
 
     
     <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
@@ -121,9 +121,9 @@
 
     <!--Buttons for DELETE, ADD, DONE-->
     <div class="btn-group-actions">
-      <li><button id="delete">Delete task</button></li>
+      <li><input type="button" id="delete" value="Delete task"></li>
       <!-- <li><button id="add" >Add another task</button></li> -->
-      <li><input type="button" id="done" value="Back to main schedule" onclick="closeMe()"></li>
+      <li><input type="button" id="done" value="Back to main schedule"></li>
     </div>
 
    </body>

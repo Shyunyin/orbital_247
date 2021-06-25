@@ -239,9 +239,12 @@ nav {
   top: 420px;
   z-index: 2;
 }
-.counterOutput {
-  color: #1e5353;
-}
+/* #counterOutput {
+  color: black;
+  font-size: large;
+  position: absolute;
+  z-index: 2;
+} */
 .startTime {
   font-family: Signika Negative, sans-serif;
   position: absolute;
@@ -349,7 +352,7 @@ nav {
   height: 35px;
   cursor: pointer;
 }
-/* #add {
+#add {
   font-family: Signika Negative, sans-serif;
   background-color: #e3aba1;
   border-radius: 5px;
@@ -359,7 +362,7 @@ nav {
   margin-left: 100px;
   height: 35px;
   cursor: pointer;
-} */
+}
 #done {
   font-family: Signika Negative, sans-serif;
   background-color: #e3aba1;

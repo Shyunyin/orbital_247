@@ -49,4 +49,4 @@ class Break {
 }
 
 Break.prototype.accumulatedWorkTime;
-Break.prototype.accumulatedBreakTime;
+Break.prototype.accumulatedBreakTime; //To be just in minutes

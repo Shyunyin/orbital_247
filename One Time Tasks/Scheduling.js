@@ -25,14 +25,14 @@ class Scheduling {
             // Calculating the break duration for the curr fixed task
             let currBreakDuration = Time.calculateBreak(currStartTime, currEndTime);
             // Adding the break duration to the accumulated break time
-            Break.accumulatedBreakTime += currBreakDuration; //TODO: Update according to the format of the durations
+            Break.accumulatedBreakTime += currBreakDuration; 
 
             let a;
             for (a = 0; a < this.emptyWindowArr.length; a++) {
                 // Checking if there is a break immediately after this fixed task
                 if (currEndTime.equals(this.emptyWindowArr[a].getStartTime())) {
                     // If the accumulated break time is > 30 mins, we can only allocate a max of 30 mins break at any one time
-                    if (Break.accumulatedBreakTime > 30) { //TODO: Update according to the format of the durations
+                    if (Break.accumulatedBreakTime > 30) {
                         // If accumulated break time is >= 30 mins but the empty window is < than the 30 mins
                         if (Time.duration(this.emptyWindowArr[a].getStartTime(), this.emptyWindowArr[a].getEndTime()) < 30) {
                             // Create a break for whatever time there is 
@@ -65,9 +65,8 @@ class Scheduling {
                         Break.prototype.accumulatedBreakTime -= Time.duration(this.emptyWindowArr[a].getStartTime(), this.emptyWindowArr[a].getEndTime());
                     // If accumulated break time is <= 30 mins and empty window >= accumulated break time
                     } else {
-                        // TODO: Update the duration format accordingly. Create the findEndTime method
                         // Since it is posssible that the duration available in the curr empty window > accumulated break duratoin, find the time at the end of accumulated the break 
-                        let endTime = Time.findEndTime(this.emptyWindowArr[a].getStartTime(), Break.prototype.accumulatedBreakTime);
+                        let endTime = Time.findEndTime(this.emptyWindowArr[a].getStartTime(), [0, Break.prototype.accumulatedBreakTime]);
 
                         let newBreak = new Window("Break", currWindow.getYear(), currWindow.getMonth(), currWindow.getDate(), this.emptyWindowArr[a].getStartTime(), endTime, 1);
 
@@ -166,7 +165,7 @@ class Scheduling {
                     }
                     //Calculating the new break duration
                     breakDuration = currEmptyWindowDuration - workDuration;
-                    let startTimeBreak = Time.findStartTime(currEmptyEndTime, breakDuration);
+                    let startTimeBreak = Time.findStartTime(currEmptyEndTime, [0, breakDuration]);
 
                     // Scheduling the task and break
                     let newBreak = new Window("Break", currTaskWindow.getYear(), currTaskWindow.getMonth(), currTaskWindow.getDate(), startTimeBreak, currEmptyEndTime, 1);
@@ -183,7 +182,7 @@ class Scheduling {
                 // If the duration of the curr work window + its break <= duration of the empty window 
                 } else {
                     // Finding the start time of the break
-                    let startTimeBreak = Time.findStartTime(currEmptyEndTime, breakDuration);
+                    let startTimeBreak = Time.findStartTime(currEmptyEndTime, [0, breakDuration]);
                     // Finding the start time of the task
                     let startTimeTask = Time.findStartTime(startTimeBreak, currWorkDuration);
 
@@ -229,7 +228,6 @@ class Scheduling {
             if (currTaskIndex >= this.nonFixedWindowArr.length) {
                 let taskIndex = 0;
                 // If the curr empty window falls during the productivity period
-                //TODO: Create the duringProductivePeriod() method
                 if (currEmpty.duringProductivePeriod()) {
                     // Check if the curr task type if "Fully work"/"Work". If you can't find that, try to find a "Partially work" type. Otherwise any type is okay. Do this in one traversal.
                     chosenTask = this.nonFixedWindowArr[taskIndex];
@@ -299,7 +297,6 @@ class Scheduling {
             } else {
                 let taskIndex = index;
                 // If the curr empty window falls during the productivity period
-                //TODO: Create the duringProductivePeriod() method
                 if (this.emptyWindowArr[0].duringProductivePeriod()) {
                     chosenTask = this.nonFixedWindowArr[taskIndex];
                     //If the curr task is only "Partially work" (exact same logic as before)
@@ -386,7 +383,7 @@ class Scheduling {
 
                 // Check if the duration of the chosen task + break <= duration of empty window (if connected task, just check for the very first task). If <=, schedule the task and break. Pop off the task. 
                 if (chosenTaskIndivDuration + breakDuration  <= currEmptyWindowDuration) {
-                    //TODO: Create the methods findEndTime and getIndivDuration
+                    //TODO: Create the method getIndivDuration
                     // Find the end time of the task
                     let taskEndTime = Time.findEndTime(this.emptyWindowArr[0].getStartTime(), chosenTaskIndivDuration);
                     // Find the end time of the break

@@ -12,11 +12,11 @@ class Window {
      * @param {Number} date Date of the window
      * @param {Time} startTime Time at which the window starts
      * @param {Time} endTime Time at which the window ends
-     * @param {Number} type 0 - Empty, 1 - Task within 7 days, 2 - Fixed tasks for the future
+     * @param {Number} type 0 - Empty, 1 - A task
      * @param {String} taskAfterThis Name of the task that is to follow after this
      * @param {Number} accumulatedDuration The total duration of the connected tasks
      */
-    constructor(taskName, year, month, date, startTime, endTime, type, taskAfterThis, accumulatedDuration) {
+    constructor(taskName, year, month, date, startTime, endTime, type) {
         this.taskName = taskName;
         this.year = year;
         this.month = month;
@@ -24,13 +24,6 @@ class Window {
         this.startTime = startTime;
         this.endTime = endTime;
         this.type = type;
-        this.taskAfterThis = taskAfterThis;
-        this.accumulatedDuration = accumulatedDuration;
-        if (taskAfterThis == null) {
-            this.group = -1;
-        } else {
-            this.group = Window.prototype.group;
-        }
     }
 
     /**
@@ -283,6 +276,8 @@ class Window {
                 currArr = Window.prototype.occupiedCollection[index];
             } else {
                 //TODO: This is for type 2: non-fixed tasks. Need to figure how to do this for non-fixed tasks.
+
+                //TODO: Follow-up (25/06/2021) - do you even need this? Bc you are just storing non-fixed tasks in their own array till you need to schedule them right
             }
             // Doing checks to ensure that task does not clash with any existing fixed, future tasks.
             let newIndex = 0;
@@ -357,6 +352,8 @@ class Window {
                 currArr = Window.prototype.occupiedCollection[index];
             } else {
                 //TODO: This is for type 2: non-fixed tasks. Need to figure how to do this for non-fixed tasks.
+
+                //TODO: Follow-up (25/06/2021) - do you even need this? Bc you are just storing non-fixed tasks in their own array till you need to schedule them right
             }
             //Check if the task to be removed exists. Once task is identified, it is removed.
             let i;
@@ -418,9 +415,23 @@ class Window {
         }
         
         // Updating the empty windows in a similar manner
-        Window.prototype.emptyoCollection.splice(0, 1);
+        Window.prototype.emptyCollection.splice(0, 1);
         Window.prototype.emptyCollection.push(Window.prototype.emptyArr);
-        //TODO: Update for non-fixed arrays as well
+        Window.prototype.nonFixedCollection.splice(0, 1);
+        Window.prototype.emptyCollection.push([Window.prototype.nonFixedArr , Window.prototype.nonFixedPriorityArr]);
+    }
+
+    /**
+     * 
+     * @returns 
+     */
+    duringProductivePeriod() {
+        let productiveStartTime = new Time(Info.getProductiveSlotHours(), Info.getProductiveSlotMins())
+        let productiveEndTime = Time.getEndTime(productiveStartTime, [4, 0]);
+
+        let productiveWindow = new Window(this.year, this.month, this.date, productiveStartTime, productiveEndTime);
+
+        return this.partiallyOverlaps(productiveWindow) || this.isCompletelyDuring(productiveWindow);
     }
 
     /**
@@ -435,7 +446,7 @@ class Window {
         for (i = 0; i < 8; i++) {
             Window.prototype.emptyCollection.push(Window.prototype.emptyArr);
             Window.prototype.occupiedCollection.push(Window.prototype.occupiedArr);
-            Window.prototype.nonFixedCollection.push(Window.prototype.nonFixedArr);
+            Window.prototype.nonFixedCollection.push(Window.prototype.nonFixedArr , [Window.prototype.nonFixedPriorityArr]);
 
             let newWindow = new Window(currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, endTime, 0);
             Window.prototype.emptyCollection[i].push(newWindow);
@@ -451,7 +462,7 @@ Window.prototype.emptyCollection = []; // Contains 7 'Window.prototype.emptyArr'
 Window.prototype.emptyArr = []; // Represents a single day's empty windows
 Window.prototype.nonFixedCollection = []; // Contains 7 'Window.prototype.nonFixedFutureArr'
 Window.prototype.nonFixedArr = []; // Represents a single day's non-fixed tasks
-Window.prototype.nonFixedPriorityArr = [] // Represents a single day's non-fixed tasks connected to fixed tasks //TODO: Need to do proper set-up
+Window.prototype.nonFixedPriorityArr = [] // Represents a single day's non-fixed tasks connected to fixed tasks
 Window.prototype.nonFixedFutureArr = []; // Represents non-fixed tasks that are scheduled for > 7 days from now
 Window.prototype.group = 0; //Tracks the number of groups (non-fixed, connected tasks) for the day. Reset at the end of every day.
 Window.prototype.nonFixedFutureArr = []; // Represents a single day's non-fixed tasks

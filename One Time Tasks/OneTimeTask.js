@@ -9,4 +9,4 @@ class OneTimeTask {
     }
 }
 
-OneTimeTask.prototype.cats = ['Work', 'Exercise', 'Miscellaneous'];
+OneTimeTask.prototype.cats = ['Work', 'Exercise', 'Miscellaneous', 'Meal', 'Fully Work', 'Partially Work'];

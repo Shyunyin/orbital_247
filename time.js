@@ -63,6 +63,48 @@ class Time {
         return (this.hours == time.getHours() && this.mins == time.getMins());
     }
 
+    /**
+     * 
+     * @param {Time} endTime 
+     * @param {Number} duration Format: [hours, mins]
+     */
+    findStartTime(endTime, duration) {
+        durHours = duration[0]
+        durMins = duration[1]
+        let newHours;
+        let newMins;
+        if (endTime.getMins() < durMins) {
+            durMins -= endTime.getMins();
+            newHours = endTime.getHours() - 1 - durHours;
+            newMins = 60 - durMins; //TODO: Must change everything to 60
+        } else {
+            newHours = endTime.getHours() - durHours;
+            newMins = endTime.getMins() - durMins;
+        }
+        return new Time(newHours, newMins);
+    }
+
+    /**
+     * 
+     * @param {Time} endTime 
+     * @param {Number} duration Format: [hours, mins]
+     */
+     findEndTime(startTime, duration) {
+        durHours = duration[0]
+        durMins = duration[1]
+        let newHours;
+        let newMins;
+        if (startTime.getMins() + durMins > 60) {
+            durMins -= (60 - startTime.getMins());
+            newHours = startTime.getHours() + 1 + durHours;
+            newMins = durMins; //TODO: Must change everything to 60
+        } else {
+            newHours = startTime.getHours() + durHours;
+            newMins = startTime.getMins() + durMins;
+        }
+        return new Time(newHours, newMins);
+    }
+
 }
 
 Time.prototype.timeRegistered = Math.round(Date.now()/10000) * 10000; //To the nearest minute (Need to double check calculation)

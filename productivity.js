@@ -1,4 +1,5 @@
 class ProductivityStatistics {
+
     /**
      * Display of the total number of hours user spent on completing tasks for the day (accumulated based on the data retrieved from timers)
      * 
@@ -16,9 +17,23 @@ class ProductivityStatistics {
     * we are only going to measure work productivity, will be measured over a week for every 4-hour block
      */
 
+    categoryBreakdown() {
+        let workPortion = ((ProductivityStatistics.prototype.workHours / ProductivityStatistics.prototype.totalHours) * 100);
+        let miscellaneousPortion = ((ProductivityStatistics.prototype.miscellaneousHours / ProductivityStatistics.prototype.totalHour) * 100);
+        let exercisePortion = ((ProductivityStatistics.prototype.exerciseHours / ProductivityStatistics.prototype.totalHours) * 100);
+    }
+
+    productivityPeriod() {
+        //TODO: We are going to give users the productivity slot options
+        let slot1 = 
+    }
 
 }
 
+ProductivityStatistics.prototype.workHours;
+ProductivityStatistics.prototype.miscellaneousHours;
+ProductivityStatistics.prototype.exerciseHours;
+ProductivityStatistics.prototype.totalHours;
 // To increase every time a task is added
 // Reset at the end of every day
 // Change accordingly if user deletes and reschedules tasks

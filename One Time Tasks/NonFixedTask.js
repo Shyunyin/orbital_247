@@ -19,6 +19,22 @@ class NonFixedTask extends OneTimeTask {
         this.accumulatedDuration = accumulatedDuration; //TODO: When creating this object, pass in the durOfSess as the argument for this variable
     }
 
+    getTaskAfterIt() {
+        return this.taskAfterIt;
+    }
+
+    getIndivDuration() {
+        return this.durOfSess;
+    }
+    
+    changeDuration(duration) {
+        this.durOfSess = duration;
+    }
+
+    changeAccumulateDuration(accumulatedDuration) {
+        this.accumulatedDuration = accumulatedDuration;
+    }
+
     addTask() {
         let now = new Date();
         let currDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());

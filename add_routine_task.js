@@ -74,7 +74,7 @@ let endTime = new Time( //create new time object for end time in Window and indi
 function displayRadioValue() {
   var ele = document.getElementsByName("choose");
 
-  for (i = 0; i < ele.length; i++) {
+  for (let i = 0; i < ele.length; i++) {
     if (ele[i].checked) {
       var mode = ele[i].value;
     }
@@ -84,9 +84,10 @@ function displayRadioValue() {
     let saveTask = new DailyTask( //question: dont know if should save as same taskname "saveTask" throughout
       document.getElementById("taskName").innerText,
       category_num;
-    startTime,
+      startTime,
       endTime,
     )
+    
   } else if (mode === "weekly") {
     let saveTask = new WeeklyTask(
       document.getElementById("taskName").innerText,

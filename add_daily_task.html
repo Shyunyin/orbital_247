@@ -81,7 +81,7 @@
         <input type="button" id="twosessions" onclick="sessionsFunction(2)" value="x2"></button>
         <input type="button" id="threesessions" onclick="sessionsFunction(3)" value="x3"></button>
     </form>
-      <input type="button" id="doneDurationBtn" value="Done!"onclick="calculationDuration();">
+      <input type="button" id="doneDurationBtn" value="Done!" onclick="calculationDuration();">
 
     
     <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
@@ -122,8 +122,9 @@
     <!--Buttons for DELETE, ADD, DONE-->
     <div class="btn-group-actions">
       <li><button id="delete">Delete task</button></li>
-      <li><button id="add" onclick=addToList()>Add another task</button></li>
-      <li><button id="done" onclick=addToList()>Back to main schedule</button></li>
+      <!-- <li><button id="add" >Add another task</button></li> -->
+      <li><input type="button" id="done" value="Back to main schedule" onclick="closeMe()"></li>
     </div>
+
    </body>
 </html>

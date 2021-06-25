@@ -68,6 +68,10 @@ function myFunction() {
   /*Calculation for number of hours min left -> Convert to MINUTES for calculation*/  
   let totalRemaining = 720; /*Arbitrary value, must link to formular for breaks and stuff in algorithm [IN MINUTES]*/ 
 
+  function displayDuration(text) {
+    document.getElementById("counterOutput").innerHTML = text;
+  }
+
   function initial() {
     let hours = (totalRemaining / 60);
     let minutes = totalRemaining - (hours * 60);
@@ -76,11 +80,7 @@ function myFunction() {
   }
 
 
-  function displayDuration(text) {
-    document.getElementById("counterOutput").innerHTML = text;
-  }
-
-  /*To calculate remaining hours and minute*/ /*FUNCTION IS WORKING YAYYY*/
+  /*To calculate remaining hours and minute*/ /*FUNCTION IS NOT WORKING NOOOOO*/
   function calculationDuration() {
       let enterHour = parseInt((document.getElementById("hour").value)*numOfSessions); /*Number of hours entered*/
       let enterMin = parseInt((document.getElementById("minute").value)*numOfSessions); /*Number of minutes entered*/
@@ -92,6 +92,7 @@ function myFunction() {
   }
 
   /*Even though html input is in 12 hours format, it is saved as 24 hours format, use substr to extract*/
+  /*Calculate everything in minutes first then split*/
   function calculationTime() {
     let start = document.getElementById("startTime").value
     let startHour = parseInt(start.substr(0,2));
@@ -99,17 +100,20 @@ function myFunction() {
     let end = document.getElementById("endTime").value
     let endHour = parseInt(end.substr(0,2));
     let endMin = parseInt(end.substr(3,4));
-    let hours = (totalRemaining / 60);
-    let minutes = totalRemaining - (hours * 60);
-    let finalHour = hours - (endHour - startHour);
-    let finalMin = minutes - (endMin - startMin);
-    var text = "Hour: " + finalHour + " " + "Minute: " + finalMin;
-    displayDuration(text);
-  }
-
-
-  function displayDuration(text) {
-    document.getElementById("counterOutput").innerHTML = text;
+    if (endMin < startMin) { //eat into the hours
+      let totalToMinus = (endHour - startHour) * 60; //contains minutes that needs to be deducted from totalRemaining
+      totalToMinus = totalToMinus - (endMin - startMin); //in minutes (minus a negative)
+      let finalHour = Math.trunc(totalRemaining - totalToMinus) / 60);
+      let finalMin = totalRemaining - (finalHour * 60); 
+      var textNew = "Hour: " + finalHour + " " + "Minute: " + finalMin;
+    } else { //if both hours and/or minutes are positive
+      let totalToMinus = (endHour - startHour) * 60; //contains minutes that needs to be deducted from totalRemaining
+      let totalToMinus = totalToMinus + (endMin - startMin);
+      let finalHour = Math.trunc((totalRemaining - totalToMinus) / 60);
+      let finalMin = totalRemaining - (finalHour * 60); 
+      var textNew = "Hour: " + finalHour + " " + "Minute: " + finalMin;
+    }
+    displayDuration(textNew);
   }
 
 
@@ -125,5 +129,16 @@ window.onload = function createDropdown() { //ensure that dropdown list loads on
     document.getElementById("dropdownList").append(option); //appending options to the select
   }
 }
+
+function closeMe() {
+  try {
+    window.close();
+  } catch (e) { console.log(e) }
+  try {
+    self.close();
+  } catch (e) { console.log(e) }
+}
+
+
 
 

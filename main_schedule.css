@@ -112,7 +112,7 @@
   width: 720px;
   position: absolute;
   z-index: 2;
-  margin-left: 320px;
+  margin-left: 350px;
   margin-top: 190px;
 }
 #progressBar {
@@ -122,7 +122,7 @@
   border: none;
   position: absolute;
   z-index: 5;
-  margin-left: 290px;
+  margin-left: 295px;
   margin-top: 2px;
 }
 

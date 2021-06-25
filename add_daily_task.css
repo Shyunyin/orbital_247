@@ -237,6 +237,7 @@ nav {
   position: absolute;
   margin-left: 500px;
   top: 420px;
+  z-index: 2;
 }
 .counterOutput {
   color: #1e5353;
@@ -348,7 +349,7 @@ nav {
   height: 35px;
   cursor: pointer;
 }
-#add {
+/* #add {
   font-family: Signika Negative, sans-serif;
   background-color: #e3aba1;
   border-radius: 5px;
@@ -358,7 +359,7 @@ nav {
   margin-left: 100px;
   height: 35px;
   cursor: pointer;
-}
+} */
 #done {
   font-family: Signika Negative, sans-serif;
   background-color: #e3aba1;
@@ -370,7 +371,7 @@ nav {
   width: 200px;
   position: absolute;
   top: 1px;
-  margin-left: 100px;
+  margin-left: 330px;
   cursor: pointer;
 }
 #delete:hover {

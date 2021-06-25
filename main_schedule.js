@@ -29,6 +29,20 @@ function textMonth(month) {
 /*Must get input array of task names in the day, same as for add_daily_task page*/
 tasks = ["test1blahblah", "test2yadeyadeyade", "test3ldkmglkf"]; //find a way to get the tasks
 
+function doublehours(num) {
+    if (num < 10) {
+        num = "0" + num; //oooo can add string to number in javascript I didnt know that
+    }
+    return num;
+}
+
+function doubleminutes(num) {
+    if (num < 10) {
+        num = "0" + num;
+    }
+    return num;
+}
+
 /*Onload can only appear once!!!!!!*/
 window.onload = function getHeading() {
     let today = new Date(); //creating object to use Date method
@@ -36,7 +50,7 @@ window.onload = function getHeading() {
     let currentDate = document.getElementById("currentDate");
     currentDate.setAttribute("value", date);
 
-    let time = today.getHours() + ":" + today.getMinutes();
+    let time = doublehours(today.getHours()) + ":" + doubleminutes(today.getMinutes());
     let currentTime = document.getElementById("currentTime");
     currentTime.setAttribute("value", time);
 
@@ -79,11 +93,7 @@ window.onload = function getHeading() {
 /*For popup*/
 function OpenPopupWindow() {
     var url = "http://127.0.0.1:5501/add_daily_task.html";
-    myRef = window.open(url, 'mywin', 'left=20, top=20, width=750, height=700, toolbar=1, resizable=0');
+    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=750, height=700, toolbar=1, resizable=0');
     myRef.focus();
-    myRef.getElementById("done").onclick = ClosePopup();
 }
 
-function ClosePopup() {
-    myRef.close();
-}

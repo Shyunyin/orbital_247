@@ -116,5 +116,6 @@ function displayRadioValue() {
       parseInt(document.getElementById("date").value)
     )
   }
+  scheduleTask(); //to schedule the task
 }
 

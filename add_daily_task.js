@@ -1,3 +1,6 @@
+import NonFixedTask from "./NonFixedTask.js";
+import FixedTask from "./FixedTask.js";
+
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myFunction() {
@@ -19,6 +22,7 @@ function myFunction() {
   }
 
 /*CSS purpose: For selection of buttons to only happen once*/
+let catNum = 0;
   function catFunction(button_switch){
     if (button_switch === 0) {
       document.getElementById("work").style.backgroundColor="white";
@@ -37,6 +41,7 @@ function myFunction() {
       document.getElementById("exercise").style.backgroundColor="#e3aba1";
       document.getElementById("misc").style.backgroundColor="#e3aba1";
     }
+    catNum = button_switch; //to cause category to follow the array number
   }
 
   let numOfSessions = 1; /*To use as multiplier for the hours calculated*/
@@ -80,17 +85,17 @@ function myFunction() {
   }
 
   /*This function is to trigger the initial function when an option is selected*/
-  var checkTime = document.getElementById("timeTask");
-  var checkDuration = document.getElementById("durationTask");
+  // var checkTime = document.getElementById("timeTask");
+  // var checkDuration = document.getElementById("durationTask");
 
-  function check() {
-    if (checkTime.checked) {
-      initial();
-    }
-    if (checkDuration.checked) {
-      initial();
-    }
-  }
+  // function check() {
+  //   if (checkTime.checked) {
+  //     initial();
+  //   }
+  //   if (checkDuration.checked) {
+  //     initial();
+  //   }
+  // }
 
   /*To calculate remaining hours and minute*/ /*FUNCTION IS NOT WORKING NOOOOO*/
   function calculationDuration() {
@@ -156,3 +161,48 @@ function closeMe() {
 document.getElementById("done").addEventListener("click", closeMe);
 
 
+/*Integrating with javascript. Adding to Non fixed Task and Fixed Task*/
+
+var cat = document.getElementsByName("select");
+var time = new Date();
+let start = document.getElementById("startTime").value
+let end = document.getElementById("endTime").value
+
+let startTime = new Time( //create new time object for start time in Window and individual mode objects
+  parseInt(start.substr(0, 2)),
+  parseInt(start.substr(3, 4))
+)
+
+let endTime = new Time( //create new time object for end time in Window and individual mode objects
+  parseInt(end.substr(0, 2)),
+  parseInt(end.substr(3, 4))
+)
+
+let hourDuration = parseInt(document.getElementById("hour").value); //get number
+let minDuration = parseInt(document.getElementById("minute").value); //get number
+
+function check() {
+  if (checkTime.checked) {
+    var Task = new FixedTask (
+      document.getElementById("taskName").value,
+      catNum, //category number
+      time.getFullYear(), //full year
+      time.getMonth(), //month from 0-11
+      time.getDate(),
+      startTime,
+      endTime
+    )
+  }
+  if (checkDuration.checked) {
+    var Task = new NonFixedTask(
+      document.getElementById("taskName").value,
+      catNum, //category number
+      time.getMonth(), //month from 0-11
+      time.getDate(),
+      numOfSessions, //number for number of sessions
+      [hourDuration, minDuration], //not very sure about format!!
+      //find way to see how to get value of selected drop down
+    )
+  }
+  scheduleTask(); //to schedule task
+}

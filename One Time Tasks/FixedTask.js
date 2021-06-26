@@ -42,3 +42,5 @@ class FixedTask extends OneTimeTask {
     }
 
 }
+
+export default FixedTask;

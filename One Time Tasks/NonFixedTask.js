@@ -450,3 +450,5 @@ class NonFixedTask extends OneTimeTask {
 }
 
 NonFixedTask.prototype.group = 0;
+
+export default NonFixedTask;

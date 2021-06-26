@@ -43,14 +43,14 @@
     <!-- Make checkboxes either or, have the same name to be in the same group, have diff values to make distinct--> 
     <nav>
       <element id="selectTime">
-        <input type="radio" id="timeTask" name="select" value="time"> 
+        <input type="radio" id="timeTask" name="select" value="time" onclick="initial()"> 
         <label for="timeTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Time</label><br>
       </element>
       <element id="or">
         <h3>OR</h3>
       </element>
       <element id="selectDuration">
-        <input type="radio" id="durationTask" name="select" value="duration">
+        <input type="radio" id="durationTask" name="select" value="duration" onclick="initial()">
         <label for="durationTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Duration (per session)</label><br>
       </element>
     </nav>

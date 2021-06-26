@@ -467,6 +467,8 @@ class Scheduling {
             }
             this.nonFixedWindowArr.splice(startIndex, endIndex - startIndex + 1);
         }
+        // Returning the final schedule as the output
+        return this.fixedWindowArr;
     }
 }
 

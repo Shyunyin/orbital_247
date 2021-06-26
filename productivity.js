@@ -1,4 +1,4 @@
-class ProductivityStatistics {
+//class ProductivityStatistics {
 
     /**
      * Display of the total number of hours user spent on completing tasks for the day (accumulated based on the data retrieved from timers)
@@ -18,34 +18,50 @@ class ProductivityStatistics {
      */
 
     // Main idea: All these calculations will be done after the schedule has been generated
-    totalHoursSpent() {
+    var dayCount = 0; 
+    function totalHoursSpent() {
         let i;
-        let totalHours = 0; //in mins
+        let totalMins = 0; //in mins
         for (i = 0; i < counterArr.length; i++) {
-            totalHours += counterArr[i] //assuming the durations recorded in mins
+            totalMins += counterArr[i] //assuming the durations recorded in mins
         }
-        let newHours = Math.trunc(totalHours / 60);
-        let newMins = totalHours - (newHours * 60);
+        ProductivityStatistics.prototype.totalMinsForWeek += totalMins;
+        let newHours = Math.trunc(totalMins / 60);
+        let newMins = totalMins - (newHours * 60);
         return [newHours, newMins];
     }
-    
+
+    function percentageCompletionOfTasks() {
+        if (dayCount == 7) {
+            function roundToTwo(num) {
+                return +(Math.round(num + "e+2")  + "e-2");
+            }
+            return roundToTwo(ProductivityStatistics.prototype.percentageCompletion / 7); 
+        }
+            ProductivityStatistics.prototype.percentageCompletion += ProductivityStatistics.prototype.numOfTasksDone / ProductivityStatistics.prototype.numOfScheduledTasks; 
+    }
     //TODO: If a user finishes their tasks earlier than they are meant to, then it should not be recorded as less productive! As long as user clicks completed button, it should just be taken as productive. If the user exceeds (?) --> how will the timer extend?
-    categoryBreakdown(finalisedTaskArr) {
+    function categoryBreakdown(finalisedTaskArr) {
         let workMins = 0;
         let miscellaneousMins = 0;
         let exerciseMins = 0;
 
+        if (dayCount == 7) {
+            let workPortion = ((workMins / ProductivityStatistics.prototype.totalMinsForWeek) * 100);
+            let miscellaneousPortion = ((miscellaneousMins / ProductivityStatistics.prototype.totalMinsForWeek) * 100);
+            let exercisePortion = ((exerciseMins / ProductivityStatistics.prototype.totalMinsForWeek) * 100);
+            return [workPortion, miscellaneousPortion, exercisePortion];
+        }
         let i;
         //TODO: Need to use counter timing here right?
-        for(i = 0; i < finalisedTaskArr.length; i++) {
+        for(i = 0; i < counterArr.length; i++) {
             //TODO: Check if getTaskCategory exists. If not create it. 
-            duration = Time.duration(finalisedTaskArr[i].getStartTime(), finalisedTaskArr[i].getEndTime());
             if (finalisedTaskArr[i].getTaskCategory() == "Work" || finalisedTaskArr[i].getTaskCategory() == "Partially Work" || finalisedTaskArr[i].getTaskCategory() == "Fully Work") {
-                workMins += (duration[0] * 60) + duration[1];
+                workMins += counterArr[i]; //TODO: what is the format of the durations stored in counterArr
             } else if (finalisedTaskArr[i].getTaskCategory() == "Miscellaneous") {
-                miscellaneousMins += (duration[0] * 60) + duration[1];
+                miscellaneousMins += counterArr[i];
             } else if (finalisedTaskArr[i].getTaskCategory() == "Exercise") {
-                exerciseMins += (duration[0] * 60) + duration[1];
+                exerciseMins += counterArr[i];
             }
 
         }
@@ -56,18 +72,21 @@ class ProductivityStatistics {
         */
     }
 
-    productivityCalculation() {
+    function productivityCalculation() {
         //TODO: We are going to give users the productivity slot options
         //INCOMPLETE
         let window = n
     }
 
-}
+//}
+ProductivityStatistics.prototype.totalMinsForWeek;
+
+
 
 ProductivityStatistics.prototype.workHours;
 ProductivityStatistics.prototype.miscellaneousHours;
 ProductivityStatistics.prototype.exerciseHours;
-ProductivityStatistics.prototype.totalHours;
+ProductivityStatistics.prototype.totalHours = [];
 ProductivityStatistics.prototype.categoryAvg = []; //Format: [[work, misc, exer], ...]
 ProductivityStatistics.prototype.productiveSlot1;
 ProductivityStatistics.prototype.productiveSlot2;
@@ -81,3 +100,5 @@ ProductivityStatistics.prototype.numOfScheduledTasks;
 // Tracks the number of tasks done for the day (to increase if the counter completes)
 // Change accordingly if user deletes and reschedules tasks
 ProductivityStatistics.prototype.numOfTasksDone;
+
+ProductivityStatistics.prototype.percentageCompletion;

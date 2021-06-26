@@ -142,7 +142,7 @@ window.onload = function createDropdown() { //ensure that dropdown list loads on
   for (let i=0; i < taskList.length; i++) {
     let option = document.createElement("option");
     option.value = taskList[i]; //add a value attribute
-    option.text = taskList[i];
+    option.text = taskList[i];  
     option.classList.add(taskList[i]); //add a class attribute
     document.getElementById("dropdownList").append(option); //appending options to the select
   }
@@ -200,8 +200,8 @@ function check() {
       time.getMonth(), //month from 0-11
       time.getDate(),
       numOfSessions, //number for number of sessions
-      [hourDuration, minDuration], //not very sure about format!!
-      //find way to see how to get value of selected drop down
+      [hourDuration, minDuration], //not very sure about format!! currently both variables are numbers
+      document.getElementById("dropdownList").value //gives a string, will be empty if it is not a follow up task
     )
   }
   scheduleTask(); //to schedule task

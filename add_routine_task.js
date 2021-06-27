@@ -1,9 +1,9 @@
-import Window from "./Window.js";
-import RoutineTask from "./RoutineTask.js"
-import DailyTask from "./DailyTask.js";
-import WeeklyTask from "./DailyTask.js";
-import BiweeklyTask from "./DailyTask.js";
-import MonthlyTask from "./DailyTask.js";
+// import Window from "./Window.js";
+// import RoutineTask from "./RoutineTask.js"
+// import DailyTask from "./DailyTask.js";
+// import WeeklyTask from "./DailyTask.js";
+// import BiweeklyTask from "./DailyTask.js";
+// import MonthlyTask from "./DailyTask.js";
 
 /*Array for category with the following index
  * 0: work, 1: exercise, 2: misc, 3: meal
@@ -71,51 +71,62 @@ let endTime = new Time( //create new time object for end time in Window and indi
 // );
 
 /*Function to get the mode to create the object required and to link to the confirmed mode*/
-function displayRadioValue() {
-  var ele = document.getElementsByName("choose");
+// function displayRadioValue() {
+//   var ele = document.getElementsByName("choose");
 
-  for (let i = 0; i < ele.length; i++) {
-    if (ele[i].checked) {
-      var mode = ele[i].value;
-    }
-  }
+//   for (let i = 0; i < ele.length; i++) {
+//     if (ele[i].checked) {
+//       var mode = ele[i].value;
+//     }
+//   }
 
-  if (mode === "daily") {
-    let saveTask = new DailyTask( //question: dont know if should save as same taskname "saveTask" throughout
-      document.getElementById("taskName").innerText,
-      category_num;
-      startTime,
-      endTime,
-    )
+//   if (mode === "daily") {
+//     let saveTask = new DailyTask( //question: dont know if should save as same taskname "saveTask" throughout
+//       document.getElementById("taskName").innerText,
+//       category_num,
+//       startTime,
+//       endTime,
+//     )
     
-  } else if (mode === "weekly") {
-    let saveTask = new WeeklyTask(
-      document.getElementById("taskName").innerText,
-      category_num;
-    startTime,
-      endTime,
-      parseInt(document.getElementById("weeklydropdown").value)
-    )
+//   } else if (mode === "weekly") {
+//     let saveTask = new WeeklyTask(
+//       document.getElementById("taskName").innerText,
+//       category_num;
+//     startTime,
+//       endTime,
+//       parseInt(document.getElementById("weeklydropdown").value)
+//     )
 
-  } else if (mode === "biweekly") {
-    let saveTask = new BiweeklyTask(
-      document.getElementById("taskName").innerText,
-      category_num;
-    startTime,
-      endTime,
-      parseInt(document.getElementById("biweeklydropdown").value)
-    parseInt(document.getElementById("chooseWeeks").value)
-    )
+//   } else if (mode === "biweekly") {
+//     let saveTask = new BiweeklyTask(
+//       document.getElementById("taskName").innerText,
+//       category_num;
+//     startTime,
+//       endTime,
+//       parseInt(document.getElementById("biweeklydropdown").value)
+//     parseInt(document.getElementById("chooseWeeks").value)
+//     )
 
-  } else { //mode === "monthly"   
-    let saveTask = new MonthlyTask(
-      document.getElementById("taskName").innerText,
-      category_num;
-    startTime,
-      endTime,
-      parseInt(document.getElementById("date").value)
-    )
-  }
-  scheduleTask(); //to schedule the task
+//   } else { //mode === "monthly"   
+//     let saveTask = new MonthlyTask(
+//       document.getElementById("taskName").innerText,
+//       category_num;
+//     startTime,
+//       endTime,
+//       parseInt(document.getElementById("date").value)
+//     )
+//   }
+//   scheduleTask(); //to schedule the task
+// }
+
+/*For the navigation of pages*/
+function newWindow() {
+  window.alert("Current routine task saved!");
+  window.location.href = "http://127.0.0.1:5501/add_routine_task.html";
 }
 
+function mainSchedule() {
+  window.alert("Let's input more details to set-up!");
+  window.location.href = "http://127.0.0.1:5501/WakeUpTime/wakeup.html";
+
+}

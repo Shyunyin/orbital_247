@@ -213,6 +213,7 @@
 			function check(form) {
 				//if (form.userid.value == "hello" && form.pwd.value == "world") {
                     return (login());
+					window.location.href = "http://127.0.0.1:5501/add_routine_task.html"; //change to productivity page
 					//window.open("https://example.com");
 				//} else {
 				//	alert("Incorrect username or password! Please try again");
@@ -255,7 +256,8 @@
                     .then((userCredential) => {
                         // Signed in
                         var user = userCredential.user;
-                        window.alert("Welcome " + userEmail)
+                        window.alert("Welcome " + userEmail + ". For a start, we will be inputting our routine tasks.")
+						window.location.href = "http://127.0.0.1:5501/add_routine_task.html"; //change to productivity page
                     })
                     .catch((error) => {
                         var errorCode = error.code;
@@ -281,8 +283,10 @@
                         // The signed-in user info.
                         //var user = result.user;
                         // ...
-						//window.alert("You have logged in successfully!")
+						window.alert("Welcome to your very own scheduler! For a start, we will be inputting our routine tasks!")
 						//return ("http://127.0.0.1:5502/afterlogin.html");
+						window.location.href = "http://127.0.0.1:5501/add_routine_task.html"; //change to productivity page
+				
                     }).catch(error=>{
 						console.log(error)
                         // Handle Errors here.

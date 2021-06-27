@@ -4,7 +4,7 @@
 <head>
     <title>Add routine task</title>
     <script type="text/javascript" type="module" src="add_routine_task.js"></script>
-    <script type="text/javascript" type="module" src="Window.js"></script>
+    <!-- <script type="text/javascript" type="module" src="Window.js"></script> -->
     <link rel="stylesheet" href="add_routine_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
     <!-- Parent-child relationship for inline-->
     <div id="title">
         <li>
-            <h3>Add a task:</h3>
+            <h3>Add a routine task:</h3>
         </li>
         <!-- INPUT for taskName-->
         <li>
@@ -120,8 +120,8 @@
 
     <!--Buttons for ADD, DONE-->
     <div class="btn-group-actions">
-        <button id="add" onclick="finalAction(1)">Add another routine task</button>
-        <button id="done" onclick="finalAction(2)">Done adding ALL routine tasks</button>
+        <button id="add" onclick="newWindow()">Submit and Add another routine task</button>
+        <button id="done" onclick="mainSchedule()">Submit and Done adding ALL routine tasks</button>
     </div>
 
 </body>

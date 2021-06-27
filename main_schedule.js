@@ -27,7 +27,7 @@ function textMonth(month) {
 }
 
 /*Must get input array of task names in the day, same as for add_daily_task page*/
-tasks = ["test1blahblah", "test2yadeyadeyade", "test3ldkmglkf"]; //find a way to get the tasks. [only one time tasks]
+tasks = ["Test1", "Test2", "Test3"]; //find a way to get the tasks. [only one time tasks]
 
 function doublehours(num) {
     if (num < 10) {
@@ -86,7 +86,32 @@ window.onload = function getHeading() {
         append.style.marginTop = topText;
         let ele = document.getElementById("postit");
         ele.appendChild(append);
+        // let ele = document.getElementById("iconActions");
+        // let btn4 = document.createElement("button");
+        // btn4.setAttribute("id", "btn4"); //id = "btn4"
+        // btn4.style.position="relative";
+        // btn4.style.zIndex="5";
+        // btn4.style.backgroundColor="#ECEDEA";
+        // btn4.style.borderRadius="5px";
+        // btn4.style.marginLeft="5px";
+        // btn4.onmouseover = function() {
+        //     this.style.backgroundColor = "#C4C4C4";
+        // }
+        // btn4.onmouseout = function() {
+        //     this.style.backgroundColor = "#ECEDEA";
+        // }
+        // let deletetask = document.createElement("i");
+        // deletetask.setAttribute("class","fa fa-trash-o fa-2x");
+        // deletetask.setAttribute("aria-hidden", "true");
+        // btn4.appendChild(deletetask);
+        // ele.appendChild(btn4);
     }
+
+    /*To test whether the icons work: TEMP FOR MILESTONE*/
+    // createPlay();
+    // createReschedule();
+    // createEdit();
+    // createDelete();
 }
 
 /*For popup*/
@@ -96,101 +121,246 @@ function OpenPopupWindow() {
     myRef.focus();
 }
 
-/*When generate schedule button is pressed*/
+/*For when the 4 icons are clicked*/
+/*start button*/
+function clickPlay() {
+    var url = "http://127.0.0.1:5501/countdownTimer.html";
+    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=750, height=700, toolbar=1, resizable=0');
+    myRef.focus();
+}
+/*reschedule button*/
+function clickreschedule() {
 
-/*PROBLEMATIC FUNCTIONNNN*/
+}
+/*edit button*/
+function clickedit() {
+
+}
+/*delete button*/
+function clickdelete() {
+
+}
+
+/*When generate schedule button is pressed*/
 /*printSchedule function is to create the html and css on the
- * window that will appear on the main schedule*/
-function printSchedule(arr) {
-    for (let i=0; i < arr.length; i++) {
-        let block = document.getElementById("schedule");
-        let division = document.createElement("div"); //creating the new division to contain item in schedule
-        division.classList.add("division"); //classname of each item 
-        division.style.borderColor = "black";
-        //can continue adding css for division
-        block.appendChild(division); //adding the new division with classname "division" to schedule
-        /*Below will be what is appended to division: Time and taskname*/
-        /*Time*/
-        let time = document.createElement("input");
-        time.classList.add("time"); //time with class name time
-        time.setAttribute("readonly", "readonly"); //set to readonly
-        time.value = arr[i].timeItem; //need to see how objects in arr are stored to extract the time *TO BE FILLED*
-        time.style.fontFamily = "'Signika Negative', sans-serif";
-        time.style.fontSize = "large";
-        time.style.position = "absolute";
-        time.style.zIndex = "3";
-        //can continue adding css for the time
-        division.appendChild(time); //adding the time part of the item
-        /*TaskName*/
-        let taskName = document.createElement("input");
-        taskName.classList.add("taskName"); //class: taskName
-        taskName.setAttribute("readonly", "readonly"); //set to readonly
-        taskName.value = arr[i].taskName; //need to see how objects in arr are stored to extract the time *TO BE FILLED*
-        taskName.style.fontFamily = "'Signika Negative', sans-serif";
-        taskName.style.fontSize = "large";
-        taskName.style.position = "absolute";
-        taskName.style.zIndex = "3";
-        taskName.style.marginTop = 20; //TO BE CHANGED IF NOT SUITABLE
-        taskName.style.marginLeft = 30; //TO BE CHANGED IF NOT SUITABLE
-        //can continue adding css for taskname
-        division.appendChild(taskName);
-    } 
-} 
+ * window that will appear on the main schedule
+ * MUST SPLIT INTO FIXED AND NON-FIXED TASK CREATION: BOTH FIXED AND NON-FIXED BUTTON
+ */
+// function printSchedule(arr) {
+//     for (let i=0; i < arr.length; i++) {
+//         let block = document.getElementById("schedule");
+//         let division = document.createElement("div"); //creating the new division to contain item in schedule
+//         division.classList.add("container"); //classname of each item 
+//         division.style.borderColor = "black";
+//         //can continue adding css for division
+//         block.appendChild(division); //adding the new division with classname "division" to schedule
+//         /*Below will be what is appended to division: Time and itemName*/
+//         /*Time*/
+//         let itemTime = document.createElement("input");
+//         itemTime.classList.add("time"); //time with class name time
+//         itemTime.setAttribute("readonly", "readonly"); //set to readonly
+//         itemTime.value = arr[i].timeItem; //need to see how objects in arr are stored to extract the time *TO BE FILLED*
+//         itemTime.style.fontFamily = "'Signika Negative', sans-serif";
+//         itemTime.style.fontSize = "large";
+//         itemTime.style.position = "absolute";
+//         itemTime.style.zIndex = "3";
+//         //can continue adding css for the time
+//         division.appendChild(time); //adding the time part of the item
+//         /*itemName*/
+//         let itemName = document.createElement("input");
+//         itemName.classList.add("itemName"); //class: itemName
+//         itemName.setAttribute("readonly", "readonly"); //set to readonly
+//         itemName.value = arr[i].itemName; //need to see how objects in arr are stored to extract the time *TO BE FILLED*
+//         itemName.style.fontFamily = "'Signika Negative', sans-serif";
+//         itemName.style.fontSize = "large";
+//         itemName.style.position = "absolute";
+//         itemName.style.zIndex = "3";
+//         itemName.style.marginTop = 20; //TO BE CHANGED IF NOT SUITABLE
+//         itemName.style.marginLeft = 30; //TO BE CHANGED IF NOT SUITABLE
+//         //can continue adding css for itemName
+//         division.appendChild(itemName);
+//     } 
+// } 
 
 // /*actions(): function that creates icons onclick of class name "division"
-//  * when any division/item is clicked, the 4 icons will appear. For the following
-//  * Fixed Routine Task: none
+//  * when any division/item is clicked, th icons will appear. For the following
+//  * Fixed Routine Task: none MAKE SURE THAT IT IS A CONTAINER
 //  * Fixed (one-time) Task: 2.Reschedule 3.Edit 4.Delete
 //  * Non-fixed (one-time) Task: 1.Play 2.Reschedule 3.Edit 4.Delete
 //  *  QUESTION: WILL THIS BE FOR ALL THE ITEMS?
 //  */ 
-document.getElementsByClassName("division").onclick = function actions() {
+
+/*create functions are for the icons*/
+function createPlay() {
+    let ele = document.getElementById("iconActions");
+    let btn1 = document.createElement("button");
+    btn1.setAttribute("class", "btn1"); //id = "btn1"
+    btn1.setAttribute("onclick", "clickPlay()");
+    btn1.style.position="relative";
+    btn1.style.zIndex="5";
+    btn1.style.backgroundColor="#ECEDEA";
+    btn1.style.borderRadius="5px";
+    btn1.onmouseover = function() {
+        this.style.backgroundColor = "#C4C4C4";
+    }
+    btn1.onmouseout = function() {
+        this.style.backgroundColor = "#ECEDEA";
+    }
+    let play = document.createElement("i");
+    play.setAttribute("class", "fa fa-play-circle fa-2x");
+    play.setAttribute("aria-hidden", "true");
+    btn1.appendChild(play);
+    ele.appendChild(btn1);
 }
+
+function createReschedule() {
+    let ele = document.getElementById("iconActions");
+    let btn2 = document.createElement("button");
+    btn2.setAttribute("id", "btn2"); //id = "btn2"
+    btn2.style.position="relative";
+    btn2.style.zIndex="5";
+    btn2.style.backgroundColor="#ECEDEA";
+    btn2.style.borderRadius="5px";
+    btn2.style.marginLeft="5px";
+    btn2.onmouseover = function() {
+        this.style.backgroundColor = "#C4C4C4";
+    }
+    btn2.onmouseout = function() {
+        this.style.backgroundColor = "#ECEDEA";
+    }
+    let reschedule = document.createElement("i");
+    reschedule.setAttribute("class","fa fa-calendar fa-2x");
+    reschedule.setAttribute("aria-hidden", "true");
+    btn2.appendChild(reschedule);
+    ele.appendChild(btn2);
+}
+
+function createEdit() {
+    let ele = document.getElementById("iconActions");
+    let btn3 = document.createElement("button");
+    btn3.setAttribute("id", "btn3"); //id = "btn3"
+    btn3.style.position="relative";
+    btn3.style.zIndex="5";
+    btn3.style.backgroundColor="#ECEDEA";
+    btn3.style.borderRadius="5px";
+    btn3.style.marginLeft="5px";
+    btn3.onmouseover = function() {
+        this.style.backgroundColor = "#C4C4C4";
+    }
+    btn3.onmouseout = function() {
+        this.style.backgroundColor = "#ECEDEA";
+    }
+    let edit = document.createElement("i");
+    edit.setAttribute("class", "fa fa-pencil-square-o fa-2x");
+    edit.setAttribute("aria-hidden", "true");
+    btn3.appendChild(edit);
+    ele.appendChild(btn3);
+}
+
+function createDelete() {
+    let ele = document.getElementById("iconActions");
+    let btn4 = document.createElement("button");
+    btn4.setAttribute("id", "btn4"); //id = "btn4"
+    btn4.style.position="relative";
+    btn4.style.zIndex="5";
+    btn4.style.backgroundColor="#ECEDEA";
+    btn4.style.borderRadius="5px";
+    btn4.style.marginLeft="5px";
+    btn4.onmouseover = function() {
+        this.style.backgroundColor = "#C4C4C4";
+    }
+    btn4.onmouseout = function() {
+        this.style.backgroundColor = "#ECEDEA";
+    }
+    let deletetask = document.createElement("i");
+    deletetask.setAttribute("class","fa fa-trash-o fa-2x");
+    deletetask.setAttribute("aria-hidden", "true");
+    btn4.appendChild(deletetask);
+    ele.appendChild(btn4);
+}
+
+/*To remove the current icons under actions*/
+// function removeCurrentIcons() {
+//     var elem = document.getElementById("iconActions");
+//     elem.remove();
+// }
+
+/*To add fixed task select icons*/
+function tempFixed() {
+    createReschedule();
+    createEdit();
+    createDelete();
+}
+
+/*To add non-fixed task select icons*/
+function tempNonFixed() {
+    createPlay();
+    createReschedule();
+    createEdit();
+    createDelete();
+}
+
+/*UNCOMMENT WHEN LINKING TO JAVASCRIPT*/
+// document.getElementsByClassName("division").onclick = function actions() {
+//     //QUESTION HOW DO I CHECK IF IT IS A FIXED ONE TIME TASK OR A NON-FIXED ONE TIME TASK: ooo is it window type
+//     //must double check all the inputs cause its not very accurate
+   
+//     if (task.type == 1) { //fixed task
+//         createReschedule();
+//         createEdit();
+//         createDelete();
+//     } else if (task.type == 2) {
+//         createPlay();
+//         createReschedule();
+//         createEdit();
+//         createDelete();
+//     }
+// }
 
 //just to stand in for the window
-class storeTask {
-    constructor(
-        timeItem,
-        taskName
-    ) {
-        this.timeItem = timeItem;
-        this.taskName = taskName;
-    }
-}
+// class storeTask {
+//     constructor(
+//         timeItem,
+//         taskName
+//     ) {
+//         this.timeItem = timeItem;
+//         this.taskName = taskName;
+//     }
+// }
 
-const task1 = new storeTask(
-    "22:30", //cannot just key as a number 22:30
-    "item1"
-)
+// const task1 = new storeTask(
+//     "22:30", //cannot just key as a number 22:30
+//     "item1"
+// )
 
-const task2 = new storeTask(
-    "12:30",
-    task2
-)
+// const task2 = new storeTask(
+//     "12:30",
+//     "item2"
+// )
 
-const task3 = new storeTask(
-    "20:59",
-    task3
-)
+// const task3 = new storeTask(
+//     "20:59",
+//     "item3"
+// )
 
 /*clearPostit function is to remove the tasks printed on the post it 
  * after the schedule has been generated*/ /*FKING WORKS ON CONSOLE BUT NOT HERE ARGHHHHHHH*/
-document.getElementById("generateSchedule").onclick() = function clearPostit() {
-    // var ele = document.getElementById("postit");
-    var child = Array.from(document.getElementsByClassName("task"));
-    for (let i = 0; i < child.length; i++) {
-        child[i].remove();
-    }
-}
+// function clearPostit() {
+//     // var ele = document.getElementById("postit");
+//     var child = Array.from(document.getElementsByClassName("task"));
+//     for (let i = 0; i < child.length; i++) {
+//         child[i].remove();
+//     }
+// }
 
 // /*algorithm: where generation of schedule for algorithm is ran*/
-function algorithm() {
-    //link to algorithm which will output an array of the order of tasks which contains an array of objects that contains taskname and time
-    //algorithm carried out and array is created
-    var arrayOfTasks = [task1, task2, task3]; //man-made 
-    printSchedule(arrayOfTasks); //arrayOfTasks will contain the list of task objects in order
-    // clearPostit(); //to clear the list of items in post it
-}
+// function algorithm() {
+//     //link to algorithm which will output an array of the order of tasks which contains an array of objects that contains taskname and time
+//     //algorithm carried out and array is created
+//     var arrayOfTasks = [task1, task2, task3]; //man-made 
+//     printSchedule(arrayOfTasks); //arrayOfTasks will contain the list of task objects in order
+//     // clearPostit(); //to clear the list of items in post it
+// }
 
 // document.getElementById("generateSchedule").addEventListener("click", algorithm);
 // document.getElementById("generateSchedule").addEventListener("click", clearPostit);

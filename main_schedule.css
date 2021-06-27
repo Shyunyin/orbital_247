@@ -181,6 +181,23 @@
   margin-left: 80px;
 }
 
+.actions {
+  position: absolute;
+  z-index: 5;
+  font-family: "Signika Negative", sans-serif;
+  font-size: large;
+  margin-top: 480px;
+  margin-left: 90px;
+  width: 100%;
+}
+
+/* #iconActions {
+  position: absolute;
+  z-index: 5;
+  margin-top: 350px;
+  margin-left: 0px;
+} */
+
 /*Buttons*/
 #addTask {
   font-family: "Signika Negative", sans-serif;
@@ -195,7 +212,7 @@
   height: 70px;
   width: 70px;
   margin-left: 1400px;
-  margin-top: 600px;
+  margin-top: 590px;
 }
 #addTask:hover {
   background-color: #fedcce;
@@ -244,4 +261,68 @@
   margin-top: 750px;
   margin-left: 1300px;
   width: 90px;
+}
+
+/*Temporary input for main schedule*/
+
+#container {
+  /*For fixed routine task container*/
+  /* border-color: black;
+  height: 600px;
+  width: 720px;
+  border-width: 2px;
+  position: relative;
+  z-index: 5; */
+  margin-top: 15px;
+  margin-left: 10px;
+}
+#itemTime {
+  font-family: "Signika Negative", sans-serif;
+  font-size: large;
+  border: none;
+  background: none;
+}
+#itemName {
+  font-family: "Signika Negative", sans-serif;
+  font-size: large;
+  border: none;
+  background: none;
+}
+
+#fixed {
+  /*For fixed task container*/
+  margin-top: 15px;
+  margin-left: 10px;
+}
+#fixedItemTime {
+  font-family: "Signika Negative", sans-serif;
+  font-size: large;
+  border: none;
+  background: none;
+}
+#selectFixedItem {
+  font-family: "Signika Negative", sans-serif;
+  font-size: large;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+#nonFixed {
+  /*For non-fixed task container*/
+  margin-top: 15px;
+  margin-left: 10px;
+}
+#nonFixedItemTime {
+  font-family: "Signika Negative", sans-serif;
+  font-size: large;
+  border: none;
+  background: none;
+}
+#selectNonFixedItem {
+  font-family: "Signika Negative", sans-serif;
+  font-size: large;
+  border: none;
+  background: none;
+  cursor: pointer;
 }

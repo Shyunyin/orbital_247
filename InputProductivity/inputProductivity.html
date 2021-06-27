@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" type="module" src="countdownTimer.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
+<style>
+    body{
+    font-family: "Signika Negative", sans-serif;
+    background-color: #f6f7f1;
+    color: #1e5353;
+    text-align: center;
+    margin-top: 300px;
+    }
+    .btn-group {
+        position: center;
+        margin-left: 230px;
+    }
+    .btn-group .button {
+    font-family: "Signika Negative", sans-serif;
+    background-color: #96d6ed; /* Green */
+    border: 2px solid black;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    float: left;
+    }
+
+    .btn-group .button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+    }
+
+    .btn-group .button:hover {
+    background-color: #A5E4FB;
+    }
+    #done {
+    font-family: "Signika Negative", sans-serif;
+    font-size: large;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: #e3aba1;
+    margin-top: 50px;
+    }
+    #done:hover {
+        background-color: #FEDCCE;
+    }
+</style>
+</head>
+
+<body>
+    <h2>Select the timeslot(s) which you think you&nbsp;</h2>
+    <h2> are the most productive at:</h2>
+    <div class="btn-group">
+        <button id="num1" class="button" onclick="time(1)">08:00am-12:00pm</button>
+        <button id="num2" class="button" onclick="time(2)">12:00pm-04:00pm</button>
+        <button id="num3" class="button" onclick="time(3)">04:00pm-08:00pm</button>
+        <button id="num4" class="button" onclick="time(4)">08:00pm-12:00am</button>
+        <button id="num5" class="button" onclick="time(5)">12:00am-04:00am</button>
+        <button id="num6" class="button" onclick="time(6)">04:00am-08:00am</button>
+      </div>
+      <button id="done" onclick="nextPage()">Back to main schedule</button>
+   
+    <script>
+        var check = 0;
+    function time(num){
+    if (num === 1) {
+      document.getElementById("num1").style.backgroundColor="white";
+      document.getElementById("num2").style.backgroundColor="#96d6ed";
+      document.getElementById("num3").style.backgroundColor="#96d6ed";
+      document.getElementById("num4").style.backgroundColor="#96d6ed";
+      document.getElementById("num5").style.backgroundColor="#96d6ed";
+      document.getElementById("num6").style.backgroundColor="#96d6ed";
+    } else if (num === 2) {
+      document.getElementById("num1").style.backgroundColor="#96d6ed";
+      document.getElementById("num2").style.backgroundColor="white";
+      document.getElementById("num3").style.backgroundColor="#96d6ed";
+      document.getElementById("num4").style.backgroundColor="#96d6ed";
+      document.getElementById("num5").style.backgroundColor="#96d6ed";
+      document.getElementById("num6").style.backgroundColor="#96d6ed";
+    } else if (num=== 3) {
+      document.getElementById("num1").style.backgroundColor="#96d6ed";
+      document.getElementById("num2").style.backgroundColor="#96d6ed";
+      document.getElementById("num3").style.backgroundColor="white";
+      document.getElementById("num4").style.backgroundColor="#96d6ed";
+      document.getElementById("num5").style.backgroundColor="#96d6ed";
+      document.getElementById("num6").style.backgroundColor="#96d6ed";
+    } else if (num=== 4) {
+      document.getElementById("num1").style.backgroundColor="#96d6ed";
+      document.getElementById("num2").style.backgroundColor="#96d6ed";
+      document.getElementById("num3").style.backgroundColor="#96d6ed";
+      document.getElementById("num4").style.backgroundColor="white";
+      document.getElementById("num5").style.backgroundColor="#96d6ed";
+      document.getElementById("num6").style.backgroundColor="#96d6ed";
+    } else if (num === 5) {
+      document.getElementById("num1").style.backgroundColor="#96d6ed";
+      document.getElementById("num2").style.backgroundColor="#96d6ed";
+      document.getElementById("num3").style.backgroundColor="#96d6ed";
+      document.getElementById("num4").style.backgroundColor="#96d6ed";
+      document.getElementById("num5").style.backgroundColor="white";
+      document.getElementById("num6").style.backgroundColor="#96d6ed";
+    }else if (num === 6) {
+      document.getElementById("num1").style.backgroundColor="#96d6ed";
+      document.getElementById("num2").style.backgroundColor="#96d6ed";
+      document.getElementById("num3").style.backgroundColor="#96d6ed";
+      document.getElementById("num4").style.backgroundColor="#96d6ed";
+      document.getElementById("num5").style.backgroundColor="#96d6ed";
+      document.getElementById("num6").style.backgroundColor="white";
+    } else {
+      document.getElementById("num1").style.backgroundColor="#96d6ed";
+      document.getElementById("num2").style.backgroundColor="#96d6ed";
+      document.getElementById("num3").style.backgroundColor="#96d6ed";
+      document.getElementById("num4").style.backgroundColor="#96d6ed";
+      document.getElementById("num5").style.backgroundColor="#96d6ed";
+      document.getElementById("num6").style.backgroundColor="#96d6ed";
+    }
+    check = num;
+}
+
+    function nextPage() {
+        if (check === 0) {
+            window.alert("Please select your estimated most productive time first!")
+        } else {
+            window.location.href = "http://127.0.0.1:5501/main_schedule.html"; //change to productivity page
+        }
+    }
+    </script>
+</body>
+</html>

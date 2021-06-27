@@ -1,5 +1,6 @@
-import NonFixedTask from "./NonFixedTask.js";
-import FixedTask from "./FixedTask.js";
+// import OneTimeTask from "./OneTimeTask.js";
+// import NonFixedTask from "./NonFixedTask.js";
+// import FixedTask from "./FixedTask.js";
 
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
@@ -71,7 +72,7 @@ let catNum = 0;
   }
 
   /*Calculation for number of hours min left -> Convert to MINUTES for calculation*/  
-   let totalRemaining = 720; /*Arbitrary value, must link to formular for breaks and stuff in algorithm [IN MINUTES]*/ 
+   var totalRemaining = 720; /*Arbitrary value, must link to formular for breaks and stuff in algorithm [IN MINUTES]*/ 
 
   function displayDuration(text) { /*This function works*/
     document.getElementById("counterOutput").innerHTML = text;
@@ -110,6 +111,8 @@ let catNum = 0;
 
   /*Even though html input is in 12 hours format, it is saved as 24 hours format, use substr to extract*/
   /*Calculate everything in minutes first then split*/
+
+
   function calculationTime() {
     let start = document.getElementById("startTime").value
     let startHour = parseInt(start.substr(0,2));
@@ -118,20 +121,25 @@ let catNum = 0;
     let endHour = parseInt(end.substr(0,2));
     let endMin = parseInt(end.substr(3,4));
 
+    var totalToMinus;
+    var finalHour;
+    var finalMin;
+    var text;
+
     if (endMin < startMin) { //eat into the hours
-      let totalToMinus = (endHour - startHour) * 60; //contains minutes that needs to be deducted from totalRemaining
+      totalToMinus = (endHour - startHour) * 60; //contains minutes that needs to be deducted from totalRemaining
       totalToMinus = totalToMinus - (endMin - startMin); //in minutes (minus a negative to add)
-      let finalHour = Math.trunc(totalRemaining - totalToMinus) / 60);
-      let finalMin = totalRemaining - (finalHour * 60); 
-      var textNew = "Hour: " + finalHour + " " + "Minute: " + finalMin;
+      finalHour = Math.trunc((totalRemaining - totalToMinus) / 60);
+      finalMin = (totalRemaining - totalToMinus) - (finalHour * 60); 
+      text = "Hour: " + finalHour + " " + "Minute: " + finalMin;
     } else { //if both hours and/or minutes are positive
-      let totalToMinus = (endHour - startHour) * 60; //contains minutes that needs to be deducted from totalRemaining
-      let totalToMinus = totalToMinus + (endMin - startMin);
-      let finalHour = Math.trunc((totalRemaining - totalToMinus) / 60);
-      let finalMin = totalRemaining - (finalHour * 60); 
-      var textNew = "Hour: " + finalHour + " " + "Minute: " + finalMin;
+      totalToMinus = (endHour - startHour) * 60; //contains minutes that needs to be deducted from totalRemaining
+      totalToMinus = totalToMinus + (endMin - startMin);
+      finalHour = Math.trunc((totalRemaining - totalToMinus) / 60);
+      finalMin = (totalRemaining - totalToMinus) - (finalHour * 60); 
+      text = "Hour: " + finalHour + " " + "Minute: " + finalMin;
     }
-    displayDuration(textNew);
+    displayDuration(text);
   }
 
 
@@ -149,6 +157,7 @@ window.onload = function createDropdown() { //ensure that dropdown list loads on
 }
 
 
+/*closeMe(): when submit button is pressed, window will be closed*/
 function closeMe() {
   try {
     window.close();
@@ -158,51 +167,52 @@ function closeMe() {
   } catch (e) { console.log(e) }
 }
 
-document.getElementById("done").addEventListener("click", closeMe);
 
 
 /*Integrating with javascript. Adding to Non fixed Task and Fixed Task*/
 
 var cat = document.getElementsByName("select");
 var time = new Date();
-let start = document.getElementById("startTime").value
-let end = document.getElementById("endTime").value
+// let start = document.getElementById("startTime").value
+// let end = document.getElementById("endTime").value
 
-let startTime = new Time( //create new time object for start time in Window and individual mode objects
-  parseInt(start.substr(0, 2)),
-  parseInt(start.substr(3, 4))
-)
+// let startTime = new Time( //create new time object for start time in Window and individual mode objects
+//   parseInt(start.substr(0, 2)),
+//   parseInt(start.substr(3, 4))
+// )
 
-let endTime = new Time( //create new time object for end time in Window and individual mode objects
-  parseInt(end.substr(0, 2)),
-  parseInt(end.substr(3, 4))
-)
+// let endTime = new Time( //create new time object for end time in Window and individual mode objects
+//   parseInt(end.substr(0, 2)),
+//   parseInt(end.substr(3, 4))
+// )
 
-let hourDuration = parseInt(document.getElementById("hour").value); //get number
-let minDuration = parseInt(document.getElementById("minute").value); //get number
+// let hourDuration = parseInt(document.getElementById("hour").value); //get number
+// let minDuration = parseInt(document.getElementById("minute").value); //get number
 
-function check() {
-  if (checkTime.checked) {
-    var Task = new FixedTask (
-      document.getElementById("taskName").value,
-      catNum, //category number
-      time.getFullYear(), //full year
-      time.getMonth(), //month from 0-11
-      time.getDate(),
-      startTime,
-      endTime
-    )
-  }
-  if (checkDuration.checked) {
-    var Task = new NonFixedTask(
-      document.getElementById("taskName").value,
-      catNum, //category number
-      time.getMonth(), //month from 0-11
-      time.getDate(),
-      numOfSessions, //number for number of sessions
-      [hourDuration, minDuration], //not very sure about format!! currently both variables are numbers
-      document.getElementById("dropdownList").value //gives a string, will be empty if it is not a follow up task
-    )
-  }
-  scheduleTask(); //to schedule task
-}
+// function check() {
+//   if (checkTime.checked) {
+//     var Task = new FixedTask (
+//       document.getElementById("taskName").value,
+//       catNum, //category number
+//       time.getFullYear(), //full year
+//       time.getMonth(), //month from 0-11
+//       time.getDate(),
+//       startTime,
+//       endTime
+//     )
+//     Task.scheduleTask();
+//   }
+//   if (checkDuration.checked) {
+//     var Task = new NonFixedTask(
+//       document.getElementById("taskName").value,
+//       catNum, //category number
+//       time.getMonth(), //month from 0-11
+//       time.getDate(),
+//       numOfSessions, //number for number of sessions
+//       [hourDuration, minDuration], //not very sure about format!! currently both variables are numbers
+//       document.getElementById("dropdownList").value //gives a string, will be empty if it is not a follow up task
+//     )
+//     Task.addTask();
+//   }
+  // scheduleTask(); //to schedule task
+//}

@@ -3,6 +3,9 @@
   <head>
     <title>Add daily task</title>
     <script type = "text/javascript" type="module" src="add_daily_task.js"></script>
+    <!-- <script type = "text/javascript" type="module" src="./NonFixedTask.js"></script>
+    <script type = "text/javascript" type="module" src="./FixedTask.js"></script>
+    <script type = "text/javascript" type="module" src="./OneTimeTasks.js"></script> -->
     <link rel="stylesheet" href="add_daily_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
@@ -98,7 +101,7 @@
         <li><h3>Does this task follow another task?</h3></li>
         <li><input type="radio" id="yes" name="check">
           <label class="yes" for="yes">Yes</label></li>
-        <li><input type="radio" id="no" name="check">
+        <li><input type="radio" id="no" name="check" checked="checked">
           <label class="no" for="no">No</label><br></li>
       </br>
 
@@ -123,7 +126,7 @@
     <div class="btn-group-actions">
       <li><input type="button" id="delete" value="Delete task"></li>
       <!-- <li><button id="add" >Add another task</button></li> -->
-      <li><input type="button" id="done" value="Back to main schedule"></li>
+      <li><input type="button" id="done" value="Submit" onclick="closeMe()"></li>
     </div>
 
    </body>

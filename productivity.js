@@ -1,4 +1,4 @@
-//class ProductivityStatistics {
+class ProductivityStatistics {
 
     /**
      * Display of the total number of hours user spent on completing tasks for the day (accumulated based on the data retrieved from timers)
@@ -18,8 +18,7 @@
      */
 
     // Main idea: All these calculations will be done after the schedule has been generated
-    var dayCount = 0; 
-    function totalHoursSpent() {
+    totalHoursSpent() {
         let i;
         let totalMins = 0; //in mins
         for (i = 0; i < counterArr.length; i++) {
@@ -31,7 +30,7 @@
         return [newHours, newMins];
     }
 
-    function percentageCompletionOfTasks() {
+    percentageCompletionOfTasks() {
         if (dayCount == 7) {
             function roundToTwo(num) {
                 return +(Math.round(num + "e+2")  + "e-2");
@@ -41,7 +40,7 @@
             ProductivityStatistics.prototype.percentageCompletion += ProductivityStatistics.prototype.numOfTasksDone / ProductivityStatistics.prototype.numOfScheduledTasks; 
     }
     //TODO: If a user finishes their tasks earlier than they are meant to, then it should not be recorded as less productive! As long as user clicks completed button, it should just be taken as productive. If the user exceeds (?) --> how will the timer extend?
-    function categoryBreakdown(finalisedTaskArr) {
+    categoryBreakdown(finalisedTaskArr) {
         let workMins = 0;
         let miscellaneousMins = 0;
         let exerciseMins = 0;
@@ -72,15 +71,98 @@
         */
     }
 
-    function productivityCalculation() {
+    productivityCalculation(fixedTaskArr, counterArr) {
         //TODO: We are going to give users the productivity slot options
-        //INCOMPLETE
-        let window = n
+        if (dayCount == 6) {
+            maxPos = 0;
+            let i;
+            for (i = 1; i < ProductivityStatistics.prototype.prodSlots; i++) {
+                if (ProductivityStatistics.prototype.prodSlots[i][1] > ProductivityStatistics.prototype.prodSlots[max][1]) {
+                    max = i;
+                }
+            }
+            return ProductivityStatistics.prototype.prodSlots[i];
+        }
+
+        /* 
+        ONLY FOR INITIALISATION!!!
+        let slot1EndTime = Time.findEndTime(RoutineInfo.getSleepTime(), [4, 0]);
+        let slot2EndTime = Time.findEndTime(slot1EndTime, [4, 0]);
+        let slot3EndTime = Time.findEndTime(slot2EndTime, [4, 0]);
+        let slot4EndTime = Time.findEndTime(slot3EndTime, [4, 0]);
+
+        let now = new Date();
+        let slot1 = new Window("Slot 1", now.getFullYear(), now.getMonth(), now.getDate(), RoutineInfo.getSleepTime(), slot1EndTime, 2); //TODO: Created new type 2 for this (I just don't want it to interfere with anything else)
+        ProductivityStatistics.prototype.prodSlots.push([slot1]);
+        let slot2 = new Window("Slot 2", now.getFullYear(), now.getMonth(), now.getDate(), slot1EndTime, slot2EndTime, 2);
+        ProductivityStatistics.prototype.prodSlots.push([slot2]);
+        let slot3 = new Window("Slot 3", now.getFullYear(), now.getMonth(), now.getDate(), slot2EndTime, slot3EndTime, 2);
+        ProductivityStatistics.prototype.prodSlots.push([slot3]);
+        let slot4 = new Window("Slot 4", now.getFullYear(), now.getMonth(), now.getDate(), slot3EndTime, slot4EndTime, 2);
+        ProductivityStatistics.prototype.prodSlots.push([slot4]);
+        */
+
+        let j;
+        for (j = 0; j < fixedTaskArr.length; j++) {
+            // Need to also include partially work?
+            if (fixedTaskArr[j].getTaskCategory() == "Work" || fixedTaskArr[j].getTaskCategory() == "Fully Work" || fixedTaskArr[j].getTaskCategory() == "Partially work") {
+                //PART 1: Adding in the counter durations
+                let startingTime = counterArr[j][0];
+                let startingSlot = 0;
+                while (ProductivityStatistics.prototype.prodSlots[startingSlot][0].getEndTime().getHours() < startingTime[0] || (ProductivityStatistics.prototype.prodSlots[startingSlot][0].getEndTime().getHours() == startingTime[0] && ProductivityStatistics.prototype.prodSlots[startingSlot][0].getEndTime().getMins() < startingTime[1])) {
+                    startingSlot++;
+                }
+
+                let timeLeftInSlot = Time.duration(startingTime, ProductivityStatistics.prototype.prodSlots[startingSlot].getEndTime());
+                let timeLeftInSlotInMins = (timeLeftInSlot[0] * 60) + timeLeftInSlot[1];
+                let timeTaken = counterArr[j][1];
+                if (timeTaken <= timeLeftInSlot) {
+                    ProductivityStatistics.prototype.prodSlots[j][2] += timeLeftInSlot
+                }
+                while (timeLeftInSlot < timeTaken) {
+                    //ProductivityStatistics.prototype.prodSlots[j][1] += //Scheduled Time
+                    ProductivityStatistics.prototype.prodSlots[j][2] += timeLeftInSlot //Counter Time
+                    timeTaken -= timeLeftInSlot
+                    startingSlot++;
+                    timeLeftInSlot = Time.duration(startingTime, ProductivityStatistics.prototype.prodSlots[startingSlot][0].getEndTime()); 
+                }
+
+                //PART 2: Adding in the scheduled durations
+                startingSlot = 0;
+                while (startingSlot < ProductivityStatistics.prototype.prodSlots.length && !fixedTaskArr[startingSlot].isCompletelyDuring(ProductivityStatistics.prototype.prodSlots[j][0])) {
+                    startingSlot++;
+                }
+
+                if (startingSlot == ProductivityStatistics.prototype.prodSlots.length) {
+                    startingSlot = 0;
+                    while (startingSlot < ProductivityStatistics.prototype.prodSlots.length && !fixedTaskArr[startingSlot].partiallyOverlaps(ProductivityStatistics.prototype.prodSlots[j][0])) {
+                        startingSlot++;
+                    }
+                    let timeScheduled = Time.duration(finalisedTaskArr[j].getStartTime(), finalisedTaskArr[j].getEndTime())
+                    let timeScheduledInMins = (timeScheduled[0] * 60) + timeScheduled[1];
+                    timeLeftInSlot = Time.duration(finalisedTaskArr[j].getStartTime(), ProductivityStatistics.prototype.prodSlots[startingSlot][0].getEndTime());
+                    timeLeftInSlotInMins = (timeLeftInSlot[0] * 60) + timeLeftInSlot[1];
+                    
+                    while (timeLeftInSlot < timeScheduledInMins) {
+                        ProductivityStatistics.prototype.prodSlots[j][1] += timeLeftInSlot //Scheduled Time
+                        timeScheduledInMins -= timeLeftInSlot
+                        startingSlot++;
+                        timeLeftInSlot = Time.duration(startingTime, ProductivityStatistics.prototype.prodSlots[startingSlot][0].getEndTime()); 
+                    }
+                } else {
+                    let timeScheduled = Time.duration(finalisedTaskArr[j].getStartTime(), finalisedTaskArr[j].getEndTime())
+                    let timeScheduledInMins = (timeScheduled[0] * 60) + timeScheduled[1];
+                    ProductivityStatistics.prototype.prodSlots[j][1] += timeScheduledInMins;
+                }
+            }
+        }
+        
     }
 
-//}
+}
+ProductivityStatistics.prototype.dayCount = 0;
 ProductivityStatistics.prototype.totalMinsForWeek;
-
+ProductivityStatistics.prototype.prodSlots = [];
 
 
 ProductivityStatistics.prototype.workHours;

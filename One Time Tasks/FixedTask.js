@@ -5,6 +5,8 @@ Additional questions/comments:
 2. Time option before asking number of sessions
 */ 
 
+import OneTimeTask from "./OneTimeTask";
+
 class FixedTask extends OneTimeTask {
     /**
      * Creates fixed tasks for a day
@@ -43,4 +45,4 @@ class FixedTask extends OneTimeTask {
 
 }
 
-export default FixedTask;
+export { FixedTask };

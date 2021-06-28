@@ -1,3 +1,4 @@
+import OneTimeTask from "./OneTimeTask";
 // Class for non-fixed tasks to be created
 class NonFixedTask extends OneTimeTask {
     /**
@@ -451,4 +452,4 @@ class NonFixedTask extends OneTimeTask {
 
 NonFixedTask.prototype.group = 0;
 
-export default NonFixedTask;
+export { NonFixedTask };

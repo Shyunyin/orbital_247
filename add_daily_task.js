@@ -1,6 +1,7 @@
-// import OneTimeTask from "./OneTimeTask.js";
-// import NonFixedTask from "./NonFixedTask.js";
-// import FixedTask from "./FixedTask.js";
+// import { NonFixedTask } from './One Time Tasks/NonFixedTask.js';
+// import { FixedTask }  from './One Time Tasks/FixedTask.js';
+document.writeln("<script type='text/javascript' type='module' src='./One Time Tasks/NonFixedTask.js'></script>");
+document.writeln("<script type='text/javascript' type='module' src='./One Time Tasks/FixedTask.js'></script>");
 
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
@@ -171,48 +172,48 @@ function closeMe() {
 
 /*Integrating with javascript. Adding to Non fixed Task and Fixed Task*/
 
+
+function check() {
 var cat = document.getElementsByName("select");
 var time = new Date();
-// let start = document.getElementById("startTime").value
-// let end = document.getElementById("endTime").value
+let start = document.getElementById("startTime").value
+let end = document.getElementById("endTime").value
 
-// let startTime = new Time( //create new time object for start time in Window and individual mode objects
-//   parseInt(start.substr(0, 2)),
-//   parseInt(start.substr(3, 4))
-// )
+let startTime = new Time( //create new time object for start time in Window and individual mode objects
+  parseInt(start.substr(0, 2)),
+  parseInt(start.substr(3, 4))
+)
 
-// let endTime = new Time( //create new time object for end time in Window and individual mode objects
-//   parseInt(end.substr(0, 2)),
-//   parseInt(end.substr(3, 4))
-// )
+let endTime = new Time( //create new time object for end time in Window and individual mode objects
+  parseInt(end.substr(0, 2)),
+  parseInt(end.substr(3, 4))
+)
 
-// let hourDuration = parseInt(document.getElementById("hour").value); //get number
-// let minDuration = parseInt(document.getElementById("minute").value); //get number
-
-// function check() {
-//   if (checkTime.checked) {
-//     var Task = new FixedTask (
-//       document.getElementById("taskName").value,
-//       catNum, //category number
-//       time.getFullYear(), //full year
-//       time.getMonth(), //month from 0-11
-//       time.getDate(),
-//       startTime,
-//       endTime
-//     )
-//     Task.scheduleTask();
-//   }
-//   if (checkDuration.checked) {
-//     var Task = new NonFixedTask(
-//       document.getElementById("taskName").value,
-//       catNum, //category number
-//       time.getMonth(), //month from 0-11
-//       time.getDate(),
-//       numOfSessions, //number for number of sessions
-//       [hourDuration, minDuration], //not very sure about format!! currently both variables are numbers
-//       document.getElementById("dropdownList").value //gives a string, will be empty if it is not a follow up task
-//     )
-//     Task.addTask();
-//   }
-  // scheduleTask(); //to schedule task
-//}
+let hourDuration = parseInt(document.getElementById("hour").value); //get number
+let minDuration = parseInt(document.getElementById("minute").value); //get number
+  if (checkTime.checked) {
+    var Task = new FixedTask (
+      document.getElementById("taskName").value,
+      catNum, //category number
+      time.getFullYear(), //full year
+      time.getMonth(), //month from 0-11
+      time.getDate(),
+      startTime,
+      endTime
+    )
+    Task.scheduleTask();
+  }
+  if (checkDuration.checked) {
+    var Task = new NonFixedTask(
+      document.getElementById("taskName").value,
+      catNum, //category number
+      time.getMonth(), //month from 0-11
+      time.getDate(),
+      numOfSessions, //number for number of sessions
+      [hourDuration, minDuration], //not very sure about format!! currently both variables are numbers
+      document.getElementById("dropdownList").value //gives a string, will be empty if it is not a follow up task
+    )
+    Task.addTask();
+  }
+  scheduleTask(); //to schedule task
+}

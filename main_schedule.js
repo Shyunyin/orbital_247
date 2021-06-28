@@ -86,25 +86,6 @@ window.onload = function getHeading() {
         append.style.marginTop = topText;
         let ele = document.getElementById("postit");
         ele.appendChild(append);
-        // let ele = document.getElementById("iconActions");
-        // let btn4 = document.createElement("button");
-        // btn4.setAttribute("id", "btn4"); //id = "btn4"
-        // btn4.style.position="relative";
-        // btn4.style.zIndex="5";
-        // btn4.style.backgroundColor="#ECEDEA";
-        // btn4.style.borderRadius="5px";
-        // btn4.style.marginLeft="5px";
-        // btn4.onmouseover = function() {
-        //     this.style.backgroundColor = "#C4C4C4";
-        // }
-        // btn4.onmouseout = function() {
-        //     this.style.backgroundColor = "#ECEDEA";
-        // }
-        // let deletetask = document.createElement("i");
-        // deletetask.setAttribute("class","fa fa-trash-o fa-2x");
-        // deletetask.setAttribute("aria-hidden", "true");
-        // btn4.appendChild(deletetask);
-        // ele.appendChild(btn4);
     }
 
     /*To test whether the icons work: TEMP FOR MILESTONE*/
@@ -194,7 +175,7 @@ function clickdelete() {
 function createPlay() {
     let ele = document.getElementById("iconActions");
     let btn1 = document.createElement("button");
-    btn1.setAttribute("class", "btn1"); //id = "btn1"
+    btn1.setAttribute("class", "btn"); //id = "btn1"
     btn1.setAttribute("onclick", "clickPlay()");
     btn1.style.position="relative";
     btn1.style.zIndex="5";
@@ -216,7 +197,7 @@ function createPlay() {
 function createReschedule() {
     let ele = document.getElementById("iconActions");
     let btn2 = document.createElement("button");
-    btn2.setAttribute("id", "btn2"); //id = "btn2"
+    btn2.setAttribute("class", "btn"); //id = "btn2"
     btn2.style.position="relative";
     btn2.style.zIndex="5";
     btn2.style.backgroundColor="#ECEDEA";
@@ -238,7 +219,7 @@ function createReschedule() {
 function createEdit() {
     let ele = document.getElementById("iconActions");
     let btn3 = document.createElement("button");
-    btn3.setAttribute("id", "btn3"); //id = "btn3"
+    btn3.setAttribute("class", "btn"); //id = "btn3"
     btn3.style.position="relative";
     btn3.style.zIndex="5";
     btn3.style.backgroundColor="#ECEDEA";
@@ -260,7 +241,7 @@ function createEdit() {
 function createDelete() {
     let ele = document.getElementById("iconActions");
     let btn4 = document.createElement("button");
-    btn4.setAttribute("id", "btn4"); //id = "btn4"
+    btn4.setAttribute("class", "btn"); //id = "btn4"
     btn4.style.position="relative";
     btn4.style.zIndex="5";
     btn4.style.backgroundColor="#ECEDEA";
@@ -280,13 +261,29 @@ function createDelete() {
 }
 
 /*To remove the current icons under actions*/
-// function removeCurrentIcons() {
-//     var elem = document.getElementById("iconActions");
-//     elem.remove();
+function removeCurrentIcons() {
+    var elem = document.getElementById("iconActions");
+    elem.remove();
+    // var ele = document.createElement("div");
+    // ele.setAttribute("id", "iconActions");
+    // var main = document.getElementById("actions");
+    // main.appendChild(ele);
+}
+
+// function addBackDivision() {
+//     var ele = document.createElement("div");
+//     ele.setAttribute("id", "iconActions");
+//     var main = document.getElementById("actions");
+//     main.appendChild(ele);
 // }
 
 /*To add fixed task select icons*/
 function tempFixed() {
+    removeCurrentIcons();
+    var ele = document.createElement("div");
+    ele.setAttribute("id", "iconActions");
+    var main = document.getElementById("actions");
+    main.appendChild(ele);
     createReschedule();
     createEdit();
     createDelete();
@@ -294,6 +291,8 @@ function tempFixed() {
 
 /*To add non-fixed task select icons*/
 function tempNonFixed() {
+    // removeCurrentIcons();
+    // addBackDivision();
     createPlay();
     createReschedule();
     createEdit();

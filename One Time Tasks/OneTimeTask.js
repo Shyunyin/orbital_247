@@ -11,4 +11,4 @@ class OneTimeTask {
 
 OneTimeTask.prototype.cats = ['Work', 'Exercise', 'Miscellaneous', 'Meal', 'Fully Work', 'Partially Work'];
 
-export default OneTimeTask;
+export { OneTimeTask };

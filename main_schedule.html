@@ -27,7 +27,7 @@
     <!--Heading content using javascript-->
     <div id="heading">
         <input type="text" id="currentDate" readonly="readonly" onfocus="this.blur()">
-        <input type="text" id="currentTime" readonly="readonly" onfocus="this.blur()">
+        <div id="currentTime"></div><!-- <input type="text" id="currentTime" readonly="readonly" onfocus="this.blur()"> -->
         <input type="text" id="currentUser" readonly="readonly" onfocus="this.blur()">
         <input type="text" id="currentSchedule" readonly="readonly" onfocus="this.blur()">
     </div>
@@ -60,6 +60,8 @@
     <div id="postit">
         <input type="text" id="title" readonly="readonly" value="Tasks not included in schedule yet">
         <br>
+        <div id="postitContent">
+        </div>
     </div>
 
     <!--For the instructions on how to perform actions on tasks-->
@@ -84,7 +86,7 @@
 
 
     <!--Link to pop up for add daily task page-->
-    <button id="generateSchedule" name="generateSchedule" >Generate Schedule now!</button>
+    <button id="generateSchedule" name="generateSchedule" onclick="clearPostit()">Generate Schedule now!</button>
 
     <!--Buttons to go to previous and next-->
     <!--Probably must create previous button using javascript as it only appears if schedule day != current day-->

@@ -43,6 +43,28 @@ function doubleminutes(num) {
     return num;
 }
 
+function checkTime(i) {
+    if(i<10){
+        i = "0" + i;
+    }
+    return i;
+} 
+
+/*For time to be dynamic*/
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+
+    document.getElementById("currentTime").innerHTML = h + ":" + m + ":" + s;
+    t = setTimeout(function() {
+        startTime()
+    }, 500);
+}
+
 /*Onload can only appear once!!!!!!*/
 window.onload = function getHeading() {
     let today = new Date(); //creating object to use Date method
@@ -50,9 +72,7 @@ window.onload = function getHeading() {
     let currentDate = document.getElementById("currentDate");
     currentDate.setAttribute("value", date);
 
-    let time = doublehours(today.getHours()) + ":" + doubleminutes(today.getMinutes());
-    let currentTime = document.getElementById("currentTime");
-    currentTime.setAttribute("value", time);
+    startTime();
 
     let user = "Preshi & Shyun" //need to obtain from javascript login page to save their username!
     let welcome = "Welcome, " + user;
@@ -66,11 +86,11 @@ window.onload = function getHeading() {
     /*For post-it stick tasks*/
     for (let i = 0; i < tasks.length; i++) {
         let append = document.createElement("input");
-        append.type = "text";
+        append.setAttribute("type", "button");
+        append.setAttribute("value", tasks[i]);
         append.setAttribute("readonly", "readonly");
-        append.setAttribute("onfocus", "this.blur()")
+        append.setAttribute("onclick", "redirect()")
         append.classList.add("task");
-        append.value = tasks[i]; //print out task
         append.style.fontFamily = "'Signika Negative', sans-serif";
         append.style.fontSize = "large";
         append.style.position = "absolute";
@@ -80,19 +100,14 @@ window.onload = function getHeading() {
         append.style.border = "none";
         append.style.marginLeft = "15px";
         append.style.height = "20px";
+        append.style.cursor="pointer";
         //calculation to ensure that tasks printed on top of each other
         let top = i * 30;
         let topText = top + "px";
         append.style.marginTop = topText;
-        let ele = document.getElementById("postit");
+        let ele = document.getElementById("postitContent");
         ele.appendChild(append);
     }
-
-    /*To test whether the icons work: TEMP FOR MILESTONE*/
-    // createPlay();
-    // createReschedule();
-    // createEdit();
-    // createDelete();
 }
 
 /*For popup*/
@@ -110,16 +125,24 @@ function clickPlay() {
     myRef.focus();
 }
 /*reschedule button*/
-function clickreschedule() {
-
+function clickReschedule() {
+    var url = "http://127.0.0.1:5501/rescheduleIcon.html";
+    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
+    myRef.focus();
 }
 /*edit button*/
-function clickedit() {
-
+function clickEdit() {
+    var url = "http://127.0.0.1:5501/EditIcon.html";
+    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
+    myRef.focus();
 }
 /*delete button*/
-function clickdelete() {
-
+function clickDelete() {
+    var x = confirm("Are you sure you want to delete this task?");
+    if (x) 
+        return true;
+    else 
+        return false; //to link to javascript when deleting tasks can check for this boolean function
 }
 
 /*When generate schedule button is pressed*/
@@ -171,132 +194,98 @@ function clickdelete() {
 //  *  QUESTION: WILL THIS BE FOR ALL THE ITEMS?
 //  */ 
 
-/*create functions are for the icons*/
-function createPlay() {
-    let ele = document.getElementById("iconActions");
-    let btn1 = document.createElement("button");
-    btn1.setAttribute("class", "btn"); //id = "btn1"
-    btn1.setAttribute("onclick", "clickPlay()");
-    btn1.style.position="relative";
-    btn1.style.zIndex="5";
-    btn1.style.backgroundColor="#ECEDEA";
-    btn1.style.borderRadius="5px";
-    btn1.onmouseover = function() {
-        this.style.backgroundColor = "#C4C4C4";
-    }
-    btn1.onmouseout = function() {
-        this.style.backgroundColor = "#ECEDEA";
-    }
-    let play = document.createElement("i");
-    play.setAttribute("class", "fa fa-play-circle fa-2x");
-    play.setAttribute("aria-hidden", "true");
-    btn1.appendChild(play);
-    ele.appendChild(btn1);
-}
 
-function createReschedule() {
-    let ele = document.getElementById("iconActions");
-    let btn2 = document.createElement("button");
-    btn2.setAttribute("class", "btn"); //id = "btn2"
-    btn2.style.position="relative";
-    btn2.style.zIndex="5";
-    btn2.style.backgroundColor="#ECEDEA";
-    btn2.style.borderRadius="5px";
-    btn2.style.marginLeft="5px";
-    btn2.onmouseover = function() {
-        this.style.backgroundColor = "#C4C4C4";
-    }
-    btn2.onmouseout = function() {
-        this.style.backgroundColor = "#ECEDEA";
-    }
-    let reschedule = document.createElement("i");
-    reschedule.setAttribute("class","fa fa-calendar fa-2x");
-    reschedule.setAttribute("aria-hidden", "true");
-    btn2.appendChild(reschedule);
-    ele.appendChild(btn2);
-}
+  /*For detecting click outside of specified elements*/
+//   var specifiedElement = document.getElementById("schedule");
+//   document.addEventListener('click', function(event) {
+//       var isClickInside = specifiedElement.contains(event.target);
 
-function createEdit() {
-    let ele = document.getElementById("iconActions");
-    let btn3 = document.createElement("button");
-    btn3.setAttribute("class", "btn"); //id = "btn3"
-    btn3.style.position="relative";
-    btn3.style.zIndex="5";
-    btn3.style.backgroundColor="#ECEDEA";
-    btn3.style.borderRadius="5px";
-    btn3.style.marginLeft="5px";
-    btn3.onmouseover = function() {
-        this.style.backgroundColor = "#C4C4C4";
-    }
-    btn3.onmouseout = function() {
-        this.style.backgroundColor = "#ECEDEA";
-    }
-    let edit = document.createElement("i");
-    edit.setAttribute("class", "fa fa-pencil-square-o fa-2x");
-    edit.setAttribute("aria-hidden", "true");
-    btn3.appendChild(edit);
-    ele.appendChild(btn3);
-}
-
-function createDelete() {
-    let ele = document.getElementById("iconActions");
-    let btn4 = document.createElement("button");
-    btn4.setAttribute("class", "btn"); //id = "btn4"
-    btn4.style.position="relative";
-    btn4.style.zIndex="5";
-    btn4.style.backgroundColor="#ECEDEA";
-    btn4.style.borderRadius="5px";
-    btn4.style.marginLeft="5px";
-    btn4.onmouseover = function() {
-        this.style.backgroundColor = "#C4C4C4";
-    }
-    btn4.onmouseout = function() {
-        this.style.backgroundColor = "#ECEDEA";
-    }
-    let deletetask = document.createElement("i");
-    deletetask.setAttribute("class","fa fa-trash-o fa-2x");
-    deletetask.setAttribute("aria-hidden", "true");
-    btn4.appendChild(deletetask);
-    ele.appendChild(btn4);
-}
-
-/*To remove the current icons under actions*/
-function removeCurrentIcons() {
-    var elem = document.getElementById("iconActions");
-    elem.remove();
-    // var ele = document.createElement("div");
-    // ele.setAttribute("id", "iconActions");
-    // var main = document.getElementById("actions");
-    // main.appendChild(ele);
-}
-
-// function addBackDivision() {
-//     var ele = document.createElement("div");
-//     ele.setAttribute("id", "iconActions");
-//     var main = document.getElementById("actions");
-//     main.appendChild(ele);
-// }
+//       if (!isClickInside) {
+//           //if click was outside the specifiedELement
+//           var currentNode = document.getElementById("iconActions");
+//           var newNode = document.createElement("div");
+//           newNode.id = "iconActions";
+//           newNode.innerHTML="";
+//           //Replacing current iconsActions node w new iconActions node
+//           currentNode.replaceWith(newNode);
+//       }
+//   }
+//   document.onclick = function(event){
+//     var hasParent = false;
+//     var fixed = document.getElementById("fixed").onclick = tempFixed();
+//     var nonFixed = document.getElementById("nonFixed").onclick = tempNonFixed();
+//       for(var node = event.target; node != document.body; node = node.parentNode)
+//       {
+//         if(node.id == 'schedule'){
+//           hasParent = true;
+//           break;
+//         }
+//       }
+//     if(hasParent) {
+//         alert('inside');
+//         fixed = tempFixed();
+//         nonFixed = tempNonFixed();
+//     }
+//     else
+//       alert('outside');
+//       var currentNode = document.getElementById("iconActions");
+//       var newNode = document.createElement("div");
+//       newNode.id = "iconActions";
+//       newNode.innerHTML="";
+//       //Replacing current iconsActions node w new iconActions node
+//       currentNode.replaceWith(newNode);
+//   } 
 
 /*To add fixed task select icons*/
-function tempFixed() {
-    removeCurrentIcons();
-    var ele = document.createElement("div");
-    ele.setAttribute("id", "iconActions");
-    var main = document.getElementById("actions");
-    main.appendChild(ele);
-    createReschedule();
-    createEdit();
-    createDelete();
+function tempFixed() { //only reschedule, edit and delete
+    var currentNode = document.getElementById("iconActions");
+    var newNode = document.createElement("div");
+    newNode.id = "iconActions";
+    newNode.innerHTML = 
+    '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
+    '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>' +
+    '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
+    //Replacing current iconsActions node w new iconActions node
+    currentNode.replaceWith(newNode);
 }
 
 /*To add non-fixed task select icons*/
-function tempNonFixed() {
-    // removeCurrentIcons();
-    // addBackDivision();
-    createPlay();
-    createReschedule();
-    createEdit();
-    createDelete();
+function tempNonFixed() { //all 4 actions
+    var currentNode = document.getElementById("iconActions");
+    var newNode = document.createElement("div");
+    //Add ID and content
+    newNode.id = "iconActions";
+    newNode.innerHTML = 
+    '<button class="btn" onclick="clickPlay()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-play-circle fa-2x" aria-hidden="true"></i></button>' +
+    '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
+    '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>' +
+    '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
+    //Replacing current iconsActions node w new iconActions node
+    currentNode.replaceWith(newNode);
+}
+
+/*To add postit task select icons*/
+function postitActions(taskName) { //only edit and delete
+    //parameter taskName is to reference to which task got clicked in the javascript
+    var currentNode = document.getElementById("iconActions");
+    var newNode = document.createElement("div");
+    //Add ID and content
+    newNode.id = "iconActions";
+    newNode.innerHTML = 
+    '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>' +
+    '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
+    //Replacing current iconsActions node w new iconActions node
+    currentNode.replaceWith(newNode);
+}
+
+/*clearPostit function is to remove the tasks printed on the post it 
+ * after the schedule has been generated*/ /*FKING WORKS ON CONSOLE BUT NOT HERE ARGHHHHHHH*/
+ function clearPostit() {
+    var currentNode = document.getElementById("postitContent");
+    var newNode = document.createElement("div");
+    newNode.id = "postitContent";
+    newNode.innerHTML = "";
+    currentNode.replaceWith(newNode);
 }
 
 /*UNCOMMENT WHEN LINKING TO JAVASCRIPT*/
@@ -342,15 +331,7 @@ function tempNonFixed() {
 //     "item3"
 // )
 
-/*clearPostit function is to remove the tasks printed on the post it 
- * after the schedule has been generated*/ /*FKING WORKS ON CONSOLE BUT NOT HERE ARGHHHHHHH*/
-// function clearPostit() {
-//     // var ele = document.getElementById("postit");
-//     var child = Array.from(document.getElementsByClassName("task"));
-//     for (let i = 0; i < child.length; i++) {
-//         child[i].remove();
-//     }
-// }
+
 
 // /*algorithm: where generation of schedule for algorithm is ran*/
 // function algorithm() {
@@ -364,3 +345,111 @@ function tempNonFixed() {
 // document.getElementById("generateSchedule").addEventListener("click", algorithm);
 // document.getElementById("generateSchedule").addEventListener("click", clearPostit);
 
+
+
+/*--------------------------Appendix---------------------------------*/
+/*create functions are for the icons*/
+// function createPlay() {
+//     let ele = document.getElementById("iconActions");
+//     let btn1 = document.createElement("button");
+//     btn1.setAttribute("class", "btn"); //id = "btn1"
+//     btn1.setAttribute("onclick", "clickPlay()");
+//     btn1.style.position="relative";
+//     btn1.style.zIndex="5";
+//     btn1.style.backgroundColor="#ECEDEA";
+//     btn1.style.borderRadius="5px";
+//     btn1.onmouseover = function() {
+//         this.style.backgroundColor = "#C4C4C4";
+//     }
+//     btn1.onmouseout = function() {
+//         this.style.backgroundColor = "#ECEDEA";
+//     }
+//     let play = document.createElement("i");
+//     play.setAttribute("class", "fa fa-play-circle fa-2x");
+//     play.setAttribute("aria-hidden", "true");
+//     btn1.appendChild(play);
+//     ele.appendChild(btn1);
+// }
+
+// function createReschedule() {
+//     let ele = document.getElementById("iconActions");
+//     let btn2 = document.createElement("button");
+//     btn2.setAttribute("class", "btn"); //id = "btn2"
+//     btn2.style.position="relative";
+//     btn2.style.zIndex="5";
+//     btn2.style.backgroundColor="#ECEDEA";
+//     btn2.style.borderRadius="5px";
+//     btn2.style.marginLeft="5px";
+//     btn2.onmouseover = function() {
+//         this.style.backgroundColor = "#C4C4C4";
+//     }
+//     btn2.onmouseout = function() {
+//         this.style.backgroundColor = "#ECEDEA";
+//     }
+//     let reschedule = document.createElement("i");
+//     reschedule.setAttribute("class","fa fa-calendar fa-2x");
+//     reschedule.setAttribute("aria-hidden", "true");
+//     btn2.appendChild(reschedule);
+//     ele.appendChild(btn2);
+// }
+
+// function createEdit() {
+//     let ele = document.getElementById("iconActions");
+//     let btn3 = document.createElement("button");
+//     btn3.setAttribute("class", "btn"); //id = "btn3"
+//     btn3.style.position="relative";
+//     btn3.style.zIndex="5";
+//     btn3.style.backgroundColor="#ECEDEA";
+//     btn3.style.borderRadius="5px";
+//     btn3.style.marginLeft="5px";
+//     btn3.onmouseover = function() {
+//         this.style.backgroundColor = "#C4C4C4";
+//     }
+//     btn3.onmouseout = function() {
+//         this.style.backgroundColor = "#ECEDEA";
+//     }
+//     let edit = document.createElement("i");
+//     edit.setAttribute("class", "fa fa-pencil-square-o fa-2x");
+//     edit.setAttribute("aria-hidden", "true");
+//     btn3.appendChild(edit);
+//     ele.appendChild(btn3);
+// }
+
+// function createDelete() {
+//     let ele = document.getElementById("iconActions");
+//     let btn4 = document.createElement("button");
+//     btn4.setAttribute("class", "btn"); //id = "btn4"
+//     btn4.style.position="relative";
+//     btn4.style.zIndex="5";
+//     btn4.style.backgroundColor="#ECEDEA";
+//     btn4.style.borderRadius="5px";
+//     btn4.style.marginLeft="5px";
+//     btn4.onmouseover = function() {
+//         this.style.backgroundColor = "#C4C4C4";
+//     }
+//     btn4.onmouseout = function() {
+//         this.style.backgroundColor = "#ECEDEA";
+//     }
+//     let deletetask = document.createElement("i");
+//     deletetask.setAttribute("class","fa fa-trash-o fa-2x");
+//     deletetask.setAttribute("aria-hidden", "true");
+//     btn4.appendChild(deletetask);
+//     ele.appendChild(btn4);
+// }
+
+/*To remove the current icons under actions*/
+// function removeCurrentIcons() {
+//     var elem = document.getElementById("iconActions");
+//     elem.remove();
+//     // var ele = document.createElement("div");
+//     // ele.setAttribute("id", "iconActions");
+//     // var main = document.getElementById("actions");
+//     // main.appendChild(ele);
+// }
+
+// function addBackDivision() {
+//     var ele = document.createElement("div");
+//     ele.setAttribute("id", "iconActions");
+//     var main = document.getElementById("actions");
+//     main.appendChild(ele);
+// }

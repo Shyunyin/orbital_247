@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <script type="text/javascript" type="module" src=".js"></script> -->
+<link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
+<style>
+    body{
+    font-family: "Signika Negative", sans-serif;
+    background-color: #f6f7f1;
+    color: #1e5353;
+    text-align: left;
+    }
+    #taskName{
+        background-color: #96d6ed;
+        border-radius: 5px;
+        width: 500px;
+        height: 25px;
+        margin-top: 15px;
+        /* margin-left: 700px; */
+        margin-bottom: 20px;
+    }
+    #title{
+        font-family: "Signika Negative", sans-serif;
+        font-size: 20px;
+    }
+    #date{
+        font-family: "Signika Negative", sans-serif;
+        font-size: large;
+        background-color: #FDFD96;
+        height: 30px;
+        text-align: center;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+    #btn{
+        font-family: "Signika Negative", sans-serif;
+        font-size: large;
+        background-color: #e3aba1;
+        height: 30px;
+        width: 150px;
+        text-align: center;
+        border: black;
+        border: 2px solid black;
+        border-radius: 5px;
+        margin-left: 20px;
+    }
+    #btn:hover{
+        background-color: #FEDCCE;
+        cursor: pointer;
+    }
+  
+</style>
+<title>Reschedule</title>
+</head>
+
+<body>
+    <h2>Pick a date to reschedule your task</h2>
+    <div id="title"></div>
+    <div id="taskName"></div>
+    <input id="date" type="date">
+    <input type="button"  id="btn" value="Reschedule now!" onclick="closeMe()">
+
+
+   <script>
+       //after extracting taskname from the selection
+    //    document.getElementById("taskName").innerHTML = window.taskName
+    document.getElementById("title").innerHTML="Task Name:";
+    function checkDate(i) {
+    if(i<10){
+        i = "0" + i;
+    }
+    return i;
+}
+
+    function closeMe() {
+        try {
+            window.close();
+        } catch (e) { console.log(e) }
+        try {
+            self.close();
+        } catch (e) { console.log(e) }
+    }
+
+   </script>
+</body>
+</html>

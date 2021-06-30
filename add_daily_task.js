@@ -1,8 +1,3 @@
-// import { NonFixedTask } from './One Time Tasks/NonFixedTask.js';
-// import { FixedTask }  from './One Time Tasks/FixedTask.js';
-document.writeln("<script type='text/javascript' type='module' src='./One Time Tasks/NonFixedTask.js'></script>");
-document.writeln("<script type='text/javascript' type='module' src='./One Time Tasks/FixedTask.js'></script>");
-
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myFunction() {
@@ -171,8 +166,6 @@ function closeMe() {
 
 
 /*Integrating with javascript. Adding to Non fixed Task and Fixed Task*/
-
-
 function check() {
 var cat = document.getElementsByName("select");
 var time = new Date();
@@ -217,3 +210,18 @@ let minDuration = parseInt(document.getElementById("minute").value); //get numbe
   }
   scheduleTask(); //to schedule task
 }
+
+/*Initialising firebase*/
+var firebaseConfig = {
+  apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
+  authDomain: "orbital-24-7.firebaseapp.com",
+  projectId: "orbital-24-7",
+  storageBucket: "orbital-24-7.appspot.com",
+  messagingSenderId: "459091456870",
+  appId: "1:459091456870:web:21134477e94d50e25ecea7",
+  measurementId: "G-WQMCMBMFCK"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+var firestore = firebase.firestore();

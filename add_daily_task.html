@@ -3,9 +3,14 @@
   <head>
     <title>Add daily task</title>
     <script type = "text/javascript" type="module" src="add_daily_task.js"></script>
-    <!-- <script type = "text/javascript" type="module" src="../One Time Tasks/NonFixedTask.js"></script>
-    <script type = "text/javascript" type="module" src="../One Time Tasks/FixedTask.js"></script>
-    <script type = "text/javascript" type="module" src="../One Time Tasks/OneTimeTasks.js"></script> -->
+    <script type = "module">
+      import {OneTimeTask} from './OneTimeTasks/OneTimeTask.js';
+      import {NonFixedTask} from './OneTimeTasks/NonFixedTask.js';
+      import {FixedTask} from './OneTimeTasks/FixedTask.js';
+    </script>
+    <!--Importing Firebase and Cloud Firestore libraries-->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <link rel="stylesheet" href="add_daily_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">

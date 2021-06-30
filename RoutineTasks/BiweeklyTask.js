@@ -1,5 +1,6 @@
+import {RoutineTask} from './RoutineTask.js';
 // Biweekly tasks will be created from this class
-class BiweeklyTask extends RoutineTask {
+export class BiweeklyTask extends RoutineTask {
     /**
      * Constructor to create biweekly tasks
      * @param {String} taskName     Name of task
@@ -117,4 +118,17 @@ class BiweeklyTask extends RoutineTask {
     }
 }
 
-export default BiweeklyTask;
+/*Initialising firebase*/
+var firebaseConfig = {
+    apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
+    authDomain: "orbital-24-7.firebaseapp.com",
+    projectId: "orbital-24-7",
+    storageBucket: "orbital-24-7.appspot.com",
+    messagingSenderId: "459091456870",
+    appId: "1:459091456870:web:21134477e94d50e25ecea7",
+    measurementId: "G-WQMCMBMFCK"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+var firestore = firebase.firestore();

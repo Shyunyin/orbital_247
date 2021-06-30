@@ -135,6 +135,7 @@
   z-index: 2;
   margin-left: 350px; /*about same as progress bar*/
   margin-top: 240px; /*more than progress bar by 70px*/
+  overflow: auto; /* Enable scroll if needed */
 }
 
 /*For post-it page*/

@@ -4,8 +4,15 @@
 <head>
     <title>Add routine task</title>
     <script type="text/javascript" type="module" src="add_routine_task.js"></script>
-    <script type="text/javascript" type="module" src="NonFixedTask.js"></script>
-    <script type="text/javascript" type="module" src="FixedTask.js"></script>
+    <script type="module">
+        import {DailyTask} from './RoutineTasks/DailyTask.js';
+        import {WeeklyTask} from './RoutineTasks/WeeklyTask.js';
+        import {BiweeklyTask} from './RoutineTasks/BiweeklyTask.js';
+        import {MonthlyTask} from './RoutineTasks/MonthlyTask.js';
+    </script>
+    <!--Importing Firebase and Cloud Firestore libraries-->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <link rel="stylesheet" href="add_routine_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
@@ -124,6 +131,7 @@
         <button id="add" onclick="newWindow()">Submit and Add another routine task</button>
         <button id="done" onclick="mainSchedule()">Submit and Done adding ALL routine tasks</button>
     </div>
+
 
 </body>
 

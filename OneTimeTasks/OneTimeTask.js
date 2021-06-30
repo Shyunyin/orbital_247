@@ -1,12 +1,15 @@
-/*Get to other main webpages
- * To be changed if link changes
- */
-function schedule() {
-    window.location.href = "http://127.0.0.1:5501/main_schedule.html";
+// Class for one time tasks to be created
+export class OneTimeTask {
+    constructor(taskName, taskCategory, year, month, date) {
+        this.taskName = taskName;
+        this.taskCategory = taskCategory;
+        this.year = year;
+        this.month = month;
+        this.date = date;
+    }
 }
-function routine() {
-    window.location.href = "http://127.0.0.1:5501/routine.html";
-}
+
+OneTimeTask.prototype.cats = ['Work', 'Exercise', 'Miscellaneous', 'Meal', 'Fully Work', 'Partially Work'];
 
 /*Initialising firebase*/
 var firebaseConfig = {

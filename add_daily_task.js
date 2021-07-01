@@ -211,6 +211,17 @@ let minDuration = parseInt(document.getElementById("minute").value); //get numbe
   scheduleTask(); //to schedule task
 }
 
+function addContent(i) {
+  const followUp = document.getElementById("followUp");
+  if (i === 0) {
+    followUp.removeAttribute("hidden");
+  } 
+  if (i === 1) {
+    followUp.setAttribute("hidden");
+    followUp.removeAttribute("hidden");
+  }
+}
+
 /*Initialising firebase*/
 var firebaseConfig = {
   apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",

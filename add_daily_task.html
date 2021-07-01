@@ -104,14 +104,14 @@
     <div class="followTask">
       <br>
         <li><h3>Does this task follow another task?</h3></li>
-        <li><input type="radio" id="yes" name="check">
+        <li><input type="radio" id="yes" name="check" onclick="addContent(0);">
           <label class="yes" for="yes">Yes</label></li>
-        <li><input type="radio" id="no" name="check" checked="checked">
+        <li><input type="radio" id="no" name="check" checked="checked" onclick="addContent(1)">
           <label class="no" for="no">No</label><br></li>
       </br>
 
       <!--Code for dropdown menu linked to javascript, database of other tasknames-->
-  <div class="followUp">
+  <div id="followUp" hidden>
     <!--Container to contain the dynamically added elements-->
     <div>
       <select id="dropdownList">

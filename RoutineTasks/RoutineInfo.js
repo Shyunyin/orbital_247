@@ -1,5 +1,5 @@
 // Class to contain the user's wake-up time, (estimated) sleep time and productivity time
-class RoutineInfo {
+export class RoutineInfo {
     /**
      * Constructor to record user's wake-up time and productive slot information
      * @param {Time} wakeUpTime The time at which user usually wakes up at

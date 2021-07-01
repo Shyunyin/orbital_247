@@ -2,7 +2,11 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript" type="module" src="countdownTimer.js"></script>
+<script type="text/javascript" type="module" src="./countdownTimer.js"></script>
+<script type="text/javascript" type="module" src="./link.js"></script>
+<script type="module">
+    import {RoutineInfo} from './RoutineTasks/RoutineInfo.js';
+</script>
 <!--Importing Firebase and Cloud Firestore libraries-->
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
@@ -15,7 +19,7 @@ body{
   text-align: center;
   margin-top: 300px;
 }
-#time {
+#wakeupTime {
     width: 150px;
     height: 50px;
     background-color: #96d6ed;
@@ -50,7 +54,7 @@ body{
     <h2>Please input the time which you usally wake up &nbsp;</h2>
     <h2> at/ at which your day starts:</h2>
     <div class="vertical">
-        <input type="time" id="time">
+        <input type="time" id="wakeupTime">
         <button type="button" id="next" onclick="nextPage()">Next</button> 
     </div>
    
@@ -74,7 +78,7 @@ body{
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
+        var firestore = firebase.firestore();
     </script>
 </body>
 </html>

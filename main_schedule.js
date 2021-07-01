@@ -243,6 +243,7 @@ function tempFixed() { //only reschedule, edit and delete
     var newNode = document.createElement("div");
     newNode.id = "iconActions";
     newNode.innerHTML = 
+    '<button class="btn" onclick="clickPlay()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-play-circle fa-2x" aria-hidden="true"></i></button>' +
     '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
     '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>' +
     '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
@@ -341,7 +342,6 @@ function postitActions(taskName) { //only edit and delete
 //     var arrayOfTasks = [task1, task2, task3]; //man-made 
 //     printSchedule(arrayOfTasks); //arrayOfTasks will contain the list of task objects in order
 //     // clearPostit(); //to clear the list of items in post it
-// }
 
 // document.getElementById("generateSchedule").addEventListener("click", algorithm);
 // document.getElementById("generateSchedule").addEventListener("click", clearPostit);

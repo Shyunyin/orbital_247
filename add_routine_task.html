@@ -10,9 +10,6 @@
         import {BiweeklyTask} from './RoutineTasks/BiweeklyTask.js';
         import {MonthlyTask} from './RoutineTasks/MonthlyTask.js';
     </script>
-    <!--Importing Firebase and Cloud Firestore libraries-->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <link rel="stylesheet" href="add_routine_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
@@ -20,6 +17,47 @@
 </head>
 
 <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
+    <!--Importing Firebase and Cloud Firestore libraries-->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script>
+        //--------------- Configuration --------------------------//
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+        apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
+        authDomain: "orbital-24-7.firebaseapp.com",
+        databaseURL: "https://orbital-24-7-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "orbital-24-7",
+        storageBucket: "orbital-24-7.appspot.com",
+        messagingSenderId: "459091456870",
+        appId: "1:459091456870:web:21134477e94d50e25ecea7",
+        measurementId: "G-WQMCMBMFCK"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        let cloudDB = firebase.firestore();
+
+        //--------------------- Writing relevant functions ------------------//
+
+        // Add document with custom ID
+        function Add_Doc_WithID() {
+            cloudDB.collection("RoutineTasks").doc(include the name of the task here).set(
+                {
+                    taskName : String()//to all be filled in with the necessary variables
+                    taskCategory : Number()
+                    startTime : Array()
+                    endTime : Array()
+                    freq : Number()
+                }
+            ).then(function(){
+                console.log("Doc written with ID " + include the name of the task here);
+            })
+            .catch(function(error) {
+                console.error("Error adding doc", Error);
+            });
+        }
+    </script>
     <!-- Parent-child relationship for inline-->
     <div id="title">
         <li>

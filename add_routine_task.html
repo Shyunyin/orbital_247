@@ -22,6 +22,74 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <script>
+        //------------------Defining of variables------------------//
+
+        /*For referencing later on*/
+        let NameOfTask = document.getElementById("taskName"); //main taskName input
+        //category number can get from category_num in the other javascript file
+        let Start = document.getElementById("startTime");
+        // let StartArr = [parseInt(Start.value.substr(0, 2)), parseInt(Start.value.substr(3, 4))]; //main array for start time
+        let End = document.getElementById("endTime"); 
+        // let EndArr = [parseInt(End.value.substr(0, 2)), parseInt(End.value.substr(3, 4))]; //main array for end time
+        /*checkRadioValue() function returns the freq number:
+         * Daily: 0, weekly: 1, biweekly: 2, monthly: 3
+        */
+        function checkRadioValue() { 
+            var radio = document.getElementsByName("choose");
+            for(var i = 0; i < radio.length; i++) {
+                //check which radio is checked
+                if(radio[i].checked){ 
+                    return i;
+                }
+            }
+        }
+        let freq_num = checkRadioValue();
+        //for now freq_num and taskCategory has no update function so they are saved as it is first
+        let specificFreq; //referencing
+        let specificFreqTwo = "null"; //referencing only for biweekly
+        /*getFreq(): returns the ID of the frequency to retried*/
+        function getFreq(freq_num) {
+            if (freq_num === 1) {
+                SpecificFreq = document.getElementById("weeklydropdown");
+            } else if (freq_num === 2) {
+                SpecificFreq = document.getElementById("biweeklydropdown");
+                SpecificFreqTwo = document.getElementById("chooseWeeks");
+            } else if (freq_num === 3) {
+                SpecificFreq = document.getElementById("date");
+            }
+        }
+
+        // let nameOfTask, start, startArr, end, endArr;
+        let nameOfTask = NameOfTask.value;
+        let start = Start.value;
+        let startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
+        let end = End.value;
+        let endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
+        let specificFreq = parseInt(SpecificFreq.value);
+
+        function Update(val, type) {
+            if(type=='name') {
+                nameOfTask=val;
+            } else if(type=='start') {
+                start=val;
+                startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
+            } else if(type=='end') {
+                end=val;
+                endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
+            } else if(type=='weekly') {
+                specificFreq = val;
+            } else if (type=='biweekly') {
+                specificFreq = val;
+            } else if (type=='biweeklychoose') {
+                specificFreqTwo = val;
+            } else if (type=='date') {
+                specificFreq = val;
+            }
+        }
+
+
+
+
         //--------------- Configuration --------------------------//
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
@@ -41,22 +109,42 @@
         //--------------------- Writing relevant functions ------------------//
 
         // Add document with custom ID
+
         function Add_Doc_WithID() {
-            cloudDB.collection("RoutineTasks").doc(include the name of the task here).set(
+            cloudDB.collection("RoutineTasks").doc(nameOfTask).set(
                 {
-                    taskName : String()//to all be filled in with the necessary variables
-                    taskCategory : Number()
-                    startTime : Array()
-                    endTime : Array()
-                    freq : Number()
+                    taskName : String(nameOfTask),//to all be filled in with the necessary variables
+                    taskCategory : Number(category_num),
+                    startTime : Array(startArr),
+                    endTime : Array(endArr),
+                    freq : Number(freq_num),
                 }
             ).then(function(){
-                console.log("Doc written with ID " + include the name of the task here);
+                console.log("Doc written with ID " , nameOfTask);
             })
             .catch(function(error) {
                 console.error("Error adding doc", Error);
             });
         }
+
+        function Add_Doc_ForFreq() {
+            cloudDB.collection("RoutineTasks").doc(nameOfTask).collection("SpecificFrequency").doc(freq_num).set(
+                {
+                    freq : Number(freq_num),
+                    freqType : Number(specificFreq) 
+                }
+            )
+        }
+
+        //------------------------Button Events----------------------------//
+        function Add() { //linked the onclick to the HTML document itself
+            Add_Doc_WithID();
+        }
+
+        function Done() {
+            Add_Doc_WithID();
+        }
+
     </script>
     <!-- Parent-child relationship for inline-->
     <div id="title">
@@ -66,7 +154,7 @@
         <!-- INPUT for taskName-->
         <li>
             <form>
-                <input type="text" id="taskName" name="taskName" size="70"><br>
+                <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value,'name')"><br>
             </form>
         </li>
     </div>
@@ -113,7 +201,7 @@
         <!--Use javascript to replace??-->
         <div class="dropdown">
             <li>
-                <select id="weeklydropdown" name="weeklydropdown">
+                <select id="weeklydropdown" name="weeklydropdown" oninput="Update(this.value,'weekly')">
                     <option value="" selected disabled hidden>Choose a day</option>
                     <option value="0">Monday</option>
                     <option value="1">Tuesday</option>
@@ -125,7 +213,7 @@
                 </select>
             </li>
             <li>
-                <select id="biweeklydropdown" name="biweeklydropdown">
+                <select id="biweeklydropdown" name="biweeklydropdown" oninput="Update(this.value,'biweekly')">
                     <!--Can replace w javascript??-->
                     <option value="" selected disabled hidden>Choose a day</option>
                     <option value="0">Monday</option>
@@ -136,14 +224,14 @@
                     <option value="5">Saturday</option>
                     <option value="6">Sunday</option>
                 </select>
-                <select id="chooseWeeks" name="chooseWeeks">
+                <select id="chooseWeeks" name="chooseWeeks" oninput="Update(this.value,'biweeklychoose')">
                     <option value="" selected disabled hidden>Current/Next</option>
                     <option value="0">Current Week</option>
                     <option value="1">Next Week</option>
                 </select>
             </li>
             <li>
-                <input type="number" id="date" name="date" min="1" max="31">
+                <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')">
             </li>
         </div>
     </div>
@@ -153,21 +241,21 @@
         <li>
             <div class="startTime">
                 <h3>Start time:</h3>
-                <input type="time" id="startTime">
+                <input type="time" id="startTime" oninput="Update(this.value, 'start')">
             </div>
         </li>
         <li>
             <div class="endTime">
                 <h3>End time:</h3>
-                <input type="time" id="endTime">
+                <input type="time" id="endTime" oninput="Update(this.value, 'end')">
             </div>
         </li>
     </div>
 
     <!--Buttons for ADD, DONE-->
     <div class="btn-group-actions">
-        <button id="add" onclick="newWindow()">Submit and Add another routine task</button>
-        <button id="done" onclick="mainSchedule()">Submit and Done adding ALL routine tasks</button>
+        <button id="add" onclick="newWindow(); Add();">Submit and Add another routine task</button>
+        <button id="done" onclick="mainSchedule(); Done();">Submit and Done adding ALL routine tasks</button>
     </div>
 
 

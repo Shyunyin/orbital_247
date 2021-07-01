@@ -35,20 +35,20 @@ function catFunction(button_switch) {
 
 
 /*Linking to javascript objects as it is confirmed fixed task*/
-var now = new Date();
+// var now = new Date();
 
-let start = document.getElementById("startTime").value
-let end = document.getElementById("endTime").value
+// let start = document.getElementById("startTime").value
+// let end = document.getElementById("endTime").value
 
-let startTime = new Time( //create new time object for start time in Window and individual mode objects
-  parseInt(start.substr(0, 2)),
-  parseInt(start.substr(3, 4))
-)
+// let startTime = new Time( //create new time object for start time in Window and individual mode objects
+//   parseInt(start.substr(0, 2)),
+//   parseInt(start.substr(3, 4))
+// )
 
-let endTime = new Time( //create new time object for end time in Window and individual mode objects
-  parseInt(end.substr(0, 2)),
-  parseInt(end.substr(3, 4))
-)
+// let endTime = new Time( //create new time object for end time in Window and individual mode objects
+//   parseInt(end.substr(0, 2)),
+//   parseInt(end.substr(3, 4))
+// )
 
 /* Linking to window class by creating routine task object
  * Year, month, date? 
@@ -128,18 +128,5 @@ function mainSchedule() {
 //   window.alert("For a start, please input your routine tasks such as exercise times, meal times, daily, weekly, biweekly or monthly events!");
 // }
 
-/*Initialising firebase*/
-var firebaseConfig = {
-  apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-  authDomain: "orbital-24-7.firebaseapp.com",
-  projectId: "orbital-24-7",
-  storageBucket: "orbital-24-7.appspot.com",
-  messagingSenderId: "459091456870",
-  appId: "1:459091456870:web:21134477e94d50e25ecea7",
-  measurementId: "G-WQMCMBMFCK"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-var firestore = firebase.firestore();
+
 

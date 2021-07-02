@@ -45,8 +45,9 @@
         }
         let freq_num = checkRadioValue();
         //for now freq_num and taskCategory has no update function so they are saved as it is first
-        let specificFreq; //referencing
-        let specificFreqTwo = "null"; //referencing only for biweekly
+       
+        let SpecificFreqTwo = "null"; //referencing only for biweekly
+        let SpecificFreq;
         /*getFreq(): returns the ID of the frequency to retried*/
         function getFreq(freq_num) {
             if (freq_num === 1) {
@@ -66,6 +67,7 @@
         let end = End.value;
         let endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
         let specificFreq = parseInt(SpecificFreq.value);
+        let specificFreqTwo = parseInt(specificFreqTwo.value);
 
         function Update(val, type) {
             if(type=='name') {
@@ -118,6 +120,7 @@
                     startTime : Array(startArr),
                     endTime : Array(endArr),
                     freq : Number(freq_num),
+                    // freqType: Number(specificFreq)
                 }
             ).then(function(){
                 console.log("Doc written with ID " , nameOfTask);
@@ -127,14 +130,14 @@
             });
         }
 
-        function Add_Doc_ForFreq() {
-            cloudDB.collection("RoutineTasks").doc(nameOfTask).collection("SpecificFrequency").doc(freq_num).set(
-                {
-                    freq : Number(freq_num),
-                    freqType : Number(specificFreq) 
-                }
-            )
-        }
+        // function Add_Doc_ForFreq() {
+        //     cloudDB.collection("RoutineTasks").doc(nameOfTask).collection("SpecificFrequency").doc(freq_num).set(
+        //         {
+        //             freq : Number(freq_num),
+        //             freqType : Number(specificFreq) 
+        //         }
+        //     )
+        // }
 
         //------------------------Button Events----------------------------//
         function Add() { //linked the onclick to the HTML document itself

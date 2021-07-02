@@ -61,7 +61,10 @@
         }
 
         // let nameOfTask, start, startArr, end, endArr;
-        let nameOfTask = NameOfTask.value;
+        
+        let nameOfTask = document.getElementById("taskName")
+        //let nameOfTask = NameOfTask.value;
+        /*
         let start = Start.value;
         let startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
         let end = End.value;
@@ -69,6 +72,7 @@
         let specificFreq = parseInt(SpecificFreq.value);
         let specificFreqTwo = parseInt(specificFreqTwo.value);
 
+        */
         function Update(val, type) {
             if(type=='name') {
                 nameOfTask=val;
@@ -88,7 +92,6 @@
                 specificFreq = val;
             }
         }
-
 
 
 
@@ -113,14 +116,21 @@
         // Add document with custom ID
 
         function Add_Doc_WithID() {
-            cloudDB.collection("RoutineTasks").doc(nameOfTask).set(
+            cloudDB.collection("RoutineTasks").doc("name").set(
                 {
+                    taskName : String("name"),//to all be filled in with the necessary variables
+                    taskCategory : Number(0),
+                    startTime : Array([0, 0]),
+                    endTime : Array([0, 0]),
+                    //freq : Number(0),
+                    /*
                     taskName : String(nameOfTask),//to all be filled in with the necessary variables
                     taskCategory : Number(category_num),
                     startTime : Array(startArr),
                     endTime : Array(endArr),
                     freq : Number(freq_num),
                     // freqType: Number(specificFreq)
+                    */
                 }
             ).then(function(){
                 console.log("Doc written with ID " , nameOfTask);

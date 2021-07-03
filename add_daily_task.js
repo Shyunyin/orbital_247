@@ -154,15 +154,15 @@ window.onload = function createDropdown() { //ensure that dropdown list loads on
 
 
 /*closeMe(): when submit button is pressed, window will be closed*/
-function closeMe() {
-  try {
-    window.close();
-  } catch (e) { console.log(e) }
-  try {
-    self.close();
-  } catch (e) { console.log(e) }
-}
-
+// function closeMe() {
+//   try {
+//     window.close();
+//   } catch (e) { console.log(e) }
+//   try {
+//     self.close();
+//   } catch (e) { console.log(e) }
+// }
+//TEMPORARILY DISABLED STILL WANTED!!! ADD BACK TO ID DONE
 
 
 /*Integrating with javascript. Adding to Non fixed Task and Fixed Task*/

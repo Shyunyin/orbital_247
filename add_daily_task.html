@@ -8,24 +8,25 @@
       import {NonFixedTask} from './OneTimeTasks/NonFixedTask.js';
       import {FixedTask} from './OneTimeTasks/FixedTask.js';
     </script>
-    <!--Importing Firebase and Cloud Firestore libraries-->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <link rel="stylesheet" href="add_daily_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
     <!--To allow for resizing according to screens-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
-
   
   <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
+    <!--Importing Firebase and Cloud Firestore libraries-->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
     <!-- Parent-child relationship for inline-->
     <div id="title">
       <li><h3>Add a task:</h3></li>
     <!-- INPUT for taskName-->
     <li><form>
-        <input type="text" id="taskName" name="taskName" size="70"><br>
+        <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value, 'name')"><br>
     </form></li>
     </div>
 
@@ -44,7 +45,7 @@
     <!--Find a shorter way for numerical drop downs and how to link to javascript-->
     <div id="date">
       <li><h3>Date:</h3></li>
-      <li><input id="dateInput" type="date" style="background-color: #96d6ed"></li>
+      <li><input id="dateInput" type="date" style="background-color: #96d6ed" oninput="Update(this.value,'date')"></li>
     </div>
 
     <!-- Checkboxes for either TIME task or DURATION task-->
@@ -67,11 +68,11 @@
     <div id="timeOptions">
       <div class="startTime">
         <h3>Start time:</h3>
-        <input type="time" id="startTime" name="startTime">
+        <input type="time" id="startTime" name="startTime" oninput="Update(this.value, 'start')">
       </div>
       <div class="endTime">
       <h3>End time:</h3>
-        <input type="time" id="endTime" name="endTime">
+        <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
       </div>
       <input type="button" id="doneTimeBtn" value="Done!" onclick="calculationTime()">
     </div>
@@ -80,9 +81,9 @@
     <!--Duration options-->
     <div id = "durationOptions" style="display: none">
       <form class="durationOption">
-        <input type="number" id="hour" name="hour" min="0" max="3"> <!--I set max to 3 hours for health?-->
+        <input type="number" id="hour" name="hour" min="0" max="3" oninput="Update(this.value, 'hour')"> <!--I set max to 3 hours for health?-->
         <label for="hour">hr</label>
-        <input type="number" id="minute" name="minute" min="0" max="59">
+        <input type="number" id="minute" name="minute" min="0" max="59" oninput="Update(this.value, 'min')">
         <label for="minute">min</label>
       <!-- Number of sessions -->
         <div id="sessions">
@@ -120,12 +121,12 @@
   <div id="A" style="display:none">
     <!--Container to contain the dynamically added elements-->
     <div>
-      <select id="dropdownList">
+      <select id="dropdownList" oninput="Update(this.value, 'followname')">
         <option value="" selected disabled hidden>Pick a task</option>
       </select>
     </div>  
     <!--Before and after-->
-    <select name="sequence" id="sequence">
+    <select name="sequence" id="sequence" oninput="Update(this.value, 'followseq')">
       <option value="" selected disabled hidden>Before/After</option>
       <option value="before">Before</option>
       <option value="after">After</option>
@@ -140,8 +141,133 @@
     <div class="btn-group-actions">
       <li><input type="button" id="delete" value="Delete task"></li>
       <!-- <li><button id="add" >Add another task</button></li> -->
-      <li><input type="button" id="done" value="Submit" onclick="closeMe()"></li>
+      <li><input type="button" id="done" value="Submit"></li>
     </div>
 
+    <script>
+        //------------------Defining of variables------------------//
+
+        /*For referencing later on*/
+        let NameOfTask = document.getElementById("taskName"); 
+        //category number can get from cat_num in the other javascript file
+        let Start = document.getElementById("startTime");
+        // let StartArr = [parseInt(Start.value.substr(0, 2)), parseInt(Start.value.substr(3, 4))]; //main array for start time
+        let End = document.getElementById("endTime"); 
+        // let EndArr = [parseInt(End.value.substr(0, 2)), parseInt(End.value.substr(3, 4))]; //main array for end time
+        let DateInput = document.getElementById("dateInput");
+        let FollowUpTask = document.getElementById("dropdownList"); //value to get taskname
+        let Sequence = document.getElementById("sequence"); //value to get sequence
+        let Hour = document.getElementById("hour");
+        let Minute = document.getElementById("minute");
+        //numSessions can be gotten from numOfSessions in the other javascript file
+        
+        let nameOfTask = NameOfTask.value;
+        let categoryNum = catNum; //variable from other file
+        let start = Start.value;
+        let startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
+        let end = End.value;
+        let endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
+        let date = DateInput.value;
+        let followUpTask = FollowUpTask.value;
+        let sequence = Sequence.value;
+        let hour = Hour.value;
+        let minute = Minute.value;
+        let numSessions = numOfSessions; //variable from other file
+
+        function Update(val, type) {
+          if (val=='name') {
+            nameOfTask=type;
+          } else if (val='date'){
+            date=type;
+          } else if (val='start'){
+            start=type;
+          } else if (val='end'){
+            end=type;
+          } else if (val='followname'){
+            followUpTask=type;
+          } else if (val='followseq'){
+            sequence=type;
+          } else if (val='hour'){
+            hour=type;
+          } else if (val='min'){
+            minute=type;
+          }
+        }
+
+        // /*Temp*/
+        // startArr=[20,30];
+        // endArr=[15,20];
+
+        /*function check(): to get document category*/
+        function check() {
+         if (document.getElementById("durationTask").checked == true) {
+            return "Non-fixed";
+          } else { //if the duration radio button is not clicked
+            return "Fixed";
+          }
+        }
+        //--------------- Configuration --------------------------//
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+        apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
+        authDomain: "orbital-24-7.firebaseapp.com",
+        databaseURL: "https://orbital-24-7-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "orbital-24-7",
+        storageBucket: "orbital-24-7.appspot.com",
+        messagingSenderId: "459091456870",
+        appId: "1:459091456870:web:21134477e94d50e25ecea7",
+        measurementId: "G-WQMCMBMFCK"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        let cloudDB = firebase.firestore();
+        //--------------------- Writing relevant functions ------------------//
+
+        // Add document with custom ID
+
+        function Add_Doc_WithID() {
+            cloudDB.collection("OneTimeTasks").doc(check()).set(
+                {
+                    taskName : String(nameOfTask),
+                    taskCategory : Number(categoryNum),
+                    date: String(date), //in the form "yyyy-mm-dd"
+                    startTime : Array(Number(startArr[0]), Number(startArr[1])), //fixed
+                    endTime : Array(Number(endArr[0]), Number(endArr[1])), //fixed
+                    durationHour: Number(hour), //non-fixed
+                    durationMinute: Number(minute), //non-fixed
+                    numSessions : Number(numSessions), //1,2 or 3 non-fixed
+                    followTask: String(followUpTask), //no: null; yes: taskName of the followed task
+                    sequenceLabel: String(sequence) //no: null; yes: before or after
+                }
+            ).then(function(){
+                console.log("Doc written with ID " , nameOfTask);
+            })
+            .catch(function(error) {
+                console.error("Error adding doc", Error);
+            });
+        }
+        // function Add_Doc_WithID_NonFixedTask() {
+        //     cloudDB.collection("NonFixedTasks").doc(nameOfTask).set(
+        //         {
+        //             taskName : String(nameOfTask),//to all be filled in with the necessary variables
+        //             taskCategory : Number(categoryNum),
+        //             date: String(date), //in the form "yyyy-mm-dd"
+        //             durationHour: Number(hour),
+        //             durationMinute: Number(minute),
+        //             numSessions : Number(numSessions), //1,2 or 3
+        //             followTask: String(followUpTask), //no: null; yes: taskname of the followed task
+        //             sequenceLabel: String(sequence) //no: null; yes: before or after
+        //         }
+        //     ).then(function(){
+        //         console.log("Doc written with ID " , nameOfTask);
+        //     })
+        //     .catch(function(error) {
+        //         console.error("Error adding doc", Error);
+        //     });
+        // }
+
+        //------------------------Button Events----------------------------//
+        document.getElementById("done").addEventListener('click', Add_Doc_WithID);
+    </script>
    </body>
 </html>

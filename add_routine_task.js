@@ -128,5 +128,24 @@ function mainSchedule() {
 //   window.alert("For a start, please input your routine tasks such as exercise times, meal times, daily, weekly, biweekly or monthly events!");
 // }
 
-
-
+function showList(value, btn) {
+  if (value=="weekly"){
+    document.getElementById("weeklydropdown").style.display="block";
+    document.getElementById("biweeklydropdown").style.display="none";
+    document.getElementById("chooseWeeks").style.display="none";
+    document.getElementById("date").style.display="none";
+    // document.getElementsByClassName("instruction").style.display="none";
+  } else if (value=="biweekly"){
+    document.getElementById("weeklydropdown").style.display="none";
+    document.getElementById("biweeklydropdown").style.display="block";
+    document.getElementById("chooseWeeks").style.display="block";
+    document.getElementById("date").style.display="none";
+    // document.getElementsByClassName("instruction").style.display="none";
+  } else if (value=="monthly"){
+    document.getElementById("weeklydropdown").style.display="none";
+    document.getElementById("biweeklydropdown").style.display="none";
+    document.getElementById("chooseWeeks").style.display="none";
+    document.getElementById("date").style.display="block";
+    // document.getElementsByClassName("instruction").style.display="inline-block";
+  }
+}

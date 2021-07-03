@@ -140,14 +140,7 @@
             });
         }
 
-        // function Add_Doc_ForFreq() {
-        //     cloudDB.collection("RoutineTasks").doc(nameOfTask).collection("SpecificFrequency").doc(freq_num).set(
-        //         {
-        //             freq : Number(freq_num),
-        //             freqType : Number(specificFreq) 
-        //         }
-        //     )
-        // }
+       function Add
 
         //------------------------Button Events----------------------------//
         function Add() { //linked the onclick to the HTML document itself
@@ -196,15 +189,15 @@
                 <label for="daily">Daily</label>
             </li>
             <li>
-                <input type="radio" id="weekly" name="choose" value="weekly">
+                <input type="radio" id="weekly" name="choose" value="weekly" onchange="showList('weekly', this);">
                 <label for="weekly">Weekly</label>
             </li>
             <li>
-                <input type="radio" id="biweekly" name="choose" value="biweekly">
+                <input type="radio" id="biweekly" name="choose" value="biweekly" onchange="showList('biweekly', this);">
                 <label for="biweekly">Biweekly</label>
             </li>
             <li>
-                <input type="radio" id="monthly" name="choose" value="monthly">
+                <input type="radio" id="monthly" name="choose" value="monthly" onchange="showList('monthly', this);">
                 <label for="monthly">Monthly</label>
                 <h5 class="instruction">Please key in a number from 1-31</h5>
             </li>
@@ -214,7 +207,7 @@
         <!--Use javascript to replace??-->
         <div class="dropdown">
             <li>
-                <select id="weeklydropdown" name="weeklydropdown" oninput="Update(this.value,'weekly')">
+                <select id="weeklydropdown" name="weeklydropdown" oninput="Update(this.value,'weekly')" style="display: none;">
                     <option value="" selected disabled hidden>Choose a day</option>
                     <option value="0">Monday</option>
                     <option value="1">Tuesday</option>
@@ -226,7 +219,7 @@
                 </select>
             </li>
             <li>
-                <select id="biweeklydropdown" name="biweeklydropdown" oninput="Update(this.value,'biweekly')">
+                <select id="biweeklydropdown" name="biweeklydropdown" oninput="Update(this.value,'biweekly')" style="display: none;">
                     <!--Can replace w javascript??-->
                     <option value="" selected disabled hidden>Choose a day</option>
                     <option value="0">Monday</option>
@@ -237,14 +230,14 @@
                     <option value="5">Saturday</option>
                     <option value="6">Sunday</option>
                 </select>
-                <select id="chooseWeeks" name="chooseWeeks" oninput="Update(this.value,'biweeklychoose')">
+                <select id="chooseWeeks" name="chooseWeeks" oninput="Update(this.value,'biweeklychoose')" style="display: none;">
                     <option value="" selected disabled hidden>Current/Next</option>
                     <option value="0">Current Week</option>
                     <option value="1">Next Week</option>
                 </select>
             </li>
             <li>
-                <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')">
+                <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')" style="display: none;">
             </li>
         </div>
     </div>

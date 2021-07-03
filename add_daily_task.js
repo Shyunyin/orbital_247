@@ -211,13 +211,48 @@ let minDuration = parseInt(document.getElementById("minute").value); //get numbe
   scheduleTask(); //to schedule task
 }
 
-function addContent(i) {
-  const followUp = document.getElementById("followUp");
-  if (i === 0) {
-    followUp.removeAttribute("hidden");
-  } 
-  if (i === 1) {
-    followUp.setAttribute("hidden");
-    followUp.removeAttribute("hidden");
+// function addContent(i) {
+//   const followUp = document.getElementById("followUp");
+//   if (i === 0) {
+//     followUp.removeAttribute("hidden");
+//   } 
+//   if (i === 1) {
+//     followUp.setAttribute("hidden");
+//     followUp.removeAttribute("hidden");
+//   }
+// }
+
+function showOptions(value, btn) {
+  if (value=="timeOptions"){
+    document.getElementById("timeOptions").style.display = "block";
+    document.getElementById("durationOptions").style.display = "none";
+    // document.getElementsByClassName("durationOption").style.display = "none";
+    // document.getElementById("hour").style.display = "none";
+    // document.getElementById("minute").style.display = "none";
+    // document.getElementById("sessions").style.display = "none";
+    // document.getElementsByClassName("numSessions").style.display = "none";
+    // document.getElementById("doneDurationBtn").style.display = "none";
+    
+  } else if (value=="durationOptions"){
+    document.getElementById("durationOptions").style.display = "block";
+    document.getElementById("timeOptions").style.display = "none";
+    // document.getElementsByClassName("startTime").style.display = "none";
+    // document.getElementsByClassName("endTime").style.display = "none";
+    // document.getElementById("startTime").style.display = "none";
+    // document.getElementById("endTime").style.display = "none";
+    // document.getElementById("doneTimeBtn").style.display = "none";
+
   }
 }
+
+function showList(value, btn) {
+  if (value=='A'){
+    document.getElementById("A").style.display = "block";
+    document.getElementById("B").style.display = "none";
+  }
+  else if (value=='B'){
+    document.getElementById("B").style.display = "block";
+    document.getElementById("A").style.display = "none";
+  }
+}
+

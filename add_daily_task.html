@@ -51,45 +51,51 @@
     <!-- Make checkboxes either or, have the same name to be in the same group, have diff values to make distinct--> 
     <nav>
       <element id="selectTime">
-        <input type="radio" id="timeTask" name="select" value="time" onclick="initial()"> 
+        <input type="radio" id="timeTask" name="select" value="time" checked="checked" onclick="initial()" onchange="showOptions('timeOptions', this);"> 
         <label for="timeTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Time</label><br>
       </element>
       <element id="or">
         <h3>OR</h3>
       </element>
       <element id="selectDuration">
-        <input type="radio" id="durationTask" name="select" value="duration" onclick="initial()">
+        <input type="radio" id="durationTask" name="select" value="duration" onclick="initial()" onchange="showOptions('durationOptions', this);">
         <label for="durationTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Duration (per session)</label><br>
       </element>
     </nav>
 
     <!--Time options-->
-    <div class="startTime">
-      <h3>Start time:</h3>
-      <input type="time" id="startTime" name="startTime">
+    <div id="timeOptions">
+      <div class="startTime">
+        <h3>Start time:</h3>
+        <input type="time" id="startTime" name="startTime">
+      </div>
+      <div class="endTime">
+      <h3>End time:</h3>
+        <input type="time" id="endTime" name="endTime">
+      </div>
+      <input type="button" id="doneTimeBtn" value="Done!" onclick="calculationTime()">
     </div>
-    <div class="endTime">
-    <h3>End time:</h3>
-      <input type="time" id="endTime" name="endTime">
-    </div>
-    <input type="button" id="doneTimeBtn" value="Done!" onclick="calculationTime()">
+    
 
     <!--Duration options-->
-    <form class="durationOption">
-      <input type="number" id="hour" name="hour" min="0" max="3"> <!--I set max to 3 hours for health?-->
-      <label for="hour">hr</label>
-      <input type="number" id="minute" name="minute" min="0" max="59">
-      <label for="minute">min</label>
-    <!-- Number of sessions -->
-    <div id="sessions">
-      <h3>Number of Sessions:</h3>
+    <div id = "durationOptions" style="display: none">
+      <form class="durationOption">
+        <input type="number" id="hour" name="hour" min="0" max="3"> <!--I set max to 3 hours for health?-->
+        <label for="hour">hr</label>
+        <input type="number" id="minute" name="minute" min="0" max="59">
+        <label for="minute">min</label>
+      <!-- Number of sessions -->
+        <div id="sessions">
+          <h3>Number of Sessions:</h3>
+        </div>
+        <form class="numSessions">
+          <input type="button" id="onesession" onclick="sessionsFunction(1)" value="x1"></button>
+          <input type="button" id="twosessions" onclick="sessionsFunction(2)" value="x2"></button>
+          <input type="button" id="threesessions" onclick="sessionsFunction(3)" value="x3"></button>
+        </form>
+        <input type="button" id="doneDurationBtn" value="Done!" onclick="calculationDuration()">
     </div>
-    <form class="numSessions">
-        <input type="button" id="onesession" onclick="sessionsFunction(1)" value="x1"></button>
-        <input type="button" id="twosessions" onclick="sessionsFunction(2)" value="x2"></button>
-        <input type="button" id="threesessions" onclick="sessionsFunction(3)" value="x3"></button>
-    </form>
-      <input type="button" id="doneDurationBtn" value="Done!" onclick="calculationDuration()">
+  
 
     
     <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
@@ -104,14 +110,14 @@
     <div class="followTask">
       <br>
         <li><h3>Does this task follow another task?</h3></li>
-        <li><input type="radio" id="yes" name="check" onclick="addContent(0);">
+        <li><input type="radio" id="yes" name="check" value="A" onchange="showList('A', this); return false;">
           <label class="yes" for="yes">Yes</label></li>
-        <li><input type="radio" id="no" name="check" checked="checked" onclick="addContent(1)">
+        <li><input type="radio" id="no" name="check" checked="checked" value="B" onchange="showList('B', this); return false;">
           <label class="no" for="no">No</label><br></li>
       </br>
 
       <!--Code for dropdown menu linked to javascript, database of other tasknames-->
-  <div id="followUp" hidden>
+  <div id="A" style="display:none">
     <!--Container to contain the dynamically added elements-->
     <div>
       <select id="dropdownList">
@@ -124,6 +130,9 @@
       <option value="before">Before</option>
       <option value="after">After</option>
     </select>
+  </div>
+
+  <div id="B" style="display:none">
   </div>
  
 

@@ -192,7 +192,7 @@ nav {
   border-radius: 5px;
   width: 60px;
   height: 30px;
-  margin-left: 260px;
+  margin-left: 330px;
   margin-top: 150px;
 }
 #doneTimeBtn {
@@ -397,3 +397,20 @@ input[type="checkbox"] {
   border-width: 2px;
   border-color: black;
 }
+
+/*To hide items*/
+/* #timeOptions
+  .startTime
+  .endTime
+  #startTime
+  #endTime
+  #doneTimeBtn
+  #durationOptions
+  .durationOption
+  #hour
+  #minute
+  #sessions
+  .numSessions
+  #doneDurationBtn {
+  display: none;
+} */

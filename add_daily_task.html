@@ -141,7 +141,7 @@
     <div class="btn-group-actions">
       <li><input type="button" id="delete" value="Delete task"></li>
       <!-- <li><button id="add" >Add another task</button></li> -->
-      <li><input type="button" id="done" value="Submit"></li>
+      <li><input type="button" id="done" value="Submit" onclick="Add_Doc_WithID()"></li>
     </div>
 
     <script>
@@ -167,30 +167,33 @@
         let startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
         let end = End.value;
         let endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
-        let date = DateInput.value;
+        let dateInput = DateInput.value;
         let followUpTask = FollowUpTask.value;
         let sequence = Sequence.value;
         let hour = Hour.value;
         let minute = Minute.value;
         let numSessions = numOfSessions; //variable from other file
+        // let nameOfTask, categoryNum, start, startArr, end, endArr, dateInput, followUpTask, sequence, hour, minute;
 
         function Update(val, type) {
-          if (val=='name') {
-            nameOfTask=type;
-          } else if (val='date'){
-            date=type;
-          } else if (val='start'){
-            start=type;
-          } else if (val='end'){
-            end=type;
-          } else if (val='followname'){
-            followUpTask=type;
-          } else if (val='followseq'){
-            sequence=type;
-          } else if (val='hour'){
-            hour=type;
-          } else if (val='min'){
-            minute=type;
+          if (type=='name') {
+            nameOfTask=val;
+          } else if (type=='date'){
+            dateInput=val;
+          } else if (type=='start'){
+            start=val;
+            startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
+          } else if (type=='end'){
+            end=val;
+            endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
+          } else if (type=='followname'){
+            followUpTask=val;
+          } else if (type=='followseq'){
+            sequence=val;
+          } else if (type=='hour'){
+            hour=val;
+          } else if (type=='min'){
+            minute=val;
           }
         }
 
@@ -206,6 +209,7 @@
             return "Fixed";
           }
         }
+        var typeCheck = check();
         //--------------- Configuration --------------------------//
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
@@ -246,6 +250,10 @@
                 console.error("Error adding doc", Error);
             });
         }
+
+        function RetrieveWithID(taskName) {
+            console.log("I come here too");
+        }
         // function Add_Doc_WithID_NonFixedTask() {
         //     cloudDB.collection("NonFixedTasks").doc(nameOfTask).set(
         //         {
@@ -267,7 +275,7 @@
         // }
 
         //------------------------Button Events----------------------------//
-        document.getElementById("done").addEventListener('click', Add_Doc_WithID);
+        // document.getElementById("done").addEventListener('click', Add_Doc_WithID);
     </script>
    </body>
 </html>

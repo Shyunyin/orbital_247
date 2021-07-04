@@ -35,9 +35,9 @@
         <li><h3>Category:</h3></li>
     <!-- Buttons for categories-->
     <li><form class="btn-group-category">
-        <input type="button" id="work" onclick="catFunction(0)" value="Work"></button>
-        <input type="button" id="exercise" onclick="catFunction(1)" value="Exercise"></button>
-        <input type="button" id="misc" onclick="catFunction(2)" value="Miscellaneous"></button>
+        <input type="button" id="work" onclick="catFunction(0); Update(0,'work');" value="Work"></button>
+        <input type="button" id="exercise" onclick="catFunction(1); Update(1,'exercise');" value="Exercise"></button>
+        <input type="button" id="misc" onclick="catFunction(2); Update(2,'misc');" value="Miscellaneous"></button>
     </form></li>
   </div>
     
@@ -45,7 +45,7 @@
     <!--Find a shorter way for numerical drop downs and how to link to javascript-->
     <div id="date">
       <li><h3>Date:</h3></li>
-      <li><input id="dateInput" type="date" style="background-color: #96d6ed" oninput="Update(this.value,'date')"></li>
+      <li><input id="dateInput" type="date" style="background-color: #96d6ed" oninput="Update(this.value,'datein')"></li>
     </div>
 
     <!-- Checkboxes for either TIME task or DURATION task-->
@@ -90,9 +90,9 @@
           <h3>Number of Sessions:</h3>
         </div>
         <form class="numSessions">
-          <input type="button" id="onesession" onclick="sessionsFunction(1)" value="x1"></button>
-          <input type="button" id="twosessions" onclick="sessionsFunction(2)" value="x2"></button>
-          <input type="button" id="threesessions" onclick="sessionsFunction(3)" value="x3"></button>
+          <input type="button" id="onesession" onclick="sessionsFunction(1); Update(1,'one');" value="x1"></button>
+          <input type="button" id="twosessions" onclick="sessionsFunction(2);Update(2,'two');" value="x2"></button>
+          <input type="button" id="threesessions" onclick="sessionsFunction(3);Update(3,'three');" value="x3"></button>
         </form>
         <input type="button" id="doneDurationBtn" value="Done!" onclick="calculationDuration()">
     </div>
@@ -111,7 +111,7 @@
     <div class="followTask">
       <br>
         <li><h3>Does this task follow another task?</h3></li>
-        <li><input type="radio" id="yes" name="check" value="A" onchange="showList('A', this); return false;">
+        <li><input type="radio" id="yes" name="check" value="A" onchange="showList('A', this); return false;" onclick="RetrieveWithID()">
           <label class="yes" for="yes">Yes</label></li>
         <li><input type="radio" id="no" name="check" checked="checked" value="B" onchange="showList('B', this); return false;">
           <label class="no" for="no">No</label><br></li>
@@ -178,7 +178,7 @@
         function Update(val, type) {
           if (type=='name') {
             nameOfTask=val;
-          } else if (type=='date'){
+          } else if (type=='datein'){
             dateInput=val;
           } else if (type=='start'){
             start=val;
@@ -194,6 +194,18 @@
             hour=val;
           } else if (type=='min'){
             minute=val;
+          } else if (type=='work'){
+            categoryNum=val;
+          } else if (type=='exercise'){
+            categoryNum=val;
+          } else if (type=='misc'){
+            categoryNum=val;
+          } else if (type=='one'){
+            numSessions=val;
+          } else if (type=='two'){
+            numSessions=val;
+          } else if (type=='three'){
+            numSessions=val;
           }
         }
 
@@ -230,11 +242,12 @@
         // Add document with custom ID
 
         function Add_Doc_WithID() {
-            cloudDB.collection("OneTimeTasks").doc(check()).set(
+            cloudDB.collection("OneTimeTasks").doc(nameOfTask).set(
                 {
                     taskName : String(nameOfTask),
                     taskCategory : Number(categoryNum),
-                    date: String(date), //in the form "yyyy-mm-dd"
+                    date: String(dateInput), //in the form "yyyy-mm-dd"
+                    type: String(check()), //to store if its fixed or non-fixed also
                     startTime : Array(Number(startArr[0]), Number(startArr[1])), //fixed
                     endTime : Array(Number(endArr[0]), Number(endArr[1])), //fixed
                     durationHour: Number(hour), //non-fixed
@@ -251,29 +264,50 @@
             });
         }
 
-        function RetrieveWithID(taskName) {
-            console.log("I come here too");
-        }
-        // function Add_Doc_WithID_NonFixedTask() {
-        //     cloudDB.collection("NonFixedTasks").doc(nameOfTask).set(
-        //         {
-        //             taskName : String(nameOfTask),//to all be filled in with the necessary variables
-        //             taskCategory : Number(categoryNum),
-        //             date: String(date), //in the form "yyyy-mm-dd"
-        //             durationHour: Number(hour),
-        //             durationMinute: Number(minute),
-        //             numSessions : Number(numSessions), //1,2 or 3
-        //             followTask: String(followUpTask), //no: null; yes: taskname of the followed task
-        //             sequenceLabel: String(sequence) //no: null; yes: before or after
-        //         }
-        //     ).then(function(){
-        //         console.log("Doc written with ID " , nameOfTask);
-        //     })
-        //     .catch(function(error) {
-        //         console.error("Error adding doc", Error);
-        //     });
-        // }
+        //--------------------- Retrieving relavant information from database ------------------//
+        /*Function to get current date in format*/
+        function formatDate() {
+          var today = new Date();
+          year = today.getFullYear();
+          month = '' + (today.getMonth() + 1);
+          day = '' + today.getDate();
+          if (month.length < 2)
+            month = '0' + month;
+          if (day.length < 2) 
+            day = '0' + day;
 
+          return [year, month, day].join('-');
+        }
+        
+        /*Create an option in the dropdown list*/
+        function createDropdown(name) { //ensure that dropdown list loads once page is loaded up
+          namespace = name.replace(/ /g,"_");
+          let option = document.createElement("option");
+          option.value = name; //add a value attribute
+          option.text = name;  
+          option.classList.add(namespace); //add a class attribute the class of the taskname is just task underscore
+          document.getElementById("dropdownList").append(option); //appending options to the select
+        }
+         
+        /*Use where() to get the documents of the current date in order to retrieve the taskNames of these documents*/
+        function RetrieveWithID() {
+          var todayDate = formatDate(); //getting current date
+          console.log(formatDate());
+          var taskList;
+            console.log("I come here too");
+            cloudDB.collection('OneTimeTasks').where("date", "==", todayDate)
+            .get()
+            .then((snapshot) => {
+              snapshot.forEach((doc) => {
+                createDropdown(doc.data().taskName);
+                // console.log(doc.data().taskName);
+              });
+            })
+            .catch((error) => {
+            console.log("Error getting documents: ", error);
+          });
+        }
+       
         //------------------------Button Events----------------------------//
         // document.getElementById("done").addEventListener('click', Add_Doc_WithID);
     </script>

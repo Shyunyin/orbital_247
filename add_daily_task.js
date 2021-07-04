@@ -41,7 +41,7 @@ let catNum = 0;
     catNum = button_switch; //to cause category to follow the array number
   }
 
-  let numOfSessions = 1; /*To use as multiplier for the hours calculated*/
+  let numOfSessions = 0; /*To use as multiplier for the hours calculated*/
 
 /*CSS purpose: For selection of number of sessions to only 1*/
   function sessionsFunction(click_switch){
@@ -139,20 +139,18 @@ let catNum = 0;
   }
 
 
-/* To create a dynamic dropdown list*/
-let taskList = ["Test1", "Test2", "Test3"]; //this will be imported from where all tasks in the day are stored
+/* To create a dynamic dropdown list: import from database*/
+// let taskList = ["Test1", "Test2", "Test3"]; //this will be imported from where all tasks in the day are stored
 
-window.onload = function createDropdown() { //ensure that dropdown list loads once page is loaded up
-  for (let i=0; i < taskList.length; i++) {
-    let option = document.createElement("option");
-    option.value = taskList[i]; //add a value attribute
-    option.text = taskList[i];  
-    option.classList.add(taskList[i]); //add a class attribute
-    document.getElementById("dropdownList").append(option); //appending options to the select
-  }
-}
-
-
+// window.onload = function createDropdown() { //ensure that dropdown list loads once page is loaded up
+//   for (let i=0; i < taskList.length; i++) {
+//     let option = document.createElement("option");
+//     option.value = taskList[i]; //add a value attribute
+//     option.text = taskList[i];  
+//     option.classList.add(taskList[i]); //add a class attribute
+//     document.getElementById("dropdownList").append(option); //appending options to the select
+//   }
+// }
 /*closeMe(): when submit button is pressed, window will be closed*/
 // function closeMe() {
 //   try {

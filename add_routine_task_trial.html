@@ -144,7 +144,8 @@
     
         <!--Buttons for ADD, DONE-->
         <div class="btn-group-actions">
-            <button id="add" onclick=Add_Doc_WithAutoID();>Submit and Add another routine task</button>
+            <!--<button id="add" onclick=Add_Doc_WithAutoID();>Submit and Add another routine task</button>-->
+            <button id="add" onclick=RetrieveWithID();>Submit and Add another routine task</button>
             <button id="done" onclick="mainSchedule(); Done();">Submit and Done adding ALL routine tasks</button>
         </div>
     
@@ -266,8 +267,13 @@
             });
         }
 
-        function RetrieveWithID(taskName) {
+        function RetrieveWithID() {
             console.log("I come here too");
+            cloudDB.collection('OneTimeTasks').get().then(snapshot => (
+                snapshot.forEach (doc => 
+                    console.log(doc.data().numSessions)
+                )
+            ));
         }
 
         // function Add_Doc_ForFreq() {

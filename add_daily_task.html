@@ -139,7 +139,7 @@
 
     <!--Buttons for DELETE, ADD, DONE-->
     <div class="btn-group-actions">
-      <li><input type="button" id="delete" value="Delete task"></li>
+      <li><input type="button" id="delete" value="Delete task" onclick="DeleteTask()"></li>
       <!-- <li><button id="add" >Add another task</button></li> -->
       <li><input type="button" id="done" value="Submit" onclick="Add_Doc_WithID()"></li>
     </div>
@@ -174,7 +174,7 @@
         let minute = Minute.value;
         let numSessions = numOfSessions; //variable from other file
         // let nameOfTask, categoryNum, start, startArr, end, endArr, dateInput, followUpTask, sequence, hour, minute;
-
+ 
         function Update(val, type) {
           if (type=='name') {
             nameOfTask=val;
@@ -240,7 +240,6 @@
         //--------------------- Writing relevant functions ------------------//
 
         // Add document with custom ID
-
         function Add_Doc_WithID() {
             cloudDB.collection("OneTimeTasks").doc(nameOfTask).set(
                 {
@@ -290,7 +289,7 @@
         }
          
         /*Use where() to get the documents of the current date in order to retrieve the taskNames of these documents*/
-        function RetrieveWithID() {
+        function RetrieveWithID() { //get taskNames with dates considered also
           var todayDate = formatDate(); //getting current date
           console.log(formatDate());
           var taskList;
@@ -300,13 +299,23 @@
             .then((snapshot) => {
               snapshot.forEach((doc) => {
                 createDropdown(doc.data().taskName);
-                // console.log(doc.data().taskName);
               });
             })
             .catch((error) => {
             console.log("Error getting documents: ", error);
           });
         }
+
+         //--------------------- Deleting data from database ------------------//
+         function DeleteTask(){
+           cloudDB.collection("OneTimeTasks").doc(nameOfTask).delete()
+           .then(function(){
+             console.log("Document deleted with ID", nameOfTask);
+           })
+           .catch(function(error){
+             console.error("Error deleting document", error);
+           });
+         }
        
         //------------------------Button Events----------------------------//
         // document.getElementById("done").addEventListener('click', Add_Doc_WithID);

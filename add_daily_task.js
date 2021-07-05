@@ -164,7 +164,9 @@ let catNum = 0;
 //TEMPORARILY DISABLED STILL WANTED!!! ADD BACK TO ID DONE
 
 /*Functions fired when done button is clicked*/
-
+function frontEndSubmit(){
+  window.alert("Daily task has been successfully saved! Please press the X button to close the window!");
+}
 
 
 /*Integrating with javascript. Adding to Non fixed Task and Fixed Task*/

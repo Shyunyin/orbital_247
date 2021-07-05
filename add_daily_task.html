@@ -261,7 +261,7 @@
             .catch(function(error) {
                 console.error("Error adding doc", Error);
             });
-        }
+          }
 
         //--------------------- Retrieving relavant information from database ------------------//
         /*Function to get current date in format*/
@@ -307,7 +307,7 @@
         }
 
          //--------------------- Deleting data from database ------------------//
-         function DeleteTask(){
+         function DeleteTask(){ //only can test when edit function is out
            cloudDB.collection("OneTimeTasks").doc(nameOfTask).delete()
            .then(function(){
              console.log("Document deleted with ID", nameOfTask);

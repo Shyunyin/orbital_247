@@ -26,8 +26,22 @@ function textMonth(month) {
     }
 }
 
+function wholeDate(date) {
+    if (date < 10) {
+        date = "0" + date;
+    }
+    return date;
+}
+
+function wholeMonth(month) {
+    if (month < 10) {
+        month = "0" + month;
+    }
+    return month;
+}
+
 /*Must get input array of task names in the day, same as for add_daily_task page*/
-tasks = ["Test1", "Test2", "Test3"]; //find a way to get the tasks. [only one time tasks]
+//tasks = ["Test1", "Test2", "Test3"]; //find a way to get the tasks. [only one time tasks]
 
 function doublehours(num) {
     if (num < 10) {
@@ -69,7 +83,7 @@ function startTime() {
 /*Onload can only appear once!!!!!!*/
 window.onload = function getHeading() {
     let today = new Date(); //creating object to use Date method
-    let date = today.getDate() + "-" + (today.getMonth() + 1) + "-" + today.getFullYear();
+    let date = wholeDate(today.getDate()) + "-" + wholeMonth(today.getMonth() + 1) + "-" + today.getFullYear();
     let currentDate = document.getElementById("currentDate");
     currentDate.setAttribute("value", date);
 
@@ -80,43 +94,40 @@ window.onload = function getHeading() {
     let currentUser = document.getElementById("currentUser");
     currentUser.setAttribute("value", welcome);
 
-    let day = textDay(today.getDay()) + ", " + today.getDate() + " " + textMonth(today.getMonth()) + "'s Schedule";
+    let day = textDay(today.getDay()) + ", " + wholeDate(today.getDate()) + " " + textMonth(today.getMonth()) + "'s Schedule";
     let currentSchedule = document.getElementById("currentSchedule");
     currentSchedule.setAttribute("value", day);
 
-    /*For post-it stick tasks*/
-    for (let i = 0; i < tasks.length; i++) {
-        let append = document.createElement("input");
-        append.setAttribute("type", "button");
-        append.setAttribute("value", tasks[i]);
-        append.setAttribute("readonly", "readonly");
-        append.setAttribute("onclick", "redirect()")
-        append.classList.add("task");
-        append.style.fontFamily = "'Signika Negative', sans-serif";
-        append.style.fontSize = "large";
-        append.style.position = "absolute";
-        append.style.zIndex = "2";
-        append.style.color = "white";
-        append.style.backgroundColor = "#1e5353";
-        append.style.border = "none";
-        append.style.marginLeft = "15px";
-        append.style.height = "20px";
-        append.style.cursor="pointer";
-        //calculation to ensure that tasks printed on top of each other
-        let top = i * 30;
-        let topText = top + "px";
-        append.style.marginTop = topText;
-        let ele = document.getElementById("postitContent");
-        ele.appendChild(append);
-    }
-}
+    Retrieve_Doc_WithID(); //to call the function to read all the daily tasks to list in post-it
+} 
+//     /*For post-it stick tasks*/
+//     for (let i = 0; i < tasks.length; i++) {
+//         let append = document.createElement("input");
+//         append.setAttribute("type", "button");
+//         append.setAttribute("value", tasks[i]);
+//         append.setAttribute("readonly", "readonly");
+//         append.setAttribute("onclick", "redirect()")
+//         append.classList.add("task");
+//         append.style.fontFamily = "'Signika Negative', sans-serif";
+//         append.style.fontSize = "large";
+//         append.style.position = "absolute";
+//         append.style.zIndex = "2";
+//         append.style.color = "white";
+//         append.style.backgroundColor = "#1e5353";
+//         append.style.border = "none";
+//         append.style.marginLeft = "15px";
+//         append.style.height = "20px";
+//         append.style.cursor="pointer";
+//         //calculation to ensure that tasks printed on top of each other
+//         let top = i * 30;
+//         let topText = top + "px";
+//         append.style.marginTop = topText;
+//         let ele = document.getElementById("postitContent");
+//         ele.appendChild(append);
+//     }
+// }
 
-/*For popup*/
-function OpenPopupWindow() {
-    var url = "http://127.0.0.1:5501/add_daily_task.html";
-    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=750, height=700, toolbar=1, resizable=0');
-    myRef.focus();
-}
+
 
 /*For when the 4 icons are clicked*/
 /*start button*/
@@ -130,6 +141,7 @@ function clickReschedule() {
     var url = "http://127.0.0.1:5501/rescheduleIcon.html";
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
     myRef.focus();
+
 }
 /*edit button*/
 function clickEdit() {
@@ -280,14 +292,18 @@ function postitActions(taskName) { //only edit and delete
     currentNode.replaceWith(newNode);
 }
 
-/*clearPostit function is to remove the tasks printed on the post it 
- * after the schedule has been generated*/ /*FKING WORKS ON CONSOLE BUT NOT HERE ARGHHHHHHH*/
- function clearPostit() {
-    var currentNode = document.getElementById("postitContent");
-    var newNode = document.createElement("div");
-    newNode.id = "postitContent";
-    newNode.innerHTML = "";
-    currentNode.replaceWith(newNode);
+/*Open popup and close*/
+function OpenPopupWindow() {   
+    var url = "http://127.0.0.1:5501/add_daily_task.html"; 
+    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=750, height=700, toolbar=1, resizable=0');
+    myRef.focus();
+    // console.log('window opened!');
+    myRef.onunload = function(){
+  // DOM unloaded, so the window is likely closed.
+    clearPostit();
+    Retrieve_Doc_WithID();
+    // console.log('window closed!');
+    }
 }
 
 /*UNCOMMENT WHEN LINKING TO JAVASCRIPT*/

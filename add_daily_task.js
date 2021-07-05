@@ -151,6 +151,7 @@ let catNum = 0;
 //     document.getElementById("dropdownList").append(option); //appending options to the select
 //   }
 // }
+
 /*closeMe(): when submit button is pressed, window will be closed*/
 // function closeMe() {
 //   try {
@@ -161,6 +162,9 @@ let catNum = 0;
 //   } catch (e) { console.log(e) }
 // }
 //TEMPORARILY DISABLED STILL WANTED!!! ADD BACK TO ID DONE
+
+/*Functions fired when done button is clicked*/
+
 
 
 /*Integrating with javascript. Adding to Non fixed Task and Fixed Task*/

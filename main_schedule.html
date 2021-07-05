@@ -14,6 +14,11 @@
 </head>
 
 <body>
+      <!--Importing Firebase and Cloud Firestore libraries*-->
+      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
     <!-- Main division for the background-->
     <div id="background">
         <div class="btn-group">
@@ -82,7 +87,7 @@
 
     <!--Add task pop-out-->
     <button type="button" id="addTask" name="addTask">+</button>
-    <input type="button" id="addTask" value="+" onclick="OpenPopupWindow()";>
+    <input type="button" id="addTask" value="+" onclick="OpenPopupWindow()">
 
 
     <!--Link to pop up for add daily task page-->
@@ -111,29 +116,76 @@
         firebase.initializeApp(firebaseConfig);
         let cloudDB = firebase.firestore();
         //--------------------- Writing relevant functions ------------------//
-        function Add_Doc_WithID() {
-            cloudDB.collection("OneTimeTasks").doc(nameOfTask).set(
-                {
-                    taskName : String(nameOfTask),
-                    taskCategory : Number(categoryNum),
-                    date: String(dateInput), //in the form "yyyy-mm-dd"
-                    type: String(check()), //to store if its fixed or non-fixed also
-                    startTime : Array(Number(startArr[0]), Number(startArr[1])), //fixed
-                    endTime : Array(Number(endArr[0]), Number(endArr[1])), //fixed
-                    durationHour: Number(hour), //non-fixed
-                    durationMinute: Number(minute), //non-fixed
-                    numSessions : Number(numSessions), //1,2 or 3 non-fixed
-                    followTask: String(followUpTask), //no: null; yes: taskName of the followed task
-                    sequenceLabel: String(sequence) //no: null; yes: before or after
-                }
-            ).then(function(){
-                console.log("Doc written with ID " , nameOfTask);
-            })
-            .catch(function(error) {
-                console.error("Error adding doc", Error);
-            });
+        //--------------------- Retrieving post-it stick tasks from database ------------------//
+        /*Function to get current date in format*/
+        function formatDate() {
+          var today = new Date();
+          year = today.getFullYear();
+          month = '' + (today.getMonth() + 1);
+          day = '' + today.getDate();
+          if (month.length < 2)
+            month = '0' + month;
+          if (day.length < 2) 
+            day = '0' + day;
+
+          return [year, month, day].join('-');
         }
-        //--------------------- Retrieving relavant information from database ------------------//
+
+        var count = 0;
+
+        // /*clearPostit function is to remove the tasks printed on the post it 
+        function clearPostit() {
+            var currentNode = document.getElementById("postitContent");
+            var newNode = document.createElement("div");
+            newNode.id = "postitContent";
+            newNode.innerHTML = "";
+            currentNode.replaceWith(newNode);
+            count = 0; //reset count whenever post it is cleared
+        }
+     
+        // /*createPostIt(): Create an option in the post-it stick*/
+        function createPostIt(name) { 
+            let append = document.createElement("input");
+            append.setAttribute("type", "button");
+            append.setAttribute("value", name);
+            append.setAttribute("readonly", "readonly");
+            append.setAttribute("onclick", "redirect()")
+            append.classList.add("task");
+            append.style.fontFamily = "'Signika Negative', sans-serif";
+            append.style.fontSize = "large";
+            append.style.position = "absolute";
+            append.style.zIndex = "2";
+            append.style.color = "white";
+            append.style.backgroundColor = "#1e5353";
+            append.style.border = "none";
+            append.style.marginLeft = "15px";
+            append.style.height = "25px";
+            append.style.cursor="pointer";
+            //calculation to ensure that tasks printed on top of each other
+            let top = count * 30;
+            let topText = top + "px";
+            append.style.marginTop = topText;
+            let ele = document.getElementById("postitContent");
+            ele.appendChild(append);
+            count += 1; //to increase the top margin for each input
+        }
+        function Retrieve_Doc_WithID() { //is called in onload and in main_schedule.js OpenPopupWindow();
+          var todayDate = formatDate(); //getting current date
+          console.log(formatDate());
+          var taskList;
+            console.log("I come here too");
+            cloudDB.collection('OneTimeTasks').where("date", "==", todayDate)
+            .get()
+            .then((snapshot) => {
+              snapshot.forEach((doc) => {
+                createPostIt(doc.data().taskName);
+              });
+            })
+            .catch((error) => {
+            console.log("Error getting documents: ", error);
+          });
+        }
+
     </script>
 </body>
 

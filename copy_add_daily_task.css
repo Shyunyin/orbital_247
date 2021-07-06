@@ -240,11 +240,11 @@ nav {
   z-index: 2;
 }
 /* #counterOutput {
-  color: black;
-  font-size: large;
-  position: absolute;
-  z-index: 2;
-} */
+    color: black;
+    font-size: large;
+    position: absolute;
+    z-index: 2;
+  } */
 .startTime {
   font-family: Signika Negative, sans-serif;
   position: absolute;

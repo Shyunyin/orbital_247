@@ -27,7 +27,7 @@
         <li><h3>Add a task:</h3></li>
       <!-- INPUT for taskName-->
       <li><form>
-          <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value, 'name')"><br>
+          <input type="text" id="taskName" name="taskName" size="70"><br>
       </form></li>
       </div>
   
@@ -36,9 +36,9 @@
           <li><h3>Category:</h3></li>
       <!-- Buttons for categories-->
       <li><form class="btn-group-category">
-          <input type="button" id="work" onclick="catFunction(0); Update(0,'work');" value="Work"></button>
-          <input type="button" id="exercise" onclick="catFunction(1); Update(1,'exercise');" value="Exercise"></button>
-          <input type="button" id="misc" onclick="catFunction(2); Update(2,'misc');" value="Miscellaneous"></button>
+          <input type="button" id="work" onclick="catFunction(0);" value="Work"></button>
+          <input type="button" id="exercise" onclick="catFunction(1);" value="Exercise"></button>
+          <input type="button" id="misc" onclick="catFunction(2);" value="Miscellaneous"></button>
       </form></li>
     </div>
       
@@ -46,7 +46,7 @@
       <!--Find a shorter way for numerical drop downs and how to link to javascript-->
       <div id="date">
         <li><h3>Date:</h3></li>
-        <li><input id="dateInput" type="date" style="background-color: #96d6ed" oninput="Update(this.value,'datein')"></li>
+        <li><input id="dateInput" type="date" style="background-color: #96d6ed"></li>
       </div>
   
       <!-- Checkboxes for either TIME task or DURATION task-->
@@ -69,11 +69,11 @@
       <div id="timeOptions">
         <div class="startTime">
           <h3>Start time:</h3>
-          <input type="time" id="startTime" name="startTime" oninput="Update(this.value, 'start')">
+          <input type="time" id="startTime" name="startTime">
         </div>
         <div class="endTime">
         <h3>End time:</h3>
-          <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
+          <input type="time" id="endTime" name="endTime">
         </div>
         <input type="button" id="doneTimeBtn" value="Done!" onclick="calculationTime()">
       </div>
@@ -82,18 +82,18 @@
       <!--Duration options-->
       <div id = "durationOptions" style="display: none">
         <form class="durationOption">
-          <input type="number" id="hour" name="hour" min="0" max="3" oninput="Update(this.value, 'hour')"> <!--I set max to 3 hours for health?-->
+          <input type="number" id="hour" name="hour" min="0" max="3"> <!--I set max to 3 hours for health?-->
           <label for="hour">hr</label>
-          <input type="number" id="minute" name="minute" min="0" max="59" oninput="Update(this.value, 'min')">
+          <input type="number" id="minute" name="minute" min="0" max="59">
           <label for="minute">min</label>
         <!-- Number of sessions -->
           <div id="sessions">
             <h3>Number of Sessions:</h3>
           </div>
           <form class="numSessions">
-            <input type="button" id="onesession" onclick="sessionsFunction(1); Update(1,'one');" value="x1"></button>
-            <input type="button" id="twosessions" onclick="sessionsFunction(2);Update(2,'two');" value="x2"></button>
-            <input type="button" id="threesessions" onclick="sessionsFunction(3);Update(3,'three');" value="x3"></button>
+            <input type="button" id="onesession" onclick="sessionsFunction(1);" value="x1"></button>
+            <input type="button" id="twosessions" onclick="sessionsFunction(2);" value="x2"></button>
+            <input type="button" id="threesessions" onclick="sessionsFunction(3);" value="x3"></button>
           </form>
           <input type="button" id="doneDurationBtn" value="Done!" onclick="calculationDuration()">
       </div>
@@ -112,7 +112,7 @@
       <div class="followTask">
         <br>
           <li><h3>Does this task follow another task?</h3></li>
-          <li><input type="radio" id="yes" name="check" value="A" onchange="showList('A', this); return false;" onclick="RetrieveWithID()">
+          <li><input type="radio" id="yes" name="check" value="A" onchange="showList('A', this); return false;" onclick="RetrieveDropdownWithID()">
             <label class="yes" for="yes">Yes</label></li>
           <li><input type="radio" id="no" name="check" checked="checked" value="B" onchange="showList('B', this); return false;">
             <label class="no" for="no">No</label><br></li>
@@ -123,12 +123,10 @@
       <!--Container to contain the dynamically added elements-->
       <div>
         <select id="dropdownList" oninput="Update(this.value, 'followname')">
-          <option value="" selected disabled hidden>Pick a task</option>
         </select>
       </div>  
       <!--Before and after-->
       <select name="sequence" id="sequence" oninput="Update(this.value, 'followseq')">
-        <option value="" selected disabled hidden>Before/After</option>
         <option value="before">Before</option>
         <option value="after">After</option>
       </select>
@@ -149,74 +147,7 @@
   </fieldset>
 
     <script>
-        //------------------Defining of variables------------------//
-
-        /*For referencing later on*/
-        let NameOfTask = document.getElementById("taskName"); 
-        //category number can get from cat_num in the other javascript file
-        let Start = document.getElementById("startTime");
-        // let StartArr = [parseInt(Start.value.substr(0, 2)), parseInt(Start.value.substr(3, 4))]; //main array for start time
-        let End = document.getElementById("endTime"); 
-        // let EndArr = [parseInt(End.value.substr(0, 2)), parseInt(End.value.substr(3, 4))]; //main array for end time
-        let DateInput = document.getElementById("dateInput");
-        let FollowUpTask = document.getElementById("dropdownList"); //value to get taskname
-        let Sequence = document.getElementById("sequence"); //value to get sequence
-        let Hour = document.getElementById("hour");
-        let Minute = document.getElementById("minute");
-        //numSessions can be gotten from numOfSessions in the other javascript file
-        
-        let nameOfTask = NameOfTask.value;
-        let categoryNum = catNum; //variable from other file
-        let start = Start.value;
-        let startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
-        let end = End.value;
-        let endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
-        let dateInput = DateInput.value;
-        let followUpTask = FollowUpTask.value;
-        let sequence = Sequence.value;
-        let hour = Hour.value;
-        let minute = Minute.value;
-        let numSessions = numOfSessions; //variable from other file
-        // let nameOfTask, categoryNum, start, startArr, end, endArr, dateInput, followUpTask, sequence, hour, minute;
- 
-        function Update(val, type) {
-          if (type=='name') {
-            nameOfTask=val;
-          } else if (type=='datein'){
-            dateInput=val;
-          } else if (type=='start'){
-            start=val;
-            startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
-          } else if (type=='end'){
-            end=val;
-            endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
-          } else if (type=='followname'){
-            followUpTask=val;
-          } else if (type=='followseq'){
-            sequence=val;
-          } else if (type=='hour'){
-            hour=val;
-          } else if (type=='min'){
-            minute=val;
-          } else if (type=='work'){
-            categoryNum=val;
-          } else if (type=='exercise'){
-            categoryNum=val;
-          } else if (type=='misc'){
-            categoryNum=val;
-          } else if (type=='one'){
-            numSessions=val;
-          } else if (type=='two'){
-            numSessions=val;
-          } else if (type=='three'){
-            numSessions=val;
-          }
-        }
-
-        // /*Temp*/
-        // startArr=[20,30];
-        // endArr=[15,20];
-
+        //------------------Using retrieving function to fill up inputs------------------//
         /*function check(): to get document category*/
         function check() {
          if (document.getElementById("durationTask").checked == true) {
@@ -242,34 +173,6 @@
         firebase.initializeApp(firebaseConfig);
         let cloudDB = firebase.firestore();
         //--------------------- Writing relevant functions ------------------//
-
-        // Add document with custom ID
-        function Add_Doc_WithID() {
-            cloudDB.collection("OneTimeTasks").doc(nameOfTask).set(
-                {
-                    taskName : String(nameOfTask),
-                    taskCategory : Number(categoryNum),
-                    date: String(dateInput), //in the form "yyyy-mm-dd"
-                    type: String(check()), //to store if its fixed or non-fixed also
-                    startDirect: String(start), //save direct input from form
-                    startTime : Array(Number(startArr[0]), Number(startArr[1])), //fixed
-                    endDirect: String(end), //save direct input from form
-                    endTime : Array(Number(endArr[0]), Number(endArr[1])), //fixed
-                    durationHour: Number(hour), //non-fixed
-                    durationMinute: Number(minute), //non-fixed
-                    numSessions : Number(numSessions), //1,2 or 3 non-fixed
-                    followTask: String(followUpTask), //no: null; yes: taskName of the followed task
-                    sequenceLabel: String(sequence) //no: null; yes: before or after
-                }
-            ).then(function(){
-                console.log("Doc written with ID " , nameOfTask);
-            })
-            .catch(function(error) {
-                console.error("Error adding doc", Error);
-            });
-          }
-
-
         //--------------------- Retrieving relavant information from database ------------------//
         /*Function to get current date in format*/
         function frontEndSubmit() { 
@@ -304,7 +207,7 @@
         }
          
         /*Use where() to get the documents of the current date in order to retrieve the taskNames of these documents*/
-        function RetrieveWithID() { //get taskNames with dates considered also
+        function RetrieveDropdownWithID() { //get taskNames with dates considered also
           var todayDate = formatDate(); //getting current date
           console.log(formatDate());
           var taskList;
@@ -321,16 +224,61 @@
           });
         }
 
+        var taskPlusName, startTime, endTime, dateInput, followTask, followSequence, hour, minute;
+        function Retrieve_Database_Info(nameoftask){ //pass in the taskname to retrieve the info to fill up the form
+            console.log("Retrieve data to fill up form");
+            var docRef = cloudDB.collection('OneTimeTasks').doc(nameoftask);
+            docRef.get()
+            .then((doc) => {
+                if (doc.exists) {
+                    console.log("Document data retrieved");
+                    taskPlusName = doc.data().taskName;
+                    startTime = doc.data().startDirect;
+                    endTime = doc.data().endDirect;
+                    dateInput = doc.data().date;
+                    followTask = doc.data().followTask;
+                    followSequence = doc.data().sequenceLabel;
+                    hour = doc.data().durationHour;
+                    minute = doc.data().durationMinute;
+                } else {
+                    console.log("No such document!");
+                }
+            }).catch((error) => {
+                console.log("Error getting document", error);
+            });
+
+            /*Writing to the inputs using the variables found above*/
+            document.getElementById("taskName").value = taskPlusName; 
+            document.getElementById("startTime").value = startTime;
+            document.getElementById("endTime").value = endTime; 
+            document.getElementById("dateInput").value = dateInput;
+            var option = createElement("option"); //For dropdown list
+            option.classList.add("selectedTask");
+            option.value=followTask;
+            option.setAttribute("selected", "selected");
+            var dropdown = document.getElementById("dropdownList");
+            dropdown.appendChild(option); 
+            var ele = createElement("option"); //For sequence
+            ele.classList.add("seq");
+            ele.value=followSequence;
+            ele.setAttribute("selected", "selected");
+            var parent = document.getElementById("sequence");
+            parent.prepend(ele);
+            document.getElementById("hour") = hour;
+            document.getElementById("minute") = minute;
+        }
+
+        //--------------------- Updating data to database using update------------------//
          //--------------------- Deleting data from database ------------------//
-        //  function DeleteTask(){ //only can test when edit function is out
-        //    cloudDB.collection("OneTimeTasks").doc(nameOfTask).delete()
-        //    .then(function(){
-        //      console.log("Document deleted with ID", nameOfTask);
-        //    })
-        //    .catch(function(error){
-        //      console.error("Error deleting document", error);
-        //    });
-        //  }
+         function DeleteTask(){ //only can test when edit function is out
+           cloudDB.collection("OneTimeTasks").doc(nameOfTask).delete()
+           .then(function(){
+             console.log("Document deleted with ID", nameOfTask);
+           })
+           .catch(function(error){
+             console.error("Error deleting document", error);
+           });
+         }
        
         //------------------------Button Events----------------------------//
         // document.getElementById("done").addEventListener('click', Add_Doc_WithID);

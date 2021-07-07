@@ -214,17 +214,6 @@
         <script>
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-		/**
-        var firebaseConfig = {
-            apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-            authDomain: "orbital-24-7.firebaseapp.com",
-            projectId: "orbital-24-7",
-            storageBucket: "orbital-24-7.appspot.com",
-            messagingSenderId: "459091456870",
-            appId: "1:459091456870:web:21134477e94d50e25ecea7",
-            measurementId: "G-WQMCMBMFCK"
-        };
-		**/
 			const firebaseConfig = {
 			apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
 			authDomain: "orbital-24-7.firebaseapp.com",
@@ -271,7 +260,7 @@
 								userEmail : String(userEmail),
 							}
 						).then(function(){
-							console.log("Doc for user " + userName + " has been created.");
+							console.log("Doc for user '" + userName + "' has been created.");
 						})
 						.catch(function(error) {
 							console.error("Error adding doc for user '" + userName + "'' : ", error);
@@ -284,10 +273,6 @@
 						var errorMessage = error.message;
 						window.alert("Error: " + errorMessage)
 					});
-				
-				console.log("i come here");
-
-				console.log("i come here 2");
             }
         </script>
 

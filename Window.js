@@ -12,7 +12,7 @@ export class Window {
      * @param {Number} date Date of the window
      * @param {Time} startTime Time at which the window starts
      * @param {Time} endTime Time at which the window ends
-     * @param {Number} type 0 - Empty, 1 - A task
+     * @param {Number} type 0 - Empty, 1 - A fixed task, 2 - A non-fixed task, 3 - A non-fixed priority task
      * @param {String} taskAfterThis Name of the task that is to follow after this
      * @param {Number} accumulatedDuration The total duration of the connected tasks
      */
@@ -267,6 +267,26 @@ export class Window {
             }
             if (this.getEndTimeInMs() < currArr[index].getStartTimeInMs()) {
                 currArr.splice(index, 0, this);
+
+                //TODO: Might need to do the firestore configuration before this
+                //Updating the data base - confirm hastagged fields
+                cloudDB.collection(#username?).doc(#date?).collection("Empty Windows").doc(#start time of window?).set(
+                    {
+                        taskName : String("Empty Window"),
+                        year = Number(this.year),
+                        month = Number(this.month),
+                        date = Number(this.date),
+                        taskCategory : Number(0),
+                        startTime : Array(Number(this.startTime[0]), Number(this.startTime[1])),
+                        endTime : Array(Number(this.endTime[0]), Number(this.endTime[1])),
+                        type : Number(0),
+                    }
+                ).then(function(){ //cannot write docRef for some reason
+                    console.log("Empty window for " + this.startTime + " has been added.");
+                })
+                .catch(function(error) {
+                    console.error("Error adding empty window: ", error);
+                });
             } else {
                 return new Error("Cannot schedule empty window as it clashes with an existing empty window. Please adjust the start and end times of other windows accordingly.");
             }
@@ -289,8 +309,30 @@ export class Window {
             }
             if (this.getEndTimeInMs() < currArr[index].getStartTimeInMs()) {
                 currArr.splice(newIndex, 0, this);
+
+                //TODO: Might need to do the firestore configuration before this
+                //Updating the data base - confirm hastagged fields
+                cloudDB.collection(#username?).doc(#date?).collection("Tasks").doc(this.taskName).set(
+                    {
+                        taskName : String(this.taskName),
+                        year = Number(this.year),
+                        month = Number(this.month),
+                        date = Number(this.date),
+                        taskCategory : Number(0),
+                        startTime : Array(Number(this.startTime[0]), Number(this.startTime[1])),
+                        endTime : Array(Number(this.endTime[0]), Number(this.endTime[1])),
+                        type : Number(this.type),
+                    }
+                ).then(function(){ //cannot write docRef for some reason
+                    console.log("Fixed task " + this.taskName + " has been added.");
+                })
+                .catch(function(error) {
+                    console.error("Error adding fixed task: ", error);
+                });
+
                 let removedBreak = new Window(this.year, this.month, this.date, this.startTime, this.endTime, 0);
                 return removedBreak.removeWindow();
+                //TODO: Need to figure out how to delete data from firestore
             } else {
                 return new Error("Cannot schedule task as it clashes with an existing task");
             }
@@ -330,11 +372,12 @@ export class Window {
                 let newWindow1 = null;
                 let newWindow2 = null;
                 if (this.startsAfter(currArr[i])) {
-                    newWindow1 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), currArr[i].getStartTime(),  newEndTime, 0); //calc newEndTime
-                    currArr[i].changeStartTime = this.startTime;
+                    newWindow1 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), currArr[i].getStartTime(),  newEndTime, 0); //TODO: calc newEndTime
+                    currArr[i].changeStartTime = this.startTime; //TODO: Should be end time right
+                    //TODO: Need to update the values in the db as well, figure out the calculations first
                 }
                 if (currArr[i].getEndTimeInMs() > this.getEndTimeInMs()) {
-                    newWindow2 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), newStartTime, currArr[i].getEndTime(), 0); //calc newStartTime
+                    newWindow2 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), newStartTime, currArr[i].getEndTime(), 0); //TODO: calc newStartTime
                     currArr[i].changeEndTime = this.endTime;
                 }
 
@@ -365,6 +408,7 @@ export class Window {
                 }
             }
             return new Error('No such task to be removed!');
+            // TODO: Need to figure out how to remove from db
         }
     }
 

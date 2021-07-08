@@ -3,6 +3,26 @@
 Additional questions:
 1. What if the starting time of a window is in the past but the ending time is in the future?
 */
+//Importing relevant firebase libraries
+src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"
+src="https://www.gstatic.com/firebasejs/8.6.3/firebase-auth.js"
+src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"
+src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
+    authDomain: "orbital-24-7.firebaseapp.com",
+    databaseURL: "https://orbital-24-7-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "orbital-24-7",
+    storageBucket: "orbital-24-7.appspot.com",
+    messagingSenderId: "459091456870",
+    appId: "1:459091456870:web:21134477e94d50e25ecea7",
+    measurementId: "G-WQMCMBMFCK"
+    };
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+let cloudDB = firebase.firestore(); //TODO: Should be changed to the specific user's as well
 export class Window {
     /**
      * Constructor to create window objects
@@ -13,8 +33,6 @@ export class Window {
      * @param {Time} startTime Time at which the window starts
      * @param {Time} endTime Time at which the window ends
      * @param {Number} type 0 - Empty, 1 - A fixed task, 2 - A non-fixed task, 3 - A non-fixed priority task
-     * @param {String} taskAfterThis Name of the task that is to follow after this
-     * @param {Number} accumulatedDuration The total duration of the connected tasks
      */
     constructor(taskName, year, month, date, startTime, endTime, type) {
         this.taskName = taskName;
@@ -163,18 +181,6 @@ export class Window {
      */
     equals(window) {
         return (this.getStartTimeInMs() == window.getStartTimeInMs && this.getEndTimeInMs == window.getEndTimeInMs());
-
-        /* 
-        Alternative implementation (seems more lengthy and unecessary)
-
-        let currWindowStart = new Date(this.year, this.month, this.date, this.startTime.getHours(), this.startTime.getMins());
-        let otherWindowStart = new Date(otherWindowStart.getYear(), otherWindowStart.getMonth(), otherWindowStart.getDate(), otherWindowStart.getStartTime().getHours(), otherWindowStart.getStartTime().getMins());
-
-        let currWindowEnd = new Date(this.year, this.month, this.date, this.endTime.getHours(), this.endTime.getMins());
-        let otherWindowEnd = new Date(otherWindowEnd.getYear(), otherWindowEnd.getMonth(), otherWindowEnd.getDate(), otherWindowEnd.getEndTime().getHours(), otherWindowEnd.getEndTime().getMins());
-
-        return (currWindowStart.getTime() == otherWindowStart.getTime()) && (currWindowEnd.getTime() == otherWindowEnd.getTime());
-        */
     }
 
     /**
@@ -267,76 +273,78 @@ export class Window {
             }
             if (this.getEndTimeInMs() < currArr[index].getStartTimeInMs()) {
                 currArr.splice(index, 0, this);
-
-                //TODO: Might need to do the firestore configuration before this
-                //Updating the data base - confirm hastagged fields
-                cloudDB.collection(#username?).doc(#date?).collection("Empty Windows").doc(#start time of window?).set(
-                    {
-                        taskName : String("Empty Window"),
-                        year = Number(this.year),
-                        month = Number(this.month),
-                        date = Number(this.date),
-                        taskCategory : Number(0),
-                        startTime : Array(Number(this.startTime[0]), Number(this.startTime[1])),
-                        endTime : Array(Number(this.endTime[0]), Number(this.endTime[1])),
-                        type : Number(0),
-                    }
-                ).then(function(){ //cannot write docRef for some reason
-                    console.log("Empty window for " + this.startTime + " has been added.");
-                })
-                .catch(function(error) {
-                    console.error("Error adding empty window: ", error);
-                });
+                // Updating the database as well
+                this.Add_Window_WithID();
             } else {
                 return new Error("Cannot schedule empty window as it clashes with an existing empty window. Please adjust the start and end times of other windows accordingly.");
             }
         } else { // To insert tasks for the current day and furture days
-            let currArr = Window.prototype.fixedFutureArr; // For tasks to be schedule beyong 7 days from now
+            let currArr = Window.prototype.fixedFutureArr; // For tasks to be schedule beyond 7 days from now
             if (type == 1 && index < 8) { 
                 currArr = Window.prototype.occupiedCollection[index];
-            } else {
-                //TODO: This is for type 2: non-fixed tasks. Need to figure how to do this for non-fixed tasks.
-
-                //TODO: Follow-up (25/06/2021) - do you even need this? Bc you are just storing non-fixed tasks in their own array till you need to schedule them right
-            }
             // Doing checks to ensure that task does not clash with any existing fixed, future tasks.
             let newIndex = 0;
             while (newIndex < currArr.length && this.isCompletelyAfter(currArr[newIndex])) {
                 newIndex++;
             }
+            // If all currently scheduled tasks take place before the current to-be scheduled task starts
             if (newIndex == currArr.length) {
                 currArr.push(this);
             }
             if (this.getEndTimeInMs() < currArr[index].getStartTimeInMs()) {
                 currArr.splice(newIndex, 0, this);
-
-                //TODO: Might need to do the firestore configuration before this
-                //Updating the data base - confirm hastagged fields
-                cloudDB.collection(#username?).doc(#date?).collection("Tasks").doc(this.taskName).set(
-                    {
-                        taskName : String(this.taskName),
-                        year = Number(this.year),
-                        month = Number(this.month),
-                        date = Number(this.date),
-                        taskCategory : Number(0),
-                        startTime : Array(Number(this.startTime[0]), Number(this.startTime[1])),
-                        endTime : Array(Number(this.endTime[0]), Number(this.endTime[1])),
-                        type : Number(this.type),
-                    }
-                ).then(function(){ //cannot write docRef for some reason
-                    console.log("Fixed task " + this.taskName + " has been added.");
-                })
-                .catch(function(error) {
-                    console.error("Error adding fixed task: ", error);
-                });
+                // Updating the database as well
+                this.Add_Window_WithID()
 
                 let removedBreak = new Window(this.year, this.month, this.date, this.startTime, this.endTime, 0);
                 return removedBreak.removeWindow();
-                //TODO: Need to figure out how to delete data from firestore
             } else {
                 return new Error("Cannot schedule task as it clashes with an existing task");
             }
         }
+    }
+
+    function Add_Window_WithID() {
+        formattedDate = (this.date).toString() + "/" + (this.month).toString() + "/" + (this.year).toString();
+        // Procedure for adding empty widows to the database
+        if (this.type == 0) {
+            cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Empty Windows").collection("Empty Windows").doc(#startTimeOfWindow).set(
+                {
+                    taskName : null,
+                    year : Number(this.year),
+                    month : Number(this.month),
+                    date : Number(this.date),
+                    taskCategory : Number(0),
+                    startTime : Array(Number(this.startTime[0]), Number(this.startTime[1])),
+                    endTime : Array(Number(this.endTime[0]), Number(this.endTime[1])),
+                    type : Number(0),
+                }
+            ).then(function(){
+                console.log("Empty window for user '" + username + "' at " + this.startTime + " has been added."); //TODO: Need to define username
+            })
+            .catch(function(error) {
+                console.error("Error adding empty window for user '" + username + "' : ", error);
+            });
+        // Procedure for adding fixed tasks to the database
+        } else {
+            cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Tasks").collection("Tasks").doc(this.taskName).set(
+                {
+                    taskName : null,
+                    year : Number(this.year),
+                    month : Number(this.month),
+                    date : Number(this.date),
+                    taskCategory : Number(0),
+                    startTime : Array(Number(this.startTime[0]), Number(this.startTime[1])),
+                    endTime : Array(Number(this.endTime[0]), Number(this.endTime[1])),
+                    type : Number(1),
+                }
+            ).then(function(){
+                console.log("Fixed task for user '" + username + "' at " + this.startTime + " has been added."); //TODO: Need to define username
+            })
+            .catch(function(error) {
+                console.error("Error adding fixed task for user '" + username + "' : ", error);
+            });
+        } 
     }
 
     /**
@@ -372,44 +380,68 @@ export class Window {
                 let newWindow1 = null;
                 let newWindow2 = null;
                 if (this.startsAfter(currArr[i])) {
-                    newWindow1 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), currArr[i].getStartTime(),  newEndTime, 0); //TODO: calc newEndTime
-                    currArr[i].changeStartTime = this.startTime; //TODO: Should be end time right
-                    //TODO: Need to update the values in the db as well, figure out the calculations first
+                    newWindow1 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), currArr[i].getStartTime(),  this.startTime, 0); 
+                    currArr[i].changeStartTime = this.startTime;
                 }
                 if (currArr[i].getEndTimeInMs() > this.getEndTimeInMs()) {
-                    newWindow2 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), newStartTime, currArr[i].getEndTime(), 0); //TODO: calc newStartTime
+                    newWindow2 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), this.endTime, currArr[i].getEndTime(), 0);
                     currArr[i].changeEndTime = this.endTime;
                 }
 
+                //Updating the database and the respective arrays
                 currArr.splice(i, 1);
+                (currArr[i]).Remove_Window_WithID();
+
                 if (newWindow1 != null) {
                     newWindow1.insertWindow();
+                    newWindow1.Add_Window_WithID();
                 }
                 if (newWindow2 != null) {
                     newWindow2.insertWindow();
+                    newWindow2.Add_Window_WithID();
                 }
             }
         } else {
             let currArr = Window.prototype.fixedFutureArr;
             if (this.type == 1 && index < 8) {
                 currArr = Window.prototype.occupiedCollection[index];
-            } else {
-                //TODO: This is for type 2: non-fixed tasks. Need to figure how to do this for non-fixed tasks.
-
-                //TODO: Follow-up (25/06/2021) - do you even need this? Bc you are just storing non-fixed tasks in their own array till you need to schedule them right
-            }
             //Check if the task to be removed exists. Once task is identified, it is removed.
             let i;
             for (i = 0; i < currArr.length; i++) {
                 if (this.equals(currArr[i])) {
                     currArr.splice(i, 1);
+                    (currArr[i]).Remove_Window_WithID();
+
                     let newWindow = new Window(this.year, this.month, this.date, this.startTime, this.endTime, 0);
+                    newWindow.Add_Window_WithID();
                     return newWindow.insertWindow(); //Inserting back the empty window corresponding to the window of the deleted task
                 }
             }
             return new Error('No such task to be removed!');
-            // TODO: Need to figure out how to remove from db
         }
+    }
+
+    function Remove_Window_WithID() {
+        formattedDate = (this.date).toString() + "/" + (this.month).toString() + "/" + (this.year).toString();
+        // Procedure for removing from widows to the database
+        if (this.type == 0) {
+            cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Empty Windows").collection("Empty Windows").doc(#startTimeOfWindow).delete()
+            .then(function(){
+                console.log("Empty window for user '" + username + "' at " + this.startTime + " has been removed."); //TODO: Need to define username
+            })
+            .catch(function(error) {
+                console.error("Error removing empty window for user '" + username + "' : ", error);
+            });
+        // Procedure for removing fixed tasks from the database
+        } else {
+            cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Tasks").collection("Tasks").doc(this.taskName).set()
+            .then(function(){
+                console.log("Fixed task for user '" + username + "' at " + this.startTime + " has been removed."); //TODO: Need to define username
+            })
+            .catch(function(error) {
+                console.error("Error removing fixed task for user '" + username + "' : ", error);
+            });
+        } 
     }
 
     /**
@@ -466,8 +498,8 @@ export class Window {
     }
 
     /**
-     * 
-     * @returns 
+     * Checks if a given window is falls during user's productive slot
+     * @returns True if a given window is falls during user's productive slot, false if otherwise
      */
     duringProductivePeriod() {
         let productiveStartTime = new Time(Info.getProductiveSlotHours(), Info.getProductiveSlotMins())

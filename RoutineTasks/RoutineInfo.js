@@ -17,9 +17,9 @@ const firebaseConfig = {
     measurementId: "G-WQMCMBMFCK"
     };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    let cloudDB = firebase.firestore(); //TODO: Should be changed to the specific user's as well
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+let cloudDB = firebase.firestore(); //TODO: Should be changed to the specific user's as well
 export class RoutineInfo {
     /**
      * Constructor to record user's wake-up time and productive slot information

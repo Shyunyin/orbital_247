@@ -122,19 +122,20 @@ let catNum = 0;
     var finalMin;
     var text;
 
-    if (endMin < startMin) { //eat into the hours
+    if (startHour > endHour) { // for tasks that span across 2 days
+      totalToMinus = ((24 - startHour) + endHour) * 60;
+    } else {
       totalToMinus = (endHour - startHour) * 60; //contains minutes that needs to be deducted from totalRemaining
-      totalToMinus = totalToMinus - (endMin - startMin); //in minutes (minus a negative to add)
-      finalHour = Math.trunc((totalRemaining - totalToMinus) / 60);
-      finalMin = (totalRemaining - totalToMinus) - (finalHour * 60); 
-      text = "Hour: " + finalHour + " " + "Minute: " + finalMin;
-    } else { //if both hours and/or minutes are positive
-      totalToMinus = (endHour - startHour) * 60; //contains minutes that needs to be deducted from totalRemaining
-      totalToMinus = totalToMinus + (endMin - startMin);
-      finalHour = Math.trunc((totalRemaining - totalToMinus) / 60);
-      finalMin = (totalRemaining - totalToMinus) - (finalHour * 60); 
-      text = "Hour: " + finalHour + " " + "Minute: " + finalMin;
     }
+    if (endMin < startMin) {
+      totalToMinus = totalToMinus - (endMin - startMin); //in minutes (minus a negative to add)
+    } else {
+      totalToMinus = totalToMinus + (endMin - startMin);
+    }
+    finalHour = Math.trunc((totalRemaining - totalToMinus) / 60);
+    finalMin = (totalRemaining - totalToMinus) - (finalHour * 60); 
+    text = "Hour: " + finalHour + " " + "Minute: " + finalMin;
+    
     displayDuration(text);
   }
 

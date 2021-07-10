@@ -423,7 +423,7 @@ export class Window {
 
     function Remove_Window_WithID() {
         formattedDate = (this.date).toString() + "/" + (this.month).toString() + "/" + (this.year).toString();
-        // Procedure for removing from widows to the database
+        // Procedure for removing of windows from the database
         if (this.type == 0) {
             cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Empty Windows").collection("Empty Windows").doc(#startTimeOfWindow).delete()
             .then(function(){
@@ -528,7 +528,6 @@ export class Window {
             Window.prototype.emptyCollection[i].push(newWindow);
         }
     }
-
 }
 
 Window.prototype.occupiedCollection = []; // Contains 7 'Window.prototype.occupiedArr' 

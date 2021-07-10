@@ -21,135 +21,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-    <script>
-        //------------------Defining of variables------------------//
 
-        /*For referencing later on*/
-        let NameOfTask = document.getElementById("taskName"); //main taskName input
-        //category number can get from category_num in the other javascript file
-        let Start = document.getElementById("startTime");
-        // let StartArr = [parseInt(Start.value.substr(0, 2)), parseInt(Start.value.substr(3, 4))]; //main array for start time
-        let End = document.getElementById("endTime"); 
-        // let EndArr = [parseInt(End.value.substr(0, 2)), parseInt(End.value.substr(3, 4))]; //main array for end time
-        /*checkRadioValue() function returns the freq number:
-         * Daily: 0, weekly: 1, biweekly: 2, monthly: 3
-        */
-        function checkRadioValue() { 
-            var radio = document.getElementsByName("choose");
-            for(var i = 0; i < radio.length; i++) {
-                //check which radio is checked
-                if(radio[i].checked){ 
-                    return i;
-                }
-            }
-        }
-        let freq_num = checkRadioValue();
-        //for now freq_num and taskCategory has no update function so they are saved as it is first
-       
-        let SpecificFreqTwo = "null"; //referencing only for biweekly
-        let SpecificFreq;
-        /*getFreq(): returns the ID of the frequency to retried*/
-        function getFreq(freq_num) {
-            if (freq_num === 1) {
-                SpecificFreq = document.getElementById("weeklydropdown");
-            } else if (freq_num === 2) {
-                SpecificFreq = document.getElementById("biweeklydropdown");
-                SpecificFreqTwo = document.getElementById("chooseWeeks");
-            } else if (freq_num === 3) {
-                SpecificFreq = document.getElementById("date");
-            }
-        }
-
-        // let nameOfTask, start, startArr, end, endArr;
-        
-        let nameOfTask = document.getElementById("taskName")
-        //let nameOfTask = NameOfTask.value;
-        /*
-        let start = Start.value;
-        let startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
-        let end = End.value;
-        let endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
-        let specificFreq = parseInt(SpecificFreq.value);
-        let specificFreqTwo = parseInt(specificFreqTwo.value);
-
-        */
-        function Update(val, type) {
-            if(type=='name') {
-                nameOfTask=val;
-            } else if(type=='start') {
-                start=val;
-                startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
-            } else if(type=='end') {
-                end=val;
-                endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
-            } else if(type=='weekly') {
-                specificFreq = val;
-            } else if (type=='biweekly') {
-                specificFreq = val;
-            } else if (type=='biweeklychoose') {
-                specificFreqTwo = val;
-            } else if (type=='date') {
-                specificFreq = val;
-            }
-        }
-
-
-
-        //--------------- Configuration --------------------------//
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-        apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-        authDomain: "orbital-24-7.firebaseapp.com",
-        databaseURL: "https://orbital-24-7-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "orbital-24-7",
-        storageBucket: "orbital-24-7.appspot.com",
-        messagingSenderId: "459091456870",
-        appId: "1:459091456870:web:21134477e94d50e25ecea7",
-        measurementId: "G-WQMCMBMFCK"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        let cloudDB = firebase.firestore();
-
-        //--------------------- Writing relevant functions ------------------//
-
-        // Add document with custom ID
-
-        function Add_Doc_WithID() {
-            cloudDB.collection("RoutineTasks").doc("name").set(
-                {
-                    taskName : String("name"),//to all be filled in with the necessary variables
-                    taskCategory : Number(0),
-                    startTime : Array([0, 0]),
-                    endTime : Array([0, 0]),
-                    //freq : Number(0),
-                    /*
-                    taskName : String(nameOfTask),//to all be filled in with the necessary variables
-                    taskCategory : Number(category_num),
-                    startTime : Array(startArr),
-                    endTime : Array(endArr),
-                    freq : Number(freq_num),
-                    // freqType: Number(specificFreq)
-                    */
-                }
-            ).then(function(){
-                console.log("Doc written with ID " , nameOfTask);
-            })
-            .catch(function(error) {
-                console.error("Error adding doc", Error);
-            });
-        }
-
-        //------------------------Button Events----------------------------//
-        function Add() { //linked the onclick to the HTML document itself
-            Add_Doc_WithID();
-        }
-
-        function Done() {
-            Add_Doc_WithID();
-        }
-
-    </script>
     <!-- Parent-child relationship for inline-->
     <div id="title">
         <li>
@@ -258,10 +130,135 @@
 
     <!--Buttons for ADD, DONE-->
     <div class="btn-group-actions">
-        <button id="add" onclick="newWindow(); Add();">Submit and Add another routine task</button>
+        <!--<button id="add" onclick="Add(); newWindow();">Submit and Add another routine task</button>-->
+        <button id="add" onclick="Add();">Submit and Add another routine task</button>
         <button id="done" onclick="mainSchedule(); Done();">Submit and Done adding ALL routine tasks</button>
     </div>
 
+    <script>
+        //------------------Defining of variables------------------//
+
+       /*For referencing later on*/
+       //let NameOfTask = document.getElementById("taskName").value; //main taskName input
+        //category number can get from category_num in the other javascript file
+        //let Start = document.getElementById("startTime");
+        //let StartArr = [parseInt(Start.value.substr(0, 2)), parseInt(Start.value.substr(3, 4))]; //main array for start time
+        //let End = document.getElementById("endTime"); 
+        //let EndArr = [parseInt(End.value.substr(0, 2)), parseInt(End.value.substr(3, 4))]; //main array for end time
+        //let Freq = 0;
+        /*checkRadioValue() function returns the freq number:
+         * Daily: 0, weekly: 1, biweekly: 2, monthly: 3
+        */
+
+        function checkRadioValue() { 
+            var radio = document.getElementsByName("choose");
+            for(var i = 0; i < radio.length; i++) {
+                //check which radio is checked
+                if(radio[i].checked){ 
+                    return i;
+                }
+            }
+        }
+        let freq_num = checkRadioValue();
+        //for now freq_num and taskCategory has no update function so they are saved as it is first
+       
+        let SpecificFreqTwo = "null"; //referencing only for biweekly 
+        let SpecificFreq;
+        /*getFreq(): returns the ID of the frequency to retried*/
+        function getFreq(freq_num) {
+            if (freq_num === 1) {
+                SpecificFreq = document.getElementById("weeklydropdown");
+            } else if (freq_num === 2) {
+                SpecificFreq = document.getElementById("biweeklydropdown");
+                SpecificFreqTwo = document.getElementById("chooseWeeks");
+            } else if (freq_num === 3) {
+                SpecificFreq = document.getElementById("date");
+            }
+        }
+    
+        //TODO: To be confirmed with Shyun Yin
+        let nameOfTask, start, startArr, end, endArr, specificFreq, specificFreqTwo;
+        let date = null
+        let day = null
+        let week = null
+
+        function Update(val, type) {
+            if(type=='name') {
+                nameOfTask=val;
+            } else if(type=='start') {
+                start=val;
+                startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
+            } else if(type=='end') {
+                end=val;
+                endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
+            } else if(type=='weekly') {
+                specificFreq = val;
+                day = val;
+            } else if (type=='biweekly') {
+                specificFreq = val;
+                day = val;
+            } else if (type=='biweeklychoose') {
+                specificFreqTwo = val;
+                week = val;
+            } else if (type=='date') {
+                specificFreq = val;
+                date = val;
+            }
+        }
+
+        //--------------- Configuration --------------------------//
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+        apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
+        authDomain: "orbital-24-7.firebaseapp.com",
+        databaseURL: "https://orbital-24-7-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "orbital-24-7",
+        storageBucket: "orbital-24-7.appspot.com",
+        messagingSenderId: "459091456870",
+        appId: "1:459091456870:web:21134477e94d50e25ecea7",
+        measurementId: "G-WQMCMBMFCK"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        let cloudDB = firebase.firestore();
+
+        //--------------------- Writing relevant functions ------------------//
+
+        // Add document with custom ID
+
+        function Add_Doc_WithID() {
+            console.log("i come here");
+            //TODO: Using sniggy as a dummy user for now
+            cloudDB.collection("Users").doc("sniggy").collection("Routine Info").doc("Routine Tasks").set(
+            //cloudDB.collection("RoutineTasks").doc("name").set(
+                {
+                    taskName : String(nameOfTask),
+                    taskCategory : Number(0),
+                    startTime : Array(Number(startArr[0]), Number(startArr[1])),
+                    endTime : Array(Number(endArr[0]), Number(endArr[1])),
+                    freq : Number(freq_num),
+                    date: date,
+                    day: day,
+                    week: week,
+                }
+            ).then(function(){
+                console.log("Routine task '" + nameOfTask + "' added.");
+            })
+            .catch(function(error) {
+                console.error("Error adding routine task: ", Error);
+            });
+        }
+
+        //------------------------Button Events----------------------------//
+        function Add() { //linked the onclick to the HTML document itself
+            Add_Doc_WithID();
+        }
+
+        function Done() {
+            Add_Doc_WithID();
+        }
+
+    </script>
 
 </body>
 

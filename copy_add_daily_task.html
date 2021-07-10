@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Add daily task</title>
+    <title>Edit daily task</title>
     <script type = "text/javascript" type="module" src="add_daily_task.js"></script>
     <script type = "module">
       import {OneTimeTask} from './OneTimeTasks/OneTimeTask.js';
@@ -224,9 +224,21 @@
           });
         }
 
+        var nameoftask; //global variable
+
+        window.onload = function () {
+          //getting the nameoftask from local storage
+        nameoftask = localStorage.getItem("taskname");
+        // console.log(nameoftask + " is gotten from local storage!") //used for debugging to check if local storage works
+        Retrieve_Database_Info(nameoftask);
+        }        
+
         var taskPlusName, startTime, endTime, dateInput, followTask, followSequence, hour, minute;
+        
+    
         function Retrieve_Database_Info(nameoftask){ //pass in the taskname to retrieve the info to fill up the form
-            console.log("Retrieve data to fill up form");
+            // console.log("Retrieve data to fill up form");
+            // console.log(nameoftask + " is in retrieve database info!")
             var docRef = cloudDB.collection('OneTimeTasks').doc(nameoftask);
             docRef.get()
             .then((doc) => {
@@ -252,13 +264,13 @@
             document.getElementById("startTime").value = startTime;
             document.getElementById("endTime").value = endTime; 
             document.getElementById("dateInput").value = dateInput;
-            var option = createElement("option"); //For dropdown list
+            var option = document.createElement("option"); //For dropdown list
             option.classList.add("selectedTask");
             option.value=followTask;
             option.setAttribute("selected", "selected");
             var dropdown = document.getElementById("dropdownList");
             dropdown.appendChild(option); 
-            var ele = createElement("option"); //For sequence
+            var ele = document.createElement("option"); //For sequence
             ele.classList.add("seq");
             ele.value=followSequence;
             ele.setAttribute("selected", "selected");

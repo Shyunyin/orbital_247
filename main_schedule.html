@@ -133,6 +133,14 @@
 
         var count = 0;
 
+        /*redirect(x) takes in the task name and outputs a pop out window with the input fields updated when the edit button is created*/
+        function redirect(x) {
+            localStorage.setItem("taskname", x);
+            var url = "http://127.0.0.1:5501/copy_add_daily_task.html";
+            let myRef = window.open(url, 'mywin', 'left=20, top=20, width=750, height=700, toolbar=1, resizable=0');
+            myRef.focus();
+        }
+
         // /*clearPostit function is to remove the tasks printed on the post it 
         function clearPostit() {
             var currentNode = document.getElementById("postitContent");
@@ -149,7 +157,10 @@
             append.setAttribute("type", "button");
             append.setAttribute("value", name);
             append.setAttribute("readonly", "readonly");
-            append.setAttribute("onclick", "redirect()")
+            append.addEventListener('click', function(){
+                redirect(name);
+            }); 
+            // append.setAttribute("onclick", "redirect(name)"); //x is the variable that contains the taskname
             append.classList.add("task");
             append.style.fontFamily = "'Signika Negative', sans-serif";
             append.style.fontSize = "large";

@@ -158,6 +158,62 @@ function clickDelete() {
         return false; //to link to javascript when deleting tasks can check for this boolean function
 }
 
+/*Trial array just to check if printing on schedule is working*/
+var arr = ["08:00-09:00", "Wake up + Breakfast", "09:00-10:00", "Do homework"];
+
+/*Trial code to print, for 12 July use the printSchedule(arr) function below*/
+// function printSchedule() {
+//             console.log("Schedule is printed"); //debugging: function is accessed
+//             let block = document.getElementById("schedule");
+//             let maindivision = document.createElement("div"); //will contain both timedivision and namedivision
+//             maindivision.classList.add("maindiv"); 
+//             maindivision.style.float="left";
+//             block.appendChild(maindivision); //append a new main division
+//             let timedivision = document.createElement("div"); //creating the new division to contain item in schedule
+//             timedivision.classList.add("container1"); //classname of each item 
+//             maindivision.appendChild(timedivision); //appending timedivision to maindivision
+//             //can continue adding css for division
+//             /*Below will be what is appended to division: Time and itemName*/
+//             /*Time*/
+//             let itemTime = document.createElement("input");
+//             itemTime.classList.add("time"); //time with class name time
+//             itemTime.setAttribute("readonly", "readonly"); //set to readonly
+//             itemTime.value = arr[0];
+//             itemTime.style.fontFamily = "'Signika Negative', sans-serif";
+//             itemTime.style.fontSize = "large";
+//             itemTime.style.position = "relative";
+//             itemTime.style.zIndex = "3";
+//             itemTime.style.backgroundColor = "#96d6ed";
+//             itemTime.style.float="left";
+//             itemTime.style.border="none";
+//             itemTime.style.marginTop = "15px";
+//             itemTime.style.marginLeft = "10px";
+//             //can continue adding css for the time
+//             timedivision.appendChild(itemTime); //adding the time part of the item
+//             /*itemName*/
+//             let namedivision = document.createElement("div"); //creating the new division to contain item in schedule
+//             namedivision.classList.add("container2"); //classname of each item 
+//             namedivision.style.borderColor = "black";
+//             namedivision.style.position="relative";
+//             namedivision.style.display="inline-block";
+//             maindivision.appendChild(namedivision); //appending namedivision to maindivision
+//             let itemName = document.createElement("button");
+//             itemName.classList.add("itemName"); //class: itemName
+//             itemName.innerHTML = arr[1];
+//             itemName.style.fontFamily = "'Signika Negative', sans-serif";
+//             itemName.style.fontSize = "large";
+//             itemName.style.position = "absolute";
+//             itemName.style.zIndex = "3";
+//             itemName.style.cursor="pointer";
+//             itemName.style.border = "none";
+//             itemName.style.backgroundColor="#96d6ed";
+//             itemName.style.width = "200px";
+//             itemName.style.marginLeft= "50px";
+//             //can continue adding css for itemName
+//             namedivision.appendChild(itemName); //adding the name part of the item
+//     } 
+
+   
 /*When generate schedule button is pressed*/
 /*printSchedule function is to create the html and css on the
  * window that will appear on the main schedule
@@ -165,37 +221,54 @@ function clickDelete() {
  */
 // function printSchedule(arr) {
 //     for (let i=0; i < arr.length; i++) {
-//         let block = document.getElementById("schedule");
-//         let division = document.createElement("div"); //creating the new division to contain item in schedule
-//         division.classList.add("container"); //classname of each item 
-//         division.style.borderColor = "black";
-//         //can continue adding css for division
-//         block.appendChild(division); //adding the new division with classname "division" to schedule
-//         /*Below will be what is appended to division: Time and itemName*/
-//         /*Time*/
-//         let itemTime = document.createElement("input");
-//         itemTime.classList.add("time"); //time with class name time
-//         itemTime.setAttribute("readonly", "readonly"); //set to readonly
-//         itemTime.value = arr[i].timeItem; //need to see how objects in arr are stored to extract the time *TO BE FILLED*
-//         itemTime.style.fontFamily = "'Signika Negative', sans-serif";
-//         itemTime.style.fontSize = "large";
-//         itemTime.style.position = "absolute";
-//         itemTime.style.zIndex = "3";
-//         //can continue adding css for the time
-//         division.appendChild(time); //adding the time part of the item
-//         /*itemName*/
-//         let itemName = document.createElement("input");
-//         itemName.classList.add("itemName"); //class: itemName
-//         itemName.setAttribute("readonly", "readonly"); //set to readonly
-//         itemName.value = arr[i].itemName; //need to see how objects in arr are stored to extract the time *TO BE FILLED*
-//         itemName.style.fontFamily = "'Signika Negative', sans-serif";
-//         itemName.style.fontSize = "large";
-//         itemName.style.position = "absolute";
-//         itemName.style.zIndex = "3";
-//         itemName.style.marginTop = 20; //TO BE CHANGED IF NOT SUITABLE
-//         itemName.style.marginLeft = 30; //TO BE CHANGED IF NOT SUITABLE
-//         //can continue adding css for itemName
-//         division.appendChild(itemName);
+//          console.log("Schedule is printed"); //debugging: function is accessed
+// let block = document.getElementById("schedule");
+// let maindivision = document.createElement("div"); //will contain both timedivision and namedivision
+// maindivision.classList.add("maindiv"); 
+// maindivision.style.float="left";
+// block.appendChild(maindivision); //append a new main division
+// let timedivision = document.createElement("div"); //creating the new division to contain item in schedule
+// timedivision.classList.add("container1"); //classname of each item 
+// maindivision.appendChild(timedivision); //appending timedivision to maindivision
+// //can continue adding css for division
+// /*Below will be what is appended to division: Time and itemName*/
+// /*Time*/
+//     let itemTime = document.createElement("input");
+//     itemTime.classList.add("time"); //time with class name time
+//     itemTime.setAttribute("readonly", "readonly"); //set to readonly
+//     itemTime.value = arr[i].time;
+//     itemTime.style.fontFamily = "'Signika Negative', sans-serif";
+//     itemTime.style.fontSize = "large";
+//     itemTime.style.position = "relative";
+//     itemTime.style.zIndex = "3";
+//     itemTime.style.backgroundColor = "#96d6ed";
+//     itemTime.style.float="left";
+//     itemTime.style.border="none";
+//     itemTime.style.marginTop = "15px";
+//     itemTime.style.marginLeft = "10px";
+//     //can continue adding css for the time
+//     timedivision.appendChild(itemTime); //adding the time part of the item
+//     /*itemName*/
+//     let namedivision = document.createElement("div"); //creating the new division to contain item in schedule
+//     namedivision.classList.add("container2"); //classname of each item 
+//     namedivision.style.borderColor = "black";
+//     namedivision.style.position="relative";
+//     namedivision.style.display="inline-block";
+//     maindivision.appendChild(namedivision); //appending namedivision to maindivision
+//     let itemName = document.createElement("button");
+//     itemName.classList.add("itemName"); //class: itemName
+//     itemName.innerHTML = arr[i].name;
+//     itemName.style.fontFamily = "'Signika Negative', sans-serif";
+//     itemName.style.fontSize = "large";
+//     itemName.style.position = "absolute";
+//     itemName.style.zIndex = "3";
+//     itemName.style.cursor="pointer";
+//     itemName.style.border = "none";
+//     itemName.style.backgroundColor="#96d6ed";
+//     itemName.style.width = "200px";
+//     itemName.style.marginLeft= "50px";
+//     //can continue adding css for itemName
+//     namedivision.appendChild(itemName); //adding the name part of the item
 //     } 
 // } 
 

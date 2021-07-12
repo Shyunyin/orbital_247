@@ -254,10 +254,8 @@
                     taskName : String(nameOfTask),
                     taskCategory : Number(categoryNum),
                     date: String(dateInput), //in the form "yyyy-mm-dd"
-                    type: String(check()), //to store if its fixed or non-fixed also
-                    startDirect: String(start), //save direct input from form
+                    type: String(check()), //to store if its fixed or non-fixed also               
                     startTime : Array(Number(startArr[0]), Number(startArr[1])), //fixed
-                    endDirect: String(end), //save direct input from form
                     endTime : Array(Number(endArr[0]), Number(endArr[1])), //fixed
                     durationHour: Number(hour), //non-fixed
                     durationMinute: Number(minute), //non-fixed
@@ -276,7 +274,6 @@
                 console.error("Error adding doc", Error);
             });
           }
-
 
         //--------------------- Retrieving relavant information from database ------------------//
         /*Function to get current date in format*/

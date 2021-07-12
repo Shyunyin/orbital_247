@@ -230,34 +230,43 @@
           //getting the nameoftask from local storage
         nameoftask = localStorage.getItem("taskname");
         // console.log(nameoftask + " is gotten from local storage!") //used for debugging to check if local storage works
-        Retrieve_Database_Info(nameoftask);
+        Retrieve_Database_Info(nameoftask); //debugging: working
         }        
 
-        var taskPlusName, startTime, endTime, dateInput, followTask, followSequence, hour, minute;
+        var taskPlusName, categoryNum, startArr, endArr, startTime, endTime, dateInput, followTask, followSequence, hour, minute, numSessions;
         
     
         function Retrieve_Database_Info(nameoftask){ //pass in the taskname to retrieve the info to fill up the form
             // console.log("Retrieve data to fill up form");
-            // console.log(nameoftask + " is in retrieve database info!")
+            console.log(nameoftask + " is in retrieve database info!")
             var docRef = cloudDB.collection('OneTimeTasks').doc(nameoftask);
             docRef.get()
             .then((doc) => {
                 if (doc.exists) {
-                    console.log("Document data retrieved");
+                    console.log("Document data retrieved"); //debugging: each variable working as well
                     taskPlusName = doc.data().taskName;
-                    startTime = doc.data().startDirect;
-                    endTime = doc.data().endDirect;
+                    categoryNum = doc.data().taskCategory;
+                    startArr = doc.data().startTime;
+                    endArr = doc.data().endTime;
+                    startTime = toString(startArr[0]) + ":" + toString(startArr[1]);
+                    endTime = toString(endArr[0]) + ":" + toString(endArr[1]);
+                    console.log(startTime); //debugging
+                    console.log(endTime); //debugging
                     dateInput = doc.data().date;
                     followTask = doc.data().followTask;
                     followSequence = doc.data().sequenceLabel;
                     hour = doc.data().durationHour;
                     minute = doc.data().durationMinute;
+                    numSessions = doc.data().numSessions;
                 } else {
                     console.log("No such document!");
                 }
             }).catch((error) => {
                 console.log("Error getting document", error);
             });
+          }
+
+            console.log(taskPlusName +", " +categoryNum+", "+startTime+", "+endTime+", "+dateInput+", "+followTask+", "+followSequence+", "+hour+", "+minute+", "+numSessions);
 
             /*Writing to the inputs using the variables found above*/
             document.getElementById("taskName").value = taskPlusName; 
@@ -276,9 +285,8 @@
             ele.setAttribute("selected", "selected");
             var parent = document.getElementById("sequence");
             parent.prepend(ele);
-            document.getElementById("hour") = hour;
-            document.getElementById("minute") = minute;
-        }
+            document.getElementById("hour").value = hour;
+            document.getElementById("minute").value = minute;
 
         //--------------------- Updating data to database using update------------------//
          //--------------------- Deleting data from database ------------------//

@@ -45,20 +45,20 @@
     <!--Stand in for schedule-->
     <div id="schedule">
         <!--For FIXED ROUTINE TASK-->
-        <div id="container">
+        <!-- <div id="container">
             <input type="text" id="itemTime" value="08:00-09:00" readonly="readonly">
             <input type="text" id="itemName" value="Get ready for school" readonly="readonly">
-        </div> 
+        </div>  -->
         <!--For FIXED TASK-->
-        <div id="fixed">
+        <!-- <div id="fixed">
             <input type="text" id="fixedItemTime" value="09:00-11:00" readonly="readonly">
-            <button id="selectFixedItem" onclick="tempFixed()">Group Meeting</button> <!--To create in javascript use: InnerHTML-->
-        </div>
+            <button id="selectFixedItem" onclick="tempFixed()">Group Meeting</button> To create in javascript use: InnerHTML
+        </div> -->
         <!--For NON-FIXED TASK-->
-        <div id="nonFixed">
+        <!-- <div id="nonFixed">
             <input type="text" id="nonFixedItemTime" value="11:00-12:00" readonly="readonly">
             <button id="selectNonFixedItem" onclick="tempNonFixed()">Test1</button>
-        </div>
+        </div> -->
     </div>
 
     <!--For array of tasks-->
@@ -91,7 +91,7 @@
 
 
     <!--Link to pop up for add daily task page-->
-    <button id="generateSchedule" name="generateSchedule" onclick="clearPostit()">Generate Schedule now!</button>
+    <button id="generateSchedule" name="generateSchedule" onclick="clearPostit();printSchedule()">Generate Schedule now!</button>
 
     <!--Buttons to go to previous and next-->
     <!--Probably must create previous button using javascript as it only appears if schedule day != current day-->

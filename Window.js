@@ -310,7 +310,7 @@ export class Window {
         // To locate the array that represents that day of the given window. Array in position 0 of 'collection' arrays will represent the current day, while every slot to the right will represent each subsequent day
         console.log("I come to the insert window function")
         let now = new Date();
-        currDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        let currDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         let expectedDate = new Date(this.year, this.month, this.date);
         let index = (expectedDate - currDate)/86400000;
 
@@ -337,7 +337,7 @@ export class Window {
             }
         } else { // To insert tasks for the current day and furture days
             let currArr = Window.prototype.fixedFutureArr; // For tasks to be schedule beyond 7 days from now
-            if (type == 1 && index < 8) { 
+            if (this.type == 1 && index < 8) { 
                 currArr = Window.prototype.occupiedCollection[index];
             }
             // Doing checks to ensure that task does not clash with any existing fixed, future tasks.

@@ -69,16 +69,16 @@ export class Time {
      * @param {Number} duration Format: [hours, mins]
      */
     static findStartTime(endTime, duration) {
-        durHours = duration[0]
-        durMins = duration[1]
+        let durHours = duration[0]
+        let durMins = duration[1]
         let newHours;
         let newMins;
         if (endTime.getMins() < durMins) {
             durMins -= endTime.getMins();
-            newHours = endTime.getHours() - 1 - durHours;
+            newHours = (24 + endTime.getHours() - 1 - durHours) % 24;
             newMins = 60 - durMins; //TODO: Must change everything to 60
         } else {
-            newHours = endTime.getHours() - durHours;
+            newHours = (24 + endTime.getHours() - durHours) % 24;
             newMins = endTime.getMins() - durMins;
         }
         return new Time(newHours, newMins);
@@ -90,16 +90,16 @@ export class Time {
      * @param {Number} duration Format: [hours, mins]
      */
      static findEndTime(startTime, duration) {
-        durHours = duration[0]
-        durMins = duration[1]
+        let durHours = duration[0]
+        let durMins = duration[1]
         let newHours;
         let newMins;
         if (startTime.getMins() + durMins > 60) {
             durMins -= (60 - startTime.getMins());
-            newHours = startTime.getHours() + 1 + durHours;
+            newHours = (startTime.getHours() + 1 + durHours) % 24;
             newMins = durMins; //TODO: Must change everything to 60
         } else {
-            newHours = startTime.getHours() + durHours;
+            newHours = (startTime.getHours() + durHours) % 24;
             newMins = startTime.getMins() + durMins;
         }
         return new Time(newHours, newMins);

@@ -1,4 +1,5 @@
 import { OneTimeTask } from "./OneTimeTask.js";
+import { Window } from "./Window.js";
 // Class for non-fixed tasks to be created
 export class NonFixedTask extends OneTimeTask {
     /**

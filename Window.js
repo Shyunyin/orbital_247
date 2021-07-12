@@ -4,10 +4,10 @@ Additional questions:
 1. What if the starting time of a window is in the past but the ending time is in the future?
 */
 //Importing relevant firebase libraries
-src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"
-src="https://www.gstatic.com/firebasejs/8.6.3/firebase-auth.js"
-src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"
-src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"
+import firebase from "firebase/app";
+import "firebase/analytics";
+import "firebase/auth";
+import "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
@@ -18,7 +18,7 @@ const firebaseConfig = {
     messagingSenderId: "459091456870",
     appId: "1:459091456870:web:21134477e94d50e25ecea7",
     measurementId: "G-WQMCMBMFCK"
-    };
+};
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -246,12 +246,60 @@ export class Window {
         return this.startsAfter(window) && window.endsAfter(this);
     }
 
+    Add_Window_WithID() {
+        formattedDate = (this.date).toString() + "/" + (this.month).toString() + "/" + (this.year).toString();
+        // Procedure for adding empty widows to the database
+        if (this.type == 0) {
+            cloudDB.collection("Users").doc("sniggy").collection("formattedDate").doc("Empty Windows").collection("Empty Windows").doc(startTime ).set(
+            //cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Empty Windows").collection("Empty Windows").doc(#startTimeOfWindow).set(
+                {
+                    taskName : null,
+                    year : Number(this.year),
+                    month : Number(this.month),
+                    date : Number(this.date),
+                    taskCategory : Number(0),
+                    startTime : Array(Number(this.startTime[0]), Number(this.startTime[1])),
+                    endTime : Array(Number(this.endTime[0]), Number(this.endTime[1])),
+                    type : Number(0),
+                }
+            ).then(function(){
+                console.log("Empty window for user '" + username + "' at " + this.startTime + " has been added."); //TODO: Need to define username
+            })
+            .catch(function(error) {
+                console.error("Error adding empty window for user '" + username + "' : ", error);
+            });
+        // Procedure for adding fixed tasks to the database
+        } else {
+            cloudDB.collection("Users").doc("sniggy").collection("formattedDate").doc("Tasks").collection("Tasks").doc(this.taskName).set(
+            //cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Tasks").collection("Tasks").doc(this.taskName).set(
+                {
+                    taskName : null,
+                    year : Number(this.year),
+                    month : Number(this.month),
+                    date : Number(this.date),
+                    taskCategory : Number(0),
+                    startTime : Array(Number(this.startTime[0]), Number(this.startTime[1])),
+                    endTime : Array(Number(this.endTime[0]), Number(this.endTime[1])),
+                    type : Number(1),
+                }
+            ).then(function(){
+                console.log("Fixed task for user '" + "' at " + this.startTime + " has been added.");
+                //console.log("Fixed task for user '" + username + "' at " + this.startTime + " has been added."); //TODO: Need to define username
+            })
+            .catch(function(error) {
+                console.error("Error adding fixed task for user '" + "' : ", error);
+                //console.error("Error adding fixed task for user '" + username + "' : ", error);
+            });
+        } 
+    }
+
     /**
      * To insert a window into the correct array in chronological order
      * @returns Errors if there are any clashes in the start and end timings of a given window with existing windows in the array
      */
     insertWindow() {
         // To locate the array that represents that day of the given window. Array in position 0 of 'collection' arrays will represent the current day, while every slot to the right will represent each subsequent day
+        console.log("I come to the insert window function")
         let now = new Date();
         currDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         let expectedDate = new Date(this.year, this.month, this.date);
@@ -274,7 +322,7 @@ export class Window {
             if (this.getEndTimeInMs() < currArr[index].getStartTimeInMs()) {
                 currArr.splice(index, 0, this);
                 // Updating the database as well
-                this.Add_Window_WithID();
+                //this.Add_Window_WithID();
             } else {
                 return new Error("Cannot schedule empty window as it clashes with an existing empty window. Please adjust the start and end times of other windows accordingly.");
             }
@@ -282,6 +330,7 @@ export class Window {
             let currArr = Window.prototype.fixedFutureArr; // For tasks to be schedule beyond 7 days from now
             if (type == 1 && index < 8) { 
                 currArr = Window.prototype.occupiedCollection[index];
+            }
             // Doing checks to ensure that task does not clash with any existing fixed, future tasks.
             let newIndex = 0;
             while (newIndex < currArr.length && this.isCompletelyAfter(currArr[newIndex])) {
@@ -294,7 +343,7 @@ export class Window {
             if (this.getEndTimeInMs() < currArr[index].getStartTimeInMs()) {
                 currArr.splice(newIndex, 0, this);
                 // Updating the database as well
-                this.Add_Window_WithID()
+                //this.Add_Window_WithID()
 
                 let removedBreak = new Window(this.year, this.month, this.date, this.startTime, this.endTime, 0);
                 return removedBreak.removeWindow();
@@ -304,49 +353,36 @@ export class Window {
         }
     }
 
-    function Add_Window_WithID() {
+
+    Remove_Window_WithID() {
         formattedDate = (this.date).toString() + "/" + (this.month).toString() + "/" + (this.year).toString();
-        // Procedure for adding empty widows to the database
+        // Procedure for removing of windows from the database
         if (this.type == 0) {
-            cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Empty Windows").collection("Empty Windows").doc(#startTimeOfWindow).set(
-                {
-                    taskName : null,
-                    year : Number(this.year),
-                    month : Number(this.month),
-                    date : Number(this.date),
-                    taskCategory : Number(0),
-                    startTime : Array(Number(this.startTime[0]), Number(this.startTime[1])),
-                    endTime : Array(Number(this.endTime[0]), Number(this.endTime[1])),
-                    type : Number(0),
-                }
-            ).then(function(){
-                console.log("Empty window for user '" + username + "' at " + this.startTime + " has been added."); //TODO: Need to define username
+            cloudDB.collection("Users").doc("sniggy").collection(formattedDate).doc("Empty Windows").collection("Empty Windows").doc(startTime).delete()
+            //cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Empty Windows").collection("Empty Windows").doc(#startTimeOfWindow).delete()
+            .then(function(){
+                console.log("Empty window for user '" + "' at " + this.startTime + " has been removed.");
+                //console.log("Empty window for user '" + username + "' at " + this.startTime + " has been removed."); //TODO: Need to define username
             })
             .catch(function(error) {
-                console.error("Error adding empty window for user '" + username + "' : ", error);
+                console.error("Error removing empty window for user '" + "' : ", error);
+                //console.error("Error removing empty window for user '" + username + "' : ", error);
             });
-        // Procedure for adding fixed tasks to the database
+        // Procedure for removing fixed tasks from the database
         } else {
-            cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Tasks").collection("Tasks").doc(this.taskName).set(
-                {
-                    taskName : null,
-                    year : Number(this.year),
-                    month : Number(this.month),
-                    date : Number(this.date),
-                    taskCategory : Number(0),
-                    startTime : Array(Number(this.startTime[0]), Number(this.startTime[1])),
-                    endTime : Array(Number(this.endTime[0]), Number(this.endTime[1])),
-                    type : Number(1),
-                }
-            ).then(function(){
-                console.log("Fixed task for user '" + username + "' at " + this.startTime + " has been added."); //TODO: Need to define username
+            cloudDB.collection("Users").doc("sniggy").collection("formattedDate").doc("Tasks").collection("Tasks").doc(this.taskName).set()
+            //cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Tasks").collection("Tasks").doc(this.taskName).set()
+            .then(function(){
+                console.log("Fixed task for user '" + "' at " + this.startTime + " has been removed.");
+                //console.log("Fixed task for user '" + username + "' at " + this.startTime + " has been removed."); //TODO: Need to define username
             })
             .catch(function(error) {
-                console.error("Error adding fixed task for user '" + username + "' : ", error);
+                console.error("Error removing fixed task for user '" + "' : ", error);
+                //console.error("Error removing fixed task for user '" + username + "' : ", error);
             });
         } 
     }
-
+   
     /**
      * To remove a window from the correct array
      * @returns Errors if there are no such existing windows to be removed
@@ -390,58 +426,36 @@ export class Window {
 
                 //Updating the database and the respective arrays
                 currArr.splice(i, 1);
-                (currArr[i]).Remove_Window_WithID();
+                //(currArr[i]).Remove_Window_WithID();
 
                 if (newWindow1 != null) {
                     newWindow1.insertWindow();
-                    newWindow1.Add_Window_WithID();
+                    //newWindow1.Add_Window_WithID();
                 }
                 if (newWindow2 != null) {
                     newWindow2.insertWindow();
-                    newWindow2.Add_Window_WithID();
+                    //newWindow2.Add_Window_WithID();
                 }
             }
         } else {
             let currArr = Window.prototype.fixedFutureArr;
             if (this.type == 1 && index < 8) {
                 currArr = Window.prototype.occupiedCollection[index];
+            }
             //Check if the task to be removed exists. Once task is identified, it is removed.
             let i;
             for (i = 0; i < currArr.length; i++) {
                 if (this.equals(currArr[i])) {
                     currArr.splice(i, 1);
-                    (currArr[i]).Remove_Window_WithID();
+                    //(currArr[i]).Remove_Window_WithID();
 
                     let newWindow = new Window(this.year, this.month, this.date, this.startTime, this.endTime, 0);
-                    newWindow.Add_Window_WithID();
+                    //newWindow.Add_Window_WithID();
                     return newWindow.insertWindow(); //Inserting back the empty window corresponding to the window of the deleted task
                 }
             }
             return new Error('No such task to be removed!');
         }
-    }
-
-    function Remove_Window_WithID() {
-        formattedDate = (this.date).toString() + "/" + (this.month).toString() + "/" + (this.year).toString();
-        // Procedure for removing of windows from the database
-        if (this.type == 0) {
-            cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Empty Windows").collection("Empty Windows").doc(#startTimeOfWindow).delete()
-            .then(function(){
-                console.log("Empty window for user '" + username + "' at " + this.startTime + " has been removed."); //TODO: Need to define username
-            })
-            .catch(function(error) {
-                console.error("Error removing empty window for user '" + username + "' : ", error);
-            });
-        // Procedure for removing fixed tasks from the database
-        } else {
-            cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Tasks").collection("Tasks").doc(this.taskName).set()
-            .then(function(){
-                console.log("Fixed task for user '" + username + "' at " + this.startTime + " has been removed."); //TODO: Need to define username
-            })
-            .catch(function(error) {
-                console.error("Error removing fixed task for user '" + username + "' : ", error);
-            });
-        } 
     }
 
     /**
@@ -542,5 +556,3 @@ Window.prototype.nonFixedFutureArr = []; // Represents non-fixed tasks that are 
 Window.prototype.group = 0; //Tracks the number of groups (non-fixed, connected tasks) for the day. Reset at the end of every day.
 Window.prototype.nonFixedFutureArr = []; // Represents a single day's non-fixed tasks
 Window.prototype.nonFixedFutureArr = []; // Represents non-fixed tasks that are scheduled for > 7 days from now
-
-

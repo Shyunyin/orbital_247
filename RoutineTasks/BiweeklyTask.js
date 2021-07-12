@@ -1,4 +1,5 @@
 import {RoutineTask} from './RoutineTask.js';
+import { Window } from "./Window.js";
 // Biweekly tasks will be created from this class
 export class BiweeklyTask extends RoutineTask {
     /**

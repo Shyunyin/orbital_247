@@ -8,6 +8,10 @@
       import {NonFixedTask} from './OneTimeTasks/NonFixedTask.js';
       import {FixedTask} from './OneTimeTasks/FixedTask.js';
     </script>
+
+    <!--Preshita added for experimentation-->
+    <!--<script type="text/javascript" src="Window.js"></script>--> 
+
     <link rel="stylesheet" href="add_daily_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
@@ -263,6 +267,10 @@
                 }
             ).then(function(){
                 console.log("Doc written with ID " , nameOfTask);
+                // Preshita's experimentation (ignore for now)
+                let newWindow = new Window("play", 2021, 6, 14, [12, 21], [12, 41], 0);
+                //let newWindow = new Window(taskName, parseInt(start.substr(0, 4)), parseInt(start.substr(5, 7)), parseInt(start.substr(8, 10)), startArr, endArr, 0)
+                //newWindow.insertWindow();
             })
             .catch(function(error) {
                 console.error("Error adding doc", Error);

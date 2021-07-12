@@ -1,4 +1,6 @@
 import {RoutineTask} from './RoutineTask.js';
+import {Window} from './Window.js';
+
 // Monthly tasks will be created from this class
 export class MonthlyTask extends RoutineTask {
     /**

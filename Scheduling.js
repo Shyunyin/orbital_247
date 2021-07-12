@@ -7,7 +7,8 @@
 // Reminder: Don't splice empty windows. They are are automatically removed by the insert and remove functions.
 
 //TODO: Need to extend the initial window set up end timing according to the duration by which the tasks inserted by users exceed
-class Scheduling {
+import {Window} from './Window.js';
+export class Scheduling {
     static generateSchedule(emptyWindowArr, fixedWindowArr, nonFixedWindowArr, nonFixedWindowPriorityArr) {
         this.emptyWindowArr = emptyWindowArr;
         this.fixedWindowArr = fixedWindowArr;

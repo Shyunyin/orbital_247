@@ -1,6 +1,10 @@
 import {RoutineTask} from './RoutineTask.js';
+<<<<<<< HEAD
 import {Window} from './Window.js';
 
+=======
+import { Window } from "./Window.js";
+>>>>>>> f8efe587df3d1e9565b85462d19697322ad1afe5
 // Daily tasks will be created from this class
 export class DailyTask extends RoutineTask {
     /**

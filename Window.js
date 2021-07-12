@@ -169,25 +169,27 @@ export class Window {
      * To update the accumulated duration of an existing window to a new duration
      * @param {Number} newDuration The new accumulated duration in hours and minutes (Format: [hours, mins])
      */
+    /*
     changeAccumulateDuration(newDuration) {
         this.accumulatedDuration = newDuration;
     }
-
+    */
     /**
      * To update the group number fo an existing window to a new number
      * @param {Number} newGroup The new group number (based on Window.prototype.group)
      */
+    /*
     changeGroup(newGroup) {
         this.group = newGroup;
     }
-
+    */
     /**
      * To check if 2 windows are exactly the same
      * @param {Window} window 
      * @returns {Boolean} True if they are the same window, false if otherwise
      */
     equals(window) {
-        return (this.getStartTimeInMs() == window.getStartTimeInMs && this.getEndTimeInMs == window.getEndTimeInMs());
+        return (this.getStartTimeInMs() == window.getStartTimeInMs() && this.getEndTimeInMs() == window.getEndTimeInMs());
     }
 
     /**
@@ -223,7 +225,7 @@ export class Window {
      * @returns {Boolean} True if a given window starts after 'window' ends, false otherwise
      */
     isCompletelyAfter(window) {
-        return this.getStartTimeInMs() > window.getEndTimeInMs();
+        return this.getStartTimeInMs() >= window.getEndTimeInMs();
     }
 
     /**
@@ -231,12 +233,17 @@ export class Window {
      * @param {Window} window The window to be compared with
      * @returns {Boolean} True if given window partially overlaps with 'window', false if otherwise
      */
+    //IMPORTANT NOTE: window1.isCompletelyDuring(window2) may eval to true but window1.partiallyOverlaps(window2) may eval to false (bc we only consider partially overlapping cases)
     partiallyOverlaps(window) {
         // If the start time of a given window is before the start time of 'window' and the end time of a given window is before the end time of 'window' but after the start time of 'window'
-        if (this.getStartTimeInMs() < window.getStartTimeInMs() && window.getStartTimeInMs() < this.getEndTimeInMs() && this.getEndTimeInMs() < window.getEndTimeInMs()) {
+        if (window.startsAfter(this) && window.getStartTimeInMs() < this.getEndTimeInMs() && window.endsAfter(this)) {
             return true;
         // If the start time of a given window is after the start time of 'window' but before the end time of 'window' and the end time of a given window is after the end time of 'window'
         } else if (this.startsAfter(window) && this.getStartTimeInMs() < window.getEndTimeInMs() && this.endsAfter(window)) {
+            return true;
+        } else if (this.getStartTimeInMs() == window.getStartTimeInMs() && (this.endsAfter(window) || window.endsAfter(this))) {
+            return true;
+        } else if ((this.startsAfter(window) || window.startsAfter(this)) && this.getEndTimeInMs() == window.getEndTimeInMs()) {
             return true;
         } else {
             return false;
@@ -248,9 +255,41 @@ export class Window {
      * @param {Window} window 
      * @returns {Boolean} True if a given window occurs completely during 'window', false if otherwise
      */
+    //IMPORTANT NOTE: Only denotes a one way relationship (e.g. window1.isCompletelyDuring(window2) may eval to true and window2.isCompletelyDuring(window1) may eval to false)
     isCompletelyDuring(window) {
         // If a given window starts after 'window' and ends before 'window'
         return this.startsAfter(window) && window.endsAfter(this);
+    }
+
+    /**
+     * Checks if a window falls during a user's sleeping hours so as to warn users against scheduling tasks at those timings
+     * @returns {Boolean} True if window falls during user's sleeping hours, false if otherwise
+     */
+     duringSleep() {
+        let sleepStartTime = new Time(RoutineInfo.getSleepTimeHours(), Info.getSleepTimeMins())
+        let sleepEndTime = new Time(RoutineInfo.getWakeUpTimeHours(), Info.getWakeUpTimeMins());
+
+        if (sleepEndTime.getHours() > sleepStartTime.getHours()) {
+            let sleepWindow = new Window(this.year, this.month, this.date, sleepStartTime, sleepEndTime);
+            return this.partiallyOverlaps(sleepWindow) || this.isCompletelyDuring(sleepWindow);
+        } else {
+            let sleepWindow1 = new Window(this.year, this.month, this.date, sleepStartTime, new Time(23, 59));
+            let sleepWindow2 = new Window(this.year, this.month, this.date, new Time(0,0), sleepEndTime);
+            return this.partiallyOverlaps(sleepWindow1) || this.isCompletelyDuring(sleepWindow1) || this.partiallyOverlaps(sleepWindow2) || this.isCompletelyDuring(sleepWindow2);
+        }
+    }
+
+    /**
+     * Checks if a given window is falls during user's productive slot
+     * @returns True if a given window is falls during user's productive slot, false if otherwise
+     */
+     duringProductivePeriod() {
+        let productiveStartTime = new Time(RoutineInfo.getProductiveSlotHours(), RoutineInfo.getProductiveSlotMins())
+        let productiveEndTime = Time.findEndTime(productiveStartTime, [4, 0]);
+
+        let productiveWindow = new Window(this.year, this.month, this.date, productiveStartTime, productiveEndTime);
+
+        return this.partiallyOverlaps(productiveWindow) || this.isCompletelyDuring(productiveWindow);
     }
 
     /*
@@ -468,24 +507,6 @@ export class Window {
     }
 
     /**
-     * Checks if a window falls during a user's sleeping hours so as to warn users against scheduling tasks at those timings
-     * @returns {Boolean} True if window falls during user's sleeping hours, false if otherwise
-     */
-    duringSleep() {
-        let sleepStartTime = new Time(Info.getSleepTimeHours(), Info.getSleepTimeMins())
-        let sleepEndTime = new Time(Info.getWakeUpTimeHours(), Info.getWakeUpTimeMins());
-
-        if (sleepEndTime.getHours() > sleepStartTime.getHours()) {
-            let sleepWindow = new Window(this.year, this.month, this.date, sleepStartTime, sleepEndTime);
-            return this.partiallyOverlaps(sleepWindow) || this.isCompletelyDuring(sleepWindow);
-        } else {
-            let sleepWindow1 = new Window(this.year, this.month, this.date, sleepStartTime, new Time(23, 59));
-            let sleepWindow2 = new Window(this.year, this.month, this.date, new Time(0,0), sleepEndTime);
-            return this.partiallyOverlaps(sleepWindow1) || this.isCompletelyDuring(sleepWindow1) || this.partiallyOverlaps(sleepWindow2) || this.isCompletelyDuring(sleepWindow2);
-        }
-    }
-
-    /**
      * Updating the arrays with every passing day by removing the array containing windows of the previous day and adding an array with windows for a day that is 7 days from now 
      */
     static newDay() {
@@ -521,25 +542,12 @@ export class Window {
     }
 
     /**
-     * Checks if a given window is falls during user's productive slot
-     * @returns True if a given window is falls during user's productive slot, false if otherwise
-     */
-    duringProductivePeriod() {
-        let productiveStartTime = new Time(Info.getProductiveSlotHours(), Info.getProductiveSlotMins())
-        let productiveEndTime = Time.getEndTime(productiveStartTime, [4, 0]);
-
-        let productiveWindow = new Window(this.year, this.month, this.date, productiveStartTime, productiveEndTime);
-
-        return this.partiallyOverlaps(productiveWindow) || this.isCompletelyDuring(productiveWindow);
-    }
-
-    /**
      * To be called when users first register
      */
     static initialise() {
         let currTime = new Date();
-        let startTime = new Time(Info.getWakeUpTime.getHours(), Info.getWakeUpTime.getMins());
-        let endTime = new Time(Info.getSleepTime.getHours(), Info.getSleepTime.getMins());
+        let startTime = new Time(RoutineInfo.getWakeUpTimeHours(), RoutineInfo.getWakeUpTimeMins());
+        let endTime = new Time(RoutineInfo.getSleepTime.getHours(), RoutineInfo.getSleepTime.getMins());
         // Creating window arrays for the first week
         var i;
         for (i = 0; i < 8; i++) {

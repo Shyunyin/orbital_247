@@ -32,7 +32,7 @@ export class RoutineInfo {
         RoutineInfo.wakeUpTime = wakeUpTime;
         RoutineInfo.productiveSlot = productiveSlot;
         // Estimating sleep time (Assuming sleep time to be for 8 hours)
-        RoutineInfo.sleepTime = new Time((this.wakeUpTime.getHours() + 16) % 24, this.wakeUpTime.getMins());
+        RoutineInfo.sleepTime = new Time((RoutineInfo.wakeUpTime.getHours() + 16) % 24, RoutineInfo.wakeUpTime.getMins());
         //Updating the database
         cloudDB.collection("Users").doc(userName).collection("Routine Info").doc("Routine Info").set(
             {

@@ -29,11 +29,22 @@ export class Time {
      *                   second element represents the minutes
      */
      static duration(startTime, endTime) {
-        let elapsed = (this.endTime.hours * 60) + (this.endTime.mins) - (this.startTime.hours * 60) - (this.startTime.mins); 
+        let elapsed = (endTime.getHours() * 60) + (endTime.getMins()) - (startTime.getHours() * 60) - (startTime.getMins()); 
         if (elapsed < 0) {
-            return new Error('Start time is after end time!')
+            let firstHalf = Time.duration(startTime, new Time(23, 59));
+            let secondHalf = Time.duration(new Time(0, 0), endTime);
+            if (firstHalf[1] + secondHalf[1] + 1 > 60) {
+                let newMins = (firstHalf[1] + secondHalf[1] + 1) % 60;
+                let newHours = firstHalf[0] + secondHalf[0] + 1;
+                return [newHours, newMins];
+            } else {
+                let newMins = firstHalf[1] + secondHalf[1];
+                let newHours = firstHalf[0] + secondHalf[0];
+                return [newHours, newMins];
+            }
+            //return new Error('Start time is after end time!')
         }
-        let elapsedHours = Math.floor(elapsedMins / 60);
+        let elapsedHours = Math.floor(elapsed / 60);
         let elapsedMins = elapsed - (elapsedHours * 60);
         return [elapsedHours, elapsedMins];
     }

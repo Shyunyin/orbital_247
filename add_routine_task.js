@@ -146,6 +146,7 @@ function showList(value, btn) {
     document.getElementById("biweeklydropdown").style.display="none";
     document.getElementById("chooseWeeks").style.display="none";
     document.getElementById("date").style.display="block";
+    document.getElementById("instruction").style.display="inline-block";
     // document.getElementsByClassName("instruction").style.display="inline-block";
   }
 }

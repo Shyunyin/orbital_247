@@ -1,13 +1,16 @@
-//In this class, we will be creating window objects which represent windows of time during which a particular task is to be done, a break is to be taken, etc. Empty windows are periods of time where nothing is schedule (no tasks or breaks)
+//In this class, we will be creating window objects which represent windows of time during which a particular task is to be done, a break is to be taken, etc. Empty windows are periods of time where nothing is schedule (no tasks or breaks) 
 /*
 Additional questions:
 1. What if the starting time of a window is in the past but the ending time is in the future?
 */
 //Importing relevant firebase libraries
-import firebase from "firebase/app";
+/*
+import {firebase} from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
+*/
+import {Time} from '../time.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
@@ -21,8 +24,12 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-let cloudDB = firebase.firestore(); //TODO: Should be changed to the specific user's as well
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}else {
+    firebase.app(); // if already initialized, use that one
+}
+let cloudDB = firebase.firestore(); //TODO: Should be changed to the specific user's as wellgit 
 export class Window {
     /**
      * Constructor to create window objects
@@ -246,6 +253,7 @@ export class Window {
         return this.startsAfter(window) && window.endsAfter(this);
     }
 
+    /*
     Add_Window_WithID() {
         formattedDate = (this.date).toString() + "/" + (this.month).toString() + "/" + (this.year).toString();
         // Procedure for adding empty widows to the database
@@ -292,6 +300,7 @@ export class Window {
             });
         } 
     }
+    */
 
     /**
      * To insert a window into the correct array in chronological order
@@ -352,8 +361,7 @@ export class Window {
             }
         }
     }
-
-
+    /*
     Remove_Window_WithID() {
         formattedDate = (this.date).toString() + "/" + (this.month).toString() + "/" + (this.year).toString();
         // Procedure for removing of windows from the database
@@ -382,7 +390,8 @@ export class Window {
             });
         } 
     }
-   
+    */
+
     /**
      * To remove a window from the correct array
      * @returns Errors if there are no such existing windows to be removed

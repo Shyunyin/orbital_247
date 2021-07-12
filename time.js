@@ -1,5 +1,5 @@
 //Class to create time objects to keep track of when tasks are scheduled and what times are free
-class Time {
+export class Time {
     /**
      * Constructor to create Time objects
      * @param {Number} hours     Hours of the time object (0-23)

@@ -49,30 +49,61 @@
             </form>
         </li>
     </div>
-
+    
     <!-- For frequency-->
     <div class="frequency">
         <h3>Recurring frequency: </h3>
         <div class="ul">
             <li>
-                <input type="radio" id="daily" name="choose" value="daily">
+                <!--<input type="radio" id="daily" name="choose" value="daily">-->
+                <input type="radio" id="daily" name="choose" value="daily" onchange="ShowHideDiv();">
                 <label for="daily">Daily</label>
             </li>
             <li>
-                <input type="radio" id="weekly" name="choose" value="weekly" onchange="showList('weekly', this);">
+                <!--<input type="radio" id="weekly" name="choose" value="weekly" onchange="showList('weekly', this);">-->
+                <input type="radio" id="weekly" name="choose" value="weekly" onchange="ShowHideDiv();">
                 <label for="weekly">Weekly</label>
             </li>
             <li>
-                <input type="radio" id="biweekly" name="choose" value="biweekly" onchange="showList('biweekly', this);">
+                <!--<input type="radio" id="biweekly" name="choose" value="biweekly" onchange="showList('biweekly', this);">-->
+                <input type="radio" id="biweekly" name="choose" value="biweekly" onchange="ShowHideDiv();">
                 <label for="biweekly">Biweekly</label>
             </li>
+            <script>
+                function ShowHideDiv() {
+                    var daily = document.getElementById("daily");
+                    var weekly = document.getElementById("weekly");
+                    var biweekly = document.getElementById("biweekly");
+                    var monthly = document.getElementById("monthly");
+                    var instruction = document.getElementById("instruction");
+                    if (weekly.checked) {
+                        instruction.style.display = "none";
+                        biweeklydropdown.style.display = "none";
+                        showList('weekly', this);
+                    } else if (biweekly.checked) {
+                        instruction.style.display = "none";
+                        weeklydropdown.style.display = "none";
+                        showList('biweekly', this);
+                    } else if (monthly.checked) {
+                        instruction.style.display = "block";
+                        weeklydropdown.style.display = "none";
+                        biweeklydropdown.style.display = "none";
+                        showList('monthly', this);
+                    } else {
+                        instruction.style.display = "none";
+                        weeklydropdown.style.display = "none";
+                        biweeklydropdown.style.display = "none";
+                    }
+                }
+            </script>
             <li>
-                <input type="radio" id="monthly" name="choose" value="monthly" onchange="showList('monthly', this);">
+                <!--<input type="radio" id="monthly" name="choose" value="monthly" onchange="showList('monthly', this);">-->
+                <input type="radio" id="monthly" name="choose" value="monthly" onchange="ShowHideDiv();">
                 <label for="monthly">Monthly</label>
-                <h5 class="instruction">Please key in a number from 1-31</h5>
+                <!--<h5 id="instruction" style="display: none;">Please key in a number from 1-31</h5>-->
+                <h5 id="instruction" class="instruction" style="display: none;">Please key in a number from 1-31</h5>
             </li>
         </div>
-
         <!--For the dropdown lists-->
         <!--Use javascript to replace??-->
         <div class="dropdown">
@@ -108,6 +139,7 @@
             </li>
             <li>
                 <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')" style="display: none;">
+                <!--<h5 id="instruction" class="instruction" style="display: none;">Please key in a number from 1-31</h5>-->
             </li>
         </div>
     </div>
@@ -150,37 +182,39 @@
          * Daily: 0, weekly: 1, biweekly: 2, monthly: 3
         */
 
-        function checkRadioValue() { 
-            var radio = document.getElementsByName("choose");
-            for(var i = 0; i < radio.length; i++) {
-                //check which radio is checked
-                if(radio[i].checked){ 
-                    return i;
-                }
-            }
-        }
-        let freq_num = checkRadioValue();
+        // function checkRadioValue() { 
+        //     console.log("i come here to checkRadioValue()")
+        //     var radio = document.getElementsByName("choose");
+        //     for(var i = 0; i < radio.length; i++) {
+        //         //check which radio is checked
+        //         if(radio[i].checked){ 
+        //             return i;
+        //         }
+        //     }
+        // }
+        // let freq_num = checkRadioValue();
         //for now freq_num and taskCategory has no update function so they are saved as it is first
        
-        let SpecificFreqTwo = "null"; //referencing only for biweekly 
-        let SpecificFreq;
+        // let SpecificFreqTwo = "null"; //referencing only for biweekly 
+        // let SpecificFreq;
         /*getFreq(): returns the ID of the frequency to retried*/
-        function getFreq(freq_num) {
-            if (freq_num === 1) {
-                SpecificFreq = document.getElementById("weeklydropdown");
-            } else if (freq_num === 2) {
-                SpecificFreq = document.getElementById("biweeklydropdown");
-                SpecificFreqTwo = document.getElementById("chooseWeeks");
-            } else if (freq_num === 3) {
-                SpecificFreq = document.getElementById("date");
-            }
-        }
+        // function getFreq(freq_num) {
+        //     if (freq_num === 1) {
+        //         SpecificFreq = document.getElementById("weeklydropdown");
+        //     } else if (freq_num === 2) {
+        //         SpecificFreq = document.getElementById("biweeklydropdown");
+        //         SpecificFreqTwo = document.getElementById("chooseWeeks");
+        //     } else if (freq_num === 3) {
+        //         SpecificFreq = document.getElementById("date");
+        //     }
+        // }
     
         //TODO: To be confirmed with Shyun Yin
-        let nameOfTask, start, startArr, end, endArr, specificFreq, specificFreqTwo;
-        let date = null
-        let day = null
-        let week = null
+        let nameOfTask, start, startArr, end, endArr;
+        let date = null;
+        let day = null;
+        let week = null;
+        let freq_num = 0;
 
         function Update(val, type) {
             if(type=='name') {
@@ -192,17 +226,16 @@
                 end=val;
                 endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
             } else if(type=='weekly') {
-                specificFreq = val;
                 day = val;
+                freq_num = 1;
             } else if (type=='biweekly') {
-                specificFreq = val;
                 day = val;
+                freq_num = 2;
             } else if (type=='biweeklychoose') {
-                specificFreqTwo = val;
                 week = val;
             } else if (type=='date') {
-                specificFreq = val;
                 date = val;
+                freq_num = 3;
             }
         }
 
@@ -229,14 +262,14 @@
         function Add_Doc_WithID() {
             console.log("i come here");
             //TODO: Using sniggy as a dummy user for now
-            cloudDB.collection("Users").doc("sniggy").collection("Routine Info").doc("Routine Tasks").set(
+            cloudDB.collection("Users").doc("sniggy").collection("Tasks").doc(nameOfTask).set(
             //cloudDB.collection("RoutineTasks").doc("name").set(
                 {
                     taskName : String(nameOfTask),
                     taskCategory : Number(0),
                     startTime : Array(Number(startArr[0]), Number(startArr[1])),
                     endTime : Array(Number(endArr[0]), Number(endArr[1])),
-                    freq : Number(freq_num),
+                    freq: Number(freq_num),
                     date: date,
                     day: day,
                     week: week,

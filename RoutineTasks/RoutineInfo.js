@@ -1,4 +1,6 @@
 // Class to contain the user's wake-up time, (estimated) sleep time and productivity time
+import {Time} from '../Time.js';
+
 
 //Importing relevant firebase libraries
 src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"

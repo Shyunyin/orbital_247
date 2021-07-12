@@ -6,11 +6,8 @@ Additional questions/comments:
 */ 
 
 import { OneTimeTask } from "./OneTimeTask.js";
-<<<<<<< HEAD
-import {Window} from './Window.js';
-=======
-import { Window } from "./Window.js";
->>>>>>> f8efe587df3d1e9565b85462d19697322ad1afe5
+import { Window } from "../Window.js";
+import {Time} from '../Time.js';
 
 export class FixedTask extends OneTimeTask {
     /**

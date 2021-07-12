@@ -71,28 +71,18 @@
             </li>
             <script>
                 function ShowHideDiv() {
-                    var daily = document.getElementById("daily");
-                    var weekly = document.getElementById("weekly");
-                    var biweekly = document.getElementById("biweekly");
-                    var monthly = document.getElementById("monthly");
                     var instruction = document.getElementById("instruction");
+                    weeklydropdown.style.display = "none";
+                    biweeklydropdown.style.display = "none";
+                    instruction.style.display = "none";
+
                     if (weekly.checked) {
-                        instruction.style.display = "none";
-                        biweeklydropdown.style.display = "none";
                         showList('weekly', this);
                     } else if (biweekly.checked) {
-                        instruction.style.display = "none";
-                        weeklydropdown.style.display = "none";
                         showList('biweekly', this);
                     } else if (monthly.checked) {
                         instruction.style.display = "block";
-                        weeklydropdown.style.display = "none";
-                        biweeklydropdown.style.display = "none";
                         showList('monthly', this);
-                    } else {
-                        instruction.style.display = "none";
-                        weeklydropdown.style.display = "none";
-                        biweeklydropdown.style.display = "none";
                     }
                 }
             </script>

@@ -53,7 +53,7 @@ class FixedTask extends OneTimeTask {
 
 }
 
-
+//TODO: IMPORTANT - Decide if your accumualted duration is supposed to include the duration of the current session itself. If so, k * session_duration is okay. If not (k - 1) * session_duration
 class NonFixedTask extends OneTimeTask {
     /**
      * Constructor to create non-fixed tasks
@@ -96,6 +96,7 @@ class NonFixedTask extends OneTimeTask {
     }
 
     addTask() {
+        console.log("addTask function is called");
         let now = new Date();
         let currDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         let expectedDate = new Date(this.year, this.month, this.date);
@@ -103,12 +104,11 @@ class NonFixedTask extends OneTimeTask {
 
         if (index < 0) {
             return new Error('Invalid index.')
-        }
-
+        } else if (index < 7) {
         // If it is a connected task
-        if (this.taskAfterIt != null) {
-            // If the connected task is to be scheduled within the next 7 days
-            if (index < 7) {
+            if (this.taskAfterIt != null) {
+                // If the connected task is to be scheduled within the next 7 days
+                //if (index < 7) {
                 let currArr = Window.nonFixedCollection[index][0]; //IMPORTANT: I think this part can be simplified by retrieving the info from the database
                 for (let i = 0; i < currArr.length; i++) {
                     // If the task which is supposed to be after the current task has been located in the only non-fixed tasks connected to fixed tasks tasks array
@@ -153,8 +153,8 @@ class NonFixedTask extends OneTimeTask {
                             for (let k = 1; k <= this.durOfSess; k++) {
                                 //let currHours = currArr[i].getAccumulatedDuration()[0] + ((k - 1) * this.durOfSess[0]);
                                 //let currMins = currArr[i].getAccumulatedDuration()[1] + ((k - 1)  * this.durOfSess[1]);
-                                let currHours = currArr[i].getAccumulatedDuration()[0] + (k * this.durOfSess[0]);
-                                let currMins = currArr[i].getAccumulatedDuration()[1] + (k  * this.durOfSess[1]);
+                                let currHours = origTask.getAccumulatedDuration()[0] + (k * this.durOfSess[0]);
+                                let currMins = origTask.getAccumulatedDuration()[1] + (k  * this.durOfSess[1]);
                                 if (currMins > 60) {
                                     currMins = currMins % 60;
                                     currHours += 1;
@@ -204,16 +204,16 @@ class NonFixedTask extends OneTimeTask {
                             }
                             // Insert back the original task in the right place
                             currArr.splice(pos, 0, origTasks);
-
+                            let origTask = currArr[pos];
                             // Insert all sessions of this connected task (Works for any number of sessions)
                             for (let k = 1; k <= this.durOfSess; k++) {
-                                let currHours = currArr[i].getAccumulatedDuration()[0] + (k * this.durOfSess[0]);
-                                let currMins = currArr[i].getAccumulatedDuration()[1] + (k  * this.durOfSess[1]);
+                                let currHours = origTask.getAccumulatedDuration()[0] + (k * this.durOfSess[0]);
+                                let currMins = origTask.getAccumulatedDuration()[1] + (k  * this.durOfSess[1]);
                                 if (currMins > 60) {
                                     currMins = currMins % 60;
                                     currHours += 1;
                                 }
-                                let newTask = new NonFixedTask(this.taskName, newCategory, this.year, this.month, this.date, 1, this.durOfSess, [currHours, currMins], this.taskAfterIt);
+                                let newTask = new NonFixedTask(this.taskName, newCategory, this.year, this.month, this.date, 1, this.durOfSess, [currHours, currMins], newTaskNameAfterIt);
                                 //let newTask = new NonFixedTask(this.taskName, newCategory, this.month, this.date, 1, this.durOfSess, newTaskNameAfterIt, [currArr[i].getAccumulatedDuration[0] + ((k - 1) * this.durOfSess[0]), currArr[i].getAccumulatedDuration[1] + ((k - 1)  * this.durOfSess[1])]);
 
                                 currArr.splice(pos, 0, newTask);
@@ -223,29 +223,35 @@ class NonFixedTask extends OneTimeTask {
                     }
                 }
                 // Check task which is supposed to be after the current task has been located in the only non-fixed tasks connected to fixed tasks tasks array
-                currArr = Window.prototype.nonFixedCollection[index][1];
-                let j;
-                for (j = 0; j < currArr.length; j++) {
+                currArr = Window.nonFixedCollection[index][1]; //IMPORTANT: Index 1 is the priority array
+                for (let j = 0; j < currArr.length; j++) {
                     // If the task which is supposed to be after the current task has been located in the only non-fixed tasks connected to fixed tasks tasks array
                     if (currArr[j].getTaskName() == this.taskAfterIt) {
                         // If the located task has no tasks to be done after it
                         if (currArr[j].getTaskAfterIt() == null) {
                             // Updating the category of the connected non-fixed tasks
                             let newCategory = this.taskCategory;
-                            //TODO: Need to create category
                             if (currArr[j].getTaskCategory() != this.taskCategory) {
+                                // Same logic as above
                                 if (currArr[j].getTaskCategory() == 0 || this.taskCategory == 0) {
-                                    newCategory = 5;
+                                    newCategory = 5; // Partially work
                                 }
                             }
                             if (currArr[j].getTaskCategory() == 0 && this.taskCategory == 0) {
-                                newCategory = 4;
+                                newCategory = 4; // Fully work
                             }
 
+                            let origTask = currArr[j];
                             // Insert all sessions of this connected task (Works for any number of sessions)
-                            let k;
-                            for (k = 1; k <= this.durOfSess; k++) {
-                                let newTask = new NonFixedTask(this.taskName, newCategory, this.month, this.date, 1, this.durOfSess, this.taskAfterIt, [currArr[i].getAccumulatedDuration[0] + ((k - 1) * this.durOfSess[0]), currArr[i].getAccumulatedDuration[1] + ((k - 1)  * this.durOfSess[1])]);
+                            for (let k = 1; k <= this.durOfSess; k++) {
+                                let currHours = origTask.getAccumulatedDuration()[0] + (k * this.durOfSess[0]);
+                                let currMins = origTask.getAccumulatedDuration()[1] + (k  * this.durOfSess[1]);
+                                if (currMins > 60) {
+                                    currMins = currMins % 60;
+                                    currHours += 1;
+                                }
+                                let newTask = new NonFixedTask(this.taskName, newCategory, this.year, this.month, this.date, 1, this.durOfSess, [currHours, currMins], this.taskAfterIt);
+                                //let newTask = new NonFixedTask(this.taskName, newCategory, this.month, this.date, 1, this.durOfSess, this.taskAfterIt, [currArr[i].getAccumulatedDuration[0] + ((k - 1) * this.durOfSess[0]), currArr[i].getAccumulatedDuration[1] + ((k - 1)  * this.durOfSess[1])]);
 
                                 currArr.splice(j, 0, newTask);
                             }
@@ -258,20 +264,27 @@ class NonFixedTask extends OneTimeTask {
                                 latestTask--;
                             }
                             let newCategory = this.taskCategory;
-                            //TODO: Need to create category
                             if (currArr[latestTask].getTaskCategory() != this.taskCategory) {
+                                // Same logic as above
                                 if (currArr[latestTask].getTaskCategory() == 0 || this.taskCategory == 0) {
-                                    newCategory = 5;
+                                    newCategory = 5; // Partially work
                                 }
                             }
                             if (currArr[latestTask].getTaskCategory() == 0 && this.taskCategory == 0) {
-                                newCategory = 4;
+                                newCategory = 4; // Fully work
                             }
 
+                            let origTask = currArr[latestTask];
                             // Insert all sessions of this connected task (Works for any number of sessions)
-                            let k;
-                            for (k = 1; k <= this.durOfSess; k++) {
-                                let newTask = new NonFixedTask(this.taskName, newCategory, this.month, this.date, 1, this.durOfSess, newTaskNameAfterIt, [currArr[i].getAccumulatedDuration[0] + ((k - 1) * this.durOfSess[0]), currArr[i].getAccumulatedDuration[1] + ((k - 1)  * this.durOfSess[1])]);
+                            for (let k = 1; k <= this.durOfSess; k++) {
+                                let currHours = origTask.getAccumulatedDuration()[0] + (k * this.durOfSess[0]);
+                                let currMins = origTask.getAccumulatedDuration()[1] + (k  * this.durOfSess[1]);
+                                if (currMins > 60) {
+                                    currMins = currMins % 60;
+                                    currHours += 1;
+                                }
+                                let newTask = new NonFixedTask(this.taskName, newCategory, this.year, this.month, this.date, 1, this.durOfSess, [currHours, currMins], newTaskNameAfterIt);
+                                //let newTask = new NonFixedTask(this.taskName, newCategory, this.month, this.date, 1, this.durOfSess, newTaskNameAfterIt, [currArr[i].getAccumulatedDuration[0] + ((k - 1) * this.durOfSess[0]), currArr[i].getAccumulatedDuration[1] + ((k - 1)  * this.durOfSess[1])]);
 
                                 currArr.splice(latestTask, 0, newTask);
                             }
@@ -279,22 +292,55 @@ class NonFixedTask extends OneTimeTask {
                         }
                     }
                 }
-            // If the index >= 8 (to be added in the future)
+            // If the non-fixed task is not connected to anything
             } else {
-                //TODO: Need to do proper set up once the relevant date is in the 7 day runway
-                let currArr = Window.prototype.nonFixedFutureArr;
-                let g = 0;
-                //TODO: May need to create getYear, getMonth, getDate
-                let currTaskTime = new Date(this.year, this.month, this.date, 0).getTime();
-                while (g < currArr.length && currTaskTime > new Date(currArr[g].getYear(), currArr[g].getMonth(), currArr[g].getDate(), 0).getTime()) {
-                    g++;
+                let currArr = Window.nonFixedCollection[index][0];
+                // Finding the total duration of all the connected non-fixed tasks in the format of [hours, mins]
+                let accumHours = (this.numOfSess * this.durOfSess[0]);
+                let accumMins = (this.numOfSess * this.durOfSess[1]);
+                if (accumMins > 60) {
+                    accumMins = accumMins % 60;
+                    accumHours += 1;
                 }
-                currArr.splice(g, 0, this);
+                let maxAccumulatedDuration = [accumHours, accumMins];
+
+                // Pop off the original task as it has to be shifted to a new position along with the new connected tasks
+                let pos = 0;
+                while (pos < currArr.length && currArr[pos].getAccumulatedDuration() < maxAccumulatedDuration) { //TODO: Problem - Can't do such direct comparison if duration is in [hours, mins] format. Can we have the accumulated duration in mins or is there a need for hours and mins? (Comparison formula yet to be written)
+                    pos++;
+                }
+                // Insert all sessions of this connected task (Works for any number of sessions)
+                for (let k = 1; k <= this.durOfSess; k++) {
+                    //let currHours = currArr[i].getAccumulatedDuration()[0] + ((k - 1) * this.durOfSess[0]);
+                    //let currMins = currArr[i].getAccumulatedDuration()[1] + ((k - 1)  * this.durOfSess[1]);
+                    let currHours = (k * this.durOfSess[0]);
+                    let currMins = (k * this.durOfSess[1]);
+                    if (currMins > 60) {
+                        currMins = currMins % 60;
+                        currHours += 1;
+                    }
+                    let newTask = new NonFixedTask(this.taskName, newCategory, this.year, this.month, this.date, 1, this.durOfSess, [currHours, currMins], this.taskAfterIt);
+
+                    currArr.splice(pos, 0, newTask);
+                }
+                console.log("Task '" + this.taskName + "' added to task list.")
+                for (let i = 0; i < Window.nonFixedCollection.length; i++) {
+                    //console.log()
+                }
+                return;
             }
+        // If the index >= 7 (to be added in the future
+        } else {
+            let currArr = Window.nonFixedFutureArr;
+            let g = 0;
+            let currTaskTime = new Date(this.year, this.month, this.date, 0).getTime();
+            while (g < currArr.length && currTaskTime > new Date(currArr[g].getYear(), currArr[g].getMonth(), currArr[g].getDate(), 0).getTime()) {
+                g++;
+            }
+            currArr.splice(g, 0, this);
+            return;
         }
     }
-
-
 
 /*
 
@@ -517,10 +563,11 @@ class NonFixedTask extends OneTimeTask {
         return this.accumulatedDuration;
     }
 
+    /*
     getGroup() {
         return this.group;
     }
-
+    */
     /**
      * To update the accumulated duration of an existing window to a new duration
      * @param {Number} newDuration The new accumulated duration in hours and minutes (Format: [hours, mins])
@@ -533,9 +580,11 @@ class NonFixedTask extends OneTimeTask {
      * To update the group number fo an existing window to a new number
      * @param {Number} newGroup The new group number (based on Window.prototype.group)
      */
+    /*
     changeGroup(newGroup) {
         this.group = newGroup;
     }
+    */
 }
 
-NonFixedTask.prototype.group = 0;
+//NonFixedTask.prototype.group = 0;

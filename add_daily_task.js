@@ -207,13 +207,15 @@ function check() {
     var Task = new NonFixedTask(
       document.getElementById("taskName").value,
       catNum, //category number
+      year,
       month,
       date,
       //time.getMonth(), //month from 0-11
       //time.getDate(),
       numOfSessions, //number for number of sessions
       [hourDuration, minDuration], //not very sure about format!! currently both variables are numbers
-      document.getElementById("dropdownList").value //gives a string, will be empty if it is not a follow up task
+      null // For testing purposes
+      //document.getElementById("dropdownList").value //gives a string, will be empty if it is not a follow up task
     )
     Task.addTask();
   }  else {

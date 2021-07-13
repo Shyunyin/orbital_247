@@ -4,12 +4,25 @@
 <head>
     <title>Add routine task</title>
     <script type="text/javascript" type="module" src="add_routine_task.js"></script>
+    <script type="text/javascript" type="module" src="Routine_Final.js"></script>
+    <script type="text/javascript" type="module" src="Window.js"></script>
+    <!--<script type="text/javascript" type="module" src="combined.js"></script>-->
+    <!---
+    <script type="text/javascript" type="module" src="RoutineTasks.js"></script>
+    <script type="text/javascript" type="module" src="DailyTask.js"></script>
+    <script type="text/javascript" type="module" src="WeeklyTask.js"></script>
+    <script type="text/javascript" type="module" src="BiweeklyTask.js"></script>
+    <script type="text/javascript" type="module" src="MonthlyTask.js"></script>
+    -->
+    <!--<script type="text/javascript" type="module" src="Time.js"></script>-->
+    <!--
     <script type="module">
         import {DailyTask} from './RoutineTasks/DailyTask.js';
         import {WeeklyTask} from './RoutineTasks/WeeklyTask.js';
         import {BiweeklyTask} from './RoutineTasks/BiweeklyTask.js';
         import {MonthlyTask} from './RoutineTasks/MonthlyTask.js';
     </script>
+    -->
     <link rel="stylesheet" href="add_routine_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
@@ -272,6 +285,7 @@
 
         //------------------------Button Events----------------------------//
         function Add() { //linked the onclick to the HTML document itself
+            displayRadioValue();
             Add_Doc_WithID();
         }
 

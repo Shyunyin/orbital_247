@@ -1,38 +1,226 @@
-//In this class, we will be creating window objects which represent windows of time during which a particular task is to be done, a break is to be taken, etc. Empty windows are periods of time where nothing is schedule (no tasks or breaks) 
-/*
-Additional questions:
-1. What if the starting time of a window is in the past but the ending time is in the future?
-*/
-//Importing relevant firebase libraries
-/*
-import {firebase} from "firebase/app";
-import "firebase/analytics";
-import "firebase/auth";
-import "firebase/firestore";
-*/
-//import {Time} from '../time.js';
-/*
-const firebaseConfig = {
-    apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-    authDomain: "orbital-24-7.firebaseapp.com",
-    databaseURL: "https://orbital-24-7-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "orbital-24-7",
-    storageBucket: "orbital-24-7.appspot.com",
-    messagingSenderId: "459091456870",
-    appId: "1:459091456870:web:21134477e94d50e25ecea7",
-    measurementId: "G-WQMCMBMFCK"
-};
+class Time {
+    /**
+     * Constructor to create Time objects
+     * @param {Number} hours     Hours of the time object (0-23)
+     * @param {Number} mins      Minutes of the time object (0-59)
+     */
+    constructor(hours, mins) {
+        this.hours = hours;
+        this.mins = mins;
+    }
 
-// Initialize Firebase
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}else {
-    firebase.app(); // if already initialized, use that one
+    /**
+     * Calculates the number of days in a particular month
+     * @param {Number} month The month for which the number of days is requires (0-11, Jan-Dec)
+     * @param {Number} year  The respective year (Format: yyyy)
+     * @returns {Number}     The number of days in the respective month
+     */
+    static daysInMonth(month, year) {
+        let x = new Date(year, month + 1, 0);
+        return d.getDate();
+    }
+
+    /**
+     * Calculates the duration of a task in hours and minutes
+     * @param {Time} startTime Time at which the task starts
+     * @param {Time} endTime   Time at which the task ends
+     * @returns {Number} An array, where the first element represents the hours and 
+     *                   second element represents the minutes
+     */
+     static duration(startTime, endTime) {
+        let elapsed = (endTime.getHours() * 60) + (endTime.getMins()) - (startTime.getHours() * 60) - (startTime.getMins()); 
+        if (elapsed < 0) {
+            let firstHalf = Time.duration(startTime, new Time(23, 59));
+            let secondHalf = Time.duration(new Time(0, 0), endTime);
+            if (firstHalf[1] + secondHalf[1] + 1 > 60) {
+                let newMins = (firstHalf[1] + secondHalf[1] + 1) % 60;
+                let newHours = firstHalf[0] + secondHalf[0] + 1;
+                return [newHours, newMins];
+            } else {
+                let newMins = firstHalf[1] + secondHalf[1];
+                let newHours = firstHalf[0] + secondHalf[0];
+                return [newHours, newMins];
+            }
+            //return new Error('Start time is after end time!')
+        }
+        let elapsedHours = Math.floor(elapsed / 60);
+        let elapsedMins = elapsed - (elapsedHours * 60);
+        return [elapsedHours, elapsedMins];
+    }
+
+    /**
+     * To retrieve the number of hours for a given time
+     * @returns {Number} The number of hours for a given time
+     */
+    getHours() {
+        return this.hours;
+    }
+
+    /**
+     * To retrieve the number of minutes for a given time
+     * @returns {Number} The number of hours for a given time
+     */
+    getMins() {
+        return this.mins;
+    }
+
+    /**
+     * Checks if a given time is exactly the same at 'time'
+     * @param {Time} time 
+     * @returns {Boolean} True if the 2 timings are exactly the same, false if otherwise
+     */
+    equals(time) {
+        return (this.hours == time.getHours() && this.mins == time.getMins());
+    }
+
+    /**
+     * 
+     * @param {Time} endTime 
+     * @param {Number} duration Format: [hours, mins]
+     */
+    static findStartTime(endTime, duration) {
+        let durHours = duration[0]
+        let durMins = duration[1]
+        let newHours;
+        let newMins;
+        if (endTime.getMins() < durMins) {
+            durMins -= endTime.getMins();
+            newHours = (24 + endTime.getHours() - 1 - durHours) % 24;
+            newMins = 60 - durMins; //TODO: Must change everything to 60
+        } else {
+            newHours = (24 + endTime.getHours() - durHours) % 24;
+            newMins = endTime.getMins() - durMins;
+        }
+        return new Time(newHours, newMins);
+    }
+
+    /**
+     * 
+     * @param {Time} endTime 
+     * @param {Number} duration Format: [hours, mins]
+     */
+     static findEndTime(startTime, duration) {
+        let durHours = duration[0]
+        let durMins = duration[1]
+        let newHours;
+        let newMins;
+        if (startTime.getMins() + durMins > 60) {
+            durMins -= (60 - startTime.getMins());
+            newHours = (startTime.getHours() + 1 + durHours) % 24;
+            newMins = durMins; //TODO: Must change everything to 60
+        } else {
+            newHours = (startTime.getHours() + durHours) % 24;
+            newMins = startTime.getMins() + durMins;
+        }
+        return new Time(newHours, newMins);
+    }
+
 }
-let cloudDB = firebase.firestore(); //TODO: Should be changed to the specific user's as wellgit 
-*/
+
+Time.prototype.timeRegistered = Math.round(Date.now()/10000) * 10000; //To the nearest minute (Need to double check calculation)
+
+class RoutineInfo {
+    /**
+     * Constructor to record user's wake-up time and productive slot information
+     * @param {Time} wakeUpTime The time at which user usually wakes up at
+     * @param {Time} productiveSlot Start time of productivity slot (Slot's duration will always be at 4 hours)
+     */
+    constructor(wakeUpTime, productiveSlot) {
+        RoutineInfo.wakeUpTime = wakeUpTime;
+        RoutineInfo.productiveSlot = productiveSlot;
+        // Estimating sleep time (Assuming sleep time to be for 8 hours)
+        RoutineInfo.sleepTime = new Time((RoutineInfo.wakeUpTime.getHours() + 16) % 24, RoutineInfo.wakeUpTime.getMins());
+        //Updating the database
+        cloudDB.collection("Users").doc(userName).collection("Routine Info").doc("Routine Info").set(
+            {
+                wakeUpTimeStart: RoutineInfo.wakeUpTime,
+                wakeUpTimeEnd: RoutineInfo.sleepTime,
+                productiveSlotStart: RoutineInfo.productiveSlot,
+                productiveSlotEnd: Time.findEndTime(RoutineInfo.productiveSlot, [4, 0]),
+            }
+        ).then(function(){
+            console.log("Routine info for for user '" + userName + "' has been created.");
+        })
+        .catch(function(error) {
+            console.error("Error adding routine info doc for user '" + userName + "'' : ", error);
+        });
+
+    }
+
+    /**
+     * To retrieve the wake-up time of a user
+     * @returns {Time} The wake-up time of a user
+     */
+    static getWakeUpTime() {
+        return RoutineInfo.wakeUpTime;
+    }
+
+    /**
+     * To retrieve the hours of the wake-up time of a user
+     * @returns {Number} The hours of the wake-up time of a user
+     */
+    static getWakeUpTimeHours() {
+        return RoutineInfo.wakeUpTime.getHours();
+    }
+
+    /**
+     * To retrieve the minutes of the wake-up time of a user
+     * @returns {Number} The minutes of the wake-up time of a user
+     */
+    static getWakeUpTimeMins() {
+        return RoutineInfo.wakeUpTime.getMins();
+    }
+
+    /**
+     * To retrieve the estimated sleep time of a user
+     * @returns {Time} The sleep time of a user
+     */
+    static getSleepTime() {
+        return RoutineInfo.sleepTime;
+    }
+
+    /**
+     * To retrieve the hours of the estimated sleep time of a user
+     * @returns {Number} The hours of the estimated sleep time of a user
+     */
+    static getSleepTimeHours() {
+        return RoutineInfo.sleepTime.getHours();
+    }
+
+    /**
+     * To retrieve the minutes of the estimated sleep time of a user
+     * @returns {Number} The minutes of the estimated sleep time of a user
+     */
+    static getSleepTimeMins() {
+        return RoutineInfo.sleepTime.getMins();
+    }
+
+    /**
+     * To retrieve the start time of a user's productivity slot
+     * @returns {Time} The start time of a user's productivity slot
+     */
+    static getProductiveSlot() {
+        return RoutineInfo.productiveSlot;
+    }
+
+    /**
+     * To retrieve the hours of the start time of a user's productivity slot
+     * @returns {Time} The hours of the start time of a user's productivity slot
+     */
+     static getProductiveSlotHours() {
+        return RoutineInfo.productiveSlot.getHours();
+    }
+
+    /**
+     * To retrieve the minutes of the start time of a user's productivity slot
+     * @returns {Time} The minutes of the start time of a user's productivity slot
+     */
+     static getProductiveSlotMins() {
+        return RoutineInfo.productiveSlot.getMins();
+    }
+}
+
 class Window {
-//export class Window {
     /**
      * Constructor to create window objects
      * @param {String} taskName Name of the task ('null' for empty windows)

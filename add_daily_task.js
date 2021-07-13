@@ -174,12 +174,22 @@ let catNum = 0;
 
 
 /*Integrating with javascript. Adding to Non fixed Task and Fixed Task*/
+var onceOnly = true; //For testing only
 function check() {
+  // For testing only. The initialise function is just supposed to be called once upon registering a user
+  if (onceOnly) {
+    onceOnly = false;
+    Window.initialise(); //Strictly for testing purposes only
+  }
   console.log("I enter the check() function");
   var cat = document.getElementsByName("select");
-  var time = new Date();
-  let start = document.getElementById("startTime").value
-  let end = document.getElementById("endTime").value
+  let time = document.getElementById("dateInput").value;
+  let year = parseInt(time.substr(0, 4));
+  let month = parseInt(time.substr(5, 7)) - 1;
+  let date = parseInt(time.substr(8, 10));
+  //var time = new Date();
+  let start = document.getElementById("startTime").value;
+  let end = document.getElementById("endTime").value;
 
   let startTime = new Time( //create new time object for start time in Window and individual mode objects
     parseInt(start.substr(0, 2)),
@@ -197,8 +207,10 @@ function check() {
     var Task = new NonFixedTask(
       document.getElementById("taskName").value,
       catNum, //category number
-      time.getMonth(), //month from 0-11
-      time.getDate(),
+      month,
+      date,
+      //time.getMonth(), //month from 0-11
+      //time.getDate(),
       numOfSessions, //number for number of sessions
       [hourDuration, minDuration], //not very sure about format!! currently both variables are numbers
       document.getElementById("dropdownList").value //gives a string, will be empty if it is not a follow up task
@@ -209,9 +221,12 @@ function check() {
     var Task = new FixedTask (
       document.getElementById("taskName").value,
       catNum, //category number
-      time.getFullYear(), //full year
-      time.getMonth(), //month from 0-11
-      time.getDate(),
+      year,
+      month,
+      date,
+      //time.getFullYear(), //full year
+      //time.getMonth(), //month from 0-11
+      //time.getDate(),
       startTime,
       endTime
     )

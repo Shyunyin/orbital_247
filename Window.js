@@ -13,7 +13,7 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 */
-//import {Time} from '../time.js';
+//import Time from '../Time.js';
 /*
 const firebaseConfig = {
     apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
@@ -352,37 +352,38 @@ class Window {
      */
     insertWindow() {
         // To locate the array that represents that day of the given window. Array in position 0 of 'collection' arrays will represent the current day, while every slot to the right will represent each subsequent day
-        console.log("I come to the insert window function")
+        console.log("insertWindow is called")
         let now = new Date();
         let currDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         let expectedDate = new Date(this.year, this.month, this.date);
         let index = (expectedDate - currDate)/86400000;
 
         if (index < 0) {
-            return new Error('Invalid index.')
+            console.error('Invalid index.');
         }
 
         if (this.type == 0) { // To insert empty windows
-            let currArr = Window.prototype.emptyCollection[index];
-            newIndex = 0;
+            let currArr = Window.emptyCollection[index];
+            let newIndex = 0;
             // Doing checks to ensure that task does not clash with any existing empty windows.
             while (newIndex < currArr.length && this.isCompletelyAfter(currArr[newIndex])) {
                 newIndex++;
             }
             if (newIndex == currArr.length) {
                 currArr.push(this);
-            }
-            if (this.getEndTimeInMs() < currArr[index].getStartTimeInMs()) {
-                currArr.splice(index, 0, this);
+                console.log(currArr); //For testing
+            } else if ((currArr[newIndex]).isCompletelyAfter(this)) {
+                currArr.splice(newIndex, 0, this);
+                console.log(currArr);
                 // Updating the database as well
                 //this.Add_Window_WithID();
             } else {
-                return new Error("Cannot schedule empty window as it clashes with an existing empty window. Please adjust the start and end times of other windows accordingly.");
+                console.error("Cannot schedule empty window as it clashes with an existing empty window. Please adjust the start and end times of other windows accordingly.");
             }
         } else { // To insert tasks for the current day and furture days
-            let currArr = Window.prototype.fixedFutureArr; // For tasks to be schedule beyond 7 days from now
-            if (this.type == 1 && index < 8) { 
-                currArr = Window.prototype.occupiedCollection[index];
+            let currArr = Window.fixedFutureArr; // For tasks to be schedule beyond 7 days from now
+            if (this.type == 1 && index < 7) { 
+                currArr = Window.occupiedCollection[index];
             }
             // Doing checks to ensure that task does not clash with any existing fixed, future tasks.
             let newIndex = 0;
@@ -392,17 +393,18 @@ class Window {
             // If all currently scheduled tasks take place before the current to-be scheduled task starts
             if (newIndex == currArr.length) {
                 currArr.push(this);
-            }
-            if (this.getEndTimeInMs() < currArr[index].getStartTimeInMs()) {
+                console.log("I come to the insert window function 3");
+            } else if ((currArr[newIndex]).isCompletelyAfter(this)) {
                 currArr.splice(newIndex, 0, this);
+                console.log("I come to the insert window function 4");
                 // Updating the database as well
                 //this.Add_Window_WithID()
-
-                let removedBreak = new Window(this.year, this.month, this.date, this.startTime, this.endTime, 0);
-                return removedBreak.removeWindow();
             } else {
-                return new Error("Cannot schedule task as it clashes with an existing task");
+                console.error("Cannot schedule task as it clashes with an existing task!");
+                window.alert("Cannot schedule task as it clashes with an existing task!");
             }
+            let removedBreak = new Window("Empty", this.year, this.month, this.date, this.startTime, this.endTime, 0);
+            return removedBreak.removeWindow();
         }
     }
     /*
@@ -441,6 +443,7 @@ class Window {
      * @returns Errors if there are no such existing windows to be removed
      */
     removeWindow() {
+        console.log("removeWindow is called");
         // To locate the array that represents that day of the given window. Array in position 0 of 'collection' arrays will represent the current day, while every slot to the right will represent each subsequent day
         let currDate = new Date().getDate();
         currDate = new Date(this.year, this.month, currDate);
@@ -450,64 +453,71 @@ class Window {
         if (index < 0) {
             return new Error('Invalid index.')
         }
-
         if (this.type == 0) {
-            let currArr = Window.prototype.emptyCollection[index];
+            let currArr = Window.emptyCollection[index];
+            console.log("index " + index);
             let startIndex = 0;
             //While start time of given window is after the end time of the current window
             while (startIndex < currArr.length && this.isCompletelyAfter(currArr[startIndex])) {
                 startIndex++;
             }
             let endIndex = startIndex;
-            while (endIndex < currArr.length && this.getEndTimeInMs() > currArr[endIndex].getStartTimeInMs()) {
+            while (endIndex < currArr.length && this.getEndTimeInMs() > currArr[endIndex].getEndTimeInMs()) {
                 endIndex++;
             }
         
             //Removing the empty window correctly by adjusting the start and end times of the previous and subsequent windows if necessary.
-            let i;
-            for (i = startIndex; i <= endIndex; i++) {
+            let windowsToAdd = []
+            for (let i = startIndex; i <= endIndex; i++) {
                 let newWindow1 = null;
                 let newWindow2 = null;
                 if (this.startsAfter(currArr[i])) {
-                    newWindow1 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), currArr[i].getStartTime(),  this.startTime, 0); 
-                    currArr[i].changeStartTime = this.startTime;
+                    newWindow1 = new Window("Empty", currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), currArr[i].getStartTime(),  this.startTime, 0); 
+                    //currArr[i].changeStartTime = this.startTime;
                 }
                 if (currArr[i].getEndTimeInMs() > this.getEndTimeInMs()) {
-                    newWindow2 = new Window(currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), this.endTime, currArr[i].getEndTime(), 0);
-                    currArr[i].changeEndTime = this.endTime;
+                    newWindow2 = new Window("Empty", currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), this.endTime, currArr[i].getEndTime(), 0);
+                    //currArr[i].changeEndTime = this.endTime;
                 }
 
                 //Updating the database and the respective arrays
-                currArr.splice(i, 1);
                 //(currArr[i]).Remove_Window_WithID();
 
                 if (newWindow1 != null) {
-                    newWindow1.insertWindow();
+                    windowsToAdd.push(newWindow1);
                     //newWindow1.Add_Window_WithID();
                 }
                 if (newWindow2 != null) {
-                    newWindow2.insertWindow();
+                    windowsToAdd.push(newWindow2);
                     //newWindow2.Add_Window_WithID();
                 }
             }
+            currArr.splice(startIndex, endIndex - startIndex + 1);
+            for (let j = 0; j < windowsToAdd.length; j ++) {
+                windowsToAdd[j].insertWindow();
+            }
+            console.log("Empty windows successfully updated");
+            console.log(currArr);
         } else {
-            let currArr = Window.prototype.fixedFutureArr;
+            let currArr = Window.fixedFutureArr;
             if (this.type == 1 && index < 8) {
-                currArr = Window.prototype.occupiedCollection[index];
+                currArr = Window.occupiedCollection[index];
             }
             //Check if the task to be removed exists. Once task is identified, it is removed.
             let i;
             for (i = 0; i < currArr.length; i++) {
                 if (this.equals(currArr[i])) {
                     currArr.splice(i, 1);
+                    console.log("Window successfully removed")
                     //(currArr[i]).Remove_Window_WithID();
 
-                    let newWindow = new Window(this.year, this.month, this.date, this.startTime, this.endTime, 0);
+                    let newWindow = new Window("Empty", this.year, this.month, this.date, this.startTime, this.endTime, 0);
                     //newWindow.Add_Window_WithID();
                     return newWindow.insertWindow(); //Inserting back the empty window corresponding to the window of the deleted task
                 }
             }
-            return new Error('No such task to be removed!');
+            console.error("No such task to be removed!");
+            //return new Error('No such task to be removed!');
         }
     }
 
@@ -550,21 +560,69 @@ class Window {
      * To be called when users first register
      */
     static initialise() {
+        console.log("Initialise funtion is called");
         let currTime = new Date();
-        let startTime = new Time(RoutineInfo.getWakeUpTimeHours(), RoutineInfo.getWakeUpTimeMins());
-        let endTime = new Time(RoutineInfo.getSleepTime.getHours(), RoutineInfo.getSleepTime.getMins());
+        // For testing purposes
+        let startTime = new Time(8, 0);
+        let endTime = new Time(0, 0);
+        //let startTime = new Time(RoutineInfo.getWakeUpTimeHours(), RoutineInfo.getWakeUpTimeMins());
+        //let endTime = new Time(RoutineInfo.getSleepTime.getHours(), RoutineInfo.getSleepTime.getMins());
         // Creating window arrays for the first week
-        var i;
-        for (i = 0; i < 8; i++) {
-            Window.prototype.emptyCollection.push(Window.prototype.emptyArr);
-            Window.prototype.occupiedCollection.push(Window.prototype.occupiedArr);
-            Window.prototype.nonFixedCollection.push(Window.prototype.nonFixedArr , [Window.prototype.nonFixedPriorityArr]);
+        for (let i = 0; i < 7; i++) {
+            Window.emptyCollection.push([]);
+            Window.occupiedCollection.push([]);
+            Window.nonFixedCollection.push([[], []]); //0 is priority array, 1 is the normal array
 
-            let newWindow = new Window(currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, endTime, 0);
-            Window.prototype.emptyCollection[i].push(newWindow);
+            if (startTime.getHours() > endTime.getHours()) {
+                let newWindow1 = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), new Time(0, 0), endTime, 0);
+                let newWindow2 = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, new Time(23, 59), 0);
+
+                Window.emptyCollection[i].push(newWindow1);
+                Window.emptyCollection[i].push(newWindow2);
+            } else {
+                let newWindow = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, endTime, 0);
+
+                Window.emptyCollection[i].push(newWindow);
+            }
         }
+        //For tracing purposes
+        /*
+        console.log("occupiedCollection is now " + Window.occupiedCollection);
+        console.log("emptyCollection is now " + Window.emptyCollection);
+        console.log("nonFixedCollection is now " + Window.nonFixedCollection);
+        console.log("fixedFutureArr is now " + Window.fixedFutureArr);
+        for (let j = 0; j < Window.occupiedCollection.length; j ++) {
+            console.log("occupiedCollection at index " + j + " is " + Window.occupiedCollection[j]);
+        }
+        for (let j = 0; j < Window.emptyCollection.length; j ++) {
+            console.log("emptyCollection at index " + j + " is " + Window.emptyCollection[j]);
+        }
+        for (let j = 0; j < Window.nonFixedCollection.length; j ++) {
+            console.log("nonFixedCollection at index " + j + " is " + Window.nonFixedCollection[j]);
+        }
+        for (let j = 0; j < Window.fixedFutureArr.length; j ++) {
+            console.log("fixedFuture at index " + j + " is " + Window.fixedFutureArr[j]);
+        }
+        */
     }
 }
+
+// TEMPORARY ARRAYS TO CHECK IF WINDOW FUNCTIONS ARE WORKING AS THEY SHOULD
+Window.occupiedCollection = []; // Contains 7 'Window.prototype.occupiedArr' 
+Window.fixedFutureArr = []; // Represents fixed tasks that are scheduled for > 7 days from now
+Window.emptyCollection = []; // Contains 7 'Window.prototype.emptyArr'
+Window.nonFixedCollection = []; // Contains 7 'Window.prototype.nonFixedFutureArr'
+Window.nonFixedFutureArr = []; // Represents non-fixed tasks that are scheduled for > 7 days from now
+//Window.prototype.group = 0; //Tracks the number of groups (non-fixed, connected tasks) for the day. Reset at the end of every day.
+/*
+for (let i = 0; i < 7; i ++) {
+    Window.occupiedCollection.push([]);
+    Window.emptyCollection.push([]);
+    Window.nonFixedCollection.push([[], []]);
+}
+*/
+/*
+ACTUAL ARRAYS:
 
 Window.prototype.occupiedCollection = []; // Contains 7 'Window.prototype.occupiedArr' 
 Window.prototype.occupiedArr = []; // Represents a single day's fixed tasks
@@ -578,3 +636,4 @@ Window.prototype.nonFixedFutureArr = []; // Represents non-fixed tasks that are 
 Window.prototype.group = 0; //Tracks the number of groups (non-fixed, connected tasks) for the day. Reset at the end of every day.
 Window.prototype.nonFixedFutureArr = []; // Represents a single day's non-fixed tasks
 Window.prototype.nonFixedFutureArr = []; // Represents non-fixed tasks that are scheduled for > 7 days from now
+*/

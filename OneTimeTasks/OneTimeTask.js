@@ -1,4 +1,6 @@
 // Class for one time tasks to be created
+import {Window} from '../Window.js';
+import {Time} from '../Time.js';
 export class OneTimeTask {
     constructor(taskName, taskCategory, year, month, date) {
         this.taskName = taskName;

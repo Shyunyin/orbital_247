@@ -3,13 +3,18 @@
   <head>
     <title>Add daily task</title>
     <script type = "text/javascript" type="module" src="add_daily_task.js"></script>
+    <script type = "text/javascript" type="module" src="OneTimeTasks_Final.js"></script>
+    <script type = "text/javascript" type="module" src="Window.js"></script>
+    <script type = "text/javascript" type="module" src="CombinedTime_Final.js"></script>
+    <!--
     <script type = "module">
       import {OneTimeTask} from './OneTimeTasks/OneTimeTask.js';
       import {NonFixedTask} from './OneTimeTasks/NonFixedTask.js';
       import {FixedTask} from './OneTimeTasks/FixedTask.js';
-      // import {Window} from './Window.js';
+      import {Window} from '../Window.js';
+      import {Time} from '../Time.js';
     </script>
-
+    -->
     <!--Preshita added for experimentation-->
     <!--<script type="text/javascript" src="Window.js"></script>--> 
 
@@ -149,7 +154,7 @@
     <div class="btn-group-actions">
       <li><input type="button" id="delete" value="Delete task" onclick="DeleteTask()"></li>
       <!-- <li><button id="add" >Add another task</button></li> -->
-      <li><input type="button" id="done" value="Submit" onclick="frontEndSubmit()"></li>
+      <li><input type="button" id="done" value="Submit" onclick="check()"></li>
     </div>
   </fieldset>
 
@@ -223,14 +228,14 @@
         // endArr=[15,20];
 
         /*function check(): to get document category*/
-        function check() {
+        function checked() {
          if (document.getElementById("durationTask").checked == true) {
             return "Non-fixed";
           } else { //if the duration radio button is not clicked
             return "Fixed";
           }
         }
-        var typeCheck = check();
+        var typeCheck = checked();
         //--------------- Configuration --------------------------//
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
@@ -244,7 +249,12 @@
         measurementId: "G-WQMCMBMFCK"
         };
 
-        firebase.initializeApp(firebaseConfig);
+        if (!firebase.apps.length) {
+          firebase.initializeApp(firebaseConfig);
+        }else {
+          firebase.app(); // if already initialized, use that one
+        }
+        //firebase.initializeApp(firebaseConfig);
         let cloudDB = firebase.firestore();
         //--------------------- Writing relevant functions ------------------//
 
@@ -255,7 +265,7 @@
                     taskName : String(nameOfTask),
                     taskCategory : Number(categoryNum),
                     date: String(dateInput), //in the form "yyyy-mm-dd"
-                    type: String(check()), //to store if its fixed or non-fixed also               
+                    type: String(checked()), //to store if its fixed or non-fixed also               
                     startTime : Array(Number(startArr[0]), Number(startArr[1])), //fixed
                     endTime : Array(Number(endArr[0]), Number(endArr[1])), //fixed
                     durationHour: Number(hour), //non-fixed
@@ -267,7 +277,7 @@
             ).then(function(){
                 console.log("Doc written with ID " , nameOfTask);
                 // Preshita's experimentation (ignore for now)
-                let newWindow = new Window("play", 2021, 6, 14, [12, 21], [12, 41], 0);
+                //let newWindow = new Window("play", 2021, 6, 14, [12, 21], [12, 41], 0);
                 //let newWindow = new Window(taskName, parseInt(start.substr(0, 4)), parseInt(start.substr(5, 7)), parseInt(start.substr(8, 10)), startArr, endArr, 0)
                 //newWindow.insertWindow();
             })

@@ -1,5 +1,6 @@
-//Class to create time objects to keep track of when tasks are scheduled and what times are free
-export class Time {
+// Contains the following classes: Time and Break
+
+class Time {
     /**
      * Constructor to create Time objects
      * @param {Number} hours     Hours of the time object (0-23)
@@ -120,17 +121,55 @@ export class Time {
 
 Time.prototype.timeRegistered = Math.round(Date.now()/10000) * 10000; //To the nearest minute (Need to double check calculation)
 
-// Testing
-/*
-let testTime = new Time(0, 1, 1, 1, 1, 0)
-let testTime2 = new Time(0, 1, 1, 1, 1, 0)
-let testTime3 = new Date(0, 1, 1, 1, 1, 0);
-let testTime4 = new Date(0, 1, 1, 1, 1, 0);
+class Break {
+    /**
+     * Calculates 
+     * @param {Time} startTime 
+     * @param {Time} endTime 
+     * @returns 
+     */
+    static calculateBreak(startTime, endTime) {
+        duration = Time.duration(startTime, endTime);
+        if (duration.getHours() >= 1) {
+            let totalMins = (duration.getHours() * 60) + duration.getMins();
+            let breakMins = totalMins / 6;
+            let remainder = breakMins % 5
+            if (remainder < 2.5) {
+                breakMins = breakMins - remainder;
+            } else {
+                breakMins = breakMins - remainder + 5;
+            }
+            return breakMins;
+        } else {
+            return 0;
+        }
+    }
 
-testTime2.freeSlot()
-testTime2.scheduleTask()
-testTime2.freeSlot()
-testTime2.removeTask()
-testTime2.freeSlot()
-*/
+    static calculateBreakFromDuration(duration) {
+        if (duration.getHours() >= 1) {
+            let totalMins = (duration.getHours() * 60) + duration.getMins();
+            let breakMins = totalMins / 6;
+            let remainder = breakMins % 5
+            if (remainder < 2.5) {
+                breakMins = breakMins - remainder;
+            } else {
+                breakMins = breakMins - remainder + 5;
+            }
+            return breakMins;
+        } else {
+            return 0;
+        }
+    }
 
+    static accumulateWorkTime(startTime, endTime) {
+        duration = Time.duration(startTime, endTime);
+        Break.prototype.accumulatedWorkTime += (duration.getHours() * 60) + duration.getMins();
+    }
+    
+    static clearAccumulatedWorkTime() {
+        Break.prototype.accumulatedWorkTime = 0;
+    }
+}
+
+Break.prototype.accumulatedWorkTime;
+Break.prototype.accumulatedBreakTime; //To be just in minutes

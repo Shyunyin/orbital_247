@@ -5,8 +5,18 @@
     <title>Main Schedule Page</title>
     <link rel="stylesheet" href="main_schedule.css" />
     <script type="text/javascript" type="module" src="main_schedule.js"></script>
+    <script type="text/javascript" type="module" src="Scheduling.js"></script>
+    <!-- Preshita added the following 3 lines bc they might be needed -->
+    <script type="text/javascript" type="module" src="Window.js"></script>
+    <script type="text/javascript" type="module" src="Routine_Final.js"></script>
+    <script type="text/javascript" type="module" src="CombinedTime_Final.js"></script>
     <!--Importing script for icons -->
     <!-- <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script> -->
+<!--
+    <script type="module">
+        import {Scheduling} from "./Scheduling.js";
+    </script>
+-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
@@ -90,7 +100,7 @@
     <input type="button" id="addTask" value="+" onclick="OpenPopupWindow()">
 
     <!--Link to pop up for add daily task page-->
-    <button id="generateSchedule" name="generateSchedule" onclick="clearPostit();printSchedule()">Generate Schedule now!</button>
+    <button id="generateSchedule" name="generateSchedule" onclick="clearPostit();printSchedule();">Generate Schedule now!</button>
 
     <!--Buttons to go to previous and next-->
     <!--Probably must create previous button using javascript as it only appears if schedule day != current day-->

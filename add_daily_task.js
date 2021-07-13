@@ -1,5 +1,6 @@
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
+
 function myFunction() {
     document.getElementById("followUpTask").classList.toggle("show");
   }
@@ -174,24 +175,37 @@ let catNum = 0;
 
 /*Integrating with javascript. Adding to Non fixed Task and Fixed Task*/
 function check() {
-var cat = document.getElementsByName("select");
-var time = new Date();
-let start = document.getElementById("startTime").value
-let end = document.getElementById("endTime").value
+  console.log("I enter the check() function");
+  var cat = document.getElementsByName("select");
+  var time = new Date();
+  let start = document.getElementById("startTime").value
+  let end = document.getElementById("endTime").value
 
-let startTime = new Time( //create new time object for start time in Window and individual mode objects
-  parseInt(start.substr(0, 2)),
-  parseInt(start.substr(3, 4))
-)
+  let startTime = new Time( //create new time object for start time in Window and individual mode objects
+    parseInt(start.substr(0, 2)),
+    parseInt(start.substr(3, 4))
+  );
 
-let endTime = new Time( //create new time object for end time in Window and individual mode objects
-  parseInt(end.substr(0, 2)),
-  parseInt(end.substr(3, 4))
-)
+  let endTime = new Time( //create new time object for end time in Window and individual mode objects
+    parseInt(end.substr(0, 2)),
+    parseInt(end.substr(3, 4))
+  );
 
-let hourDuration = parseInt(document.getElementById("hour").value); //get number
-let minDuration = parseInt(document.getElementById("minute").value); //get number
-  if (checkTime.checked) {
+  let hourDuration = parseInt(document.getElementById("hour").value); //get number
+  let minDuration = parseInt(document.getElementById("minute").value); //get number
+  if (document.getElementById("durationTask").checked == true) {
+    var Task = new NonFixedTask(
+      document.getElementById("taskName").value,
+      catNum, //category number
+      time.getMonth(), //month from 0-11
+      time.getDate(),
+      numOfSessions, //number for number of sessions
+      [hourDuration, minDuration], //not very sure about format!! currently both variables are numbers
+      document.getElementById("dropdownList").value //gives a string, will be empty if it is not a follow up task
+    )
+    Task.addTask();
+  }  else {
+    console.log("I come to add_daily_task.js");
     var Task = new FixedTask (
       document.getElementById("taskName").value,
       catNum, //category number
@@ -203,19 +217,6 @@ let minDuration = parseInt(document.getElementById("minute").value); //get numbe
     )
     Task.scheduleTask();
   }
-  if (checkDuration.checked) {
-    var Task = new NonFixedTask(
-      document.getElementById("taskName").value,
-      catNum, //category number
-      time.getMonth(), //month from 0-11
-      time.getDate(),
-      numOfSessions, //number for number of sessions
-      [hourDuration, minDuration], //not very sure about format!! currently both variables are numbers
-      document.getElementById("dropdownList").value //gives a string, will be empty if it is not a follow up task
-    )
-    Task.addTask();
-  }
-  scheduleTask(); //to schedule task
 }
 
 // function addContent(i) {

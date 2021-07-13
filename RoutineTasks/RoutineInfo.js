@@ -1,4 +1,6 @@
 // Class to contain the user's wake-up time, (estimated) sleep time and productivity time
+import {Time} from '../Time.js';
+
 
 //Importing relevant firebase libraries
 src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"
@@ -27,17 +29,17 @@ export class RoutineInfo {
      * @param {Time} productiveSlot Start time of productivity slot (Slot's duration will always be at 4 hours)
      */
     constructor(wakeUpTime, productiveSlot) {
-        this.wakeUpTime = wakeUpTime;
-        this.productiveSlot = productiveSlot;
+        RoutineInfo.wakeUpTime = wakeUpTime;
+        RoutineInfo.productiveSlot = productiveSlot;
         // Estimating sleep time (Assuming sleep time to be for 8 hours)
-        this.sleepTime = new Time((this.wakeUpTime.getHours() + 16) % 24, this.wakeUpTime.getMins());
+        RoutineInfo.sleepTime = new Time((RoutineInfo.wakeUpTime.getHours() + 16) % 24, RoutineInfo.wakeUpTime.getMins());
         //Updating the database
         cloudDB.collection("Users").doc(userName).collection("Routine Info").doc("Routine Info").set(
             {
-                wakeUpTimeStart: this.wakeUpTime,
-                wakeUpTimeEnd: this.sleepTime,
-                productiveSlotStart: this.productiveSlot,
-                productiveSlotEnd: Time.findEndTime(this.wakeUpTime, [4, 0]),
+                wakeUpTimeStart: RoutineInfo.wakeUpTime,
+                wakeUpTimeEnd: RoutineInfo.sleepTime,
+                productiveSlotStart: RoutineInfo.productiveSlot,
+                productiveSlotEnd: Time.findEndTime(RoutineInfo.productiveSlot, [4, 0]),
             }
         ).then(function(){
             console.log("Routine info for for user '" + userName + "' has been created.");
@@ -53,7 +55,7 @@ export class RoutineInfo {
      * @returns {Time} The wake-up time of a user
      */
     static getWakeUpTime() {
-        return this.wakeUpTime;
+        return RoutineInfo.wakeUpTime;
     }
 
     /**
@@ -61,7 +63,7 @@ export class RoutineInfo {
      * @returns {Number} The hours of the wake-up time of a user
      */
     static getWakeUpTimeHours() {
-        return this.wakeUpTime.getHours();
+        return RoutineInfo.wakeUpTime.getHours();
     }
 
     /**
@@ -69,7 +71,7 @@ export class RoutineInfo {
      * @returns {Number} The minutes of the wake-up time of a user
      */
     static getWakeUpTimeMins() {
-        return this.wakeUpTime.getMins();
+        return RoutineInfo.wakeUpTime.getMins();
     }
 
     /**
@@ -77,7 +79,7 @@ export class RoutineInfo {
      * @returns {Time} The sleep time of a user
      */
     static getSleepTime() {
-        return this.sleepTime;
+        return RoutineInfo.sleepTime;
     }
 
     /**
@@ -85,7 +87,7 @@ export class RoutineInfo {
      * @returns {Number} The hours of the estimated sleep time of a user
      */
     static getSleepTimeHours() {
-        return this.sleepTime[0];
+        return RoutineInfo.sleepTime.getHours();
     }
 
     /**
@@ -93,7 +95,7 @@ export class RoutineInfo {
      * @returns {Number} The minutes of the estimated sleep time of a user
      */
     static getSleepTimeMins() {
-        return this.sleepTime[1];
+        return RoutineInfo.sleepTime.getMins();
     }
 
     /**
@@ -101,7 +103,7 @@ export class RoutineInfo {
      * @returns {Time} The start time of a user's productivity slot
      */
     static getProductiveSlot() {
-        return this.productiveSlot;
+        return RoutineInfo.productiveSlot;
     }
 
     /**
@@ -109,7 +111,7 @@ export class RoutineInfo {
      * @returns {Time} The hours of the start time of a user's productivity slot
      */
      static getProductiveSlotHours() {
-        return this.productiveSlot.getHours();
+        return RoutineInfo.productiveSlot.getHours();
     }
 
     /**
@@ -117,7 +119,7 @@ export class RoutineInfo {
      * @returns {Time} The minutes of the start time of a user's productivity slot
      */
      static getProductiveSlotMins() {
-        return this.productiveSlot.getMins();
+        return RoutineInfo.productiveSlot.getMins();
     }
 }
 

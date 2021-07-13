@@ -9,6 +9,7 @@
 //TODO: Need to extend the initial window set up end timing according to the duration by which the tasks inserted by users exceed
 import {Window} from './Window.js';
 import {Break} from './Break.js';
+import {Time} from '../time.js';
 export class Scheduling {
     static generateSchedule(emptyWindowArr, fixedWindowArr, nonFixedWindowArr, nonFixedWindowPriorityArr) {
         this.emptyWindowArr = emptyWindowArr;

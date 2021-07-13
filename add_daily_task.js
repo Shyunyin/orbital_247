@@ -174,7 +174,13 @@ let catNum = 0;
 
 
 /*Integrating with javascript. Adding to Non fixed Task and Fixed Task*/
+var onceOnly = true; //For testing only
 function check() {
+  // For testing only. The initialise function is just supposed to be called once upon registering a user
+  if (onceOnly) {
+    onceOnly = false;
+    Window.initialise(); //Strictly for testing purposes only
+  }
   console.log("I enter the check() function");
   var cat = document.getElementsByName("select");
   let time = document.getElementById("dateInput").value;

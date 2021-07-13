@@ -522,15 +522,15 @@ class Window {
      * Updating the arrays with every passing day by removing the array containing windows of the previous day and adding an array with windows for a day that is 7 days from now 
      */
     static newDay() {
-        Window.prototype.occupiedCollection.splice(0, 1);
-        Window.prototype.occupiedCollection.push(Window.prototype.occupiedArr);
+        Window.occupiedCollection.splice(0, 1);
+        Window.occupiedCollection.push([]);
         let now = new Date();
         // Calculating the date of the newly added array
         let currDate = now.getDate();
         let currMonth = now.getMonth();
         let currYear = now.getYear();
-        if (currDate + 7 > Time.daysInMonth(currMonth, currYear)) {
-            currDate = currDate + 7 - Time.daysInMonth(currMonth, currYear);
+        if (currDate + 6 > Time.daysInMonth(currMonth, currYear)) {
+            currDate = currDate + 6 - Time.daysInMonth(currMonth, currYear);
             currMonth++;
             if (currMonth > 11) {
                 currMonth = 0;
@@ -539,18 +539,41 @@ class Window {
         }
         let newlyAddedDate = [new Date(currYear, currMonth, currDate, 0, 0).getTime(), new Date(currYear, currMonth, currDate, 23, 59).getTime()];
         let index = 0;
-        let currArr = Window.prototype.fixedFutureArr;
+        let currArr = Window.fixedFutureArr;
         // Identifying fixed tasks that were scheduled long time ago and are to take place in the current week. These tasks are then added to the relevant array and removed from the fixedFutureArr.
-        while (newlyAddedDate[0] <= currArr[index].getStartTimeInMs && newlyAddedDate[1] >= currArr[index].getEndTimeInMs) {
-            Window.prototype.occupiedCollection[7].push(currArr[index]);
-            currArr.splice(index, 1);
+        while (newlyAddedDate[0] <= currArr[index].getStartTimeInMs() && newlyAddedDate[1] >= currArr[index].getEndTimeInMs()) {
+            //Window.occupiedCollection[7].push(currArr.splice(index, 1)[0]);
+            currArr[index].scheduleTask();
+            index ++;
         }
+        currArr.splice(0, index);
+        index = 0;
+
+        currArr = Window.nonFixedFutureArr;
+        Window.nonFixedCollection.splice(0, 1);
+        Window.emptyCollection.push([[] , []]);
+        while (newlyAddedDate[0] <= currArr[index].getStartTimeInMs() && newlyAddedDate[1] >= currArr[index].getEndTimeInMs()) {
+            //TODO: How to add the non-fixed tasks into the right array?
+            if (currArr[index])
+            Window.occupiedCollection[7].push(currArr.splice(index, 1)[0]);
+            index ++;
+        }
+
         
         // Updating the empty windows in a similar manner
         Window.prototype.emptyCollection.splice(0, 1);
-        Window.prototype.emptyCollection.push(Window.prototype.emptyArr);
-        Window.prototype.nonFixedCollection.splice(0, 1);
-        Window.prototype.emptyCollection.push([Window.prototype.nonFixedArr , Window.prototype.nonFixedPriorityArr]);
+        if (startTime.getHours() > endTime.getHours()) {
+            let newWindow1 = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), new Time(0, 0), endTime, 0);
+            let newWindow2 = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, new Time(23, 59), 0);
+
+            Window.emptyCollection[i].push(newWindow1);
+            Window.emptyCollection[i].push(newWindow2);
+        } else {
+            let newWindow = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, endTime, 0);
+
+            Window.emptyCollection[i].push(newWindow);
+        }
+        
     }
 
     /**

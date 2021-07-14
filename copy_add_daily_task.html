@@ -123,16 +123,13 @@
   
         <!--Code for dropdown menu linked to javascript, database of other tasknames-->
     <div id="A" style="display:none">
-      <!--Container to contain the dynamically added elements-->
+        <!--Container to contain the dynamically added elements-->
       <div>
         <select id="dropdownList" oninput="Update(this.value, 'followname')">
+          <option value="" selected disabled hidden>Select a task</option>
         </select>
-      </div>  
-      <!--Before and after-->
-      <select name="sequence" id="sequence" oninput="Update(this.value, 'followseq')">
-        <option value="before">Before</option>
-        <option value="after">After</option>
-      </select>
+      </div>
+      <h4 id="sequence">(Selected task will be scheduled after the created task)</h4>
     </div>
   
     <div id="B" style="display:none">
@@ -251,45 +248,47 @@
                     categoryNum = doc.data().taskCategory;
                     startArr = doc.data().startTime;
                     endArr = doc.data().endTime;
-                    startTime = toString(startArr[0]) + ":" + toString(startArr[1]);
-                    endTime = toString(endArr[0]) + ":" + toString(endArr[1]);
-                    console.log(startTime); //debugging
-                    console.log(endTime); //debugging
+                    startTime = startArr[0] + ":" + startArr[1];
+                    endTime = endArr[0] + ":" + endArr[1];
+                    // console.log(startArr); //debugging
+                    // console.log(endArr); //debugging
+                    // console.log(startTime); //debugging
+                    // console.log(endTime); //debugging
                     dateInput = doc.data().date;
                     followTask = doc.data().followTask;
                     followSequence = doc.data().sequenceLabel;
                     hour = doc.data().durationHour;
                     minute = doc.data().durationMinute;
                     numSessions = doc.data().numSessions;
+
+                    /*For the setting of values to fill in the fields*/
+                    document.getElementById("taskName").value = taskPlusName; 
+                    document.getElementById("startTime").value = startTime;
+                    document.getElementById("endTime").value = endTime; 
+                    document.getElementById("dateInput").value = dateInput;
+                    var option = document.createElement("option"); //For dropdown list
+                    option.classList.add("selectedTask");
+                    option.value=followTask;
+                    option.setAttribute("selected", "selected");
+                    var dropdown = document.getElementById("dropdownList");
+                    dropdown.appendChild(option); 
+                    var ele = document.createElement("option"); //For sequence
+                    ele.classList.add("seq");
+                    ele.value=followSequence;
+                    ele.setAttribute("selected", "selected");
+                    var parent = document.getElementById("sequence");
+                    parent.prepend(ele);
+                    document.getElementById("hour").value = hour;
+                    document.getElementById("minute").value = minute;
+                    console.log(taskPlusName +", " +categoryNum+", "+startTime+", "+endTime+", "+dateInput+", "+followTask+", "+followSequence+", "+hour+", "+minute+", "+numSessions);
                 } else {
                     console.log("No such document!");
                 }
-            }).catch((error) => {
+              }).catch((error) => {
                 console.log("Error getting document", error);
             });
           }
 
-            console.log(taskPlusName +", " +categoryNum+", "+startTime+", "+endTime+", "+dateInput+", "+followTask+", "+followSequence+", "+hour+", "+minute+", "+numSessions);
-
-            /*Writing to the inputs using the variables found above*/
-            document.getElementById("taskName").value = taskPlusName; 
-            document.getElementById("startTime").value = startTime;
-            document.getElementById("endTime").value = endTime; 
-            document.getElementById("dateInput").value = dateInput;
-            var option = document.createElement("option"); //For dropdown list
-            option.classList.add("selectedTask");
-            option.value=followTask;
-            option.setAttribute("selected", "selected");
-            var dropdown = document.getElementById("dropdownList");
-            dropdown.appendChild(option); 
-            var ele = document.createElement("option"); //For sequence
-            ele.classList.add("seq");
-            ele.value=followSequence;
-            ele.setAttribute("selected", "selected");
-            var parent = document.getElementById("sequence");
-            parent.prepend(ele);
-            document.getElementById("hour").value = hour;
-            document.getElementById("minute").value = minute;
 
         //--------------------- Updating data to database using update------------------//
          //--------------------- Deleting data from database ------------------//

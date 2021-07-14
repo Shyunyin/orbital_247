@@ -368,7 +368,7 @@ function postitActions(taskName) { //only edit and delete
 /*Open popup and close*/
 function OpenPopupWindow() {   
     var url = "http://127.0.0.1:5501/add_daily_task.html"; 
-    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=750, height=700, toolbar=1, resizable=0');
+    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=770, height=700, toolbar=1, resizable=0');
     myRef.focus();
     // console.log('window opened!');
     myRef.onunload = function(){

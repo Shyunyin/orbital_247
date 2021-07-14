@@ -303,21 +303,12 @@ nav {
 .no {
   font-size: 18px;
 }
+
 #sequence {
   font-family: Signika Negative, sans-serif;
   font-size: 15px;
-  background-color: #96d6ed;
-  border-radius: 5px;
-  width: 110px;
-  height: 30px;
-  margin-left: 400px;
-  position: absolute;
-  top: 80px;
-  border-width: 2px;
-  border-color: black;
-}
-#sequence:hover {
-  background-color: #a1e6ff;
+  margin-left: 360px;
+  margin-top: -18px;
 }
 
 #dropdownList {

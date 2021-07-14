@@ -160,10 +160,10 @@ class DailyTask extends RoutineTask {
      * To add a daily task to the user's schedule
      */
     scheduleTask() { 
-        for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
-            for (m = 0; m < 12; m++) {
-                for (d = 1; d <= Time.daysInMonth(m, y); d++) {
-                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
+        for (let y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
+            for (let m = 0; m < 12; m++) {
+                for (let d = 1; d <= Time.daysInMonth(m, y); d++) {
+                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1);
                     if (newTask.duringSleep()) {
                         //TODO: window.alert("Do you really want to schedule tasks during your sleep time?"); Basically if yes, continue. If no, return.
                     }
@@ -176,10 +176,10 @@ class DailyTask extends RoutineTask {
     }
 
     deleteTask() {
-        for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
-            for (m = 0; m < 12; m++) {
-                for (d = 1; d <= Time.daysInMonth(m, y); d++) {
-                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
+        for (let y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
+            for (let m = 0; m < 12; m++) {
+                for (let d = 1; d <= Time.daysInMonth(m, y); d++) {
+                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1);
                     if (!newTask.isPast()) {
                         newTask.removeWindow();
                     }
@@ -227,10 +227,10 @@ class WeeklyTask extends RoutineTask {
      * To add a weekly task to the user's schedule
      */
     scheduleTask() { 
-        for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
-            for (m = 0; m < 12; m++) {
-                for (d = WeeklyTask.startingDate(y, m, this.day); d <= Time.daysInMonth(m, y); d += 7) {
-                    let newTask = new Window(this,taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
+        for (let y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
+            for (let m = 0; m < 12; m++) {
+                for (let d = WeeklyTask.startingDate(y, m, this.day); d <= Time.daysInMonth(m, y); d += 7) {
+                    let newTask = new Window(this,taskName, y, m, d, this.startTime, this.endTime, 1);
                     if (newTask.duringSleep()) {
                         //TODO: window.alert("Do you really want to schedule tasks during your sleep time?"); Basically if yes, continue. If no, return.
                     }
@@ -244,10 +244,10 @@ class WeeklyTask extends RoutineTask {
     }
 
     deleteTask() {
-        for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
-            for (m = 0; m < 12; m++) {
-                for (d = WeeklyTask.startingDate(y, m, this.day); d <= Time.daysInMonth(m, y); d += 7) {
-                    let newTask = new Window(this,taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
+        for (let y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
+            for (let m = 0; m < 12; m++) {
+                for (let d = WeeklyTask.startingDate(y, m, this.day); d <= Time.daysInMonth(m, y); d += 7) {
+                    let newTask = new Window(this,taskName, y, m, d, this.startTime, this.endTime, 1);
                     // Only deleting tasks from the present and the future
                     if (!newTime.isPast()) {
                         newTask.removeWindow();
@@ -343,10 +343,10 @@ class BiweeklyTask extends RoutineTask {
      */
     scheduleTask() { 
         let previousDate = this.previousDate();
-        for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
-            for (m = 0; m < 12; m++) {
-                for (d = BiweeklyTask.startingDate(y, m, this.day, previousDate); d <= Time.daysInMonth(m, y); d += 14) {
-                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
+        for (let y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
+            for (let m = 0; m < 12; m++) {
+                for (let d = BiweeklyTask.startingDate(y, m, this.day, previousDate); d <= Time.daysInMonth(m, y); d += 14) {
+                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1);
                     if (newTask.duringSleep()) {
                         //TODO: window.alert("Do you really want to schedule tasks during your sleep time?"); Basically if yes, continue. If no, return.
                     }
@@ -362,10 +362,10 @@ class BiweeklyTask extends RoutineTask {
 
     deleteTask() {
         let previousDate = this.previousDate();
-        for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
-            for (m = 0; m < 12; m++) {
-                for (d = BiweeklyTask.startingDate(y, m, this.day, previousDate); d <= Time.daysInMonth(m, y); d += 14) {
-                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
+        for (let y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
+            for (let m = 0; m < 12; m++) {
+                for (let d = BiweeklyTask.startingDate(y, m, this.day, previousDate); d <= Time.daysInMonth(m, y); d += 14) {
+                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1);
                     // Only deleting tasks from the present and the future
                     if (!newTask.isPast()) {
                         newTask.removeWindow();
@@ -398,10 +398,10 @@ class MonthlyTask extends RoutineTask {
      * To add a monthly task to the user's schedule
      */
     scheduleTask() {
-        for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
-            for (m = 0; m < 12; m++) {
+        for (let y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
+            for (let m = 0; m < 12; m++) {
                 if (this.date <= Time.daysInMonth(m, y)) {
-                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
+                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1);
                     if (newTask.duringSleep()) {
                         //TODO: window.alert("Do you really want to schedule tasks during your sleep time?"); Basically if yes, continue. If no, return.
                     }
@@ -414,10 +414,10 @@ class MonthlyTask extends RoutineTask {
     }
 
     deleteTask() {
-        for (y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
-            for (m = 0; m < 12; m++) {
+        for (let y = new Date().getFullYear(); y < new Date().getFullYear() + 100; y++) {
+            for (let m = 0; m < 12; m++) {
                 if (this.date <= Time.daysInMonth(m, y)) {
-                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1, null, null);
+                    let newTask = new Window(this.taskName, y, m, d, this.startTime, this.endTime, 1);
                     if (!newTime.isPast()) {
                         newTask.removeWindow();
                     }

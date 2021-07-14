@@ -75,15 +75,12 @@ input[type="text"]:hover {
 }
 #work:hover {
   background-color: #fedcce;
-  transition-duration: 0.3s;
 }
 #exercise:hover {
   background-color: #fedcce;
-  transition-duration: 0.3s;
 }
 #misc:hover {
   background-color: #fedcce;
-  transition-duration: 0.3s;
 }
 
 /*For date section*/
@@ -95,11 +92,16 @@ input[type="text"]:hover {
   margin-left: 67px;
 }
 #dateInput {
+  background-color: #96d6ed;
   border-radius: 5px; /*make button rounded*/
   border-width: 2px;
   border-color: black;
   font-weight: bold;
   text-align: center;
+}
+
+#dateInput:hover {
+  background-color: #a1e6ff;
 }
 
 /*For number of sections section*/
@@ -194,6 +196,9 @@ nav {
   height: 30px;
   margin-left: 330px;
   margin-top: 150px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
 }
 #doneTimeBtn {
   font-family: "Signika Negative", sans-serif;
@@ -206,6 +211,9 @@ nav {
   height: 30px;
   margin-left: 15px;
   margin-top: 150px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
 }
 #doneDurationBtn:hover {
   background-color: #52c4c4;
@@ -222,6 +230,9 @@ nav {
   border-color: black;
   width: 50px;
 }
+#hour:hover {
+  background-color: #ffffcc;
+}
 #minute {
   font-size: large;
   font-family: Signika Negative, sans-serif;
@@ -230,6 +241,9 @@ nav {
   border-width: 2px;
   border-color: black;
   width: 50px;
+}
+#minute:hover {
+  background-color: #ffffcc;
 }
 #counter {
   font-family: "Signika Negative", sans-serif;
@@ -260,7 +274,10 @@ nav {
   top: 40px;
   height: 25px;
   text-align: center;
-  z-index: 1; /*to bring to front of page*/
+  z-index: 99; /*to bring to front of page*/
+}
+#startTime:hover {
+  background-color: #ffffcc;
 }
 .endTime {
   font-family: Signika Negative, sans-serif;
@@ -278,6 +295,9 @@ nav {
   height: 25px;
   text-align: center;
   z-index: 1; /*to bring to front of page*/
+}
+#endTime:hover {
+  background-color: #ffffcc;
 }
 
 /*Follow another task*/
@@ -306,7 +326,9 @@ nav {
 #sequence {
   font-family: Signika Negative, sans-serif;
   font-size: 15px;
-  background-color: #96d6ed;
+  margin-left: 370px;
+  margin-top: -18px;
+  /* background-color: #96d6ed;
   border-radius: 5px;
   width: 110px;
   height: 30px;
@@ -314,11 +336,11 @@ nav {
   position: absolute;
   top: 80px;
   border-width: 2px;
-  border-color: black;
+  border-color: black; */
 }
-#sequence:hover {
+/* #sequence:hover {
   background-color: #a1e6ff;
-}
+} */
 
 #dropdownList {
   font-family: Signika Negative, sans-serif;
@@ -380,15 +402,12 @@ nav {
 }
 #delete:hover {
   background-color: #fedcce;
-  transition-duration: 0.3s;
 }
 #add:hover {
   background-color: #fedcce;
-  transition-duration: 0.3s;
 }
 #done:hover {
   background-color: #fedcce;
-  transition-duration: 0.3s;
 }
 
 /*For checkboxes*/

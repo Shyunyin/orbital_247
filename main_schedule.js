@@ -159,58 +159,74 @@ function clickDelete() {
 }
 
 /*Trial array just to check if printing on schedule is working*/
-var arr = ["08:00-09:00", "Wake up + Breakfast", "09:00-10:00", "Do homework"];
+var arr = ["08:00-09:00", "Wake up + Breakfast", "09:00-10:00", "Do homework", "10:00-11:00", "Prepare lunch", ];
+//"09:00-10:00", "Do homework" "11:00-12:00", "early lunch"
 
 /*Trial code to print, for 12 July use the printSchedule(arr) function below*/
 function printSchedule() {
+       /*To refresh schedule when generate button is clicked*/
+       var block = document.getElementById("schedule");
+       var blockRefresh = document.createElement("div");
+       blockRefresh.id = "schedule";
+       blockRefresh.innerHTML="";
+       block.replaceWith(blockRefresh)
+            /*Start printing of schedule*/
             console.log("Schedule is printed"); //debugging: function is accessed
-            let block = document.getElementById("schedule");
-            let maindivision = document.createElement("div"); //will contain both timedivision and namedivision
-            maindivision.classList.add("maindiv"); 
-            maindivision.style.float="left";
-            block.appendChild(maindivision); //append a new main division
-            let timedivision = document.createElement("div"); //creating the new division to contain item in schedule
-            timedivision.classList.add("container1"); //classname of each item 
-            maindivision.appendChild(timedivision); //appending timedivision to maindivision
-            //can continue adding css for division
-            /*Below will be what is appended to division: Time and itemName*/
-            /*Time*/
-            let itemTime = document.createElement("input");
-            itemTime.classList.add("time"); //time with class name time
-            itemTime.setAttribute("readonly", "readonly"); //set to readonly
-            itemTime.value = arr[0];
-            itemTime.style.fontFamily = "'Signika Negative', sans-serif";
-            itemTime.style.fontSize = "large";
-            itemTime.style.position = "relative";
-            itemTime.style.zIndex = "3";
-            itemTime.style.backgroundColor = "#96d6ed";
-            itemTime.style.float="left";
-            itemTime.style.border="none";
-            itemTime.style.marginTop = "15px";
-            itemTime.style.marginLeft = "10px";
-            //can continue adding css for the time
-            timedivision.appendChild(itemTime); //adding the time part of the item
-            /*itemName*/
-            let namedivision = document.createElement("div"); //creating the new division to contain item in schedule
-            namedivision.classList.add("container2"); //classname of each item 
-            namedivision.style.borderColor = "black";
-            namedivision.style.position="relative";
-            namedivision.style.display="inline-block";
-            maindivision.appendChild(namedivision); //appending namedivision to maindivision
-            let itemName = document.createElement("button");
-            itemName.classList.add("itemName"); //class: itemName
-            itemName.innerHTML = arr[1];
-            itemName.style.fontFamily = "'Signika Negative', sans-serif";
-            itemName.style.fontSize = "large";
-            itemName.style.position = "absolute";
-            itemName.style.zIndex = "3";
-            itemName.style.cursor="pointer";
-            itemName.style.border = "none";
-            itemName.style.backgroundColor="#96d6ed";
-            itemName.style.width = "200px";
-            itemName.style.marginLeft= "50px";
-            //can continue adding css for itemName
-            namedivision.appendChild(itemName); //adding the name part of the item
+            for (let i = 0; i < arr.length; i++) {    
+                let schedule = document.getElementById("schedule");
+                let maindivision = document.createElement("div"); //will contain both timedivision and namedivision
+                maindivision.classList.add("maindiv"); 
+                maindivision.style.float="left";
+                maindivision.style.display="inline-block";
+                schedule.appendChild(maindivision); //append a new main division
+                let timedivision = document.createElement("div"); //creating the new division to contain item in schedule
+                timedivision.classList.add("container1"); //classname of each item 
+                maindivision.appendChild(timedivision); //appending timedivision to maindivision
+                //can continue adding css for division
+                /*Below will be what is appended to division: Time and itemName*/
+                /*Time*/
+                if (i % 2 === 0) { //even number for time
+                    let itemTime = document.createElement("input");
+                    itemTime.classList.add("time"); //time with class name time
+                    itemTime.setAttribute("readonly", "readonly"); //set to readonly
+                    itemTime.value = arr[i];
+                    itemTime.style.fontFamily = "'Signika Negative', sans-serif";
+                    itemTime.style.fontSize = "large";
+                    itemTime.style.position = "relative";
+                    itemTime.style.zIndex = "3";
+                    itemTime.style.backgroundColor = "#96d6ed";
+                    itemTime.style.border="none";
+                    itemTime.style.marginTop = "10px";
+                    itemTime.style.marginLeft = "10px";
+                    //can continue adding css for the time
+                    timedivision.appendChild(itemTime); //adding the time part of the item
+                } else { //odd number for name
+                    /*itemName*/
+                    let namedivision = document.createElement("div"); //creating the new division to contain item in schedule
+                    namedivision.classList.add("container2"); //classname of each item 
+                    namedivision.style.borderColor = "black";
+                    namedivision.style.position="relative";
+                    namedivision.style.display="inline-block";
+                    maindivision.appendChild(namedivision); //appending namedivision to maindivision
+                    let itemName = document.createElement("button");
+                    itemName.classList.add("itemName"); //class: itemName
+                    itemName.innerHTML = arr[i];
+                    itemName.addEventListener('click', tempFixed);
+                    itemName.style.fontFamily = "'Signika Negative', sans-serif";
+                    itemName.style.fontSize = "large";
+                    itemName.style.position = "absolute";
+                    itemName.style.zIndex = "3";
+                    itemName.style.cursor="pointer";
+                    itemName.style.border = "none";
+                    itemName.style.backgroundColor="#96d6ed";
+                    itemName.style.width = "200px";       
+                    itemName.style.textAlign="center";             
+                    itemName.style.marginLeft= "200px";
+                    itemName.style.marginTop="-40px";
+                    namedivision.appendChild(itemName); //adding the name part of the item
+                }
+            } 
+ 
     } 
 
    
@@ -220,16 +236,23 @@ function printSchedule() {
  * MUST SPLIT INTO FIXED AND NON-FIXED TASK CREATION: BOTH FIXED AND NON-FIXED BUTTON
  */
 // function printSchedule(arr) {
+    /*To refresh schedule when generate button is clicked*/
+    // var block = document.getElementById("schedule");
+    // var blockRefresh = document.createElement("div");
+    // blockRefresh.id = "schedule";
+    // blockRefresh.innerHTML="";
+    // block.replaceWith(blockRefresh)
 //     for (let i=0; i < arr.length; i++) {
 //          console.log("Schedule is printed"); //debugging: function is accessed
-// let block = document.getElementById("schedule");
-// let maindivision = document.createElement("div"); //will contain both timedivision and namedivision
-// maindivision.classList.add("maindiv"); 
-// maindivision.style.float="left";
-// block.appendChild(maindivision); //append a new main division
-// let timedivision = document.createElement("div"); //creating the new division to contain item in schedule
-// timedivision.classList.add("container1"); //classname of each item 
-// maindivision.appendChild(timedivision); //appending timedivision to maindivision
+//      let block = document.getElementById("schedule");
+//      let maindivision = document.createElement("div"); //will contain both timedivision and namedivision
+//      maindivision.classList.add("maindiv"); 
+//      maindivision.style.float="left";
+//      maindivision.style.display="inline-block";
+//      block.appendChild(maindivision); //append a new main division
+//      let timedivision = document.createElement("div"); //creating the new division to contain item in schedule
+//      timedivision.classList.add("container1"); //classname of each item 
+//      maindivision.appendChild(timedivision); //appending timedivision to maindivision
 // //can continue adding css for division
 // /*Below will be what is appended to division: Time and itemName*/
 // /*Time*/
@@ -244,7 +267,7 @@ function printSchedule() {
 //     itemTime.style.backgroundColor = "#96d6ed";
 //     itemTime.style.float="left";
 //     itemTime.style.border="none";
-//     itemTime.style.marginTop = "15px";
+//     itemTime.style.marginTop = "10px";
 //     itemTime.style.marginLeft = "10px";
 //     //can continue adding css for the time
 //     timedivision.appendChild(itemTime); //adding the time part of the item
@@ -266,7 +289,9 @@ function printSchedule() {
 //     itemName.style.border = "none";
 //     itemName.style.backgroundColor="#96d6ed";
 //     itemName.style.width = "200px";
-//     itemName.style.marginLeft= "50px";
+//     itemName.style.textAlign="center";             
+//     itemName.style.marginLeft= "200px";
+//     itemName.style.marginTop="-40px";
 //     //can continue adding css for itemName
 //     namedivision.appendChild(itemName); //adding the name part of the item
 //     } 
@@ -352,18 +377,18 @@ function tempNonFixed() { //all 4 actions
 }
 
 /*To add postit task select icons*/
-function postitActions(taskName) { //only edit and delete
-    //parameter taskName is to reference to which task got clicked in the javascript
-    var currentNode = document.getElementById("iconActions");
-    var newNode = document.createElement("div");
-    //Add ID and content
-    newNode.id = "iconActions";
-    newNode.innerHTML = 
-    '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>' +
-    '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
-    //Replacing current iconsActions node w new iconActions node
-    currentNode.replaceWith(newNode);
-}
+// function postitActions(taskName) { //only edit and delete
+//     //parameter taskName is to reference to which task got clicked in the javascript
+//     var currentNode = document.getElementById("iconActions");
+//     var newNode = document.createElement("div");
+//     //Add ID and content
+//     newNode.id = "iconActions";
+//     newNode.innerHTML = 
+//     '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>' +
+//     '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
+//     //Replacing current iconsActions node w new iconActions node
+//     currentNode.replaceWith(newNode);
+// }
 
 /*Open popup and close*/
 function OpenPopupWindow() {   

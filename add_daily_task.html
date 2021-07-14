@@ -150,7 +150,7 @@
     <div class="btn-group-actions">
       <li><input type="button" id="delete" value="Delete task" onclick="DeleteTask()"></li>
       <!-- <li><button id="add" >Add another task</button></li> -->
-      <li><input type="button" id="done" value="Submit" onclick="check()"></li>
+      <li><input type="button" id="done" value="Submit" onclick="frontEndSubmit();check()"></li>
     </div>
   </fieldset>
 
@@ -286,7 +286,7 @@
         /*Function to get current date in format*/
         function frontEndSubmit() { 
           Add_Doc_WithID();
-          // console.log("Task has been added");
+          console.log("Task has been added");
           alert("Daily task has been successfully saved! Please press the X button to close the window!");
           var myFieldset = document.getElementById("myFieldset");
           myFieldset.disabled = true;

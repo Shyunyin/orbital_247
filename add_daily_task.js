@@ -234,13 +234,6 @@ function check() {
     )
     Task.scheduleTask();
   }
-
-  Add_Doc_WithID();
-  // console.log("Task has been added");
-  alert("Daily task has been successfully saved! Please press the X button to close the window!");
-  var myFieldset = document.getElementById("myFieldset");
-  myFieldset.disabled = true;
-
 }
 
 // function addContent(i) {

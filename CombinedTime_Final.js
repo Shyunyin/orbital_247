@@ -119,7 +119,8 @@ class Time {
 
 }
 
-Time.prototype.timeRegistered = Math.round(Date.now()/10000) * 10000; //To the nearest minute (Need to double check calculation)
+//TODO: Should this be part of initialisation of something?
+Time.timeRegistered = Math.round(Date.now()/10000) * 10000; //To the nearest minute (Need to double check calculation)
 
 class Break {
     /**
@@ -146,8 +147,8 @@ class Break {
     }
 
     static calculateBreakFromDuration(duration) {
-        if (duration.getHours() >= 1) {
-            let totalMins = (duration.getHours() * 60) + duration.getMins();
+        if (duration[0] >= 1) {
+            let totalMins = (duration[0] * 60) + duration[1];
             let breakMins = totalMins / 6;
             let remainder = breakMins % 5
             if (remainder < 2.5) {
@@ -163,16 +164,17 @@ class Break {
 
     static accumulateWorkTime(startTime, endTime) {
         duration = Time.duration(startTime, endTime);
-        Break.prototype.accumulatedWorkTime += (duration.getHours() * 60) + duration.getMins();
+        Break.accumulatedWorkTime += (duration.getHours() * 60) + duration.getMins();
     }
     
     static clearAccumulatedWorkTime() {
-        Break.prototype.accumulatedWorkTime = 0;
+        Break.accumulatedWorkTime = 0;
     }
 }
 
-Break.prototype.accumulatedWorkTime;
-Break.prototype.accumulatedBreakTime; //To be just in minutes
+//TODO: Should this be present for each day? So in an array for the 7 days
+Break.accumulatedWorkTime;
+Break.accumulatedBreakTime; //To be just in minutes
 
 
     // class Window {

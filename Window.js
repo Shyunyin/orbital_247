@@ -41,7 +41,7 @@ class Window {
      * @param {Number} date Date of the window
      * @param {Time} startTime Time at which the window starts
      * @param {Time} endTime Time at which the window ends
-     * @param {Number} type 0 - Empty, 1 - A fixed task, 2 - A non-fixed task, 3 - A non-fixed priority task
+     * @param {Number} type 0 - Empty, 1 - A fixed task/Break, 2 - A non-fixed task, 3 - A non-fixed priority task
      */
     constructor(taskName, year, month, date, startTime, endTime, type) {
         this.taskName = taskName;

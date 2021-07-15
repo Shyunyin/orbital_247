@@ -10,6 +10,9 @@
     <script type="text/javascript" type="module" src="Window.js"></script>
     <script type="text/javascript" type="module" src="Routine_Final.js"></script>
     <script type="text/javascript" type="module" src="CombinedTime_Final.js"></script>
+    <!-- <script type = "text/javascript" type="module" src="initialise.js"></script> -->
+    <!--<script type="text/javascript" type="module" src="combine_add_daily_main.js"></script>-->
+
     <!--Importing script for icons -->
     <!-- <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script> -->
 <!--
@@ -85,7 +88,7 @@
     <input type="button" id="addTask" value="+" onclick="OpenPopupWindow()">
 
     <!--Link to pop up for add daily task page-->
-    <button id="generateSchedule" name="generateSchedule" onclick="clearPostit();printSchedule();">Generate Schedule now!</button>
+    <button id="generateSchedule" name="generateSchedule" onclick="clearPostit();printSchedule(generate());">Generate Schedule now!</button>
 
     <!--Buttons to go to previous and next-->
     <!--Probably must create previous button using javascript as it only appears if schedule day != current day-->

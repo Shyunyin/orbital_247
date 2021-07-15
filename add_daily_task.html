@@ -2,10 +2,14 @@
 <html>
   <head>
     <title>Add daily task</title>
+    <!--<script type = "text/javascript" type="module" src="main_schedule.js"></script>-->
     <script type = "text/javascript" type="module" src="add_daily_task.js"></script>
+    <!--<script type = "text/javascript" type="module" src="combine_add_daily_main.js"></script>-->
     <script type = "text/javascript" type="module" src="Time.js"></script>
     <script type = "text/javascript" type="module" src="OneTimeTasks_Final.js"></script>
     <script type = "text/javascript" type="module" src="Window.js"></script>
+    <!--<script type = "text/javascript" type="module" src="main_schedule.js"></script>-->
+    <!--<script type = "text/javascript" type="module" src="initialise.js"></script>-->
     <!--<script type = "text/javascript" type="module" src="CombinedTime_Final.js"></script>-->
     <!--
     <script type = "module">
@@ -333,6 +337,28 @@
           });
         }
 
+
+        var array = [];
+        window.onload = function getFromDatabase() {
+          cloudDB.collection("test")
+          //cloudDB.collection("allArrays").doc("occupiedCollection").collection("Day 0")
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              var task = new Window (
+                doc.data().taskName,
+                doc.data().year,
+                doc.data().month,
+                doc.data().date,
+                doc.data().startTime,
+                doc.data().endTime,
+                doc.data().type
+              )
+              array.push(task);
+              console.log(array);
+            })
+        });
+        }
          //--------------------- Deleting data from database ------------------//
         //  function DeleteTask(){ //only can test when edit function is out
         //    cloudDB.collection("OneTimeTasks").doc(nameOfTask).delete()

@@ -381,9 +381,14 @@ class Window {
                 console.error("Cannot schedule empty window as it clashes with an existing empty window. Please adjust the start and end times of other windows accordingly.");
             }
         } else { // To insert tasks for the current day and furture days
+            console.log(Window.occupiedCollection);
             let currArr = Window.fixedFutureArr; // For tasks to be schedule beyond 7 days from now
             if (this.type == 1 && index < 7) { 
+                console.log("I change curr arr");
+                console.log(index);
+                //currArr = localStorage.getItem("Window.occupiedCollection");
                 currArr = Window.occupiedCollection[index];
+                console.log(currArr);
             }
             // Doing checks to ensure that task does not clash with any existing fixed, future tasks.
             let newIndex = 0;
@@ -403,6 +408,7 @@ class Window {
                 console.error("Cannot schedule task as it clashes with an existing task!");
                 window.alert("Cannot schedule task as it clashes with an existing task!");
             }
+            //console.log(Window.occupiedCollection[0]);
             let removedBreak = new Window("Empty", this.year, this.month, this.date, this.startTime, this.endTime, 0);
             return removedBreak.removeWindow();
         }
@@ -579,6 +585,12 @@ class Window {
         
     }
 
+    static emptyCollection = [];
+    static occupiedCollection = [];
+    static nonFixedCollection = [];
+    static fixedFutureArr = [];
+    static nonFixedFutureArr = [];
+
     /**
      * To be called when users first register
      */
@@ -594,17 +606,21 @@ class Window {
         for (let i = 0; i < 7; i++) {
             Window.emptyCollection.push([]);
             Window.occupiedCollection.push([]);
+            //let occupiedArr = localStorage.getItem("Window.occupiedCollection");
+            //console.log("occupiedArr is " + occupiedArr);
+            // occupiedArr.push([]);
+            console.log("i have pushed");
             Window.nonFixedCollection.push([[], []]); //0 is priority array, 1 is the normal array
-
+    
             if (startTime.getHours() > endTime.getHours()) {
                 let newWindow1 = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), new Time(0, 0), endTime, 0);
                 let newWindow2 = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, new Time(23, 59), 0);
-
+    
                 Window.emptyCollection[i].push(newWindow1);
                 Window.emptyCollection[i].push(newWindow2);
             } else {
                 let newWindow = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, endTime, 0);
-
+    
                 Window.emptyCollection[i].push(newWindow);
             }
         }
@@ -614,9 +630,12 @@ class Window {
         console.log("emptyCollection is now " + Window.emptyCollection);
         console.log("nonFixedCollection is now " + Window.nonFixedCollection);
         console.log("fixedFutureArr is now " + Window.fixedFutureArr);
+        */
         for (let j = 0; j < Window.occupiedCollection.length; j ++) {
+            console.log(Window.occupiedCollection[j]);
             console.log("occupiedCollection at index " + j + " is " + Window.occupiedCollection[j]);
         }
+        /*
         for (let j = 0; j < Window.emptyCollection.length; j ++) {
             console.log("emptyCollection at index " + j + " is " + Window.emptyCollection[j]);
         }
@@ -628,14 +647,15 @@ class Window {
         }
         */
     }
+    
 }
 
 // TEMPORARY ARRAYS TO CHECK IF WINDOW FUNCTIONS ARE WORKING AS THEY SHOULD
-Window.occupiedCollection = []; // Contains 7 'Window.prototype.occupiedArr' 
-Window.fixedFutureArr = []; // Represents fixed tasks that are scheduled for > 7 days from now
-Window.emptyCollection = []; // Contains 7 'Window.prototype.emptyArr'
-Window.nonFixedCollection = []; // Contains 7 'Window.prototype.nonFixedFutureArr'
-Window.nonFixedFutureArr = []; // Represents non-fixed tasks that are scheduled for > 7 days from now
+//Window.occupiedCollection = []; // Contains 7 'Window.prototype.occupiedArr' 
+//Window.fixedFutureArr = []; // Represents fixed tasks that are scheduled for > 7 days from now
+//Window.emptyCollection = []; // Contains 7 'Window.prototype.emptyArr'
+//Window.nonFixedCollection = []; // Contains 7 'Window.prototype.nonFixedFutureArr'
+//Window.nonFixedFutureArr = []; // Represents non-fixed tasks that are scheduled for > 7 days from now
 //Window.prototype.group = 0; //Tracks the number of groups (non-fixed, connected tasks) for the day. Reset at the end of every day.
 /*
 for (let i = 0; i < 7; i ++) {
@@ -644,6 +664,9 @@ for (let i = 0; i < 7; i ++) {
     Window.nonFixedCollection.push([[], []]);
 }
 */
+//localStorage.setItem("Window.occupiedCollection", JSON.stringify(Window.occupiedCollection));
+//console.log("At the bottom " + localStorage.getItem("Window.occupiedCollection"));
+
 /*
 ACTUAL ARRAYS:
 

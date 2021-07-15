@@ -1,8 +1,11 @@
 //In this class, we will be creating window objects which represent windows of time during which a particular task is to be done, a break is to be taken, etc. Empty windows are periods of time where nothing is schedule (no tasks or breaks) 
 /*
 Additional questions:
+
 1. What if the starting time of a window is in the past but the ending time is in the future?
 */
+// import {Break} from './Break.js';
+
 //Importing relevant firebase libraries
 /*
 import {firebase} from "firebase/app";

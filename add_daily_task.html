@@ -57,7 +57,7 @@
       <!--Find a shorter way for numerical drop downs and how to link to javascript-->
       <div id="date">
         <li><h3>Date:</h3></li>
-        <li><input id="dateInput" type="date" style="background-color: #96d6ed" oninput="Update(this.value,'datein')"></li>
+        <li><input id="dateInput" type="date" oninput="Update(this.value,'datein')"></li>
       </div>
   
       <!-- Checkboxes for either TIME task or DURATION task-->
@@ -122,7 +122,7 @@
       <!-- For follow up task-->
       <div class="followTask">
         <br>
-          <li><h3>Does this task follow another task?</h3></li>
+          <li><h3>Is this task followed by another task?</h3></li>
           <li><input type="radio" id="yes" name="check" value="A" onchange="showList('A', this); return false;" onclick="RetrieveWithID()">
             <label class="yes" for="yes">Yes</label></li>
           <li><input type="radio" id="no" name="check" checked="checked" value="B" onchange="showList('B', this); return false;">
@@ -134,15 +134,10 @@
       <!--Container to contain the dynamically added elements-->
       <div>
         <select id="dropdownList" oninput="Update(this.value, 'followname')">
-          <option value="" selected disabled hidden>Pick a task</option>
+          <option value="" selected disabled hidden>Select a task</option>
         </select>
-      </div>  
-      <!--Before and after-->
-      <select name="sequence" id="sequence" oninput="Update(this.value, 'followseq')">
-        <option value="" selected disabled hidden>Before/After</option>
-        <option value="before">Before</option>
-        <option value="after">After</option>
-      </select>
+      </div>
+      <h4 id="sequence">(Selected task will be scheduled after the created task)</h4>
     </div>
   
     <div id="B" style="display:none">
@@ -155,7 +150,7 @@
     <div class="btn-group-actions">
       <li><input type="button" id="delete" value="Delete task" onclick="DeleteTask()"></li>
       <!-- <li><button id="add" >Add another task</button></li> -->
-      <li><input type="button" id="done" value="Submit" onclick="check()"></li>
+      <li><input type="button" id="done" value="Submit" onclick="frontEndSubmit();check()"></li>
     </div>
   </fieldset>
 
@@ -291,7 +286,7 @@
         /*Function to get current date in format*/
         function frontEndSubmit() { 
           Add_Doc_WithID();
-          // console.log("Task has been added");
+          console.log("Task has been added");
           alert("Daily task has been successfully saved! Please press the X button to close the window!");
           var myFieldset = document.getElementById("myFieldset");
           myFieldset.disabled = true;

@@ -1,4 +1,4 @@
-class Break {
+export class Break {
     /**
      * Calculates 
      * @param {Time} startTime 

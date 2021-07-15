@@ -139,6 +139,7 @@
   float: left;
   display: flex;
   flex-direction: column;
+  overflow: auto; /*to make schedule vertically scrollable*/
 }
 
 /*For post-it page*/
@@ -150,6 +151,7 @@
   z-index: 2;
   margin-left: 1120px;
   margin-top: 241px;
+  overflow: auto; /*to make schedule vertically scrollable*/
 }
 #title {
   font-family: "Signika Negative", sans-serif;

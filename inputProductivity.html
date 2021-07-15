@@ -5,11 +5,7 @@
 <script type="text/javascript" type="module" src="./countdownTimer.js"></script>
 <script type="text/javascript" type="module" src="./link.js"></script>
 <script type="text/javascript" type="module" src="Routine_Final.js"></script>
-<!--
-<script type="module">
-  import {RoutineInfo} from './RoutineTasks/RoutineInfo.js';
-</script>
--->
+
 <!--Importing Firebase and Cloud Firestore libraries-->
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
@@ -113,6 +109,8 @@
         }
     }
     
+  
+
     /*importing array from I forgot where... to create buttons. UNCOMMENT WHEN WE GET THE ARRAY*/ 
     // function nameButtons(){
     //   var time = [obj1, obj2, obj3, obj4];
@@ -126,20 +124,6 @@
     //   btn4.innerHTML = obj4.startHour() + ":" + obj4.startMinute() + "-" + obj4.endHour() + ":" + obj4.endMinute();
     // }
 
-    /*Initialising firebase*/
-    var firebaseConfig = {
-            apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-            authDomain: "orbital-24-7.firebaseapp.com",
-            projectId: "orbital-24-7",
-            storageBucket: "orbital-24-7.appspot.com",
-            messagingSenderId: "459091456870",
-            appId: "1:459091456870:web:21134477e94d50e25ecea7",
-            measurementId: "G-WQMCMBMFCK"
-        };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-    var firestore = firebase.firestore();
     </script>
 </body>
 </html>

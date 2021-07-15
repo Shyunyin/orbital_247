@@ -68,14 +68,14 @@
       <!-- Make checkboxes either or, have the same name to be in the same group, have diff values to make distinct--> 
       <nav>
         <element id="selectTime">
-          <input type="radio" id="timeTask" name="select" value="time" checked="checked" onclick="initial()" onchange="showOptions('timeOptions', this);"> 
+          <input type="radio" id="timeTask" name="select" value="time" checked="checked" onchange="showOptions('timeOptions', this);reinitialise()"> 
           <label for="timeTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Time</label><br>
         </element>
         <element id="or">
           <h3>OR</h3>
         </element>
         <element id="selectDuration">
-          <input type="radio" id="durationTask" name="select" value="duration" onclick="initial()" onchange="showOptions('durationOptions', this);">
+          <input type="radio" id="durationTask" name="select" value="duration" onchange="showOptions('durationOptions', this);reinitialise()">
           <label for="durationTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Duration (per session)</label><br>
         </element>
       </nav>
@@ -188,12 +188,14 @@
         let minute = Minute.value;
         let numSessions = numOfSessions; //variable from other file
         // let nameOfTask, categoryNum, start, startArr, end, endArr, dateInput, followUpTask, sequence, hour, minute;
+        var dateNumber = 0;
  
         function Update(val, type) {
           if (type=='name') {
             nameOfTask=val;
           } else if (type=='datein'){
             dateInput=val;
+            //insert formula to get number after dateInput is changed
           } else if (type=='start'){
             start=val;
             startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
@@ -260,7 +262,7 @@
 
         // Add document with custom ID
         function Add_Doc_WithID() {
-            cloudDB.collection("OneTimeTasks").doc(nameOfTask).set(
+            cloudDB.collection("allArrays").doc("occupiedCollection").collection("0").doc(startTime).set( //collection number use formula!
                 {
                     taskName : String(nameOfTask),
                     taskCategory : Number(categoryNum),
@@ -294,6 +296,7 @@
           alert("Daily task has been successfully saved! Please press the X button to close the window!");
           var myFieldset = document.getElementById("myFieldset");
           myFieldset.disabled = true;
+          update_totalRemaining_toDB(); //to update database
         }
 
         function formatDate() {
@@ -337,28 +340,153 @@
           });
         }
 
+        /*Retrieving remaining time after calculations: 24*60min - 8*60min for sleep - (min time for routine tasks)*/
+        /*Do by retrieving from database?*/
+        // var totalRemaining = 720; /*Arbitrary value, must link to formular for breaks and stuff in algorithm [IN MINUTES]*/ 
+        /*1) Maybe can get an array of total minutes in a loop for the 7 days so that it will be easier?*/
+        /*2) Also need to find a way to update the arrays*/
+        var totalRemainingArr = [720, 720, 720, 720, 720, 720, 720]; 
 
-        var array = [];
-        window.onload = function getFromDatabase() {
-          cloudDB.collection("test")
-          //cloudDB.collection("allArrays").doc("occupiedCollection").collection("Day 0")
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              var task = new Window (
-                doc.data().taskName,
-                doc.data().year,
-                doc.data().month,
-                doc.data().date,
-                doc.data().startTime,
-                doc.data().endTime,
-                doc.data().type
-              )
-              array.push(task);
-              console.log(array);
-            })
-        });
+        /*SetupCounter() updates database with the remaining counter timings for a collection of 7 days*/
+        function SetupCounter() { 
+          for (let i = 0; i < totalRemainingArr.length; i++) {
+            cloudDB.collection("allArrays").doc("counter").collection(i.toString()).doc(i.toString()).update(
+            {
+              totalTime : Number(totalRemainingArr[i])
+            }).then(function() {
+              console.log("Counter array is created");
+              console.log(totalRemainingArr[i]);
+            }).catch(function(error){
+              console.log("Error filling up counter");
+            });
+          } 
         }
+    
+        window.onload = function get_DateNumber() {
+          cloudDB.collection("allArrays").doc("counter").collection(dateNumber.toString()).doc(dateNumber.toString())
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              var totalRemaining = doc.data().totalTime;
+              console.log("Document data exists", totalRemaining);
+              initial(totalRemaining);
+            } else {
+              console.log("No such document!");
+            }
+          }).catch((error) => {
+            console.log("Error getting document", error);
+          })
+        
+        }
+
+
+  /*displayDuration(): to display out font-end counter timing*/      
+  function displayDuration(text) { /*This function works*/
+    document.getElementById("counterOutput").innerHTML = text;
+  }
+
+  var totalRemaining; // so that totalRemaining wont be undefined for calculationDuration and calculationTime
+
+  function initial(x) { /*Loads when webpage is loaded*/
+    // console.log("initial() is called"); //debug
+    totalRemaining = x;
+    let hours = (x / 60);
+    let minutes = x- (hours * 60);
+    let text = "Hour: " + hours + " " + "Minute: " + minutes;
+    displayDuration(text); /*initial display*/  
+  }
+
+  /*reinitialise(): called whenever there is a changed in radio button being clicked*/
+  function reinitialise() {
+    initial(totalRemaining);
+  }
+
+  var finalDBMin; //used to get final minutes left to update the database after add daily task is submitted
+
+/*To calculate remaining hours and minute*/ /*FUNCTION IS NOT WORKING NOOOOO*/
+function calculationDuration() {
+    let enterHour = parseInt((document.getElementById("hour").value)*numOfSessions); /*Number of hours entered*/
+    let enterMin = parseInt((document.getElementById("minute").value)*numOfSessions); /*Number of minutes entered*/
+    let totalToDeduct = enterMin + (enterHour*60); /*convert hour to minute*/
+    let hoursLeft = Math.trunc((totalRemaining - totalToDeduct) / 60); /*Final number for hours*/ 
+    let minutesLeft = (totalRemaining - totalToDeduct - (hoursLeft * 60)); /*Final number for minutes*/
+    var text = "Hour: " + hoursLeft + " " + "Minute: " + minutesLeft;
+    displayDuration(text);
+
+    finalDBMin=totalRemaining - totalToDeduct;
+}
+
+/*Even though html input is in 12 hours format, it is saved as 24 hours format, use substr to extract*/
+/*Calculate everything in minutes first then split*/
+
+
+function calculationTime() {
+  let start = document.getElementById("startTime").value
+  let startHour = parseInt(start.substr(0,2));
+  let startMin = parseInt(start.substr(3,4));
+  let end = document.getElementById("endTime").value
+  let endHour = parseInt(end.substr(0,2));
+  let endMin = parseInt(end.substr(3,4));
+
+  var totalToMinus;
+  var finalHour;
+  var finalMin;
+  var text;
+
+  if (startHour > endHour) { // for tasks that span across 2 days
+    totalToMinus = ((24 - startHour) + endHour) * 60;
+  } else {
+    totalToMinus = (endHour - startHour) * 60; //contains minutes that needs to be deducted from totalRemaining
+  }
+  if (endMin < startMin) {
+    totalToMinus = totalToMinus - (endMin - startMin); //in minutes (minus a negative to add)
+  } else {
+    totalToMinus = totalToMinus + (endMin - startMin);
+  }
+  finalHour = Math.trunc((totalRemaining - totalToMinus) / 60);
+  finalMin = (totalRemaining - totalToMinus) - (finalHour * 60); 
+  text = "Hour: " + finalHour + " " + "Minute: " + finalMin;
+  
+  displayDuration(text);
+
+  finalDBMin = totalRemaining - totalToMinus;
+}
+
+function update_totalRemaining_toDB() {
+  cloudDB.collection("allArrays").doc("counter").collection(dateNumber.toString()).doc(dateNumber.toString()).update(
+    {
+      totalTime : Number(finalDBMin)
+    }).then(function() {
+        console.log("New minutes left is updated");
+    }).catch(function(error){
+        console.log("Error updating final minutes");
+    });
+  } 
+
+
+
+
+
+        // var array = [];
+        // function getFromDatabase() {
+        //   cloudDB.collection("allArrays").doc("occupiedCollection").collection("Day 0")
+        //   .get()
+        //   .then((querySnapshot) => {
+        //     querySnapshot.forEach((doc) => {
+        //       var task = new Window (
+        //         doc.data().taskName,
+        //         doc.data().year,
+        //         doc.data().month,
+        //         doc.data().date,
+        //         doc.data().startTime,
+        //         doc.data().endTime,
+        //         doc.data().type
+        //       )
+        //       array.push(task);
+        //       console.log(array);
+        //     })
+        // });
+        // }
          //--------------------- Deleting data from database ------------------//
         //  function DeleteTask(){ //only can test when edit function is out
         //    cloudDB.collection("OneTimeTasks").doc(nameOfTask).delete()

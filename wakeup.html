@@ -62,7 +62,7 @@ body{
          let Wakeup = document.getElementById("wakeupTime");
 
          let wakeup = Wakeup.value;
-         var wakeupArr = [parseInt(wakeup.substr(0, 2)), parseInt(wakeup.substr(3, 4))];
+         let wakeupArr = [parseInt(wakeup.substr(0, 2)), parseInt(wakeup.substr(3, 4))];
         function Update(val, type){
             if(type=='time'){
                 wakeup=val;
@@ -93,13 +93,12 @@ body{
 
 
         function link_To_Database() {
-                cloudDB.collection("Users").doc("sniggy").collection("User Info").doc("Wakeup Time").set({
+                cloudDB.collection("User Info").document("Wakeup Time").update({
                     wakeupTime: Array(Number(wakeupArr[0]), Number(wakeupArr[1]))
-                })
-                .then(function(){
+                }).then(function(){
+                    console.log(wakeupArr);
                     console.log("Wake up time written ");
-                })
-                .catch(function(error){
+                }).catch(function(error){
                     console.error("Error adding wakeup time");
                 });
         }

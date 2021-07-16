@@ -468,8 +468,8 @@ function update_totalRemaining_toDB() {
 
 
 
-        var array = [];
-        function getFromDatabase() {
+        // var array = [];
+        // function getFromDatabase() {
         //   cloudDB.collection("allArrays").doc("occupiedCollection").collection("Day 0")
         //   .get()
         //   .then((querySnapshot) => {
@@ -501,6 +501,48 @@ function update_totalRemaining_toDB() {
        
         //------------------------Button Events----------------------------//
         // document.getElementById("done").addEventListener('click', Add_Doc_WithID);
+
+<?php
+//To connect to database
+$user = 'root'; //no users for now
+$pass = ''; //dont need for now
+$db='schedulerdb'; 
+
+$link = mysqli_connect('localhost', $user, $pass);
+
+if ($link === false){
+  die("ERROR: Could not connect." . mysqli_connect_error());
+}
+
+//creating table in SQL
+$sql = "CREATE TABLE onetimetask(
+  taskName TEXT(100) NOT NULL,
+  taskCategory INT NOT NULL,
+  dateIn DATE,
+  startTimeHour int NOT NULL,
+  startTimeMin int NOT NULL,
+  endTimeHour int NOT NULL,
+  endTimeMin int NOT NULL,
+  durationHour int NOT NULL,
+  durationMinute int NOT NULL,
+  numSessions int NOT NULL,
+  followTask tinyint NOT NULL,
+  )";
+
+//insert SQL database
+$sql = "INSERT INTO onetimetask(taskName, taskCategory, dateIn, startTimeHour, startTimeMin, endTimeHour, endTimeMin, durationHour, durationMinute, numSessions, followTask) 
+VALUES (nameOfTask, categoryNum, dateInput, startArr[0], startArr[1], endArr[0], endArr[1], hour, minute, numSessions, followUpTask)";
+
+if (mysqli_query($link, $sql)) {
+  echo "Records inserted successully.";
+} else {
+  echo "ERROR: Not able to execute $sql.".mysqli_error($link);
+}
+
+//close connection
+mysqli_close($link);
+?>
+
     </script>
    </body>
 </html>

@@ -508,7 +508,7 @@ $user = 'root'; //no users for now
 $pass = ''; //dont need for now
 $db='schedulerdb'; 
 
-$link = mysqli_connect('localhost', $user, $pass);
+$link = new mysqli('localhost', $user, $pass, $db);
 
 if ($link === false){
   die("ERROR: Could not connect." . mysqli_connect_error());
@@ -519,25 +519,44 @@ $sql = "CREATE TABLE onetimetask(
   taskName TEXT(100) NOT NULL,
   taskCategory INT NOT NULL,
   dateIn DATE,
-  startTimeHour int NOT NULL,
-  startTimeMin int NOT NULL,
-  endTimeHour int NOT NULL,
-  endTimeMin int NOT NULL,
-  durationHour int NOT NULL,
-  durationMinute int NOT NULL,
-  numSessions int NOT NULL,
+  startTimeHour INT NOT NULL,
+  startTimeMin INT NOT NULL,
+  endTimeHour INT NOT NULL,
+  endTimeMin INT NOT NULL,
+  durationHour INT NOT NULL,
+  durationMinute INT NOT NULL,
+  numSessions INT NOT NULL,
   followTask tinyint NOT NULL,
   )";
 
-//insert SQL database
-$sql = "INSERT INTO onetimetask(taskName, taskCategory, dateIn, startTimeHour, startTimeMin, endTimeHour, endTimeMin, durationHour, durationMinute, numSessions, followTask) 
-VALUES (nameOfTask, categoryNum, dateInput, startArr[0], startArr[1], endArr[0], endArr[1], hour, minute, numSessions, followUpTask)";
-
 if (mysqli_query($link, $sql)) {
-  echo "Records inserted successully.";
+  echo "Table created successfully!";
 } else {
   echo "ERROR: Not able to execute $sql.".mysqli_error($link);
 }
+
+//Getting input values from html cause unable to just declare variable in html then automatically assume in PHP
+// $nameOfTask = 
+// $categoryNum =
+// $dateInput =
+// $startArr0 =
+// $startArr =
+// $endArr0 =
+// $endArr1 =
+// $hour =
+// $minute =
+// $numSessions =
+// $followUpTask =
+
+//insert SQL database
+// $sql = "INSERT INTO onetimetask(taskName, taskCategory, dateIn, startTimeHour, startTimeMin, endTimeHour, endTimeMin, durationHour, durationMinute, numSessions, followTask) 
+// VALUES (nameOfTask, categoryNum, dateInput, startArr[0], startArr[1], endArr[0], endArr[1], hour, minute, numSessions, followUpTask)";
+
+// if (mysqli_query($link, $sql)) {
+//   echo "Records inserted successully.";
+// } else {
+//   echo "ERROR: Not able to execute $sql.".mysqli_error($link);
+// }
 
 //close connection
 mysqli_close($link);

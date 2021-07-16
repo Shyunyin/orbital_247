@@ -40,6 +40,7 @@ class FixedTask extends OneTimeTask {
         //TODO: Pop up window if it is during sleep
         let newTask = new Window(this.taskName, this.year, this.month, this.date, this.startTime, this.endTime, 1);
         if (!newTask.isPast()) {
+            console.log(this.startTime);
             newTask.insertWindow();
         }
     }

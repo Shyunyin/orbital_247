@@ -32,7 +32,7 @@ if (!firebase.apps.length) {
 }else {
     firebase.app(); // if already initialized, use that one
 }
-let cloudDB = firebase.firestore(); //TODO: Should be changed to the specific user's as wellgit 
+let cloudDB = firebase.firestore(); //TODO: Should be changed to the specific user's as well 
 */
 class Window {
 //export class Window {
@@ -297,12 +297,13 @@ class Window {
         return this.partiallyOverlaps(productiveWindow) || this.isCompletelyDuring(productiveWindow);
     }
 
-    /*
     Add_Window_WithID() {
-        formattedDate = (this.date).toString() + "/" + (this.month).toString() + "/" + (this.year).toString();
+        let formattedDate = (this.date).toString() + "/" + (this.month).toString() + "/" + (this.year).toString();
+        console.log(this.startTime);
+        let start = this.startTime.getHours().toString() + this.startTime.getMins().toString();
         // Procedure for adding empty widows to the database
         if (this.type == 0) {
-            cloudDB.collection("Users").doc("sniggy").collection("formattedDate").doc("Empty Windows").collection("Empty Windows").doc(startTime ).set(
+            cloudDB.collection("Users").doc("sniggy").collection("formattedDate").doc("Empty Windows").collection("Empty Windows").doc(start).set(
             //cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Empty Windows").collection("Empty Windows").doc(#startTimeOfWindow).set(
                 {
                     taskName : null,
@@ -310,15 +311,18 @@ class Window {
                     month : Number(this.month),
                     date : Number(this.date),
                     taskCategory : Number(0),
-                    startTime : Array(Number(this.startTime[0]), Number(this.startTime[1])),
-                    endTime : Array(Number(this.endTime[0]), Number(this.endTime[1])),
+                    startTime : Array(Number(this.startTime.getHours()), Number(this.startTime.getMins())),
+                    endTime : Array(Number(this.endTime.getHours()), Number(this.endTime.getMins())),
                     type : Number(0),
                 }
             ).then(function(){
-                console.log("Empty window for user '" + username + "' at " + this.startTime + " has been added."); //TODO: Need to define username
+                console.log("Empty window for user '" + "' at " + " has been added.");
+                //let start = this.startTime[0].toString() + this.startTime[1].toString();
+                //console.log("Empty window for user '" + username + "' at " + start + " has been added."); //TODO: Need to define username
             })
             .catch(function(error) {
-                console.error("Error adding empty window for user '" + username + "' : ", error);
+                console.error("Error adding fixed task for user '" + "' : ", error);
+                //console.error("Error adding empty window for user '" + username + "' : ", error);
             });
         // Procedure for adding fixed tasks to the database
         } else {
@@ -330,12 +334,14 @@ class Window {
                     month : Number(this.month),
                     date : Number(this.date),
                     taskCategory : Number(0),
-                    startTime : Array(Number(this.startTime[0]), Number(this.startTime[1])),
-                    endTime : Array(Number(this.endTime[0]), Number(this.endTime[1])),
+                    startTime : Array(Number(this.startTime.getHours()), Number(this.startTime.getMins())),
+                    endTime : Array(Number(this.endTime.getHours()), Number(this.endTime.getMins())),
                     type : Number(1),
                 }
             ).then(function(){
-                console.log("Fixed task for user '" + "' at " + this.startTime + " has been added.");
+                //let start = this.startTime[0].toString() + this.startTime[1].toString();
+                console.log("Fixed task for user '" + "' at " + " has been added.");
+                //console.log("Fixed task for user '" + "' at " + start + " has been added.");
                 //console.log("Fixed task for user '" + username + "' at " + this.startTime + " has been added."); //TODO: Need to define username
             })
             .catch(function(error) {
@@ -344,7 +350,6 @@ class Window {
             });
         } 
     }
-    */
 
     /**
      * To insert a window into the correct array in chronological order
@@ -372,11 +377,12 @@ class Window {
             if (newIndex == currArr.length) {
                 currArr.push(this);
                 console.log(currArr); //For testing
+                this.Add_Window_WithID();
             } else if ((currArr[newIndex]).isCompletelyAfter(this)) {
                 currArr.splice(newIndex, 0, this);
                 console.log(currArr);
                 // Updating the database as well
-                //this.Add_Window_WithID();
+                this.Add_Window_WithID();
             } else {
                 console.error("Cannot schedule empty window as it clashes with an existing empty window. Please adjust the start and end times of other windows accordingly.");
             }
@@ -398,12 +404,15 @@ class Window {
             // If all currently scheduled tasks take place before the current to-be scheduled task starts
             if (newIndex == currArr.length) {
                 currArr.push(this);
+                console.log(currArr); //For testing
                 console.log("I come to the insert window function 3");
+                this.Add_Window_WithID();
             } else if ((currArr[newIndex]).isCompletelyAfter(this)) {
                 currArr.splice(newIndex, 0, this);
+                console.log(currArr); //For testing
                 console.log("I come to the insert window function 4");
                 // Updating the database as well
-                //this.Add_Window_WithID()
+                this.Add_Window_WithID();
             } else {
                 console.error("Cannot schedule task as it clashes with an existing task!");
                 window.alert("Cannot schedule task as it clashes with an existing task!");

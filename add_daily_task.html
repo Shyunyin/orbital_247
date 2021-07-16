@@ -262,7 +262,8 @@
 
         // Add document with custom ID
         function Add_Doc_WithID() {
-            cloudDB.collection("allArrays").doc("occupiedCollection").collection("0").doc(startTime).set( //collection number use formula!
+            cloudDB.collection("allArrays").doc("occupiedCollection").collection("0").doc(start).set(
+            //cloudDB.collection("allArrays").doc("occupiedCollection").collection("0").doc(startTime).set( //collection number use formula!
                 {
                     taskName : String(nameOfTask),
                     taskCategory : Number(categoryNum),

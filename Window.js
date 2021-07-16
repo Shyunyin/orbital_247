@@ -297,13 +297,10 @@ class Window {
         return this.partiallyOverlaps(productiveWindow) || this.isCompletelyDuring(productiveWindow);
     }
 
-    Add_Window_WithID() {
-        let formattedDate = (this.date).toString() + "/" + (this.month).toString() + "/" + (this.year).toString();
-        console.log(this.startTime);
-        let start = this.startTime.getHours().toString() + this.startTime.getMins().toString();
+    Add_Window_WithID(dayIndex) {
         // Procedure for adding empty widows to the database
         if (this.type == 0) {
-            cloudDB.collection("Users").doc("sniggy").collection("formattedDate").doc("Empty Windows").collection("Empty Windows").doc(start).set(
+            cloudDB.collection("allArrays").doc("emptyCollection").collection(dayIndex.toString()).doc(this.startTime.toString()).set(
             //cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Empty Windows").collection("Empty Windows").doc(#startTimeOfWindow).set(
                 {
                     taskName : null,
@@ -326,10 +323,10 @@ class Window {
             });
         // Procedure for adding fixed tasks to the database
         } else {
-            cloudDB.collection("Users").doc("sniggy").collection("formattedDate").doc("Tasks").collection("Tasks").doc(this.taskName).set(
+            cloudDB.collection("allArrays").doc("occupiedCollection").collection(dayIndex.toString()).doc(this.startTime.toString()).set(
             //cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Tasks").collection("Tasks").doc(this.taskName).set(
                 {
-                    taskName : null,
+                    taskName : this.taskName,
                     year : Number(this.year),
                     month : Number(this.month),
                     date : Number(this.date),
@@ -377,12 +374,12 @@ class Window {
             if (newIndex == currArr.length) {
                 currArr.push(this);
                 console.log(currArr); //For testing
-                this.Add_Window_WithID();
+                this.Add_Window_WithID(index);
             } else if ((currArr[newIndex]).isCompletelyAfter(this)) {
                 currArr.splice(newIndex, 0, this);
                 console.log(currArr);
                 // Updating the database as well
-                this.Add_Window_WithID();
+                this.Add_Window_WithID(index);
             } else {
                 console.error("Cannot schedule empty window as it clashes with an existing empty window. Please adjust the start and end times of other windows accordingly.");
             }
@@ -406,13 +403,13 @@ class Window {
                 currArr.push(this);
                 console.log(currArr); //For testing
                 console.log("I come to the insert window function 3");
-                this.Add_Window_WithID();
+                this.Add_Window_WithID(index);
             } else if ((currArr[newIndex]).isCompletelyAfter(this)) {
                 currArr.splice(newIndex, 0, this);
                 console.log(currArr); //For testing
                 console.log("I come to the insert window function 4");
                 // Updating the database as well
-                this.Add_Window_WithID();
+                this.Add_Window_WithID(index);
             } else {
                 console.error("Cannot schedule task as it clashes with an existing task!");
                 window.alert("Cannot schedule task as it clashes with an existing task!");
@@ -422,15 +419,14 @@ class Window {
             return removedBreak.removeWindow();
         }
     }
-    /*
-    Remove_Window_WithID() {
-        formattedDate = (this.date).toString() + "/" + (this.month).toString() + "/" + (this.year).toString();
+    
+    Remove_Window_WithID(dayIndex) {
         // Procedure for removing of windows from the database
         if (this.type == 0) {
-            cloudDB.collection("Users").doc("sniggy").collection(formattedDate).doc("Empty Windows").collection("Empty Windows").doc(startTime).delete()
+            cloudDB.collection("allArrays").doc("emptyCollection").collection(dayIndex.toString()).doc(this.startTime.toString()).delete()
             //cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Empty Windows").collection("Empty Windows").doc(#startTimeOfWindow).delete()
             .then(function(){
-                console.log("Empty window for user '" + "' at " + this.startTime + " has been removed.");
+                console.log("Empty window for user '" + "' at " + " has been removed.");
                 //console.log("Empty window for user '" + username + "' at " + this.startTime + " has been removed."); //TODO: Need to define username
             })
             .catch(function(error) {
@@ -439,10 +435,10 @@ class Window {
             });
         // Procedure for removing fixed tasks from the database
         } else {
-            cloudDB.collection("Users").doc("sniggy").collection("formattedDate").doc("Tasks").collection("Tasks").doc(this.taskName).set()
+            cloudDB.collection("allArrays").doc("occupiedCollection").collection(dayIndex.toString()).doc(this.startTime.toString()).delete()
             //cloudDB.collection(Users).doc(#username).collection(formattedDate).doc("Tasks").collection("Tasks").doc(this.taskName).set()
             .then(function(){
-                console.log("Fixed task for user '" + "' at " + this.startTime + " has been removed.");
+                console.log("Fixed task for user '" + "' at " + " has been removed.");
                 //console.log("Fixed task for user '" + username + "' at " + this.startTime + " has been removed."); //TODO: Need to define username
             })
             .catch(function(error) {
@@ -451,7 +447,7 @@ class Window {
             });
         } 
     }
-    */
+    
 
     /**
      * To remove a window from the correct array
@@ -489,6 +485,7 @@ class Window {
                 if (this.startsAfter(currArr[i])) {
                     newWindow1 = new Window("Empty", currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), currArr[i].getStartTime(),  this.startTime, 0); 
                     //currArr[i].changeStartTime = this.startTime;
+                    //TODO: Standardise the names of all empty windows to null?
                 }
                 if (currArr[i].getEndTimeInMs() > this.getEndTimeInMs()) {
                     newWindow2 = new Window("Empty", currArr[i].getYear(), currArr[i].getMonth(), currArr[i].getDate(), this.endTime, currArr[i].getEndTime(), 0);
@@ -496,15 +493,15 @@ class Window {
                 }
 
                 //Updating the database and the respective arrays
-                //(currArr[i]).Remove_Window_WithID();
+                (currArr[i]).Remove_Window_WithID(index);
 
                 if (newWindow1 != null) {
                     windowsToAdd.push(newWindow1);
-                    //newWindow1.Add_Window_WithID();
+                    //newWindow1.Add_Window_WithID(index);
                 }
                 if (newWindow2 != null) {
                     windowsToAdd.push(newWindow2);
-                    //newWindow2.Add_Window_WithID();
+                    //newWindow2.Add_Window_WithID(index);
                 }
             }
             currArr.splice(startIndex, endIndex - startIndex + 1);
@@ -519,12 +516,11 @@ class Window {
                 currArr = Window.occupiedCollection[index];
             }
             //Check if the task to be removed exists. Once task is identified, it is removed.
-            let i;
-            for (i = 0; i < currArr.length; i++) {
+            for (let i = 0; i < currArr.length; i++) {
                 if (this.equals(currArr[i])) {
                     currArr.splice(i, 1);
                     console.log("Window successfully removed")
-                    //(currArr[i]).Remove_Window_WithID();
+                    (currArr[i]).Remove_Window_WithID(index);
 
                     let newWindow = new Window("Empty", this.year, this.month, this.date, this.startTime, this.endTime, 0);
                     //newWindow.Add_Window_WithID();
@@ -540,6 +536,73 @@ class Window {
      * Updating the arrays with every passing day by removing the array containing windows of the previous day and adding an array with windows for a day that is 7 days from now 
      */
     static newDay() {
+        //STEP 1: Updating the collection arrays by removing Day 0 and shifting up all other days
+        let collectionArr = ["emptyCollection", "occupiedCollection", "nonFixedCollection"]
+        //TODO: how to check if a doc exists? Bc it may not?
+        for (let i = 0; i < 7; i++) {
+            for (let j = 0; j < collectionArr.length; j++) {
+                if (i == 6) {
+                    cloudDB.collection("allArrays").doc(collectionArr[j]).collection("6").delete();
+                } else {
+                    cloudDB.collection("allArrays").doc(collectionArr[j]).collection(i.toString()).delete();
+                    cloudDB.collection("allArrays").doc(collectionArr[j]).collection((i + 1).toString())
+                        .get()
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                                cloudDB.collection("allArrays").doc(collectionArr[j]).collection(i.toString()).set(doc);
+                            })
+                        });
+                }
+            }
+        }
+
+        // Calculating the date of the newly added array
+        let currDate = now.getDate();
+        let currMonth = now.getMonth();
+        let currYear = now.getYear();
+        if (currDate + 6 > Time.daysInMonth(currMonth, currYear)) {
+            currDate = currDate + 6 - Time.daysInMonth(currMonth, currYear);
+            currMonth++;
+            if (currMonth > 11) {
+                currMonth = 0;
+                currYear++;
+            }
+        }
+        let formattedDate = currDate.toString() + "/" + currMonth.toString() + "/" + currYear.toString();
+        //TODO: Don't need to insert window again for fixed tasks right?
+        //STEP 2: Transferring fixed and nonfixed tasks from future arrays
+        cloudDB.collection("allArrays").doc("fixedFutureArr").collection(formattedDate)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    cloudDB.collection("allArrays").doc("occupiedCollection").collection("6").set(doc);
+                })
+            });
+        cloudDB.collection("allArrays").doc("fixedFutureArr").collection(formattedDate).delete();
+
+        cloudDB.collection("allArrays").doc("nonFixedFutureArr").collection(formattedDate)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    doc.addTask();
+                })
+            });
+        cloudDB.collection("allArrays").doc("nonFixedFutureArr").collection(formattedDate).delete();
+
+        //STEP 3: Incomplete bc no RoutinInfo yet. Creating the empty windows for the new day 6. 
+        if (startTime.getHours() > endTime.getHours()) {
+            let newWindow1 = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), new Time(0, 0), endTime, 0);
+            let newWindow2 = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, new Time(23, 59), 0);
+
+            newWindow1.insertWindow();
+            newWindow2.insertWindow();
+        } else {
+            let newWindow = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, endTime, 0);
+
+            newWindow.insertWindow();
+        }
+        
+        /*
         Window.occupiedCollection.splice(0, 1);
         Window.occupiedCollection.push([]);
         let now = new Date();
@@ -591,7 +654,7 @@ class Window {
 
             Window.emptyCollection[i].push(newWindow);
         }
-        
+        */
     }
 
     static emptyCollection = [];
@@ -605,6 +668,33 @@ class Window {
      */
     static initialise() {
         console.log("Initialise funtion is called");
+
+        /*
+        // DATABASE VERSION (Probably don't need the version below for the final product)
+        let currTime = new Date();
+        // For testing purposes
+        let startTime = new Time(8, 0); //to be replaced with actual routineinfo data
+        let endTime = new Time(0, 0); //to be replaced with actual routineinfo data
+
+        cloudDB.collection("allArrays").doc("emptyCollection");
+        cloudDB.collection("allArrays").doc("occupiedCollection");
+        cloudDB.collection("allArrays").doc("nonFixedCollection");
+        cloudDB.collection("allArrays").doc("fixedFutureArr");
+        cloudDB.collection("allArrays").doc("nonFixedFutureArr");
+
+        if (startTime.getHours() > endTime.getHours()) {
+            let newWindow1 = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), new Time(0, 0), endTime, 0);
+            let newWindow2 = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, new Time(23, 59), 0);
+
+            newWindow1.insertWindow();
+            newWindow2.insertWindow();
+        } else {
+            let newWindow = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, endTime, 0);
+
+            newWindow.insertWindow();
+        }
+        */
+
         let currTime = new Date();
         // For testing purposes
         let startTime = new Time(8, 0);

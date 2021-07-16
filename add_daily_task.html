@@ -292,8 +292,8 @@
         //--------------------- Retrieving relavant information from database ------------------//
         /*Function to get current date in format*/
         function frontEndSubmit() { 
-          Add_Doc_WithID();
-          console.log("Task has been added");
+          //Add_Doc_WithID();
+          //console.log("Task has been added");
           alert("Daily task has been successfully saved! Please press the X button to close the window!");
           var myFieldset = document.getElementById("myFieldset");
           myFieldset.disabled = true;
@@ -468,8 +468,8 @@ function update_totalRemaining_toDB() {
 
 
 
-        // var array = [];
-        // function getFromDatabase() {
+        var array = [];
+        function getFromDatabase() {
         //   cloudDB.collection("allArrays").doc("occupiedCollection").collection("Day 0")
         //   .get()
         //   .then((querySnapshot) => {
@@ -487,7 +487,7 @@ function update_totalRemaining_toDB() {
         //       console.log(array);
         //     })
         // });
-        // }
+        }
          //--------------------- Deleting data from database ------------------//
         //  function DeleteTask(){ //only can test when edit function is out
         //    cloudDB.collection("OneTimeTasks").doc(nameOfTask).delete()

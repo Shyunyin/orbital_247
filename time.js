@@ -117,6 +117,18 @@ class Time {
         return new Time(newHours, newMins);
     }
 
+    toString() {
+        let hours = this.getHours();
+        let mins = this.getMins();
+        if (hours < 10) {
+            hours = "0" + hours.toString()
+        }
+        if (mins < 10) {
+            mins = "0" + mins.toString()
+        }
+        return hours.toString() + ":" + mins.toString();
+    }
+
 }
 
 //Time.timeRegistered = Math.round(Date.now()/10000) * 10000; //To the nearest minute (Need to double check calculation)

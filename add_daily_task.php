@@ -483,11 +483,17 @@ function update_totalRemaining_toDB() {
   console.log(result);
 
 
+<<<<<<< HEAD:add_daily_task.html
         // var arr = [];
         // var arr2 = []
         // function getFromDatabase() {
         //   let array = [];
         //   cloudDB.collection("allArrays").doc("occupiedCollection").collection("0")
+=======
+        // var array = [];
+        // function getFromDatabase() {
+        //   cloudDB.collection("allArrays").doc("occupiedCollection").collection("Day 0")
+>>>>>>> feefdd3591190c8766f366fa5aebc90a60f16733:add_daily_task.php
         //   .get()
         //   .then((querySnapshot) => {
         //     querySnapshot.forEach((doc) => {
@@ -534,6 +540,67 @@ function update_totalRemaining_toDB() {
        
         //------------------------Button Events----------------------------//
         // document.getElementById("done").addEventListener('click', Add_Doc_WithID);
+
+<?php
+//To connect to database
+$user = 'root'; //no users for now
+$pass = ''; //dont need for now
+$db='schedulerdb'; 
+
+$link = new mysqli('localhost', $user, $pass, $db);
+
+if ($link === false){
+  die("ERROR: Could not connect." . mysqli_connect_error());
+}
+
+//creating table in SQL
+$sql = "CREATE TABLE onetimetask(
+  taskName TEXT(100) NOT NULL,
+  taskCategory INT NOT NULL,
+  dateIn DATE,
+  startTimeHour INT NOT NULL,
+  startTimeMin INT NOT NULL,
+  endTimeHour INT NOT NULL,
+  endTimeMin INT NOT NULL,
+  durationHour INT NOT NULL,
+  durationMinute INT NOT NULL,
+  numSessions INT NOT NULL,
+  followTask tinyint NOT NULL,
+  )";
+
+if (mysqli_query($link, $sql)) {
+  echo "Table created successfully!";
+} else {
+  echo "ERROR: Not able to execute $sql.".mysqli_error($link);
+}
+
+//Getting input values from html cause unable to just declare variable in html then automatically assume in PHP
+// $nameOfTask = 
+// $categoryNum =
+// $dateInput =
+// $startArr0 =
+// $startArr =
+// $endArr0 =
+// $endArr1 =
+// $hour =
+// $minute =
+// $numSessions =
+// $followUpTask =
+
+//insert SQL database
+// $sql = "INSERT INTO onetimetask(taskName, taskCategory, dateIn, startTimeHour, startTimeMin, endTimeHour, endTimeMin, durationHour, durationMinute, numSessions, followTask) 
+// VALUES (nameOfTask, categoryNum, dateInput, startArr[0], startArr[1], endArr[0], endArr[1], hour, minute, numSessions, followUpTask)";
+
+// if (mysqli_query($link, $sql)) {
+//   echo "Records inserted successully.";
+// } else {
+//   echo "ERROR: Not able to execute $sql.".mysqli_error($link);
+// }
+
+//close connection
+mysqli_close($link);
+?>
+
     </script>
    </body>
 </html>

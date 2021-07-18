@@ -232,11 +232,14 @@ function clickDelete() {
     
     function generate() {
         console.log("generate is called");
-        console.log(Window.emptyCollection[0]);
-        console.log(Window.occupiedCollection[0]);
-        var scheduleArr = Scheduling.generateSchedule(Window.emptyCollection[0], Window.occupiedCollection[0], Window.nonFixedCollection[0][0], Window.nonFixedCollection[0][1]); //Testing with only today's schedule
+        // console.log(Window.emptyCollection[0]);
+        // console.log(Window.occupiedCollection[0]);
+        console.log(emptyCollection[0]);
+        console.log(occupiedCollection[0]);
+        var scheduleArr = Scheduling.generateSchedule(emptyCollection[0], occupiedCollection[0], nonFixedCollection[0][0], nonFixedCollection[0][1]); 
+        //var scheduleArr = Scheduling.generateSchedule(Window.emptyCollection[0], Window.occupiedCollection[0], Window.nonFixedCollection[0][0], Window.nonFixedCollection[0][1]); //Testing with only today's schedule
 
-        console.log(Window.occupiedCollection[0]);
+        //console.log(Window.occupiedCollection[0]);
         console.log(scheduleArr);
         return scheduleArr;
     };

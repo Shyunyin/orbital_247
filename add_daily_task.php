@@ -154,7 +154,9 @@
     <div class="btn-group-actions">
       <li><input type="button" id="delete" value="Delete task" onclick="DeleteTask()"></li>
       <!-- <li><button id="add" >Add another task</button></li> -->
-      <li><input type="button" id="done" value="Submit" onclick="frontEndSubmit();check()"></li>
+      <!--<li><input type="button" id="done" value="Submit" onclick="frontEndSubmit();check()"></li>-->
+      <li><input type="button" id="done" value="Submit" onclick="Window.testFunction();frontEndSubmit();"></li>
+      
     </div>
   </fieldset>
 
@@ -466,15 +468,36 @@ function update_totalRemaining_toDB() {
 
 
 
+  /*
+  function test() {
+    console.log("i come here")
+    return JSON.parse(localStorage.getItem("test"))
+    //testArr = arr;
+    //console.log(arr)
+    //return localStorage.getItem("test");
+  }
+  */
+  var result = JSON.parse(localStorage.getItem("newnewtest"));
+  //var result = localStorage.getItem("test");
+
+  console.log(result);
 
 
+<<<<<<< HEAD:add_daily_task.html
+        // var arr = [];
+        // var arr2 = []
+        // function getFromDatabase() {
+        //   let array = [];
+        //   cloudDB.collection("allArrays").doc("occupiedCollection").collection("0")
+=======
         // var array = [];
         // function getFromDatabase() {
         //   cloudDB.collection("allArrays").doc("occupiedCollection").collection("Day 0")
+>>>>>>> feefdd3591190c8766f366fa5aebc90a60f16733:add_daily_task.php
         //   .get()
         //   .then((querySnapshot) => {
         //     querySnapshot.forEach((doc) => {
-        //       var task = new Window (
+        //       let task = new Window (
         //         doc.data().taskName,
         //         doc.data().year,
         //         doc.data().month,
@@ -485,9 +508,25 @@ function update_totalRemaining_toDB() {
         //       )
         //       array.push(task);
         //       console.log(array);
+        //       //arr = array;
+        //       //console.log(arr);
         //     })
-        // });
-        }
+        //     //console.log(array);
+        //     //return arr;
+        //   });
+        //   //console.log(array);
+        //   //console.log("I come here");
+        //   //return arr;
+        // }
+
+        //arr2 = getFromDatabase()
+        //console.log("arr 2 is " + getFromDatabase());
+
+
+        
+        
+
+
          //--------------------- Deleting data from database ------------------//
         //  function DeleteTask(){ //only can test when edit function is out
         //    cloudDB.collection("OneTimeTasks").doc(nameOfTask).delete()

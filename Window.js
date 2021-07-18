@@ -297,6 +297,31 @@ class Window {
         return this.partiallyOverlaps(productiveWindow) || this.isCompletelyDuring(productiveWindow);
     }
 
+    static arr = [];
+
+    static getFromDatabase(currCollection, index) {
+        console.log("getFromDatebase is called");
+        Window.arr = [];
+        cloudDB.collection("allArrays").doc(currCollection.toString()).collection(index.toString())
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+            let task = new Window (
+                doc.data().taskName,
+                doc.data().year,
+                doc.data().month,
+                doc.data().date,
+                doc.data().startTime,
+                doc.data().endTime,
+                doc.data().type
+            )
+            console.log("the task I got is " + task);
+            Window.arr.push(task);
+            })
+        });
+        //return Window.arr;
+    }
+
     Add_Window_WithID(dayIndex) {
         // Procedure for adding empty widows to the database
         if (this.type == 0) {
@@ -365,7 +390,12 @@ class Window {
         }
 
         if (this.type == 0) { // To insert empty windows
-            let currArr = Window.emptyCollection[index];
+            //getFromDatabase("emptyCollection", index);
+            //let currArr = Window.arr;
+            //let currArr = Window.getFromDatabase("emptyCollection", index);
+            //let currArr = Window.emptyCollection[index];
+            let currArr = emptyCollection[index];
+            
             let newIndex = 0;
             // Doing checks to ensure that task does not clash with any existing empty windows.
             while (newIndex < currArr.length && this.isCompletelyAfter(currArr[newIndex])) {
@@ -384,14 +414,21 @@ class Window {
                 console.error("Cannot schedule empty window as it clashes with an existing empty window. Please adjust the start and end times of other windows accordingly.");
             }
         } else { // To insert tasks for the current day and furture days
-            console.log(Window.occupiedCollection);
-            let currArr = Window.fixedFutureArr; // For tasks to be schedule beyond 7 days from now
+            //console.log(Window.occupiedCollection);
+            let currArr = fixedFutureArr;
+            //let currArr = Window.fixedFutureArr; // For tasks to be schedule beyond 7 days from now
+            //TODO: Must insert the formattedDate, which will be the collection name
+            //let currArr = Window.getFromDatabase("fixedFutureArr", index);
+
             if (this.type == 1 && index < 7) { 
                 console.log("I change curr arr");
                 console.log(index);
                 //currArr = localStorage.getItem("Window.occupiedCollection");
-                currArr = Window.occupiedCollection[index];
-                console.log(currArr);
+                //currArr = Window.occupiedCollection[index];
+                currArr = occupiedCollection[index];
+                //Window.getFromDatabase("occupiedCollection", index);
+                //currArr = Window.arr;
+                //console.log(currArr);
             }
             // Doing checks to ensure that task does not clash with any existing fixed, future tasks.
             let newIndex = 0;
@@ -465,7 +502,9 @@ class Window {
             return new Error('Invalid index.')
         }
         if (this.type == 0) {
-            let currArr = Window.emptyCollection[index];
+            //let currArr = Window.emptyCollection[index];
+            let currArr = emptyCollection[index];
+            //let currArr = Window.getFromDatabase("emptyCollection", index);
             console.log("index " + index);
             let startIndex = 0;
             //While start time of given window is after the end time of the current window
@@ -476,7 +515,7 @@ class Window {
             while (endIndex < currArr.length && this.getEndTimeInMs() > currArr[endIndex].getEndTimeInMs()) {
                 endIndex++;
             }
-        
+            console.log(currArr);
             //Removing the empty window correctly by adjusting the start and end times of the previous and subsequent windows if necessary.
             let windowsToAdd = []
             for (let i = startIndex; i <= endIndex; i++) {
@@ -512,8 +551,12 @@ class Window {
             console.log(currArr);
         } else {
             let currArr = Window.fixedFutureArr;
+            //TODO: Must insert the formattedDate, which will be the collection name
+            //let currArr = Window.getFromDatabase("fixedFutureArr", index);
             if (this.type == 1 && index < 8) {
-                currArr = Window.occupiedCollection[index];
+                //currArr = Window.occupiedCollection[index];
+                currArr = occupiedCollection[index];
+                //currArr = Window.getFromDatabase("occupiedCollection", index);
             }
             //Check if the task to be removed exists. Once task is identified, it is removed.
             for (let i = 0; i < currArr.length; i++) {
@@ -657,11 +700,11 @@ class Window {
         */
     }
 
-    static emptyCollection = [];
-    static occupiedCollection = [];
-    static nonFixedCollection = [];
-    static fixedFutureArr = [];
-    static nonFixedFutureArr = [];
+    // static emptyCollection = [];
+    // static occupiedCollection = [];
+    // static nonFixedCollection = [];
+    // static fixedFutureArr = [];
+    // static nonFixedFutureArr = [];
 
     /**
      * To be called when users first register
@@ -703,24 +746,30 @@ class Window {
         //let endTime = new Time(RoutineInfo.getSleepTime.getHours(), RoutineInfo.getSleepTime.getMins());
         // Creating window arrays for the first week
         for (let i = 0; i < 7; i++) {
-            Window.emptyCollection.push([]);
-            Window.occupiedCollection.push([]);
+            //Window.emptyCollection.push([]);
+            //Window.occupiedCollection.push([]);
+            emptyCollection.push([]);
+            occupiedCollection.push([]);
             //let occupiedArr = localStorage.getItem("Window.occupiedCollection");
             //console.log("occupiedArr is " + occupiedArr);
             // occupiedArr.push([]);
             console.log("i have pushed");
-            Window.nonFixedCollection.push([[], []]); //0 is priority array, 1 is the normal array
+            //Window.nonFixedCollection.push([[], []]); //0 is priority array, 1 is the normal array
+            nonFixedCollection.push([[], []]);
     
             if (startTime.getHours() > endTime.getHours()) {
                 let newWindow1 = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), new Time(0, 0), endTime, 0);
                 let newWindow2 = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, new Time(23, 59), 0);
     
-                Window.emptyCollection[i].push(newWindow1);
-                Window.emptyCollection[i].push(newWindow2);
+                //Window.emptyCollection[i].push(newWindow1);
+                //Window.emptyCollection[i].push(newWindow2);
+                emptyCollection[i].push(newWindow1);
+                emptyCollection[i].push(newWindow2);
             } else {
                 let newWindow = new Window("Empty", currTime.getFullYear(), currTime.getMonth(), currTime.getDate(), startTime, endTime, 0);
     
-                Window.emptyCollection[i].push(newWindow);
+                //Window.emptyCollection[i].push(newWindow);
+                emptyCollection[i].push(newWindow);
             }
         }
         //For tracing purposes
@@ -730,10 +779,16 @@ class Window {
         console.log("nonFixedCollection is now " + Window.nonFixedCollection);
         console.log("fixedFutureArr is now " + Window.fixedFutureArr);
         */
+        for (let j = 0; j < occupiedCollection.length; j ++) {
+            console.log(occupiedCollection[j]);
+            console.log("occupiedCollection at index " + j + " is " + occupiedCollection[j]);
+        }
+        /*
         for (let j = 0; j < Window.occupiedCollection.length; j ++) {
             console.log(Window.occupiedCollection[j]);
             console.log("occupiedCollection at index " + j + " is " + Window.occupiedCollection[j]);
         }
+        */
         /*
         for (let j = 0; j < Window.emptyCollection.length; j ++) {
             console.log("emptyCollection at index " + j + " is " + Window.emptyCollection[j]);
@@ -747,7 +802,24 @@ class Window {
         */
     }
     
+    static testFunction() {
+        let newTask = [new Window("Empty", 2036, 6, 16, new Time(8, 0), new Time(23, 59), 0)];
+        console.log("i come to testFunction")
+        //let x = [1, 2];
+        //let newTask = 1;
+        //emptyCollection.push(newTask);
+        //console.log(x);
+        localStorage.setItem("newnewtest", JSON.stringify(newTask));
+    }
 }
+//var emptyCollection = [];
+var occupiedCollection = [];
+var nonFixedCollection = [];
+var fixedFutureArr = [];
+var nonFixedFutureArr = [];
+
+//localStorage.setItem("test", JSON.stringify(Window.emptyCollection));
+
 
 // TEMPORARY ARRAYS TO CHECK IF WINDOW FUNCTIONS ARE WORKING AS THEY SHOULD
 //Window.occupiedCollection = []; // Contains 7 'Window.prototype.occupiedArr' 

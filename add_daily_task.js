@@ -112,6 +112,7 @@ function check() {
     onceOnly = false;
     Window.initialise(); //Strictly for testing purposes only
   }
+  //Window.testFunction();
   console.log("I enter the check() function");
   var cat = document.getElementsByName("select");
   let time = document.getElementById("dateInput").value;

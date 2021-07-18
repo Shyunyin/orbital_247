@@ -483,17 +483,9 @@ function update_totalRemaining_toDB() {
   console.log(result);
 
 
-<<<<<<< HEAD:add_daily_task.html
-        // var arr = [];
-        // var arr2 = []
-        // function getFromDatabase() {
-        //   let array = [];
-        //   cloudDB.collection("allArrays").doc("occupiedCollection").collection("0")
-=======
         // var array = [];
         // function getFromDatabase() {
         //   cloudDB.collection("allArrays").doc("occupiedCollection").collection("Day 0")
->>>>>>> feefdd3591190c8766f366fa5aebc90a60f16733:add_daily_task.php
         //   .get()
         //   .then((querySnapshot) => {
         //     querySnapshot.forEach((doc) => {

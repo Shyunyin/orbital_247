@@ -128,8 +128,9 @@ class Time {
         }
         return hours.toString() + ":" + mins.toString();
     }
-
 }
+
+
 
 //Time.timeRegistered = Math.round(Date.now()/10000) * 10000; //To the nearest minute (Need to double check calculation)
 

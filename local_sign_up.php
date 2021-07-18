@@ -172,9 +172,9 @@
             <div>Create your account now!</div> <br>
         </div>
 
-		<form name="login">
+		<form name="login" action="includes/signup.inc.php" method="post">
 			<div class="login">
-				<input type="text" placeholder="Username" name="userid" id="name"/>
+				<input type="text" placeholder="Username" name="username" id="name"/>
 				<br />
 				<input type="text" placeholder="Email" name="email" id="email_id" /><br />
 				<input type="password" placeholder="Password" name="pwd" id="pwd"/><br />
@@ -183,16 +183,16 @@
 					placeholder="Confirm Password"
 					name="cfm_pwd"
 				/><br />
-				<input type="button" onclick="check(this.form)" value="Confirm" />
+				<input type="button" onclick="check(this.form)" value="Confirm" name="submit"/>
 			</div>
 
 			<footer class="footer">
 				<a class="member" href="http://127.0.0.1:5501/login.html">Already have an account?</a>
 			</footer>
-
 		</form>
 
 		<script language="javascript">
+			//to check if passwords keyed in are the same
 			function check(form) {
 				if (form.pwd.value == form.cfm_pwd.value) {
 					return register();

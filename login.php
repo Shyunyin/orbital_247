@@ -192,13 +192,13 @@
 		<br />
 
 
-		<form name="login">
+		<form name="login" action="includes/login.inc.php" method="post">
 			<div class="login">
 				<div class="or">---- or ----</div>
                 <!-- need to change type and name to email but need to update css accordingly-->
 				<input type="text" placeholder="Email" name="userid" id="email_id"/><br />
 				<input type="password" placeholder="Password" name="pwd" id="pwd"/><br />
-				<input type="button" onclick="check(this.form)" value="Log In" />
+				<input type="button" onclick="check(this.form)" value="Log In" name="submit"/>
 			</div>
 
 			<footer class="footer">
@@ -208,6 +208,8 @@
 				<a class="forgotten" href="http://127.0.0.1:5501/forgot_password.html">Forgot password?</a>
 			</footer>
 		</form>
+
+		
 
 		<script language="javascript">
 			function check(form) {

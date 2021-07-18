@@ -196,8 +196,8 @@
 			<div class="login">
 				<div class="or">---- or ----</div>
                 <!-- need to change type and name to email but need to update css accordingly-->
-				<form action="includes/login.inc.php" method="post">
-					<input type="text" placeholder="Username/Email" name="name" id="email_id"/><br />
+				<form action="includes/login.inc.php" method="POST">
+					<input type="text" placeholder="Username/Email" name="uid" id="email_id"/><br />
 					<input type="password" placeholder="Password" name="pwd" id="pwd"/><br />
 					<button type="submit" name="submit">Log In</button>
 				</form>	

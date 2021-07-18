@@ -172,26 +172,25 @@
             <div>Create your account now!</div> <br>
         </div>
 
-		<form name="login" action="includes/signup.inc.php" method="post">
-			<div class="login">
-				<input type="text" placeholder="Username" name="username" id="name"/>
+		
+ 		<div class="login">
+			<form action="includes/signup.inc.php" method="post">
+				<input type="text" placeholder="Username" name="username" id="name">
 				<br />
-				<input type="text" placeholder="Email" name="email" id="email_id" /><br />
-				<input type="password" placeholder="Password" name="pwd" id="pwd"/><br />
-				<input
-					type="password"
-					placeholder="Confirm Password"
-					name="cfm_pwd"
-				/><br />
-				<input type="button" onclick="check(this.form)" value="Confirm" name="submit"/>
-			</div>
+				<input type="text" placeholder="Email" name="email" id="email_id"><br />
+				<input type="password" placeholder="Password" name="pwd" id="pwd"><br />
+				<input type="password" placeholder="Confirm Password" name="cfm_pwd">
+				<br />
+				<input type="button" value="Confirm" name="submit">
+			</form>
+		</div>
 
 			<footer class="footer">
 				<a class="member" href="http://127.0.0.1:5501/login.html">Already have an account?</a>
 			</footer>
-		</form>
+	
 
-		<script language="javascript">
+		<!-- <script language="javascript">
 			//to check if passwords keyed in are the same
 			function check(form) {
 				if (form.pwd.value == form.cfm_pwd.value) {
@@ -200,18 +199,18 @@
 					alert("Passwords do not match. Please re-enter them.");
 				}
 			}
-		</script>
-		<!-- The core Firebase JS SDK is always required and must be listed first -->
-        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+		</script> -->
+		 <!--The core Firebase JS SDK is always required and must be listed first -->
+        <!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script> -->
 
 
         <!-- TODO: Add SDKs for Firebase products that you want to use
             https://firebase.google.com/docs/web/setup#available-libraries -->
-        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+        <!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script> -->
+        <!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script> -->
+		<!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script> -->
 
-        <script>
+        <!-- <script>
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 			const firebaseConfig = {
@@ -274,8 +273,7 @@
 						window.alert("Error: " + errorMessage)
 					});
             }
-        </script>
-
+        </script> -->
 
 	</body>
 	

@@ -192,13 +192,15 @@
 		<br />
 
 
-		<form name="login" action="includes/login.inc.php" method="post">
+		
 			<div class="login">
 				<div class="or">---- or ----</div>
                 <!-- need to change type and name to email but need to update css accordingly-->
-				<input type="text" placeholder="Email" name="userid" id="email_id"/><br />
-				<input type="password" placeholder="Password" name="pwd" id="pwd"/><br />
-				<input type="button" onclick="check(this.form)" value="Log In" name="submit"/>
+				<form name="login" action="includes/login.inc.php" method="post">
+					<input type="text" placeholder="Email" name="userid" id="email_id"/><br />
+					<input type="password" placeholder="Password" name="pwd" id="pwd"/><br />
+					<input type="button" value="Log In" name="submit"/>
+				</form>	
 			</div>
 
 			<footer class="footer">
@@ -211,7 +213,7 @@
 
 		
 
-		<script language="javascript">
+		<!-- <script language="javascript">
 			function check(form) {
 				//if (form.userid.value == "hello" && form.pwd.value == "world") {
                     return (login());
@@ -223,96 +225,96 @@
 				//	alert("Incorrect username or password! Please try again");
 				//}
 			}
-		</script>
+		</script> -->
 
         <!-- The core Firebase JS SDK is always required and must be listed first -->
-        <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+        <!-- <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script> -->
 
 
         <!-- TODO: Add SDKs for Firebase products that you want to use
             https://firebase.google.com/docs/web/setup#available-libraries -->
-        <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
+        <!-- <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-auth.js"></script> -->
+        <!-- <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script> -->
 		<!--Importing Firebase and Cloud Firestore libraries-->
-		<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+		<!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script> -->
 
-        <script>
+        <!-- <script> -->
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        var firebaseConfig = {
-            apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-            authDomain: "orbital-24-7.firebaseapp.com",
-            projectId: "orbital-24-7",
-            storageBucket: "orbital-24-7.appspot.com",
-            messagingSenderId: "459091456870",
-            appId: "1:459091456870:web:21134477e94d50e25ecea7",
-            measurementId: "G-WQMCMBMFCK"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
+        // var firebaseConfig = {
+        //     apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
+        //     authDomain: "orbital-24-7.firebaseapp.com",
+        //     projectId: "orbital-24-7",
+        //     storageBucket: "orbital-24-7.appspot.com",
+        //     messagingSenderId: "459091456870",
+        //     appId: "1:459091456870:web:21134477e94d50e25ecea7",
+        //     measurementId: "G-WQMCMBMFCK"
+        // };
+        // // Initialize Firebase
+        // firebase.initializeApp(firebaseConfig);
+        // firebase.analytics();
         
 
-            function login() {
-                //Must use web v8
-                var userEmail = document.getElementById("email_id").value;
-                var userPassword = document.getElementById("pwd").value;
+        //     function login() {
+        //         //Must use web v8
+        //         var userEmail = document.getElementById("email_id").value;
+        //         var userPassword = document.getElementById("pwd").value;
                 
-                firebase.auth().signInWithEmailAndPassword(userEmail, userPassword)
-                    .then((userCredential) => {
-                        // Signed in
-                        var user = userCredential.user;
-                        window.alert("Welcome " + userEmail + ". " + "For a start, please input your routine tasks such as exercise times, meal times, daily, weekly, biweekly or monthly events!");
-						window.location.href = "http://127.0.0.1:5501/add_routine_task.html"; //change to productivity page
-                    })
-                    .catch((error) => {
-                        var errorCode = error.code;
-                        var errorMessage = error.message;
-                        window.alert("Error: " + errorMessage);
-                    });
-            }
+        //         firebase.auth().signInWithEmailAndPassword(userEmail, userPassword)
+        //             .then((userCredential) => {
+        //                 // Signed in
+        //                 var user = userCredential.user;
+        //                 window.alert("Welcome " + userEmail + ". " + "For a start, please input your routine tasks such as exercise times, meal times, daily, weekly, biweekly or monthly events!");
+		// 				window.location.href = "http://127.0.0.1:5501/add_routine_task.html"; //change to productivity page
+        //             })
+        //             .catch((error) => {
+        //                 var errorCode = error.code;
+        //                 var errorMessage = error.message;
+        //                 window.alert("Error: " + errorMessage);
+        //             });
+        //     }
 
 			
-			var provider = new firebase.auth.GoogleAuthProvider();
-            //Google authentication
-            function google_sign_in() {
-				//window.alert("i am clicked")
-                firebase.auth()
-                    .signInWithPopup(provider)
-                    .then(result=>{
-						console.log(result)
-                        //firebase.auth.OAuthCredential = T7dI67VIadLbD8mzBzUkTkpG;
-                        //var credential = result.credential;
+		// 	var provider = new firebase.auth.GoogleAuthProvider();
+        //     //Google authentication
+        //     function google_sign_in() {
+		// 		//window.alert("i am clicked")
+        //         firebase.auth()
+        //             .signInWithPopup(provider)
+        //             .then(result=>{
+		// 				console.log(result)
+        //                 //firebase.auth.OAuthCredential = T7dI67VIadLbD8mzBzUkTkpG;
+        //                 //var credential = result.credential;
 
-                        // This gives you a Google Access Token. You can use it to access the Google API.
-                        //var token = credential.accessToken;
-                        // The signed-in user info.
-                        //var user = result.user;
-                        // ...
-						//return ("http://127.0.0.1:5502/afterlogin.html");
-						window.alert("Welcome!" + "For a start, please input your routine tasks such as exercise times, meal times, daily, weekly, biweekly or monthly events!");
-						window.location.href = "http://127.0.0.1:5501/add_routine_task.html"; //change to productivity page
+        //                 // This gives you a Google Access Token. You can use it to access the Google API.
+        //                 //var token = credential.accessToken;
+        //                 // The signed-in user info.
+        //                 //var user = result.user;
+        //                 // ...
+		// 				//return ("http://127.0.0.1:5502/afterlogin.html");
+		// 				window.alert("Welcome!" + "For a start, please input your routine tasks such as exercise times, meal times, daily, weekly, biweekly or monthly events!");
+		// 				window.location.href = "http://127.0.0.1:5501/add_routine_task.html"; //change to productivity page
 				
-                    }).catch(error=>{
-						console.log(error)
-                        // Handle Errors here.
-                        var errorCode = error.code;
-                        var errorMessage = error.message;
-                        // The email of the user's account used.
-                        var email = error.email;
-                        // The firebase.auth.AuthCredential type that was used.
-                        var credential = error.credential;
-						window.alert("Error: " + errorMessage)
-                        // ...
-                    });
-            }
-        </script>
+        //             }).catch(error=>{
+		// 				console.log(error)
+        //                 // Handle Errors here.
+        //                 var errorCode = error.code;
+        //                 var errorMessage = error.message;
+        //                 // The email of the user's account used.
+        //                 var email = error.email;
+        //                 // The firebase.auth.AuthCredential type that was used.
+        //                 var credential = error.credential;
+		// 				window.alert("Error: " + errorMessage)
+        //                 // ...
+        //             });
+        //     }
+        // </script>
 
 	</body>
 </html>
 
 
-		<style type="text/css">
+		<!-- <style type="text/css">
 			@import url("https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap");
 
 			#customBtn {
@@ -358,28 +360,27 @@
 				top: calc(15%);
 				left: calc(25% - 50px);
 			}
-		</style>
-	</head>
-	<body>
+		</style> -->
+		<!-- <body> -->
 		<!-- In the callback, you would hide the gSignInWrapper element on a
     successful sign in -->
-		<div id="gSignInWrapper">
-			<div id="customBtn" class="customGPlusSignIn" onclick=google_sign_in()>
-				<div class="google_icon">
-					<img
+		<!-- <div id="gSignInWrapper"> -->
+			<!-- <div id="customBtn" class="customGPlusSignIn" onclick=google_sign_in()> -->
+				<!-- <div class="google_icon"> -->
+					<!-- <img
 						src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png"
 						height="29px"
 						width="29px"
-					/>
-				</div>
+					/> -->
+				<!-- </div> -->
 				<!--data-onsuccess="onSignIn"-->
-				<span class="buttonText">Log in with Google</span>
-			</div>
-		</div>
-		<div id="name"></div>
-		<script>
+				<!-- <span class="buttonText">Log in with Google</span> -->
+			<!-- </div> -->
+		<!-- </div> -->
+		<!-- <div id="name"></div> -->
+		<!-- <script>
 			//startApp();
-		</script>
-	</body> -->
-</html>
+		</script> -->
+	<!-- </body> --> -->
+
 

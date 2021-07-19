@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html>
 
@@ -40,6 +43,14 @@
             <button class="button" onclick="routine()">Routine</button>
         </div>
         <div class="main"></div>
+    </div>
+
+    <div class = logout>
+        <?php
+            if (isset($_SESSION["useruid"])) {
+                echo "<li><a href='includes/logout.inc.php'>Log out</a></li>";
+            }
+        ?>
     </div>
 
     <!--Heading content using javascript-->

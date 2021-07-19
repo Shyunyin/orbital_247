@@ -23,6 +23,12 @@
   position: absolute;
   z-index: 1;
 }
+#logout {
+  position: absolute;
+  z-index: 10;
+  font-family: "Signika Negative", sans-serif;
+  float: right;
+}
 .btn-group .button {
   font-family: "Signika Negative", sans-serif;
   text-align: center;

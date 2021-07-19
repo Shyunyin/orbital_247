@@ -196,13 +196,23 @@
 			<div class="login">
 				<div class="or">---- or ----</div>
                 <!-- need to change type and name to email but need to update css accordingly-->
-				<form name="login" action="includes/login.inc.php" method="post">
-					<input type="text" placeholder="Email" name="userid" id="email_id"/><br />
+				<form action="includes/login.inc.php" method="POST">
+					<input type="text" placeholder="Username/Email" name="uid" id="email_id"/><br />
 					<input type="password" placeholder="Password" name="pwd" id="pwd"/><br />
-					<input type="button" value="Log In" name="submit"/>
+					<button type="submit" name="submit">Log In</button>
 				</form>	
 			</div>
-
+			<!-- Error handling -->
+			<?php
+				if (isset($_GET["error"])) {
+					if ($_GET["error"] == "emptyinput") {
+						echo "<p>Fill in all fields!</p>";
+					}
+					else if ($_GET["error"] == "wronglogin") {
+						echo "<p>Incorrect login info!</p>";
+					}
+				}
+			?>
 			<footer class="footer">
 				<a class="create" href="http://127.0.0.1:5501/local_sign_up.html"
 					>Don't have an account?</a

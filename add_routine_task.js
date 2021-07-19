@@ -334,7 +334,8 @@ class MonthlyTask extends RoutineTask {
  */
 var category_num;
 
-function catFunction(button_switch) {
+function catFunction() {
+  var button_switch;
   if (button_switch === 0) {
     document.querySelector("body div#categories li:last-child input#work").style.backgroundColor = "white";
     document.querySelector("body div#categories li:last-child input#exercise").style.backgroundColor = "#e3aba1";
@@ -362,6 +363,7 @@ function catFunction(button_switch) {
     document.querySelector("body div#categories li:last-child input#meal").style.backgroundColor = "#e3aba1";
   }
   category_num = button_switch;
+  return button_switch;
 }
 
 
@@ -450,10 +452,10 @@ function newWindow() {
   window.location.href = "http://127.0.0.1:5501/add_routine_task.html";
 }
 
-function mainSchedule() {
-  window.alert("Let's input more details to set-up!");
-  window.location.href = "http://127.0.0.1:5501/WakeUpTime/wakeup.html";
-}
+// function wakeupSchedule() {
+//   window.alert("Let's input more details to set-up!");
+//   window.location.href = "http://127.0.0.1:5501/WakeUpTime/wakeup.html";
+// }
 
 /*For instructions pop-up*/
 // window.onload = function() {

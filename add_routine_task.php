@@ -1,5 +1,7 @@
 <?php
     session_start();
+    require_once "../includes/dbh.inc.php";
+    require_once "../includes/functions.inc.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -9,23 +11,6 @@
     <script type="text/javascript" type="module" src="add_routine_task.js"></script>
     <script type="text/javascript" type="module" src="Routine_Final.js"></script>
     <script type="text/javascript" type="module" src="Window.js"></script>
-    <!--<script type="text/javascript" type="module" src="combined.js"></script>-->
-    <!---
-    <script type="text/javascript" type="module" src="RoutineTasks.js"></script>
-    <script type="text/javascript" type="module" src="DailyTask.js"></script>
-    <script type="text/javascript" type="module" src="WeeklyTask.js"></script>
-    <script type="text/javascript" type="module" src="BiweeklyTask.js"></script>
-    <script type="text/javascript" type="module" src="MonthlyTask.js"></script>
-    -->
-    <!--<script type="text/javascript" type="module" src="Time.js"></script>-->
-    <!--
-    <script type="module">
-        import {DailyTask} from './RoutineTasks/DailyTask.js';
-        import {WeeklyTask} from './RoutineTasks/WeeklyTask.js';
-        import {BiweeklyTask} from './RoutineTasks/BiweeklyTask.js';
-        import {MonthlyTask} from './RoutineTasks/MonthlyTask.js';
-    </script>
-    -->
     <link rel="stylesheet" href="add_routine_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
@@ -38,6 +23,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
 
+    <!-- <form action="../includes/add_routine_task_inc.php" method="POST"> -->
     <!-- Parent-child relationship for inline-->
     <div id="title">
         <li>
@@ -112,6 +98,7 @@
         <!--Use javascript to replace??-->
         <div class="dropdown">
             <li>
+            <!-- <form action="" method="POST"> -->
                 <select id="weeklydropdown" name="weeklydropdown" oninput="Update(this.value,'weekly')" style="display: none;">
                     <option value="" selected disabled hidden>Choose a day</option>
                     <option value="0">Monday</option>
@@ -122,8 +109,10 @@
                     <option value="5">Saturday</option>
                     <option value="6">Sunday</option>
                 </select>
+            <!-- </form> -->
             </li>
             <li>
+            <!-- <form action="" method="POST">     -->
                 <select id="biweeklydropdown" name="biweeklydropdown" oninput="Update(this.value,'biweekly')" style="display: none;">
                     <!--Can replace w javascript??-->
                     <option value="" selected disabled hidden>Choose a day</option>
@@ -135,11 +124,14 @@
                     <option value="5">Saturday</option>
                     <option value="6">Sunday</option>
                 </select>
+            <!-- </form> -->
+            <!-- <form action="" method="POST"> -->
                 <select id="chooseWeeks" name="chooseWeeks" oninput="Update(this.value,'biweeklychoose')" style="display: none;">
                     <option value="" selected disabled hidden>Current/Next</option>
                     <option value="0">Current Week</option>
                     <option value="1">Next Week</option>
                 </select>
+            <!-- </form> -->
             </li>
             <li>
                 <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')" style="display: none;">
@@ -153,13 +145,13 @@
         <li>
             <div class="startTime">
                 <h3>Start time:</h3>
-                <input type="time" id="startTime" oninput="Update(this.value, 'start')">
+                <input type="time" id="startTime" name="startTime" oninput="Update(this.value, 'start')">
             </div>
         </li>
         <li>
             <div class="endTime">
                 <h3>End time:</h3>
-                <input type="time" id="endTime" oninput="Update(this.value, 'end')">
+                <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
             </div>
         </li>
     </div>
@@ -168,10 +160,112 @@
     <div class="btn-group-actions">
         <!--<button id="add" onclick="Add(); newWindow();">Submit and Add another routine task</button>-->
         <button id="add" onclick="Add();">Submit and Add another routine task</button>
-        <button id="done" onclick="mainSchedule(); Done();">Submit and Done adding ALL routine tasks</button>
+        <button type ="submit" name="submit" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>
+        <!-- wakeupSchedule(); --> 
     </div>
 
     <script>
+        let NameOfTask = document.getElementById("taskName").value; //main taskName input
+        //category number can get from category_num in the other javascript file
+        let Start = document.getElementById("startTime");
+        let StartArr = [parseInt(Start.value.substr(0, 2)), parseInt(Start.value.substr(3, 4))]; //main array for start time
+        let End = document.getElementById("endTime"); 
+        let EndArr = [parseInt(End.value.substr(0, 2)), parseInt(End.value.substr(3, 4))]; //main array for end time
+        let Freq = 0;
+        /*checkRadioValue() function returns the freq number:
+         * Daily: 0, weekly: 1, biweekly: 2, monthly: 3
+        */
+        function checkRadioValue() { 
+            console.log("i come here to checkRadioValue()")
+            var radio = document.getElementsByName("choose");
+            for(var i = 0; i < radio.length; i++) {
+                //check which radio is checked
+                if(radio[i].checked){ 
+                    return i;
+                }
+            }
+        }
+        let freq_num = checkRadioValue();
+        //for now freq_num and taskCategory has no update function so they are saved as it is first
+       
+        let SpecificFreqTwo = "null"; //referencing only for biweekly 
+        let SpecificFreq;
+        /*getFreq(): returns the ID of the frequency to retried*/
+        function getFreq(freq_num) {
+            if (freq_num === 1) {
+                SpecificFreq = document.getElementById("weeklydropdown");
+            } else if (freq_num === 2) {
+                SpecificFreq = document.getElementById("biweeklydropdown");
+                SpecificFreqTwo = document.getElementById("chooseWeeks");
+            } else if (freq_num === 3) {
+                SpecificFreq = document.getElementById("date");
+            }
+        }
+    
+        //TODO: To be confirmed with Shyun Yin
+        let nameOfTask, start, startArr, end, endArr, cat_num, startHour, startMin, endHour, endMin;
+        let date = null;
+        let day = null;
+        let week = null;
+        let freq_num = 0;
+        cat_num = catFunction();
+
+        function Update(val, type) {
+            if(type=='name') {
+                nameOfTask=val;
+            } else if(type=='start') {
+                start=val;
+                startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
+                startHour = startArr[0];
+                startMin = startArr[1];
+            } else if(type=='end') {
+                end=val;
+                endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
+                endHour = endArr[0];
+                endMin = endArr[1];
+            } else if(type=='weekly') {
+                day = val;
+                freq_num = 1;
+            } else if (type=='biweekly') {
+                day = val;
+                freq_num = 2;
+            } else if (type=='biweeklychoose') {
+                week = val;
+            } else if (type=='date') {
+                date = val;
+                freq_num = 3;
+            }
+        }  
+    </script>
+
+    <?php
+        $taskName = "<script>document.writeln(nameOfTask);</script>";
+        $taskCategory = "<script>document.writeln(cat_num);</script>";
+        $startTimeHour = "<script>document.writeln(startHour);</script>";
+        $startTimeMin = "<script>document.writeln(startMin);</script>";
+        $endTimeHour = "<script>document.writeln(endHour);</script>";
+        $endTimeMin = "<script>document.writeln(endMin);</script>";
+        $freq = "<script>document.writeln(freq_num);</script>";
+        $day = "<script>document.writeln(day);</script>";
+        $week = "<script>document.writeln(week);</script>";
+        $date = "<script>document.writeln(date);</script>";
+        $user = -1;
+
+        // echo "print";
+        //  $_SESSION['useruid'];
+
+        // $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskDate, userid) 
+        // VALUES ($taskName, $taskCategory, $startTimeHour, $startTimeMin, $endTimeHour, $endTimeMin, $freq, $day, $week, $date, $user);";
+        // mysqli_query($conn, $sql);
+        // echo "$taskName";
+        // echo "$taskCategory";
+        // header("location: ../add_routine_task.php"); 
+        // exit();
+    ?>
+
+ <!-- </form> -->
+
+    <!--<script>
         //------------------Defining of variables------------------//
 
        /*For referencing later on*/
@@ -296,7 +390,7 @@
             Add_Doc_WithID();
         }
 
-    </script>
+    </script> -->
 
 </body>
 

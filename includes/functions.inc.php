@@ -1,4 +1,5 @@
 <?php
+require_once 'dbh.inc.php';
 
 function emptyInputSignup($name, $email, $pwd, $pwdRepeat) {
     $result; //return true or false
@@ -64,21 +65,42 @@ function uidExists($conn, $username, $email) {
     mysqli_stmt_close($stmt);
 }
 
+/*
+function uidExists($conn, $username, $email) {
+    $sql = "SELECT * FROM users WHERE usersUid = ?;";
+    $stmt = mysqli_stmt_init($conn); //prepared statement
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../local_sign_up.php?error=stmtfailed"); 
+        exit();
+    } else {
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+        $resultCheck = my_sqli_stmt_num_rows($stmt);
+        if ($resultCheck > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+*/
+
 function createUser($conn, $name, $email, $pwd) {
     $sql = "INSERT INTO users (usersUid, usersEmail, usersPwd) VALUES (?, ?, ?);";
     $stmt = mysqli_stmt_init($conn); //prepared statement
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../local_sign_up.php?error=stmtfailed"); 
         exit();
-    } 
+    } else { 
+        $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-    $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
-
-    mysqli_stmt_bind_param($stmt, "sss", $username, $email, $hashedPwd);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    header("location: ../local_sign_up.php?error=none"); 
-    exit();
+        mysqli_stmt_bind_param($stmt, "sss", $username, $email, $hashedPwd);
+        mysqli_stmt_execute($stmt);
+        //mysqli_stmt_close($stmt);
+        header("location: ../local_sign_up.php?error=none"); 
+        exit();
+    }
 }
 
 function emptyInputLogin($username, $pwd) {

@@ -174,7 +174,7 @@
 
 		
  		<div class="login">
-			<form action="includes/signup.inc.php" method="POST">
+			<form action="../includes/signup.inc.php" method="POST">
 				<input type="text" name="username" id="name" placeholder="Username" >
 				<br />
 				<input type="text" placeholder="Email" name="email" id="email_id"><br />

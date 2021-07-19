@@ -46,6 +46,9 @@
         }
 
         createUser($conn, $name, $email, $pwd);
+        $stmt = mysqli_stmt_init($conn);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
 
     } else {
         //echo "<p>Sign up not successful</p>";

@@ -81,9 +81,6 @@ function createUser($conn, $name, $email, $pwd) {
     exit();
 }
 
-<<<<<<< HEAD
-?>
-=======
 function emptyInputLogin($username, $pwd) {
     $result; //return true or false
     if (empty($username) || empty($pwd)) { //inbuilt php data
@@ -118,4 +115,5 @@ function loginUser($conn, $username, $pwd) {
         exit();
     }
 }
->>>>>>> 3672ac5cf272664e574e820ecb95bce104e382fb
+
+?>

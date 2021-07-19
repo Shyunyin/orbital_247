@@ -8,7 +8,8 @@
         $pwd = $_POST["pwd"];
         $pwdRepeat = $_POST["cfm_pwd"];
 
-        require_once 'dbh.inc.php';
+        //require_once 'dbh.inc.php';
+        include_once 'dbh.inc.php';
         require_once 'functions.inc.php';
 
         /*----------------------------Errorhandling----------------------------*/

@@ -174,25 +174,14 @@
 
 		
  		<div class="login">
-<<<<<<< HEAD
-			<!--<form action="login_test.php" method="post">-->
-			<form action="includes/signup.inc.php" method="post">
-				<input type="text" placeholder="Username" name="username" id="name">
-=======
 			<form action="includes/signup.inc.php" method="POST">
 				<input type="text" name="username" id="name" placeholder="Username" >
->>>>>>> 3672ac5cf272664e574e820ecb95bce104e382fb
 				<br />
 				<input type="text" placeholder="Email" name="email" id="email_id"><br />
 				<input type="password" placeholder="Password" name="pwd" id="pwd"><br />
 				<input type="password" placeholder="Confirm Password" name="cfm_pwd">
 				<br />
-<<<<<<< HEAD
-				<button type ="submit" name ="signup-submit">Confirm</button>
-				<!--<input type="button" value="Confirm" name="submit">-->
-=======
 				<button type="submit" name="submit">Confirm</button>
->>>>>>> 3672ac5cf272664e574e820ecb95bce104e382fb
 			</form>
 		</div>
 

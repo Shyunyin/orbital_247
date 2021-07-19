@@ -174,6 +174,7 @@
 
 		
  		<div class="login">
+			<!--<form action="login_test.php" method="post">-->
 			<form action="includes/signup.inc.php" method="post">
 				<input type="text" placeholder="Username" name="username" id="name">
 				<br />
@@ -181,7 +182,8 @@
 				<input type="password" placeholder="Password" name="pwd" id="pwd"><br />
 				<input type="password" placeholder="Confirm Password" name="cfm_pwd">
 				<br />
-				<input type="button" value="Confirm" name="submit">
+				<button type ="submit" name ="signup-submit">Confirm</button>
+				<!--<input type="button" value="Confirm" name="submit">-->
 			</form>
 		</div>
 

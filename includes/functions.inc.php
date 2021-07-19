@@ -80,3 +80,5 @@ function createUser($conn, $name, $email, $pwd) {
     header("location: ../local_sign_up.php?error=none"); 
     exit();
 }
+
+?>

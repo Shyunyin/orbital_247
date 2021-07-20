@@ -2,9 +2,9 @@
  * To be changed if link changes
  */
 function schedule() {
-    window.location.href = "http://127.0.0.1:5501/main_schedule.html";
+    window.location.href = "http://localhost/main_schedule.php";
 }
 function statistics() {
-    window.location.href = "http://127.0.0.1:5501/statistics.html";
+    window.location.href = "http://localhost/statistics.php";
 }
 

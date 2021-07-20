@@ -2,10 +2,10 @@
  * To be changed if link changes
  */
 function statistics() {
-    window.location.href = "http://127.0.0.1:5501/statistics.html";
+    window.location.href = "http://localhost/statistics.php";
 }
 function routine() {
-    window.location.href = "http://127.0.0.1:5501/routine.html";
+    window.location.href = "http://localhost/routine.php";
 }
 
 let dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];

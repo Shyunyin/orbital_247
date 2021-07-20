@@ -160,6 +160,7 @@
 			}
 
 			#confirm {
+				font-family: 'Signika Negative', sans-serif;
 				background-color: #e3aba1; 
 				border-radius: 5px; 
 				margin-top: 20px;
@@ -219,7 +220,7 @@
 			}
 		?>
 			<footer class="footer">
-				<a class="member" href="http://127.0.0.1:5501/login.html">Already have an account?</a>
+				<a class="member" href="http://localhost/login.php">Already have an account?</a>
 			</footer>
 	
 

@@ -1,3 +1,8 @@
+<!DOCTYPE HTML>
+<html?>
+    <body>
+        <script>
+
 <?php
     if (isset($_POST["submit"])) {
         /*

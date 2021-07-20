@@ -1,11 +1,10 @@
 <?php
-    // session_start();
-    // include "../includes/dbh.inc.php";
-    // include "../includes/functions.inc.php";
+    session_start();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
+<form action="" method="POST">
     <title>Add routine task</title>
     <script type="text/javascript" type="module" src="add_routine_task.js"></script>
     <!--<script type="text/javascript" type="module" src="Routine_Final.js"></script>-->
@@ -31,7 +30,7 @@
         <!-- INPUT for taskName-->
         <li>
             <form>
-                <input type="text" id="taskName" name="taskName" size="70"><br>
+                <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value, 'name')"><br>
             </form>
         </li>
     </div>
@@ -98,7 +97,7 @@
         <div class="dropdown">
             <li>
             <!-- <form action="" method="POST"> -->
-                <select id="weeklydropdown" name="weeklydropdown" style="display: none;">
+                <select id="weeklydropdown" name="weeklydropdown" style="display: none;" oninput="Update(this.value, 'weekly')">
                     <option value="" selected disabled hidden>Choose a day</option>
                     <option value="0">Monday</option>
                     <option value="1">Tuesday</option>
@@ -112,7 +111,7 @@
             </li>
             <li>
             <!-- <form action="" method="POST">     -->
-                <select id="biweeklydropdown" name="biweeklydropdown" style="display: none;">
+                <select id="biweeklydropdown" name="biweeklydropdown" style="display: none;" oninput="Update(this.value, 'biweekly')">
                     <!--Can replace w javascript??-->
                     <option value="" selected disabled hidden>Choose a day</option>
                     <option value="0">Monday</option>
@@ -125,7 +124,7 @@
                 </select>
             <!-- </form> -->
             <!-- <form action="" method="POST"> -->
-                <select id="chooseWeeks" name="chooseWeeks" style="display: none;">
+                <select id="chooseWeeks" name="chooseWeeks" style="display: none;" oninput="Update(this.value, 'biweeklychoose')">
                     <option value="" selected disabled hidden>Current/Next</option>
                     <option value="0">Current Week</option>
                     <option value="1">Next Week</option>
@@ -133,7 +132,7 @@
             <!-- </form> -->
             </li>
             <li>
-                <input type="number" id="date" name="date" min="1" max="31" style="display: none;">
+                <input type="number" id="date" name="date" min="1" max="31" style="display: none;" oninput="Update(this.value, 'date')">
                 <!--<h5 id="instruction" class="instruction" style="display: none;">Please key in a number from 1-31</h5>-->
             </li>
         </div>
@@ -144,13 +143,13 @@
         <li>
             <div class="startTime">
                 <h3>Start time:</h3>
-                <input type="time" id="startTime" name="startTime">
+                <input type="time" id="startTime" name="startTime" oninput="Update(this.value, 'start')">
             </div>
         </li>
         <li>
             <div class="endTime">
                 <h3>End time:</h3>
-                <input type="time" id="endTime" name="endTime">
+                <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
             </div>
         </li>
     </div>
@@ -158,10 +157,13 @@
     <!--Buttons for ADD, DONE-->
     <div class="btn-group-actions">
         <!--<button id="add" onclick="Add(); newWindow();">Submit and Add another routine task</button>-->
-        <button id="add" onclick="Add();">Submit and Add another routine task</button>
-        <button type ="submit" name="submit" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>
+        <button type="submit" name="submitsame"id="add" onclick="Add();">Submit and Add another routine task</button>
+        <button type ="submit" name="submitnext" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>
+        <div id="link"></div>
         <!-- wakeupSchedule(); --> 
+        <!-- Done(); -->
     </div>
+</form>
 
     <script>
         let NameOfTask = document.getElementById("taskName").value; //main taskName input
@@ -241,31 +243,49 @@
         console.log("end hour: "+ endHour);
         console.log("end min: " + endMin);
         console.log("cat num: " + cat_num);
+
+        function Done() {
+            // var result = ;
+            // document.write(result);
+            var ele = document.createElement("a");
+            ele.setAttribute("href", "add_routine_task.php?name=true");
+            document.getElementById("link").appendChild(ele);
+        }
     </script>
 
     <?php
-        // $taskName = "<script>document.writeln(nameOfTask);</script>";
-        // $taskCategory = "<script>document.writeln(cat_num);</script>";
-        // $startTimeHour = "<script>document.writeln(startHour);</script>";
-        // $startTimeMin = "<script>document.writeln(startMin);</script>";
-        // $endTimeHour = "<script>document.writeln(endHour);</script>";
-        // $endTimeMin = "<script>document.writeln(endMin);</script>";
-        // $freq = "<script>document.writeln(freq_num);</script>";
-        // $day = "<script>document.writeln(day);</script>";
-        // $week = "<script>document.writeln(week);</script>";
-        // $date = "<script>document.writeln(date);</script>";
-        // $user = -1;
-
         // echo "print";
         //  $_SESSION['useruid'];
 
-        // $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskDate, userid) 
-        // VALUES ($taskName, $taskCategory, $startTimeHour, $startTimeMin, $endTimeHour, $endTimeMin, $freq, $day, $week, $date, $user);";
-        // mysqli_query($conn, $sql);
+        function saveToDatabase() {
+            $taskName = "<script>document.writeln(nameOfTask);</script>";
+            $taskCategory = "<script>document.writeln(cat_num);</script>";
+            $startTimeHour = "<script>document.writeln(startHour);</script>";
+            $startTimeMin = "<script>document.writeln(startMin);</script>";
+            $endTimeHour = "<script>document.writeln(endHour);</script>";
+            $endTimeMin = "<script>document.writeln(endMin);</script>";
+            $freq = "<script>document.writeln(freq_num);</script>";
+            $day = "<script>document.writeln(day);</script>";
+            $week = "<script>document.writeln(week);</script>";
+            $date = "<script>document.writeln(date);</script>";
+            $user = -1;
+            include "../includes/dbh.inc.php";
+            include "../includes/functions.inc.php";
+            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskDate, userid) 
+                VALUES ($taskName, $taskCategory, $startTimeHour, $startTimeMin, $endTimeHour, $endTimeMin, $freq, $day, $week, $date, $user);";
+            mysqli_query($conn, $sql);
+            header("location: ../add_routine_task.php"); //if successful go here
+            exit();
+        }
+
+        if(isset($_GET['name'])) {
+            saveToDatabase();
+        }
+
+          
+            // echo "submitted";
         // echo "$taskName";
         // echo "$taskCategory";
-        // header("location: ../add_routine_task.php"); 
-        // exit();
     ?>
 
  <!-- </form> -->

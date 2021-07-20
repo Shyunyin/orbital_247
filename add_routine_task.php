@@ -1,11 +1,10 @@
 <?php
-    session_start();
-    require_once "../includes/dbh.inc.php";
-    require_once "../includes/functions.inc.php";
+    // session_start();
+    // include "../includes/dbh.inc.php";
+    // include "../includes/functions.inc.php";
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Add routine task</title>
     <script type="text/javascript" type="module" src="add_routine_task.js"></script>
@@ -32,7 +31,7 @@
         <!-- INPUT for taskName-->
         <li>
             <form>
-                <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value,'name')"><br>
+                <input type="text" id="taskName" name="taskName" size="70"><br>
             </form>
         </li>
     </div>
@@ -44,10 +43,10 @@
         <!-- Buttons for categories-->
         <li>
             <form class="btn-group-category">
-                <input type="button" id="work" onclick="catFunction(0)" value="Work"></button>
-                <input type="button" id="exercise" onclick="catFunction(1)" value="Exercise"></button>
-                <input type="button" id="misc" onclick="catFunction(2)" value="Miscellaneous"></button>
-                <input type="button" id="meal" onclick="catFunction(3)" value="Meal Times"></button>
+                <input type="button" id="work" onclick="catFunction(0)" value="Work">
+                <input type="button" id="exercise" onclick="catFunction(1)" value="Exercise">
+                <input type="button" id="misc" onclick="catFunction(2)" value="Miscellaneous">
+                <input type="button" id="meal" onclick="catFunction(3)" value="Meal Times">
             </form>
         </li>
     </div>
@@ -99,7 +98,7 @@
         <div class="dropdown">
             <li>
             <!-- <form action="" method="POST"> -->
-                <select id="weeklydropdown" name="weeklydropdown" oninput="Update(this.value,'weekly')" style="display: none;">
+                <select id="weeklydropdown" name="weeklydropdown" style="display: none;">
                     <option value="" selected disabled hidden>Choose a day</option>
                     <option value="0">Monday</option>
                     <option value="1">Tuesday</option>
@@ -113,7 +112,7 @@
             </li>
             <li>
             <!-- <form action="" method="POST">     -->
-                <select id="biweeklydropdown" name="biweeklydropdown" oninput="Update(this.value,'biweekly')" style="display: none;">
+                <select id="biweeklydropdown" name="biweeklydropdown" style="display: none;">
                     <!--Can replace w javascript??-->
                     <option value="" selected disabled hidden>Choose a day</option>
                     <option value="0">Monday</option>
@@ -126,7 +125,7 @@
                 </select>
             <!-- </form> -->
             <!-- <form action="" method="POST"> -->
-                <select id="chooseWeeks" name="chooseWeeks" oninput="Update(this.value,'biweeklychoose')" style="display: none;">
+                <select id="chooseWeeks" name="chooseWeeks" style="display: none;">
                     <option value="" selected disabled hidden>Current/Next</option>
                     <option value="0">Current Week</option>
                     <option value="1">Next Week</option>
@@ -134,7 +133,7 @@
             <!-- </form> -->
             </li>
             <li>
-                <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')" style="display: none;">
+                <input type="number" id="date" name="date" min="1" max="31" style="display: none;">
                 <!--<h5 id="instruction" class="instruction" style="display: none;">Please key in a number from 1-31</h5>-->
             </li>
         </div>
@@ -145,13 +144,13 @@
         <li>
             <div class="startTime">
                 <h3>Start time:</h3>
-                <input type="time" id="startTime" name="startTime" oninput="Update(this.value, 'start')">
+                <input type="time" id="startTime" name="startTime">
             </div>
         </li>
         <li>
             <div class="endTime">
                 <h3>End time:</h3>
-                <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
+                <input type="time" id="endTime" name="endTime">
             </div>
         </li>
     </div>
@@ -207,8 +206,7 @@
         let date = null;
         let day = null;
         let week = null;
-        let freq_num = 0;
-        cat_num = catFunction();
+        cat_num = category_num; //retrieve from add_routine_task.js
 
         function Update(val, type) {
             if(type=='name') {
@@ -236,20 +234,27 @@
                 freq_num = 3;
             }
         }  
+
+        console.log("Name of task:" + nameOfTask);
+        console.log("start hour:" + startHour);
+        console.log("start min:" + startMin);
+        console.log("end hour: "+ endHour);
+        console.log("end min: " + endMin);
+        console.log("cat num: " + cat_num);
     </script>
 
     <?php
-        $taskName = "<script>document.writeln(nameOfTask);</script>";
-        $taskCategory = "<script>document.writeln(cat_num);</script>";
-        $startTimeHour = "<script>document.writeln(startHour);</script>";
-        $startTimeMin = "<script>document.writeln(startMin);</script>";
-        $endTimeHour = "<script>document.writeln(endHour);</script>";
-        $endTimeMin = "<script>document.writeln(endMin);</script>";
-        $freq = "<script>document.writeln(freq_num);</script>";
-        $day = "<script>document.writeln(day);</script>";
-        $week = "<script>document.writeln(week);</script>";
-        $date = "<script>document.writeln(date);</script>";
-        $user = -1;
+        // $taskName = "<script>document.writeln(nameOfTask);</script>";
+        // $taskCategory = "<script>document.writeln(cat_num);</script>";
+        // $startTimeHour = "<script>document.writeln(startHour);</script>";
+        // $startTimeMin = "<script>document.writeln(startMin);</script>";
+        // $endTimeHour = "<script>document.writeln(endHour);</script>";
+        // $endTimeMin = "<script>document.writeln(endMin);</script>";
+        // $freq = "<script>document.writeln(freq_num);</script>";
+        // $day = "<script>document.writeln(day);</script>";
+        // $week = "<script>document.writeln(week);</script>";
+        // $date = "<script>document.writeln(date);</script>";
+        // $user = -1;
 
         // echo "print";
         //  $_SESSION['useruid'];

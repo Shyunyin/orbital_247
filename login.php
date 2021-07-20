@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html?>
 	<head>
 		<meta charset="UTF-8" />
 		<title>Login</title>
@@ -219,103 +219,8 @@
 				>
 				<a class="forgotten" href="http://127.0.0.1:5501/forgot_password.html">Forgot password?</a>
 			</footer>
-		</form>
-
-		<!-- <script language="javascript">
-			function check(form) {
-				//if (form.userid.value == "hello" && form.pwd.value == "world") {
-                    return (login());
-					window.location.href = "http://127.0.0.1:5501/add_routine_task.html"; //change to productivity page
-					window.alert("Welcome! For a start, please input your routine tasks such as exercise times, meal times, daily, weekly, biweekly or monthly events!");
-					//TODO: Need to figure out a way to go into the user's database as well
-					//window.open("https://example.com");
-				//} else {
-				//	alert("Incorrect username or password! Please try again");
-				//}
-			}
-		</script> -->
-
-        <!-- The core Firebase JS SDK is always required and must be listed first -->
-        <!-- <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script> -->
-
-
-        <!-- TODO: Add SDKs for Firebase products that you want to use
-            https://firebase.google.com/docs/web/setup#available-libraries -->
-        <!-- <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-auth.js"></script> -->
-        <!-- <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script> -->
-		<!--Importing Firebase and Cloud Firestore libraries-->
-		<!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script> -->
 	</body>
 </html>
 
-
-		<!-- <style type="text/css">
-			@import url("https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap");
-
-			#customBtn {
-				position: absolute;
-				top: calc(37% - 50px);
-				left: calc(45.5% - 50px);
-				width: 250px;
-				height: 30px;
-				border: 1px black;
-				cursor: pointer;
-				border-radius: 2px;
-				color: black;
-				font-family: "Signika Negative", sans-serif;
-				font-size: 16px;
-				font-weight: 400;
-				padding: 6px;
-				margin-top: 10px;
-				display: inline-block;
-				background: #e3aba1; /* colour of google button */
-				white-space: nowrap;
-			}
-			#customBtn:hover {
-				cursor: pointer;
-			}
-			span.label {
-				font-family: "Signika Negative", sans-serif;
-				color: black;
-				font-family: "Signika Negative", sans-serif;
-				font-size: 16px;
-				font-weight: 400;
-			}
-			span.buttonText {
-				position: absolute;
-				top: calc(15%);
-				left: calc(47% - 50px);
-				padding: 6px;
-				font-size: 16px;
-				font-weight: 400;
-				font-family: "Signika Negative", sans-serif;
-			}
-			.google_icon {
-				position: absolute;
-				top: calc(15%);
-				left: calc(25% - 50px);
-			}
-		</style> -->
-		<!-- <body> -->
-		<!-- In the callback, you would hide the gSignInWrapper element on a
-    successful sign in -->
-		<!-- <div id="gSignInWrapper"> -->
-			<!-- <div id="customBtn" class="customGPlusSignIn" onclick=google_sign_in()> -->
-				<!-- <div class="google_icon"> -->
-					<!-- <img
-						src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png"
-						height="29px"
-						width="29px"
-					/> -->
-				<!-- </div> -->
-				<!--data-onsuccess="onSignIn"-->
-				<!-- <span class="buttonText">Log in with Google</span> -->
-			<!-- </div> -->
-		<!-- </div> -->
-		<!-- <div id="name"></div> -->
-		<!-- <script>
-			//startApp();
-		</script> -->
-	<!-- </body> --> -->
 
 

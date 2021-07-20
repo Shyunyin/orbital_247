@@ -98,7 +98,8 @@ function createUser($conn, $name, $email, $pwd) {
         mysqli_stmt_bind_param($stmt, "sss", $name, $email, $hashedPwd);
         mysqli_stmt_execute($stmt);
         //mysqli_stmt_close($stmt);
-        header("location: ../local_sign_up.php?error=none"); 
+        header("location: ../login.php");
+        //header("location: ../local_sign_up.php?error=none"); 
         exit();
     }
 }

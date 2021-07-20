@@ -99,13 +99,13 @@
             <!-- <form action="" method="POST"> -->
                 <select id="weeklydropdown" name="weeklydropdown" style="display: none;" oninput="Update(this.value, 'weekly')">
                     <option value="" selected disabled hidden>Choose a day</option>
-                    <option value="0">Monday</option>
-                    <option value="1">Tuesday</option>
-                    <option value="2">Wednesday</option>
-                    <option value="3">Thursday</option>
-                    <option value="4">Friday</option>
-                    <option value="5">Saturday</option>
-                    <option value="6">Sunday</option>
+                    <option value="1">Monday</option>
+                    <option value="2">Tuesday</option>
+                    <option value="3">Wednesday</option>
+                    <option value="4">Thursday</option>
+                    <option value="5">Friday</option>
+                    <option value="6">Saturday</option>
+                    <option value="0">Sunday</option>
                 </select>
             <!-- </form> -->
             </li>
@@ -114,13 +114,13 @@
                 <select id="biweeklydropdown" name="biweeklydropdown" style="display: none;" oninput="Update(this.value, 'biweekly')">
                     <!--Can replace w javascript??-->
                     <option value="" selected disabled hidden>Choose a day</option>
-                    <option value="0">Monday</option>
-                    <option value="1">Tuesday</option>
-                    <option value="2">Wednesday</option>
-                    <option value="3">Thursday</option>
-                    <option value="4">Friday</option>
-                    <option value="5">Saturday</option>
-                    <option value="6">Sunday</option>
+                    <option value="1">Monday</option>
+                    <option value="2">Tuesday</option>
+                    <option value="3">Wednesday</option>
+                    <option value="4">Thursday</option>
+                    <option value="5">Friday</option>
+                    <option value="6">Saturday</option>
+                    <option value="0">Sunday</option>
                 </select>
             <!-- </form> -->
             <!-- <form action="" method="POST"> -->
@@ -179,7 +179,7 @@
         function checkRadioValue() { 
             console.log("i come here to checkRadioValue()")
             var radio = document.getElementsByName("choose");
-            for(var i = 0; i < radio.length; i++) {
+            for(var i = 0; i <radio.length; i++) {
                 //check which radio is checked
                 if(radio[i].checked){ 
                     return i;
@@ -205,6 +205,7 @@
     
         //TODO: To be confirmed with Shyun Yin
         let nameOfTask, start, startArr, end, endArr, cat_num, startHour, startMin, endHour, endMin;
+        //nameOfTask = "heyo";
         let date = null;
         let day = null;
         let week = null;
@@ -237,56 +238,53 @@
             }
         }  
 
-        console.log("Name of task:" + nameOfTask);
-        console.log("start hour:" + startHour);
-        console.log("start min:" + startMin);
-        console.log("end hour: "+ endHour);
-        console.log("end min: " + endMin);
-        console.log("cat num: " + cat_num);
-
         function Done() {
-            // var result = ;
-            // document.write(result);
-            var ele = document.createElement("a");
-            ele.setAttribute("href", "add_routine_task.php?name=true");
-            document.getElementById("link").appendChild(ele);
+            <?php
+                 $taskName = "document.write(nameOfTask);";
+                $taskCategory = "document.write(cat_num);";
+                $startTimeHour = "document.write(startHour);";
+                $startTimeMin = "document.write(startMin);";
+                $endTimeHour = "document.write(endHour);";
+                $endTimeMin = "document.write(endMin);";
+                $freq = "document.write(freq_num);";
+                $day = "document.write(day);";
+                $week = "document.write(week);";
+                $date = "document.write(date);";
+                $user = "document.write(-1);";
+                
+                echo ($taskName);
+                echo ($startTimeHour);
+                echo ($startTimeMin);
+                echo ($endTimeHour);
+                echo ($endTimeMin);
+                echo ($freq);
+                echo ($day);
+                echo ($week);
+                echo ($date);
+                echo ($user);
+            ?>    
+            
+            console.log("Name of task:" + nameOfTask);
+            console.log("cat_num: " + cat_num);
+            console.log("start hour:" + startHour);
+            console.log("start min:" + startMin);
+            console.log("end hour: "+ endHour);
+            console.log("end min: " + endMin);
+            console.log("freq: " + freq_num);
+            console.log("day: " + day);
+            console.log("week: " + week);
+            console.log("date: " + date);
         }
+
+        //console.log("Name of task:" + nameOfTask);
+        //console.log("start hour:" + startHour);
+        //console.log("start min:" + startMin);
+        //console.log("end hour: "+ endHour);
+        //console.log("end min: " + endMin);
+        //console.log("cat num: " + cat_num);
     </script>
-
-    <?php
-        // echo "print";
-        //  $_SESSION['useruid'];
-
-        function saveToDatabase() {
-            $taskName = "<script>document.writeln(nameOfTask);</script>";
-            $taskCategory = "<script>document.writeln(cat_num);</script>";
-            $startTimeHour = "<script>document.writeln(startHour);</script>";
-            $startTimeMin = "<script>document.writeln(startMin);</script>";
-            $endTimeHour = "<script>document.writeln(endHour);</script>";
-            $endTimeMin = "<script>document.writeln(endMin);</script>";
-            $freq = "<script>document.writeln(freq_num);</script>";
-            $day = "<script>document.writeln(day);</script>";
-            $week = "<script>document.writeln(week);</script>";
-            $date = "<script>document.writeln(date);</script>";
-            $user = -1;
-            include "../includes/dbh.inc.php";
-            include "../includes/functions.inc.php";
-            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskDate, userid) 
-                VALUES ($taskName, $taskCategory, $startTimeHour, $startTimeMin, $endTimeHour, $endTimeMin, $freq, $day, $week, $date, $user);";
-            mysqli_query($conn, $sql);
-            header("location: ../add_routine_task.php"); //if successful go here
-            exit();
-        }
-
-        if(isset($_GET['name'])) {
-            saveToDatabase();
-        }
-
-          
-            // echo "submitted";
-        // echo "$taskName";
-        // echo "$taskCategory";
-    ?>
+</body>
+</html>
 
  <!-- </form> -->
 
@@ -416,7 +414,3 @@
         }
 
     </script> -->
-
-</body>
-
-</html>

@@ -31,7 +31,7 @@
         <!-- INPUT for taskName-->
         <li>
             <form>
-                <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value,'name')"><br>
+                <input type="text" id="taskName" name="taskName" size="70"><br>
             </form>
         </li>
     </div>
@@ -98,7 +98,7 @@
         <div class="dropdown">
             <li>
             <!-- <form action="" method="POST"> -->
-                <select id="weeklydropdown" name="weeklydropdown" oninput="Update(this.value,'weekly')" style="display: none;">
+                <select id="weeklydropdown" name="weeklydropdown" style="display: none;">
                     <option value="" selected disabled hidden>Choose a day</option>
                     <option value="1">Monday</option>
                     <option value="2">Tuesday</option>
@@ -112,7 +112,7 @@
             </li>
             <li>
             <!-- <form action="" method="POST">     -->
-                <select id="biweeklydropdown" name="biweeklydropdown" oninput="Update(this.value,'biweekly')" style="display: none;">
+                <select id="biweeklydropdown" name="biweeklydropdown" style="display: none;">
                     <!--Can replace w javascript??-->
                     <option value="" selected disabled hidden>Choose a day</option>
                     <option value="1">Monday</option>
@@ -125,7 +125,7 @@
                 </select>
             <!-- </form> -->
             <!-- <form action="" method="POST"> -->
-                <select id="chooseWeeks" name="chooseWeeks" oninput="Update(this.value,'biweeklychoose')" style="display: none;">
+                <select id="chooseWeeks" name="chooseWeeks" style="display: none;">
                     <option value="" selected disabled hidden>Current/Next</option>
                     <option value="0">Current Week</option>
                     <option value="1">Next Week</option>
@@ -133,7 +133,7 @@
             <!-- </form> -->
             </li>
             <li>
-                <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')" style="display: none;">
+                <input type="number" id="date" name="date" min="1" max="31" style="display: none;">
                 <!--<h5 id="instruction" class="instruction" style="display: none;">Please key in a number from 1-31</h5>-->
             </li>
         </div>
@@ -144,13 +144,13 @@
         <li>
             <div class="startTime">
                 <h3>Start time:</h3>
-                <input type="time" id="startTime" name="startTime" oninput="Update(this.value, 'start')">
+                <input type="time" id="startTime" name="startTime">
             </div>
         </li>
         <li>
             <div class="endTime">
                 <h3>End time:</h3>
-                <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
+                <input type="time" id="endTime" name="endTime">
             </div>
         </li>
     </div>
@@ -234,7 +234,7 @@
                 date = val;
                 freq_num = 3;
             }
-        }
+        }  
 
         function Done() {
             <?php

@@ -158,6 +158,13 @@
 			::-moz-input-placeholder {
 				color: rgba(255, 255, 255, 0.6);
 			}
+
+			#confirm {
+				background-color: #e3aba1; 
+				border-radius: 5px; 
+				margin-top: 20px;
+				margin-left: 90px;
+			}
 		</style>
 	</head>
 
@@ -181,7 +188,7 @@
 				<input type="password" placeholder="Password" name="pwd" id="pwd"><br />
 				<input type="password" placeholder="Confirm Password" name="cfm_pwd">
 				<br />
-				<button type="submit" name="submit">Confirm</button>
+				<button type="submit" id="confirm" name="submit">Confirm</button>
 			</form>
 		</div>
 

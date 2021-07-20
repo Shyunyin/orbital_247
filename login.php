@@ -178,6 +178,13 @@
 			::-moz-input-placeholder {
 				color: rgba(255, 255, 255, 0.6);
 			}
+
+			#loginbtn {
+				background-color: #e3aba1; 
+				border-radius: 5px; 
+				margin-top: 20px;
+				margin-left: 90px;
+			}
 		</style>
 	</head>
 
@@ -199,7 +206,7 @@
 				<form action="includes/login.inc.php" method="POST">
 					<input type="text" placeholder="Username/Email" name="uid" id="email_id"/><br />
 					<input type="password" placeholder="Password" name="pwd" id="pwd"/><br />
-					<button type="submit" name="submit">Log In</button>
+					<button type="submit" name="submit" id="loginbtn">Log In</button>
 				</form>	
 			</div>
 			<!-- Error handling -->

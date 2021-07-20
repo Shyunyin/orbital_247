@@ -32,7 +32,7 @@ function catFunction() {
     document.querySelector("body div#categories li:last-child input#meal").style.backgroundColor = "#e3aba1";
   }
   category_num = button_switch;
-  return button_switch;
+  //return button_switch;
 }
 
 

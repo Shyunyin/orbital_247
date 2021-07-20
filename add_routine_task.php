@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    // session_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -240,7 +240,7 @@
 
         function Done() {
             <?php
-                 $taskName = "document.write(nameOfTask);";
+                $taskName = "document.write(nameOfTask);";
                 $taskCategory = "document.write(cat_num);";
                 $startTimeHour = "document.write(startHour);";
                 $startTimeMin = "document.write(startMin);";

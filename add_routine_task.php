@@ -1,6 +1,16 @@
 <?php
-    //session_start();
-    echo session_id();
+    session_start();
+    $serverName = "localhost";
+    $dBUsername = "root";
+    $dBPassword = "";
+    $dBName = "orbital247";
+
+    $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    // echo session_id();
     //include "../includes/dbh.inc.php";
     //include "../includes/functions.inc.php";
 ?>
@@ -238,18 +248,39 @@
 
         function Done() {
             <?php
-                $taskName = "document.write(nameOfTask);";
-                $taskCategory = "document.write(cat_num);";
-                $startTimeHour = "document.write(startHour);";
-                $startTimeMin = "document.write(startMin);";
-                $endTimeHour = "document.write(endHour);";
-                $endTimeMin = "document.write(endMin);";
-                $freq = "document.write(freq_num);";
-                $day = "document.write(day);";
-                $week = "document.write(week);";
-                $date = "document.write(date);";
-                $user = "document.write(-1);";
+                $taskName = "document.write(nameOfTask)";
+                $taskCategory = (int) "document.write(cat_num);";
+                $startTimeHour = (int) "document.write(startHour);";
+                $startTimeMin = (int) "document.write(startMin);";
+                $endTimeHour = (int) "document.write(endHour);";
+                $endTimeMin = (int) "document.write(endMin);";
+                $freq = (int) "document.write(freq_num);";
+                $day = (int) "document.write(day);";
+                $week = (int) "document.write(week);";
+                $date = (int) "document.write(date);";
+                $user = (int) "document.write(-1);";
                 
+                // $serverName = "localhost";
+                // $dBUsername = "root";
+                // $dBPassword = "";
+                // $dBName = "orbital247";
+
+                // $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
+
+                // if (!$conn) {
+                //     die("Connection failed: " . mysqli_connect_error());
+                // }
+                $sql = "INSERT INTO routinetask(taskName,taskCategory,startTimeHour,startTimeMin,endTimeHour,endTimeMin,freq,taskDay,week,taskDate,userid) 
+                VALUES ('$taskName',$taskCategory,$startTimeHour,$startTimeMin,$endTimeHour,$endTimeMin,$freq,$day,$week,$date,$user);";
+                if (mysqli_query($conn, $sql)) {
+                    echo "Records inserted successfully";
+                    mysqli_close($conn);
+                    header("Location: ../wakeup.php");
+                    exit();
+                } else {
+                    echo "ERROR: Not able to execute $sql." . mysqli_error($conn);
+                }
+            
                 // $sql = "INSERT INTO 'routinetask'('taskName', 'taskCategory', 'startTimeHour', 'startTimeMin', 'endTimeHour', 'endTimeMin', 'freq', 'taskDay', 'week', 'taskDate', 'userid') VALUES ($taskName, $taskCategory, $startTimeHour, $startTimeMin, $endTimeHour, $endTimeMin, $freq', $day, $week, $date, $user);";
 
                 // $result = mysqli_query($conn, $sql);

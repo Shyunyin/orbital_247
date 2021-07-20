@@ -219,7 +219,6 @@
 				>
 				<a class="forgotten" href="http://127.0.0.1:5501/forgot_password.html">Forgot password?</a>
 			</footer>
-		<!--</form>-->
 	</body>
 </html>
 

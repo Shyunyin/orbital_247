@@ -9,7 +9,7 @@
 <head>
     <title>Add routine task</title>
     <script type="text/javascript" type="module" src="add_routine_task.js"></script>
-    <script type="text/javascript" type="module" src="Routine_Final.js"></script>
+    <!--<script type="text/javascript" type="module" src="Routine_Final.js"></script>-->
     <script type="text/javascript" type="module" src="Window.js"></script>
     <link rel="stylesheet" href="add_routine_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">

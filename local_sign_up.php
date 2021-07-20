@@ -206,9 +206,9 @@
 				else if ($_GET["error"] == "usernametaken") {
 					echo "<p>Username already taken!</p>";
 				}
-				else if ($_GET["error"] == "none") {
-					echo "<p>You have signed up!</p>";
-				}
+				//else if ($_GET["error"] == "none") {
+				//	echo "<p>You have signed up!</p>";
+				//}
 			}
 		?>
 			<footer class="footer">

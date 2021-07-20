@@ -571,7 +571,7 @@ if (mysqli_query($link, $sql)) {
 }
 
 //Getting input values from html cause unable to just declare variable in html then automatically assume in PHP
-// $nameOfTask = 
+//$nameOfTask = echo "nameOfTask";
 // $categoryNum =
 // $dateInput =
 // $startArr0 =

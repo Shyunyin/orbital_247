@@ -1,10 +1,10 @@
-<!DOCTYPE html>
 <?php
-    // session_start();
-    // echo session_id();
+    //session_start();
+    echo session_id();
     //include "../includes/dbh.inc.php";
     //include "../includes/functions.inc.php";
 ?>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Add routine task</title>

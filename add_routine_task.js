@@ -116,7 +116,7 @@ function displayRadioValue() {
 /*For the navigation of pages*/
 function newWindow() {
   window.alert("Current routine task saved!");
-  window.location.href = "http://127.0.0.1:5501/add_routine_task.html";
+  window.location.href = "http://localhost/add_routine_task.php";
 }
 
 // function wakeupSchedule() {

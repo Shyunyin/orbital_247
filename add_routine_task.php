@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <?php
-<<<<<<< HEAD
     // session_start();
-=======
-    session_start();
-    echo session_id();
+    // echo session_id();
     //include "../includes/dbh.inc.php";
     //include "../includes/functions.inc.php";
->>>>>>> f85bde423b0d5e63f733ea4f5e31d91e5238a54e
 ?>
 <html>
 <head>
@@ -26,8 +22,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-
-    <!-- <form action="../includes/add_routine_task_inc.php" method="POST"> -->
+    <!-- <form action="../includes/add_routine_task_inc.php" method="POST"> --> 
     <!-- Parent-child relationship for inline-->
     <div id="title">
         <li>
@@ -160,14 +155,14 @@
         </li>
     </div>
 
-    <!--Buttons for ADD, DONE-->
-    <div class="btn-group-actions">
+          <!--Buttons for ADD, DONE-->
+          <div class="btn-group-actions">
         <!--<button id="add" onclick="Add(); newWindow();">Submit and Add another routine task</button>-->
         <button id="add" onclick="Add();">Submit and Add another routine task</button>
         <button type ="submit" name="submit" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>
         <!-- wakeupSchedule(); --> 
     </div>
-
+  
     <script>
         let NameOfTask = document.getElementById("taskName").value; //main taskName input
         //category number can get from category_num in the other javascript file
@@ -211,8 +206,7 @@
         let date = null;
         let day = null;
         let week = null;
-        //cat_num = category_num; //retrieve from add_routine_task.js
-
+        cat_num = category_num; //retrieve from add_routine_task.js
         function Update(val, type) {
             if(type=='name') {
                 nameOfTask=val;
@@ -256,9 +250,9 @@
                 $date = "document.write(date);";
                 $user = "document.write(-1);";
                 
-                $sql = "INSERT INTO 'routinetask'('taskName', 'taskCategory', 'startTimeHour', 'startTimeMin', 'endTimeHour', 'endTimeMin', 'freq', 'taskDay', 'week', 'taskDate', 'userid') VALUES ($taskName, $taskCategory, $startTimeHour, $startTimeMin, $endTimeHour, $endTimeMin, $freq', $day, $week, $date, $user);";
+                // $sql = "INSERT INTO 'routinetask'('taskName', 'taskCategory', 'startTimeHour', 'startTimeMin', 'endTimeHour', 'endTimeMin', 'freq', 'taskDay', 'week', 'taskDate', 'userid') VALUES ($taskName, $taskCategory, $startTimeHour, $startTimeMin, $endTimeHour, $endTimeMin, $freq', $day, $week, $date, $user);";
 
-                $result = mysqli_query($conn, $sql);
+                // $result = mysqli_query($conn, $sql);
                 // echo ($taskName);
                 // echo ($startTimeHour);
                 // echo ($startTimeMin);
@@ -282,5 +276,6 @@
             console.log("date: " + date);
         }
     </script>
+
 </body>
 </html>

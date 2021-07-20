@@ -41,11 +41,11 @@
         </li>
         <!-- Buttons for categories-->
         <li>
-            <form class="btn-group-category">
-                <input type="button" id="work" onclick="catFunction(0)" value="Work">
-                <input type="button" id="exercise" onclick="catFunction(1)" value="Exercise">
-                <input type="button" id="misc" onclick="catFunction(2)" value="Miscellaneous">
-                <input type="button" id="meal" onclick="catFunction(3)" value="Meal Times">
+        <form class="btn-group-category">
+                <input type="button" id="work" onclick="catFunction(0);Update(0,'category');" value="Work">
+                <input type="button" id="exercise" onclick="catFunction(1);Update(1,'category');" value="Exercise">
+                <input type="button" id="misc" onclick="catFunction(2);Update(2,'category');" value="Miscellaneous">
+                <input type="button" id="meal" onclick="catFunction(3);Update(3,'category');" value="Meal Times">
             </form>
         </li>
     </div>

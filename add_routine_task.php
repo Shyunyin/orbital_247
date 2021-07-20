@@ -1,18 +1,8 @@
 <?php
     session_start();
-    $serverName = "localhost";
-    $dBUsername = "root";
-    $dBPassword = "";
-    $dBName = "orbital247";
-
-    $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
-
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    // echo session_id();
+    echo session_id();
     //include "../includes/dbh.inc.php";
-    //include "../includes/functions.inc.php";
+    // include "../includes/functions.inc.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,11 +18,7 @@
 </head>
 
 <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
-    <!--Importing Firebase and Cloud Firestore libraries-->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-    <!-- <form action="../includes/add_routine_task_inc.php" method="POST"> --> 
+    <!-- <form action="../includes/add_routine_task_inc.php" method="POST"> -->
     <!-- Parent-child relationship for inline-->
     <div id="title">
         <li>
@@ -40,7 +26,7 @@
         </li>
         <!-- INPUT for taskName-->
         <li>
-            <form>
+            <form action="includes/add_routine_task.inc.php" method="POST">
                 <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value,'name')"><br>
             </form>
         </li>
@@ -169,10 +155,16 @@
           <div class="btn-group-actions">
         <!--<button id="add" onclick="Add(); newWindow();">Submit and Add another routine task</button>-->
         <button id="add" onclick="Add();">Submit and Add another routine task</button>
-        <button type ="submit" name="submit" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>
+        <form action="includes/add_routine_task.inc.php" method="POST">
+            <button type ="submit" name="submit" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>
+        </form>
         <!-- wakeupSchedule(); --> 
     </div>
-  
+
+    <form method="POST" style="display:none" id="hidden">
+    </form>
+
+
     <script>
         let NameOfTask = document.getElementById("taskName").value; //main taskName input
         //category number can get from category_num in the other javascript file
@@ -210,9 +202,10 @@
                 SpecificFreq = document.getElementById("date");
             }
         }
-    
+
         //TODO: To be confirmed with Shyun Yin
         let nameOfTask, start, startArr, end, endArr, cat_num, startHour, startMin, endHour, endMin;
+        //let freq = 0
         let date = null;
         let day = null;
         let week = null;
@@ -233,58 +226,88 @@
             } else if(type=='weekly') {
                 day = val;
                 freq_num = 1;
+                //freq = 1;
             } else if (type=='biweekly') {
                 day = val;
                 freq_num = 2;
+                //freq = 2;
             } else if (type=='biweeklychoose') {
                 week = val;
             } else if (type=='date') {
                 date = val;
                 freq_num = 3;
+                //freq = 3;
             } else if (type=='category') {
                 cat_num = val;
             }
+            
+            var name = document.createElement("input");
+            name.type = "text"
+            name.innerHTML = nameOfTask;
+            name.name = "name";
+            var ele = document.getElementById("hidden");
+            ele.appendChild(name); 
+
+            var category = document.createElement("input");
+            category.type = "text"
+            category.innerHTML = cat_num;
+            category.name = "cat_num";
+            var ele = document.getElementById("hidden");
+            ele.appendChild(category); 
         }
 
         function Done() {
             <?php
-                $taskName = "document.write(nameOfTask)";
-                $taskCategory = (int) "document.write(cat_num);";
+            // if (isset($_POST["submit"])) {
+                // $taskCategory = $_POST["cat_num"];
+            // if (isset($_POST["taskName"])) {
+                // $taskName = $_POST["taskName"];
+                // echo "$taskCategory";
+                // $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskDate, userid) VALUES ('$taskName', 1, 1, 1, 1, 1, 1, 1, 1, 1, -1);";
+                // $serverName = "localhost";
+                // $dBUsername = "root";
+            //     $dBPassword = "";
+            //     $dBName = "orbital247";
+
+            //     $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
+
+            //     mysqli_query($conn, $sql);
+            // }
+             
+            // } 
+            // else {
+                // header("location: ../login.php");
+                // exit();
+            // }
+                // $taskName = $_POST["taskName"];
+                // echo($taskName);
+                
+                //$taskName = "document.write(nameOfTask);";
+                /*
+                $taskCategory = "document.write(cat_num);";
                 $startTimeHour = (int) "document.write(startHour);";
                 $startTimeMin = (int) "document.write(startMin);";
                 $endTimeHour = (int) "document.write(endHour);";
                 $endTimeMin = (int) "document.write(endMin);";
-                $freq = (int) "document.write(freq_num);";
+                $freq = (int) "document.write(0);";
+                //$freq = (int) "document.write(freq_num);";
                 $day = (int) "document.write(day);";
                 $week = (int) "document.write(week);";
                 $date = (int) "document.write(date);";
                 $user = (int) "document.write(-1);";
-                
-                // $serverName = "localhost";
-                // $dBUsername = "root";
-                // $dBPassword = "";
-                // $dBName = "orbital247";
+                */
+                //$sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskDate, userid) VALUES ($taskName, '$taskCategory', $startTimeHour, $startTimeMin, $endTimeHour, $endTimeMin, $freq, $day, $week, $date, $user);";
 
-                // $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
+              
 
-                // if (!$conn) {
-                //     die("Connection failed: " . mysqli_connect_error());
+                // if (mysqli_query($conn, $sql)) {
+                //     echo "Record added!";
                 // }
-                $sql = "INSERT INTO routinetask(taskName,taskCategory,startTimeHour,startTimeMin,endTimeHour,endTimeMin,freq,taskDay,week,taskDate,userid) 
-                VALUES ('$taskName',$taskCategory,$startTimeHour,$startTimeMin,$endTimeHour,$endTimeMin,$freq,$day,$week,$date,$user);";
-                if (mysqli_query($conn, $sql)) {
-                    echo "Records inserted successfully";
-                    mysqli_close($conn);
-                    header("Location: ../wakeup.php");
-                    exit();
-                } else {
-                    echo "ERROR: Not able to execute $sql." . mysqli_error($conn);
-                }
-            
-                // $sql = "INSERT INTO 'routinetask'('taskName', 'taskCategory', 'startTimeHour', 'startTimeMin', 'endTimeHour', 'endTimeMin', 'freq', 'taskDay', 'week', 'taskDate', 'userid') VALUES ($taskName, $taskCategory, $startTimeHour, $startTimeMin, $endTimeHour, $endTimeMin, $freq', $day, $week, $date, $user);";
-
-                // $result = mysqli_query($conn, $sql);
-                // echo ($taskName);
+                // } else {
+                //     echo "Record cannot be added!";
+                //     //echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+                // }
+                //echo ($taskName);
                 // echo ($startTimeHour);
                 // echo ($startTimeMin);
                 // echo ($endTimeHour);
@@ -294,8 +317,9 @@
                 // echo ($week);
                 // echo ($date);
                 // echo ($user);
+                //echo "'TaskCategory' Is data type - ".gettype($taskCategory);
             ?>   
-            console.log("Name of task:" + nameOfTask);
+            console.log("Name of task: " + nameOfTask);
             console.log("cat_num: " + cat_num);
             console.log("start hour:" + startHour);
             console.log("start min:" + startMin);

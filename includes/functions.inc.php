@@ -134,8 +134,10 @@ function loginUser($conn, $username, $pwd) {
         //create super global session variable
         $_SESSION["userid"] = $uidExists["usersId"];
         $_SESSION["useruid"] = $uidExists["usersUid"];
-        header("location: ../add_routine_task.php"); //go to first page
-        exit();
+
+        echo($_SESSION["userid"]);
+        // header("location: ../add_routine_task.php"); //go to first page
+        // exit();
     }
 }
 

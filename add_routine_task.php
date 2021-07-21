@@ -20,6 +20,7 @@
 <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
     <!-- <form action="../includes/add_routine_task_inc.php" method="POST"> -->
     <!-- Parent-child relationship for inline-->
+    <form action="includes/add_routine_task.inc.php" method="POST">
     <div id="title">
         <li>
             <h3>Add a routine task:</h3>
@@ -152,14 +153,17 @@
     </div>
 
           <!--Buttons for ADD, DONE-->
-          <div class="btn-group-actions">
+    <div class="btn-group-actions">
         <!--<button id="add" onclick="Add(); newWindow();">Submit and Add another routine task</button>-->
+        <!-- $taskName = "test"; -->
         <button id="add" onclick="Add();">Submit and Add another routine task</button>
         <form action="includes/add_routine_task.inc.php" method="POST">
-            <button type ="submit" name="submit" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>
+            <button type ="submit" name="submitTask" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>
         </form>
         <!-- wakeupSchedule(); --> 
     </div>
+
+</form>
 
     <form method="POST" style="display:none" id="hidden">
     </form>

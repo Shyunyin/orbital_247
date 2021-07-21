@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     $taskName = $_POST['taskName'];
     $cat = (int) $_POST['jsCat'];
     $startHour = (int) $_POST['jsStartHour'];
@@ -6,6 +8,7 @@
     $endHour = (int) $_POST['jsEndHour'];
     $endMin = (int) $_POST['jsEndMin'];
     $freq = (int) $_POST['jsFreq'];
+    $userid = $_SESSION["userid"];
 
     if ($freq == 1) {
         $taskDay = (int) $_POST['jsDay'];
@@ -43,25 +46,25 @@
         if ($freq == 1) {
             //echo ("I enter the weekly freq block");
 
-            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDay, -1);";
+            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDay, $userid);";
 
             mysqli_query($conn, $sql);
         } else if ($freq == 2) {
             //echo ("I enter the biweekly freq block");
 
-            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDay, $week, -1);";
+            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDay, $week, $userid);";
 
             mysqli_query($conn, $sql);
         } else if ($freq == 3) {
             //echo ("I enter the monthly freq block");
 
-            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDate, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDate, -1);";
+            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDate, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDate, $userid);";
 
             mysqli_query($conn, $sql);
         } else {
             //echo ("I enter the daily freq block");
 
-            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, -1);";
+            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $userid);";
 
             mysqli_query($conn, $sql);
         }

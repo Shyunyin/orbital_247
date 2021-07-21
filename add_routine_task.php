@@ -1,8 +1,10 @@
 <?php
     session_start();
+    //echo($_SESSION["userid"]);
+    //$userid = $_SESSION['user_id'];
     //echo session_id();
     //include "../includes/dbh.inc.php";
-    // include "../includes/functions.inc.php";
+    //include "../includes/functions.inc.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -148,9 +150,9 @@
           <!--Buttons for ADD, DONE-->
         <div class="btn-group-actions">
             <!--<button id="add" onclick="Add(); newWindow();">Submit and Add another routine task</button>-->
-            <button id="add" onclick="Add();">Submit and Add another routine task</button>
+            <button type="submit" name="add" id="add">Submit and Add another routine task</button>
             
-            <button type="submit" name="done-submit" id="done">Submit and Done adding ALL routine tasks</button>
+            <button type="submit" name="done" id="done">Submit and Done adding ALL routine tasks</button>
             <!--<button type ="submit" name="submit" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>-->
         </div>
         </form>

@@ -1,6 +1,6 @@
 <?php
     session_start();
-    echo session_id();
+    //echo session_id();
     //include "../includes/dbh.inc.php";
     // include "../includes/functions.inc.php";
 ?>

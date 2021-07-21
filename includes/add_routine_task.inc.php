@@ -16,22 +16,22 @@
         $taskDate = (int) $_POST['jsDate'];
     }
 
-
-    echo "taskName in php is: " . $taskName . "<br>";
-    echo "cat in php is: " . $cat . "<br>";
-    echo "startHour in php is: " . $startHour . "<br>";
-    echo "startMin in php is: " . $startMin . "<br>";
-    echo "endHour in php is: " . $endHour . "<br>";
-    echo "endMin in php is: " . $endMin . "<br>";
-    echo "freq in php is: " . $freq . "<br>";
-    echo "taskDay in php is: " . $taskDay . "<br>";
-    echo "week in php is: " . $week . "<br>";
-    echo "taskDate in php is: " . $taskDate . "<br>";
+// For testing purposes
+    // echo "taskName in php is: " . $taskName . "<br>";
+    // echo "cat in php is: " . $cat . "<br>";
+    // echo "startHour in php is: " . $startHour . "<br>";
+    // echo "startMin in php is: " . $startMin . "<br>";
+    // echo "endHour in php is: " . $endHour . "<br>";
+    // echo "endMin in php is: " . $endMin . "<br>";
+    // echo "freq in php is: " . $freq . "<br>";
+    // echo "taskDay in php is: " . $taskDay . "<br>";
+    // echo "week in php is: " . $week . "<br>";
+    // echo "taskDate in php is: " . $taskDate . "<br>";
     //echo gettype($startHour) . "<br>";
     //echo "startHour in php is: " . $startHour . "<br>";
     //echo "taskName in php is: " . $taskName . "<br>";
 
-    if (isset($_POST['done-submit'])) {
+    if (isset($_POST['done']) || isset($_POST['add'])) {
         $serverName = "localhost";
         $dBUsername = "root";
         $dBPassword = "";
@@ -41,31 +41,39 @@
         //$sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskDate, userid) VALUES ('$taskName', 1, $startHour, $startMin, $endHour, $endMin, $freq, '$taskDay', '$week', '$taskDate', -1);";
 
         if ($freq == 1) {
-            echo ("I enter the weekly freq block");
+            //echo ("I enter the weekly freq block");
 
             $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDay, -1);";
 
             mysqli_query($conn, $sql);
         } else if ($freq == 2) {
-            echo ("I enter the biweekly freq block");
+            //echo ("I enter the biweekly freq block");
 
             $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDay, $week, -1);";
 
             mysqli_query($conn, $sql);
         } else if ($freq == 3) {
-            echo ("I enter the monthly freq block");
+            //echo ("I enter the monthly freq block");
 
             $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDate, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDate, -1);";
 
             mysqli_query($conn, $sql);
         } else {
-            echo ("I enter the daily freq block");
+            //echo ("I enter the daily freq block");
 
             $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, -1);";
 
             mysqli_query($conn, $sql);
         }
     }
+    
+    if (isset($_POST['done'])) {
+        echo ("We will move onto the Routine Info page now");
+    } else if (isset($_POST['add'])) {
+        header("location: ../add_routine_task.php");
+        exit();
+        //echo ("Need to continue adding other tasks");
+    }
 
-    echo("I sucessfully exit");
+    //echo("I sucessfully exit");
 ?>

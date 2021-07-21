@@ -4,6 +4,7 @@
 
 <!DOCTYPE html>
 <html>
+
   <head>
     <title>Add daily task</title>
     <!--<script type = "text/javascript" type="module" src="main_schedule.js"></script>-->
@@ -15,18 +16,6 @@
     <!--<script type = "text/javascript" type="module" src="main_schedule.js"></script>-->
     <!--<script type = "text/javascript" type="module" src="initialise.js"></script>-->
     <!--<script type = "text/javascript" type="module" src="CombinedTime_Final.js"></script>-->
-    <!--
-    <script type = "module">
-      import {OneTimeTask} from './OneTimeTasks/OneTimeTask.js';
-      import {NonFixedTask} from './OneTimeTasks/NonFixedTask.js';
-      import {FixedTask} from './OneTimeTasks/FixedTask.js';
-      import {Window} from '../Window.js';
-      import {Time} from '../Time.js';
-    </script>
-    -->
-    <!--Preshita added for experimentation-->
-    <!--<script type="text/javascript" src="Window.js"></script>--> 
-
     <link rel="stylesheet" href="add_daily_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
@@ -35,31 +24,27 @@
   </head>
   
   <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
-    <!--Importing Firebase and Cloud Firestore libraries-->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-
+  <!--<form action="includes/add_routine_task.inc.php" method="POST" id="bigForm">-->
     <!-- Parent-child relationship for inline-->
     <fieldset id="myFieldset">
       <div id="title">
         <li><h3>Add a task:</h3></li>
-      <!-- INPUT for taskName-->
-      <li><form>
-          <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value, 'name')"><br>
-      </form></li>
+        <!-- INPUT for taskName-->
+        <li>
+            <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value, 'name')"><br>
+        </li>
       </div>
   
       <!-- Parent-child relationship for inline-->
       <div id="categories">
-          <li><h3>Category:</h3></li>
-      <!-- Buttons for categories-->
-      <li><form class="btn-group-category">
-          <input type="button" id="work" onclick="catFunction(0); Update(0,'work');" value="Work"></button>
-          <input type="button" id="exercise" onclick="catFunction(1); Update(1,'exercise');" value="Exercise"></button>
-          <input type="button" id="misc" onclick="catFunction(2); Update(2,'misc');" value="Miscellaneous"></button>
-      </form></li>
-    </div>
+        <li><h3>Category:</h3></li>
+        <!-- Buttons for categories-->
+        <li>
+            <input type="button" id="work" onclick="catFunction(0); Update(0,'work');" value="Work"></button>
+            <input type="button" id="exercise" onclick="catFunction(1); Update(1,'exercise');" value="Exercise"></button>
+            <input type="button" id="misc" onclick="catFunction(2); Update(2,'misc');" value="Miscellaneous"></button>
+        </li>
+      </div>
       
       <!--For INPUT DROPDOWN date-->
       <!--Find a shorter way for numerical drop downs and how to link to javascript-->
@@ -96,7 +81,6 @@
         </div>
         <input type="button" id="doneTimeBtn" value="Done!" onclick="calculationTime()">
       </div>
-      
   
       <!--Duration options-->
       <div id = "durationOptions" style="display: none">
@@ -109,16 +93,15 @@
           <div id="sessions">
             <h3>Number of Sessions:</h3>
           </div>
-          <form class="numSessions">
+          <!--<form class="numSessions">-->
             <input type="button" id="onesession" onclick="sessionsFunction(1); Update(1,'one');" value="x1"></button>
             <input type="button" id="twosessions" onclick="sessionsFunction(2);Update(2,'two');" value="x2"></button>
             <input type="button" id="threesessions" onclick="sessionsFunction(3);Update(3,'three');" value="x3"></button>
-          </form>
-          <input type="button" id="doneDurationBtn" value="Done!" onclick="calculationDuration()">
+        </form>
+        <input type="button" id="doneDurationBtn" value="Done!" onclick="calculationDuration()">
       </div>
     
   
-      
       <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
       <!-- QUESTION: idk how to include javascript element into html isit ${}?-->
       <div id="counter">
@@ -138,32 +121,31 @@
         </br>
   
         <!--Code for dropdown menu linked to javascript, database of other tasknames-->
-    <div id="A" style="display:none">
-      <!--Container to contain the dynamically added elements-->
-      <div>
-        <select id="dropdownList" oninput="Update(this.value, 'followname')">
-          <option value="" selected disabled hidden>Select a task</option>
-        </select>
-      </div>
-      <h4 id="sequence">(Selected task will be scheduled after the created task)</h4>
-    </div>
-  
-    <div id="B" style="display:none">
-    </div>
-
-    
- 
-
-    <!--Buttons for DELETE, ADD, DONE-->
-    <div class="btn-group-actions">
-      <li><input type="button" id="delete" value="Delete task" onclick="DeleteTask()"></li>
-      <!-- <li><button id="add" >Add another task</button></li> -->
-      <!--<li><input type="button" id="done" value="Submit" onclick="frontEndSubmit();check()"></li>-->
-      <li><input type="button" id="done" value="Submit" onclick="Window.testFunction();frontEndSubmit();"></li>
+        <div id="A" style="display:none">
+          <!--Container to contain the dynamically added elements-->
+          <div>
+            <select id="dropdownList" oninput="Update(this.value, 'followname')">
+              <option value="" selected disabled hidden>Select a task</option>
+            </select>
+          </div>
+          <h4 id="sequence">(Selected task will be scheduled after the created task)</h4>
+        </div>
       
-    </div>
-  </fieldset>
+        <div id="B" style="display:none">
+      </div>
 
+  
+      <!--Buttons for DELETE, ADD, DONE-->
+      <div class="btn-group-actions">
+        <li><input type="button" id="delete" value="Delete task" onclick="DeleteTask()"></li>
+        <!-- <li><button id="add" >Add another task</button></li> -->
+        <!--<li><input type="button" id="done" value="Submit" onclick="frontEndSubmit();check()"></li>-->
+        <li><button type="submit" id="done" name="done">Submit</button></li>
+        <!--<li><input type="button" id="done" value="Submit" onclick="Window.testFunction();frontEndSubmit();"></li>-->
+      </div>
+
+    </fieldset>
+<!--</form>-->
     <script>
         //------------------Defining of variables------------------//
 
@@ -197,6 +179,7 @@
         var dateNumber = 0;
  
         function Update(val, type) {
+          var ele = document.getElementById("bigForm");
           if (type=='name') {
             nameOfTask=val;
           } else if (type=='datein'){
@@ -205,9 +188,35 @@
           } else if (type=='start'){
             start=val;
             startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
+
+            var jsStartHour = document.createElement("input");
+            jsStartHour.type = "hidden";
+            jsStartHour.value = startArr[0];
+            jsStartHour.name = "jsStartHour";
+            ele.appendChild(jsStartHour);
+
+            var jsStartMin = document.createElement("input");
+            jsStartMin.type = "hidden";
+            jsStartMin.value = startArr[1];
+            jsStartMin.name = "jsStartMin";
+            ele.appendChild(jsStartMin);
+
           } else if (type=='end'){
             end=val;
             endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
+
+            var jsEndHour = document.createElement("input");
+            jsEndHour.type = "hidden";
+            jsEndHour.value = endArr[0];
+            jsEndHour.name = "jsEndHour";
+            ele.appendChild(jsEndHour);
+
+            var jsEndMin = document.createElement("input");
+            jsEndMin.type = "hidden";
+            jsEndMin.value = endArr[1];
+            jsEndMin.name = "jsEndMin";
+            ele.appendChild(jsEndMin);
+
           } else if (type=='followname'){
             followUpTask=val;
           } else if (type=='followseq'){
@@ -218,10 +227,31 @@
             minute=val;
           } else if (type=='work'){
             categoryNum=val;
+
+            var jsCat = document.createElement("input");
+            jsCat.type = "hidden";
+            jsCat.value = categoryNum;
+            jsCat.name = "jsCat";
+            ele.appendChild(jsCat);
+
           } else if (type=='exercise'){
             categoryNum=val;
+
+            var jsCat = document.createElement("input");
+            jsCat.type = "hidden";
+            jsCat.value = categoryNum;
+            jsCat.name = "jsCat";
+            ele.appendChild(jsCat);
+
           } else if (type=='misc'){
             categoryNum=val;
+
+            var jsCat = document.createElement("input");
+            jsCat.type = "hidden";
+            jsCat.value = categoryNum;
+            jsCat.name = "jsCat";
+            ele.appendChild(jsCat);
+
           } else if (type=='one'){
             numSessions=val;
           } else if (type=='two'){
@@ -230,10 +260,6 @@
             numSessions=val;
           }
         }
-
-        // /*Temp*/
-        // startArr=[20,30];
-        // endArr=[15,20];
 
         /*function check(): to get document category*/
         function checked() {
@@ -247,86 +273,8 @@
 
         //--------------------- Writing relevant functions ------------------//
 
-        // Add document with custom ID
-        function Add_Doc_WithID() {
-          let taskName, taskCat, startTimeHour, year, month, date, startTimeMin, endTimeHour, endTimeMin, type, newWin;
-          let finalArr = [];
-
-          <?php
-            $user = 'root'; 
-            $pass = '';
-            $db='orbital247';
-            $conn = mysqli_connect('localhost', $user, $pass, $db);
-
-            $sql = "SELECT * FROM fixedtask where ;"; //incomplete
-            $result = mysqli_query($conn, $sql);
-            $resultCheck = mysqli_num_rows($result);
-            $data = array();
-
-            if ($resultCheck > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $data[] = $row;   
-                }   
-            }
-            foreach($data as $single) {
-                $taskName = $single['taskName'];
-                echo "taskName = '$taskName';";
-                $taskCat = $single['taskCategory'];
-                echo "taskCat = '$taskCat';";
-                $year = $single['year'];
-                echo "year = '$year';";
-                $month = $single['month'];
-                echo "month = '$month';";
-                $date = $single['date'];
-                echo "date = '$date';";
-                $startTimeHour = $single['startTimeHour'];
-                echo "startTimeHour = '$startTimeHour';";
-                $startTimeMin = $single['startTimeMin'];
-                echo "startTimeMin = '$startTimeMin';";
-                $endTimeHour = $single['endTimeHour'];
-                echo "endTimeHour = '$endTimeHour';";
-                $endTimeMin = $single['endTimeMin'];
-                echo "endTimeMin = '$endTimeMin';";
-                $type = $single['type'];
-                echo "type = '$type';";
-                
-                echo "newWin = new Window(taskName, taskCat, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);";
-
-                echo "finalArr.push(newWin);";
-            }
-          ?>
-
-
-
-
-            cloudDB.collection("allArrays").doc("occupiedCollection").collection("0").doc(start).set(
-            //cloudDB.collection("allArrays").doc("occupiedCollection").collection("0").doc(startTime).set( //collection number use formula!
-                {
-                    taskName : String(nameOfTask),
-                    taskCategory : Number(categoryNum),
-                    date: String(dateInput), //in the form "yyyy-mm-dd"
-                    type: String(checked()), //to store if its fixed or non-fixed also               
-                    startTime : Array(Number(startArr[0]), Number(startArr[1])), //fixed
-                    endTime : Array(Number(endArr[0]), Number(endArr[1])), //fixed
-                    durationHour: Number(hour), //non-fixed
-                    durationMinute: Number(minute), //non-fixed
-                    numSessions : Number(numSessions), //1,2 or 3 non-fixed
-                    followTask: String(followUpTask), //no: null; yes: taskName of the followed task
-                    sequenceLabel: String(sequence) //no: null; yes: before or after
-                }
-            ).then(function(){
-                console.log("Doc written with ID " , nameOfTask);
-                // Preshita's experimentation (ignore for now)
-                //let newWindow = new Window("play", 2021, 6, 14, [12, 21], [12, 41], 0);
-                //let newWindow = new Window(taskName, parseInt(start.substr(0, 4)), parseInt(start.substr(5, 7)), parseInt(start.substr(8, 10)), startArr, endArr, 0)
-                //newWindow.insertWindow();
-            })
-            .catch(function(error) {
-                console.error("Error adding doc", Error);
-            });
-          }
-
         //--------------------- Retrieving relavant information from database ------------------//
+
         /*Function to get current date in format*/
         function frontEndSubmit() { 
           //Add_Doc_WithID();
@@ -334,7 +282,7 @@
           alert("Daily task has been successfully saved! Please press the X button to close the window!");
           var myFieldset = document.getElementById("myFieldset");
           myFieldset.disabled = true;
-          update_totalRemaining_toDB(); //to update database
+          //update_totalRemaining_toDB(); //to update database
         }
 
         function formatDate() {
@@ -359,24 +307,6 @@
           option.classList.add(namespace); //add a class attribute the class of the taskname is just task underscore
           document.getElementById("dropdownList").append(option); //appending options to the select
         }
-         
-        /*Use where() to get the documents of the current date in order to retrieve the taskNames of these documents*/
-        function RetrieveWithID() { //get taskNames with dates considered also
-          var todayDate = formatDate(); //getting current date
-          console.log(formatDate());
-          var taskList;
-            console.log("I come here too");
-            cloudDB.collection('OneTimeTasks').where("date", "==", todayDate)
-            .get()
-            .then((snapshot) => {
-              snapshot.forEach((doc) => {
-                createDropdown(doc.data().taskName);
-              });
-            })
-            .catch((error) => {
-            console.log("Error getting documents: ", error);
-          });
-        }
 
         /*Retrieving remaining time after calculations: 24*60min - 8*60min for sleep - (min time for routine tasks)*/
         /*Do by retrieving from database?*/
@@ -386,36 +316,37 @@
         var totalRemainingArr = [720, 720, 720, 720, 720, 720, 720]; 
 
         /*SetupCounter() updates database with the remaining counter timings for a collection of 7 days*/
-        function SetupCounter() { 
-          for (let i = 0; i < totalRemainingArr.length; i++) {
-            cloudDB.collection("allArrays").doc("counter").collection(i.toString()).doc(i.toString()).update(
-            {
-              totalTime : Number(totalRemainingArr[i])
-            }).then(function() {
-              console.log("Counter array is created");
-              console.log(totalRemainingArr[i]);
-            }).catch(function(error){
-              console.log("Error filling up counter");
-            });
-          } 
-        }
-    
-        window.onload = function get_DateNumber() {
-          cloudDB.collection("allArrays").doc("counter").collection(dateNumber.toString()).doc(dateNumber.toString())
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              var totalRemaining = doc.data().totalTime;
-              console.log("Document data exists", totalRemaining);
-              initial(totalRemaining);
-            } else {
-              console.log("No such document!");
-            }
-          }).catch((error) => {
-            console.log("Error getting document", error);
-          })
         
-        }
+        // function SetupCounter() { 
+        //   for (let i = 0; i < totalRemainingArr.length; i++) {
+        //     cloudDB.collection("allArrays").doc("counter").collection(i.toString()).doc(i.toString()).update(
+        //     {
+        //       totalTime : Number(totalRemainingArr[i])
+        //     }).then(function() {
+        //       console.log("Counter array is created");
+        //       console.log(totalRemainingArr[i]);
+        //     }).catch(function(error){
+        //       console.log("Error filling up counter");
+        //     });
+        //   } 
+        // }
+    
+        // window.onload = function get_DateNumber() {
+        //   cloudDB.collection("allArrays").doc("counter").collection(dateNumber.toString()).doc(dateNumber.toString())
+        //   .get()
+        //   .then((doc) => {
+        //     if (doc.exists) {
+        //       var totalRemaining = doc.data().totalTime;
+        //       console.log("Document data exists", totalRemaining);
+        //       initial(totalRemaining);
+        //     } else {
+        //       console.log("No such document!");
+        //     }
+        //   }).catch((error) => {
+        //     console.log("Error getting document", error);
+        //   })
+        
+        // }
 
 
   /*displayDuration(): to display out font-end counter timing*/      
@@ -490,144 +421,16 @@ function calculationTime() {
   finalDBMin = totalRemaining - totalToMinus;
 }
 
-function update_totalRemaining_toDB() {
-  cloudDB.collection("allArrays").doc("counter").collection(dateNumber.toString()).doc(dateNumber.toString()).update(
-    {
-      totalTime : Number(finalDBMin)
-    }).then(function() {
-        console.log("New minutes left is updated");
-    }).catch(function(error){
-        console.log("Error updating final minutes");
-    });
-  } 
-
-
-
-  /*
-  function test() {
-    console.log("i come here")
-    return JSON.parse(localStorage.getItem("test"))
-    //testArr = arr;
-    //console.log(arr)
-    //return localStorage.getItem("test");
-  }
-  */
-  var result = JSON.parse(localStorage.getItem("newnewtest"));
-  //var result = localStorage.getItem("test");
-
-  console.log(result);
-
-
-        // var array = [];
-        // function getFromDatabase() {
-        //   cloudDB.collection("allArrays").doc("occupiedCollection").collection("Day 0")
-        //   .get()
-        //   .then((querySnapshot) => {
-        //     querySnapshot.forEach((doc) => {
-        //       let task = new Window (
-        //         doc.data().taskName,
-        //         doc.data().year,
-        //         doc.data().month,
-        //         doc.data().date,
-        //         doc.data().startTime,
-        //         doc.data().endTime,
-        //         doc.data().type
-        //       )
-        //       array.push(task);
-        //       console.log(array);
-        //       //arr = array;
-        //       //console.log(arr);
-        //     })
-        //     //console.log(array);
-        //     //return arr;
-        //   });
-        //   //console.log(array);
-        //   //console.log("I come here");
-        //   //return arr;
-        // }
-
-        //arr2 = getFromDatabase()
-        //console.log("arr 2 is " + getFromDatabase());
-
-
-        
-        
-
-
-         //--------------------- Deleting data from database ------------------//
-        //  function DeleteTask(){ //only can test when edit function is out
-        //    cloudDB.collection("OneTimeTasks").doc(nameOfTask).delete()
-        //    .then(function(){
-        //      console.log("Document deleted with ID", nameOfTask);
-        //    })
-        //    .catch(function(error){
-        //      console.error("Error deleting document", error);
-        //    });
-        //  }
-       
-        //------------------------Button Events----------------------------//
-        // document.getElementById("done").addEventListener('click', Add_Doc_WithID);
-
-<?php
-//To connect to database
-$user = 'root'; //no users for now
-$pass = ''; //dont need for now
-$db='schedulerdb'; 
-
-$link = new mysqli('localhost', $user, $pass, $db);
-
-if ($link === false){
-  die("ERROR: Could not connect." . mysqli_connect_error());
-}
-
-//creating table in SQL
-$sql = "CREATE TABLE onetimetask(
-  taskName TEXT(100) NOT NULL,
-  taskCategory INT NOT NULL,
-  dateIn DATE,
-  startTimeHour INT NOT NULL,
-  startTimeMin INT NOT NULL,
-  endTimeHour INT NOT NULL,
-  endTimeMin INT NOT NULL,
-  durationHour INT NOT NULL,
-  durationMinute INT NOT NULL,
-  numSessions INT NOT NULL,
-  followTask tinyint NOT NULL,
-  )";
-
-if (mysqli_query($link, $sql)) {
-  echo "Table created successfully!";
-} else {
-  echo "ERROR: Not able to execute $sql.".mysqli_error($link);
-}
-
-//Getting input values from html cause unable to just declare variable in html then automatically assume in PHP
-//$nameOfTask = echo "nameOfTask";
-// $categoryNum =
-// $dateInput =
-// $startArr0 =
-// $startArr =
-// $endArr0 =
-// $endArr1 =
-// $hour =
-// $minute =
-// $numSessions =
-// $followUpTask =
-
-//insert SQL database
-// $sql = "INSERT INTO onetimetask(taskName, taskCategory, dateIn, startTimeHour, startTimeMin, endTimeHour, endTimeMin, durationHour, durationMinute, numSessions, followTask) 
-// VALUES (nameOfTask, categoryNum, dateInput, startArr[0], startArr[1], endArr[0], endArr[1], hour, minute, numSessions, followUpTask)";
-
-// if (mysqli_query($link, $sql)) {
-//   echo "Records inserted successully.";
-// } else {
-//   echo "ERROR: Not able to execute $sql.".mysqli_error($link);
-// }
-
-//close connection
-mysqli_close($link);
-?>
-
+// function update_totalRemaining_toDB() {
+//   cloudDB.collection("allArrays").doc("counter").collection(dateNumber.toString()).doc(dateNumber.toString()).update(
+//     {
+//       totalTime : Number(finalDBMin)
+//     }).then(function() {
+//         console.log("New minutes left is updated");
+//     }).catch(function(error){
+//         console.log("Error updating final minutes");
+//     });
+//   } 
     </script>
    </body>
 </html>

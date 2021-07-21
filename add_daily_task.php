@@ -1,5 +1,6 @@
 <?php
     session_start();
+    //include "../includes/add_daily_task.inc.php"
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
     <!--<script type = "text/javascript" type="module" src="combine_add_daily_main.js"></script>-->
     <script type = "text/javascript" type="module" src="Time.js"></script>
     <script type = "text/javascript" type="module" src="OneTimeTasks_Final.js"></script>
-    <script type = "text/javascript" type="module" src="Window.js"></script>
+    <!--<script type = "text/javascript" type="module" src="Window.js"></script>-->
     <!--<script type = "text/javascript" type="module" src="main_schedule.js"></script>-->
     <!--<script type = "text/javascript" type="module" src="initialise.js"></script>-->
     <!--<script type = "text/javascript" type="module" src="CombinedTime_Final.js"></script>-->
@@ -24,7 +25,7 @@
   </head>
   
   <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
-  <!--<form action="includes/add_routine_task.inc.php" method="POST" id="bigForm">-->
+  <form action="includes/add_daily_task.inc.php" method="POST" id="bigForm">
     <!-- Parent-child relationship for inline-->
     <fieldset id="myFieldset">
       <div id="title">
@@ -50,7 +51,7 @@
       <!--Find a shorter way for numerical drop downs and how to link to javascript-->
       <div id="date">
         <li><h3>Date:</h3></li>
-        <li><input id="dateInput" type="date" oninput="Update(this.value,'datein')"></li>
+        <li><input id="dateInput" type="date" name="taskDate" oninput="Update(this.value,'datein')"></li>
       </div>
   
       <!-- Checkboxes for either TIME task or DURATION task-->
@@ -84,7 +85,8 @@
   
       <!--Duration options-->
       <div id = "durationOptions" style="display: none">
-        <form class="durationOption">
+        <!--<form class="durationOption">-->
+        <div class="durationOption">
           <input type="number" id="hour" name="hour" min="0" max="3" oninput="Update(this.value, 'hour')"> <!--I set max to 3 hours for health?-->
           <label for="hour">hr</label>
           <input type="number" id="minute" name="minute" min="0" max="59" oninput="Update(this.value, 'min')">
@@ -97,7 +99,8 @@
             <input type="button" id="onesession" onclick="sessionsFunction(1); Update(1,'one');" value="x1"></button>
             <input type="button" id="twosessions" onclick="sessionsFunction(2);Update(2,'two');" value="x2"></button>
             <input type="button" id="threesessions" onclick="sessionsFunction(3);Update(3,'three');" value="x3"></button>
-        </form>
+        <!--</form>-->
+        </div>
         <input type="button" id="doneDurationBtn" value="Done!" onclick="calculationDuration()">
       </div>
     
@@ -145,7 +148,7 @@
       </div>
 
     </fieldset>
-<!--</form>-->
+  </form>
     <script>
         //------------------Defining of variables------------------//
 
@@ -184,6 +187,24 @@
             nameOfTask=val;
           } else if (type=='datein'){
             dateInput=val;
+            
+            var jsYear = document.createElement("input");
+            jsYear.type = "hidden";
+            jsYear.value = dateInput.substring(0, 4);
+            jsYear.name = "jsYear";
+            ele.appendChild(jsYear);
+
+            var jsMonth = document.createElement("input");
+            jsMonth.type = "hidden";
+            jsMonth.value = dateInput.substring(5, 7);
+            jsMonth.name = "jsMonth";
+            ele.appendChild(jsMonth);
+
+            var jsDate = document.createElement("input");
+            jsDate.type = "hidden";
+            jsDate.value = dateInput.substring(8, 10);
+            jsDate.name = "jsDate";
+            ele.appendChild(jsDate);
             //insert formula to get number after dateInput is changed
           } else if (type=='start'){
             start=val;
@@ -219,12 +240,36 @@
 
           } else if (type=='followname'){
             followUpTask=val;
+
+            var jsFollowName = document.createElement("input");
+            jsFollowUp.type = "hidden";
+            jsFollowUp.value = followUpTask;
+            jsFollowUp.name = "jsFollowUp";
+            ele.appendChild(jsFollowUp);
+
           } else if (type=='followseq'){
             sequence=val;
+            
+            // Still need this?
+
           } else if (type=='hour'){
             hour=val;
+
+            var jsHour = document.createElement("input");
+            jsHour.type = "hidden";
+            jsHour.value = hour;
+            jsHour.name = "jsHour";
+            ele.appendChild(jsHour);
+
           } else if (type=='min'){
             minute=val;
+
+            var jsMin = document.createElement("input");
+            jsMin.type = "hidden";
+            jsMin.value = minute;
+            jsMin.name = "jsMin";
+            ele.appendChild(jsMin);
+
           } else if (type=='work'){
             categoryNum=val;
 
@@ -254,10 +299,31 @@
 
           } else if (type=='one'){
             numSessions=val;
+
+            var jsNum = document.createElement("input");
+            jsNum.type = "hidden";
+            jsNum.value = numSessions;
+            jsNum.name = "jsNum";
+            ele.appendChild(jsNum);
+
           } else if (type=='two'){
             numSessions=val;
+
+            var jsNum = document.createElement("input");
+            jsNum.type = "hidden";
+            jsNum.value = numSessions;
+            jsNum.name = "jsNum";
+            ele.appendChild(jsNum);
+
           } else if (type=='three'){
             numSessions=val;
+
+            var jsNum = document.createElement("input");
+            jsNum.type = "hidden";
+            jsNum.value = numSessions;
+            jsNum.name = "jsNum";
+            ele.appendChild(jsNum);
+
           }
         }
 
@@ -421,6 +487,16 @@ function calculationTime() {
   finalDBMin = totalRemaining - totalToMinus;
 }
 
+/*
+function addTask() {
+  if (hour == null) {
+    console.log("I come to addTask() function");
+    let newWin = new Window(nameOfTask, parseInt(dateInput.substr(0, 4)), parseInt(dateInput.substr(5, 7)) - 1, parseInt(dateInput.substr(8, 10)), new Time(startArr[0], startArr[1]), new Time(endArr[0], endArr[1]), 1);
+
+    newWin.insertWindow()
+  } 
+}
+*/
 // function update_totalRemaining_toDB() {
 //   cloudDB.collection("allArrays").doc("counter").collection(dateNumber.toString()).doc(dateNumber.toString()).update(
 //     {

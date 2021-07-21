@@ -244,30 +244,61 @@
           }
         }
         var typeCheck = checked();
-        //--------------- Configuration --------------------------//
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-        apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-        authDomain: "orbital-24-7.firebaseapp.com",
-        databaseURL: "https://orbital-24-7-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "orbital-24-7",
-        storageBucket: "orbital-24-7.appspot.com",
-        messagingSenderId: "459091456870",
-        appId: "1:459091456870:web:21134477e94d50e25ecea7",
-        measurementId: "G-WQMCMBMFCK"
-        };
 
-        if (!firebase.apps.length) {
-          firebase.initializeApp(firebaseConfig);
-        }else {
-          firebase.app(); // if already initialized, use that one
-        }
-        //firebase.initializeApp(firebaseConfig);
-        let cloudDB = firebase.firestore();
         //--------------------- Writing relevant functions ------------------//
 
         // Add document with custom ID
         function Add_Doc_WithID() {
+          let taskName, taskCat, startTimeHour, year, month, date, startTimeMin, endTimeHour, endTimeMin, type, newWin;
+          let finalArr = [];
+
+          <?php
+            $user = 'root'; 
+            $pass = '';
+            $db='orbital247';
+            $conn = mysqli_connect('localhost', $user, $pass, $db);
+
+            $sql = "SELECT * FROM fixedtask where ;"; //incomplete
+            $result = mysqli_query($conn, $sql);
+            $resultCheck = mysqli_num_rows($result);
+            $data = array();
+
+            if ($resultCheck > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $data[] = $row;   
+                }   
+            }
+            foreach($data as $single) {
+                $taskName = $single['taskName'];
+                echo "taskName = '$taskName';";
+                $taskCat = $single['taskCategory'];
+                echo "taskCat = '$taskCat';";
+                $year = $single['year'];
+                echo "year = '$year';";
+                $month = $single['month'];
+                echo "month = '$month';";
+                $date = $single['date'];
+                echo "date = '$date';";
+                $startTimeHour = $single['startTimeHour'];
+                echo "startTimeHour = '$startTimeHour';";
+                $startTimeMin = $single['startTimeMin'];
+                echo "startTimeMin = '$startTimeMin';";
+                $endTimeHour = $single['endTimeHour'];
+                echo "endTimeHour = '$endTimeHour';";
+                $endTimeMin = $single['endTimeMin'];
+                echo "endTimeMin = '$endTimeMin';";
+                $type = $single['type'];
+                echo "type = '$type';";
+                
+                echo "newWin = new Window(taskName, taskCat, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);";
+
+                echo "finalArr.push(newWin);";
+            }
+          ?>
+
+
+
+
             cloudDB.collection("allArrays").doc("occupiedCollection").collection("0").doc(start).set(
             //cloudDB.collection("allArrays").doc("occupiedCollection").collection("0").doc(startTime).set( //collection number use formula!
                 {

@@ -20,18 +20,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
+<script>
+    function popupFunction() {
+        window.alert("Please input your routine tasks such as exercise times, meal times, daily, weekly, biweekly or monthly events!");
+    }    
+</script>
+
+<body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;" onload="popupFunction()">
     <!-- Parent-child relationship for inline-->
-<<<<<<< HEAD
-    <form action="includes/add_routine_task.inc.php" method="POST">
-    <div id="title">
-        <li>
-            <h3>Add a routine task:</h3>
-        </li>
-        <!-- INPUT for taskName-->
-        <li>
-            <form action="includes/add_routine_task.inc.php" method="POST">
-=======
     <form action="includes/add_routine_task.inc.php" method="POST" id="bigForm">
         <div id="title">
             <li>
@@ -39,7 +35,6 @@
             </li>
             <!-- INPUT for taskName-->
             <li>
->>>>>>> 8fa02d7c436ddbf21e2c4ca217f324d6a01b7133
                 <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value,'name')"><br>
             </li>
         </div>

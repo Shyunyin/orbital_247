@@ -136,8 +136,8 @@ function loginUser($conn, $username, $pwd) {
         $_SESSION["useruid"] = $uidExists["usersUid"];
 
         echo($_SESSION["userid"]);
-        // header("location: ../add_routine_task.php"); //go to first page
-        // exit();
+        header("location: ../add_routine_task.php"); //go to first page
+        exit();
     }
 }
 

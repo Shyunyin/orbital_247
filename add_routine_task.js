@@ -124,10 +124,7 @@ function newWindow() {
 //   window.location.href = "http://127.0.0.1:5501/WakeUpTime/wakeup.html";
 // }
 
-/*For instructions pop-up*/
-// window.onload = function() {
-//   window.alert("For a start, please input your routine tasks such as exercise times, meal times, daily, weekly, biweekly or monthly events!");
-// }
+
 
 function showList(value, btn) {
   if (value=="weekly"){

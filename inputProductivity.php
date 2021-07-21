@@ -1,7 +1,6 @@
 <?php
     session_start();
 ?>
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -24,7 +23,7 @@
     }
     .btn-group {
         position: center;
-        margin-left: 230px;
+        margin-left: 300px;
     }
     .btn-group .button {
     font-family: "Signika Negative", sans-serif;
@@ -62,72 +61,140 @@
 </head>
 
 <body>
+  <!--Get wake up time from php to display on buttons-->
+  <?php
+        $serverName = "localhost";
+        $dBUsername = "root";
+        $dBPassword = "";
+        $dBName = "orbital247";
+        $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
+
+        $userid = (int) $_SESSION['userid'];
+        $sql = "SELECT * FROM infowakeup WHERE id=$userid;";
+        $result = mysqli_query($conn,$sql);
+        if(!$result) {
+          echo "Could not run query:" . mysqli_error();
+          exit();
+        }
+        $row = mysqli_fetch_row($result);
+        $startHour = $row[0];
+        $startMin = $row[1];
+
+        //creating 2nd, 3rd and 4th start productivity time
+        $secondHour = calculate($startHour + 4);
+        $thirdHour = calculate($secondHour + 4);
+        $fourthHour = calculate($thirdHour + 4);
+        $lastHour = calculate($fourthHour + 4);
+
+        //calculate() checks if an Hour is more than 24 and ensures that the output uses the 24-hour format
+        function calculate($x){
+          if ($x > 23) {
+            return ($x - 24);
+          }
+            return $x;
+          }
+
+        // echo "0" .$secondHour;
+        // echo ($startHour. ":" .$startMin. "-" .$secondHour. ":" .$startMin);
+
+        function printval($var){
+          if ($var < 10) {
+            echo "0" .$var;
+          } else {
+            echo $var;
+          }
+        }
+        // echo (" Hour:" .$startHour. "and Minute:" .$startMin); //debugging: works
+    ?>
+
     <h2>Select the timeslot(s) which you think you&nbsp;</h2>
     <h2> are the most productive at:</h2>
-    <div class="btn-group">
-        <button id="num1" class="button" onclick="time(1)"></button>
-        <button id="num2" class="button" onclick="time(2)"></button>
-        <button id="num3" class="button" onclick="time(3)"></button>
-        <button id="num4" class="button" onclick="time(4)"></button>
-      </div>
-      <button id="done" onclick="nextPage()">Let's go to input our routine tasks!</button>
-   
+    <form action="" method="POST">
+      <div class="btn-group">
+          <button type="submit" id="num1" class="button" name="first" onclick="time(1)"><?php printval($startHour); echo (":"); printval($startMin); echo (" - "); printval($secondHour); echo (":"); printval($startMin);?></button>
+          <button type="submit" id="num2" class="button" name="second" onclick="time(2)"><?php printval($secondHour); echo (":"); printval($startMin); echo (" - "); printval($thirdHour); echo (":"); printval($startMin);?></button>
+          <button type="submit" id="num3" class="button" name="third" onclick="time(3)"><?php printval($thirdHour); echo (":"); printval($startMin); echo (" - "); printval($fourthHour); echo (":"); printval($startMin);?></button>
+          <button type="submit" id="num4" class="button" name="fourth" onclick="time(4)"><?php printval($fourthHour); echo (":"); printval($startMin); echo (" - "); printval($lastHour); echo (":"); printval($startMin);?></button>
+        </div>
+        <button type="submit" name="done" id="done">Next</button>
+    </form>
+
     <script>
-        var check = 0;
-    function time(num){
-    if (num === 1) {
-      document.getElementById("num1").style.backgroundColor="white";
-      document.getElementById("num2").style.backgroundColor="#96d6ed";
-      document.getElementById("num3").style.backgroundColor="#96d6ed";
-      document.getElementById("num4").style.backgroundColor="#96d6ed";
-    } else if (num === 2) {
-      document.getElementById("num1").style.backgroundColor="#96d6ed";
-      document.getElementById("num2").style.backgroundColor="white";
-      document.getElementById("num3").style.backgroundColor="#96d6ed";
-      document.getElementById("num4").style.backgroundColor="#96d6ed";
-    } else if (num=== 3) {
-      document.getElementById("num1").style.backgroundColor="#96d6ed";
-      document.getElementById("num2").style.backgroundColor="#96d6ed";
-      document.getElementById("num3").style.backgroundColor="white";
-      document.getElementById("num4").style.backgroundColor="#96d6ed";
-    } else if (num=== 4) {
-      document.getElementById("num1").style.backgroundColor="#96d6ed";
-      document.getElementById("num2").style.backgroundColor="#96d6ed";
-      document.getElementById("num3").style.backgroundColor="#96d6ed";
-      document.getElementById("num4").style.backgroundColor="white";
-    } else {
-      document.getElementById("num1").style.backgroundColor="#96d6ed";
-      document.getElementById("num2").style.backgroundColor="#96d6ed";
-      document.getElementById("num3").style.backgroundColor="#96d6ed";
-      document.getElementById("num4").style.backgroundColor="#96d6ed";
-    }
-    check = num;
-}
-
-
-    function nextPage() {
-        if (check === 0) {
-            window.alert("Please select your estimated most productive time first!")
+        function time(num){
+        if (num === 1) {
+          document.getElementById("num1").style.backgroundColor="white";
+          document.getElementById("num2").style.backgroundColor="#96d6ed";
+          document.getElementById("num3").style.backgroundColor="#96d6ed";
+          document.getElementById("num4").style.backgroundColor="#96d6ed";
+        } else if (num === 2) {
+          document.getElementById("num1").style.backgroundColor="#96d6ed";
+          document.getElementById("num2").style.backgroundColor="white";
+          document.getElementById("num3").style.backgroundColor="#96d6ed";
+          document.getElementById("num4").style.backgroundColor="#96d6ed";
+        } else if (num=== 3) {
+          document.getElementById("num1").style.backgroundColor="#96d6ed";
+          document.getElementById("num2").style.backgroundColor="#96d6ed";
+          document.getElementById("num3").style.backgroundColor="white";
+          document.getElementById("num4").style.backgroundColor="#96d6ed";
+        } else if (num=== 4) {
+          document.getElementById("num1").style.backgroundColor="#96d6ed";
+          document.getElementById("num2").style.backgroundColor="#96d6ed";
+          document.getElementById("num3").style.backgroundColor="#96d6ed";
+          document.getElementById("num4").style.backgroundColor="white";
         } else {
-            window.location.href = "http://127.0.0.1:5501/main_schedule.html"; //change to productivity page
+          document.getElementById("num1").style.backgroundColor="#96d6ed";
+          document.getElementById("num2").style.backgroundColor="#96d6ed";
+          document.getElementById("num3").style.backgroundColor="#96d6ed";
+          document.getElementById("num4").style.backgroundColor="#96d6ed";
         }
-    }
-    
-  
-
-    /*importing array from I forgot where... to create buttons. UNCOMMENT WHEN WE GET THE ARRAY*/ 
-    // function nameButtons(){
-    //   var time = [obj1, obj2, obj3, obj4];
-    //   var btn1 = document.getElementById("num1");
-    //   var btn2 = document.getElementById("num2");
-    //   var btn3 = document.getElementById("num3");
-    //   var btn4 = document.getElementById("num4");
-    //   btn1.innerHTML = obj1.startHour() + ":" + obj1.startMinute() + "-" + obj1.endHour() + ":" + obj1.endMinute();
-    //   btn2.innerHTML = obj2.startHour() + ":" + obj2.startMinute() + "-" + obj2.endHour() + ":" + obj2.endMinute();
-    //   btn3.innerHTML = obj3.startHour() + ":" + obj3.startMinute() + "-" + obj3.endHour() + ":" + obj3.endMinute();
-    //   btn4.innerHTML = obj4.startHour() + ":" + obj4.startMinute() + "-" + obj4.endHour() + ":" + obj4.endMinute();
-    // }
-
+      }
     </script>
+
+    <?php
+      // $userid = (int) $_SESSION['userid'];
+
+      // //check if done button is clicked
+      // if (isset($_POST['done'])) {
+      //   if (isset($_POST['first'])) {
+      //     $starttimehour = $startHour;
+      //     $starttimemin = $startMin;
+      //     $endtimehour = $secondHour;
+      //     $endtimemin = $startMin; 
+      //   }
+      //   if (isset($_POST['second'])) {
+      //     $starttimehour = $secondHour;
+      //     $starttimemin = $startMin;
+      //     $endtimehour = $thirdHour;
+      //     $endtimemin = $startMin; 
+      //   }
+      //   if (isset($_POST['third'])) {
+      //     $starttimehour = $thirdHour;
+      //     $starttimemin = $startMin;
+      //     $endtimehour = $fourthHour;
+      //     $endtimemin = $startMin; 
+      //   }
+      //   if (isset($_POST['fourth'])) {
+      //     $starttimehour = $fourthHour;
+      //     $starttimemin = $startMin;
+      //     $endtimehour = $lastHour;
+      //     $endtimemin = $startMin; 
+      //   }
+
+      //   $sql = "INSERT INTO infoproductive(startTimeHour, startTimeMin, endTimeHour, endTimeMin, id) 
+      //   VALUES ($starttimehour, $starttimemin, $endtimehour, $endtimemin, $userid);";
+
+      //   mysqli_query($conn, $sql);
+
+      //   echo ("Let's head to the main schedule!");
+      //   header("location: ../main_schedule.php");
+      //   exit();
+
+      // } else {
+        // echo "Please fill up your productivity times!";
+        // header("location: ../inputProductivity.php?error=noneselected");
+        // exit();
+      // }
+    ?>
+ 
 </body>
 </html>

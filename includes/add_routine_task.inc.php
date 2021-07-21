@@ -8,7 +8,7 @@
     $endHour = (int) $_POST['jsEndHour'];
     $endMin = (int) $_POST['jsEndMin'];
     $freq = (int) $_POST['jsFreq'];
-    $userid = $_SESSION["userid"];
+    $userid = (int) $_SESSION["userid"];
 
     if ($freq == 1) {
         $taskDay = (int) $_POST['jsDay'];
@@ -71,7 +71,9 @@
     }
     
     if (isset($_POST['done'])) {
-        echo ("We will move onto the Routine Info page now");
+        echo ("We will move onto adding more information now!");
+        header("location: ../wakeup.php");
+        exit();
     } else if (isset($_POST['add'])) {
         header("location: ../add_routine_task.php");
         exit();

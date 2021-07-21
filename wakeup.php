@@ -1,6 +1,7 @@
 <?php
     session_start();
 ?>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -46,7 +47,7 @@ body{
 #next:hover {
     background-color: #FEDCCE;
 }
-.vertical {
+#vertical {
     justify-content: center;
 }
 </style>
@@ -55,68 +56,40 @@ body{
 <body>
     <h2>Please input the time which you usally wake up &nbsp;</h2>
     <h2> at/ at which your day starts:</h2>
-    <div class="vertical">
-        <input type="time" id="wakeupTime" oninput="Update(this.value, 'time')">
-        <button type="button" id="next" onclick="nextPage()">Next</button> 
-    </div>
+    <form action ="includes/wakeup.inc.php" method="POST" id="vertical">
+        <input type="time" id="wakeupTime" name="wakeupTime" oninput="Update(this.value, 'time')">
+        <button type="submit" id="next" name="next">Next</button> 
+    </form>
    
     <script>
          //------------------Defining of variables------------------//
          let Wakeup = document.getElementById("wakeupTime");
 
          let wakeup = Wakeup.value;
-         let wakeupArr = [parseInt(wakeup.substr(0, 2)), parseInt(wakeup.substr(3, 4))];
+         let hour, min, wakeupArr;
+
+        //  let wakeupArr = [parseInt(wakeup.substr(0, 2)), parseInt(wakeup.substr(3, 4))];
         function Update(val, type){
+        var ele = document.getElementById("vertical"); //link to main form
             if(type=='time'){
                 wakeup=val;
-                console.log(wakeup) //debugging
                 wakeupArr=[parseInt(wakeup.substr(0, 2)), parseInt(wakeup.substr(3, 4))];
-                console.log(wakeupArr) //debugging
+                hour = wakeupArr[0];
+                min = wakeupArr[1];
+                //Shift variable to html
+
+                var jsHour = document.createElement("input");
+                jsHour.type = "hidden";
+                jsHour.value = hour;
+                jsHour.name = "jsHour";
+                ele.appendChild(jsHour);
+
+                var jsMin = document.createElement("input");
+                jsMin.type = "hidden";
+                jsMin.value = min;
+                jsMin.name = "jsMin";
+                ele.appendChild(jsMin);
             }
-        }
-         //--------------- Configuration --------------------------//
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-        apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-        authDomain: "orbital-24-7.firebaseapp.com",
-        databaseURL: "https://orbital-24-7-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "orbital-24-7",
-        storageBucket: "orbital-24-7.appspot.com",
-        messagingSenderId: "459091456870",
-        appId: "1:459091456870:web:21134477e94d50e25ecea7",
-        measurementId: "G-WQMCMBMFCK"
-        };
-
-        if (!firebase.apps.length) {
-          firebase.initializeApp(firebaseConfig);
-        }else {
-          firebase.app(); // if already initialized, use that one
-        }
-        let cloudDB = firebase.firestore();
-
-
-        function link_To_Database() {
-                cloudDB.collection("User Info").document("Wakeup Time").update({
-                    wakeupTime: Array(Number(wakeupArr[0]), Number(wakeupArr[1]))
-                }).then(function(){
-                    console.log(wakeupArr);
-                    console.log("Wake up time written ");
-                }).catch(function(error){
-                    console.error("Error adding wakeup time");
-                });
-        }
-
-        function nextPage() {
-            if (document.getElementById("wakeupTime").value === "") { //if not filled
-                window.alert("Please input your wake up time!");
-            } else { //if time is filled up
-                link_To_Database();
-            }
-                // /*Storing as a function*/
-                // let wakeTime = new Time( //create new time object for end time in Window and individual mode objects
-                // parseInt(wakeup.substr(0, 2)),
-                // parseInt(wakeup.substr(3, 4)),
-                // window.location.href = "http://127.0.0.1:5501/inputProductivity.html"; //change to productivity page
         }
     </script>
 </body>

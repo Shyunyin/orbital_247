@@ -1,10 +1,5 @@
 <?php
     session_start();
-    //echo($_SESSION["userid"]);
-    //$userid = $_SESSION['user_id'];
-    //echo session_id();
-    //include "../includes/dbh.inc.php";
-    //include "../includes/functions.inc.php";
 ?>
 <!DOCTYPE html>
 <html>

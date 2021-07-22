@@ -1,4 +1,8 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
+<html>
 <head>
     <title>Routine Page</title>
     <link rel="stylesheet" href="routine.css" />
@@ -21,4 +25,34 @@
         </div>
         <div class="main"></div>
     </div>    
+
+    <div id="routine">
+        <h3> List of routine tasks: </h3>
+        <div id="box"></div> 
+        <div id="tasklist"></div> <!-- To be edited using function in routine.js after retrieving array, currently in routine.js --> 
+    </div>
+    <div id="instruction">
+        <!--For the background box-->
+    </div>
+    <div class="instruction">
+        <h3>Click on a task to</h3>
+        <h3>edit or delete it</h3>
+    </div>
+
+    <div id="iconActions">
+    </div>
+
+    <div id="wakeup">
+        <h3>Wake up time</h3>
+        <div id="displayWakeup"></div> <!--To be retrieved from database-->
+        <button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>
+    </div>
+
+    <div id="productive">
+        <h3>Productive time period</h3>
+        <div id="displayProductive"></div> <!--To be retrieved from database-->
+        <button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>
+    </div>    
+
 </body>
+</html>

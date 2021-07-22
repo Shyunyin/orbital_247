@@ -97,10 +97,24 @@ function createUser($conn, $name, $email, $pwd) {
 
         mysqli_stmt_bind_param($stmt, "sss", $name, $email, $hashedPwd);
         mysqli_stmt_execute($stmt);
-        //mysqli_stmt_close($stmt);
-        header("location: ../login.php");
-        //header("location: ../local_sign_up.php?error=none"); 
+        //to check if user exists and link everything to userid
+        $uidExists = uidExists($conn, $username, $email);
+        if ($uidExists === false) {
+            header("location: ../login.php?error=wronglogin");
+            exit();
+        }
+        //to start the session after signing in
+        session_start();
+        //create super global session variable
+        $_SESSION["userid"] = $uidExists["usersId"];
+        $_SESSION["useruid"] = $uidExists["usersUid"];
+        mysqli_stmt_close($stmt);
+        // echo($_SESSION["userid"]);
+        header("location: ../add_routine_task.php"); //go to first page
         exit();
+        // header("location: ../login.php");
+        //header("location: ../local_sign_up.php?error=none"); 
+        // exit();
     }
 }
 
@@ -134,10 +148,11 @@ function loginUser($conn, $username, $pwd) {
         //create super global session variable
         $_SESSION["userid"] = $uidExists["usersId"];
         $_SESSION["useruid"] = $uidExists["usersUid"];
-
-        echo($_SESSION["userid"]);
-        header("location: ../add_routine_task.php"); //go to first page
+        header("location: ../main_schedule.php"); //go to first page
         exit();
+
+        // echo($_SESSION["userid"]);
+   
     }
 }
 

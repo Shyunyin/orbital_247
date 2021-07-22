@@ -221,10 +221,10 @@
 				}
 			?>
 			<footer class="footer">
-				<a class="create" href="http://localhost/local_sign_up.php"
+				<a class="create" href="../local_sign_up.php"
 					>Don't have an account?</a
 				>
-				<a class="forgotten" href="http://localhost/forgot_password.php">Forgot password?</a>
+				<a class="forgotten" href="../forgot_password.php">Forgot password?</a>
 			</footer>
 	</body>
 </html>

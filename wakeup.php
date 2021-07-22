@@ -53,7 +53,13 @@ body{
 </style>
 </head>
 
-<body>
+<script>
+    function popupFunction() {
+        window.alert("Please input your wake up time:)");
+    }    
+</script>
+
+<body onload="popupFunction();">
     <h2>Please input the time which you usally wake up &nbsp;</h2>
     <h2> at/ at which your day starts:</h2>
     <form action ="includes/wakeup.inc.php" method="POST" id="vertical">

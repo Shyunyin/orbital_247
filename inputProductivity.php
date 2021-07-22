@@ -23,11 +23,11 @@
     }
     .btn-group {
         position: center;
-        margin-left: 300px;
+        margin-left: 430px;
     }
     .btn-group .button {
     font-family: "Signika Negative", sans-serif;
-    background-color: #96d6ed; /* Green */
+    background-color: #96d6ed;
     border: 2px solid black;
     color: black;
     padding: 15px 32px;
@@ -53,6 +53,7 @@
     border-radius: 5px;
     background-color: #e3aba1;
     margin-top: 50px;
+    margin-left: -180px;
     }
     #done:hover {
         background-color: #FEDCCE;
@@ -60,7 +61,13 @@
 </style>
 </head>
 
-<body>
+<script>
+    function popupFunction() {
+        window.alert("Please click on the button that displays the window of time where you are the most productive!");
+    }    
+</script>
+
+<body onload="popupFunction();">
   <!--Get wake up time from php to display on buttons-->
   <?php
         $serverName = "localhost";
@@ -92,7 +99,7 @@
             return ($x - 24);
           }
             return $x;
-          }
+        }
 
         // echo "0" .$secondHour;
         // echo ($startHour. ":" .$startMin. "-" .$secondHour. ":" .$startMin);
@@ -105,42 +112,117 @@
           }
         }
         // echo (" Hour:" .$startHour. "and Minute:" .$startMin); //debugging: works
+        $userid = (int) $_SESSION['userid'];
     ?>
 
-    <h2>Select the timeslot(s) which you think you&nbsp;</h2>
-    <h2> are the most productive at:</h2>
-    <form action="" method="POST">
-      <div class="btn-group">
-          <button type="submit" id="num1" class="button" name="first" onclick="time(1)"><?php printval($startHour); echo (":"); printval($startMin); echo (" - "); printval($secondHour); echo (":"); printval($startMin);?></button>
-          <button type="submit" id="num2" class="button" name="second" onclick="time(2)"><?php printval($secondHour); echo (":"); printval($startMin); echo (" - "); printval($thirdHour); echo (":"); printval($startMin);?></button>
-          <button type="submit" id="num3" class="button" name="third" onclick="time(3)"><?php printval($thirdHour); echo (":"); printval($startMin); echo (" - "); printval($fourthHour); echo (":"); printval($startMin);?></button>
-          <button type="submit" id="num4" class="button" name="fourth" onclick="time(4)"><?php printval($fourthHour); echo (":"); printval($startMin); echo (" - "); printval($lastHour); echo (":"); printval($startMin);?></button>
-        </div>
-        <button type="submit" name="done" id="done">Next</button>
-    </form>
-
-    <script>
-        function time(num){
+<script>
+  //to get variables from php
+  <?php
+    echo "var firstHour = $startHour;";
+    echo "var allMin = $startMin;";
+    echo "var secondHour = $secondHour;";
+    echo "var thirdHour = $thirdHour;";
+    echo "var fourthHour = $fourthHour;";
+    echo "var lastHour = $lastHour;";
+  ?>
+      function time(num){
+        var main = document.getElementById("mainForm");
         if (num === 1) {
           document.getElementById("num1").style.backgroundColor="white";
           document.getElementById("num2").style.backgroundColor="#96d6ed";
           document.getElementById("num3").style.backgroundColor="#96d6ed";
           document.getElementById("num4").style.backgroundColor="#96d6ed";
-        } else if (num === 2) {
+
+          var startHour = document.createElement("input");
+          startHour.type = "hidden";
+          startHour.value = firstHour;
+          startHour.name = "startHour";
+          main.appendChild(startHour);
+
+          var endHour = document.createElement("input");
+          endHour.type = "hidden";
+          endHour.value = secondHour;
+          endHour.name = "endHour";
+          main.appendChild(endHour);
+
+          var minute = document.createElement("input");
+          minute.type = "hidden";
+          minute.value = allMin;
+          minute.name = "allMin";
+          main.appendChild(minute);
+        } 
+         else if (num === 2) {
           document.getElementById("num1").style.backgroundColor="#96d6ed";
           document.getElementById("num2").style.backgroundColor="white";
           document.getElementById("num3").style.backgroundColor="#96d6ed";
           document.getElementById("num4").style.backgroundColor="#96d6ed";
+
+          var startHour = document.createElement("input");
+          startHour.type = "hidden";
+          startHour.value = secondHour;
+          startHour.name = "startHour";
+          main.appendChild(startHour);
+
+          var endHour = document.createElement("input");
+          endHour.type = "hidden";
+          endHour.value = thirdHour;
+          endHour.name = "endHour";
+          main.appendChild(endHour);
+
+          var minute = document.createElement("input");
+          minute.type = "hidden";
+          minute.value = allMin;
+          minute.name = "allMin";
+          main.appendChild(minute);
+
         } else if (num=== 3) {
           document.getElementById("num1").style.backgroundColor="#96d6ed";
           document.getElementById("num2").style.backgroundColor="#96d6ed";
           document.getElementById("num3").style.backgroundColor="white";
           document.getElementById("num4").style.backgroundColor="#96d6ed";
+
+          var startHour = document.createElement("input");
+          startHour.type = "hidden";
+          startHour.value = thirdHour;
+          startHour.name = "startHour";
+          main.appendChild(startHour);
+
+          var endHour = document.createElement("input");
+          endHour.type = "hidden";
+          endHour.value = fourthHour;
+          endHour.name = "endHour";
+          main.appendChild(endHour);
+
+          var minute = document.createElement("input");
+          minute.type = "hidden";
+          minute.value = allMin;
+          minute.name = "allMin";
+          main.appendChild(minute);
+
         } else if (num=== 4) {
           document.getElementById("num1").style.backgroundColor="#96d6ed";
           document.getElementById("num2").style.backgroundColor="#96d6ed";
           document.getElementById("num3").style.backgroundColor="#96d6ed";
           document.getElementById("num4").style.backgroundColor="white";
+          
+          var startHour = document.createElement("input");
+          startHour.type = "hidden";
+          startHour.value = fourthHour;
+          startHour.name = "startHour";
+          main.appendChild(startHour);
+
+          var endHour = document.createElement("input");
+          endHour.type = "hidden";
+          endHour.value = lastHour;
+          endHour.name = "endHour";
+          main.appendChild(endHour);
+
+          var minute = document.createElement("input");
+          minute.type = "hidden";
+          minute.value = allMin;
+          minute.name = "allMin";
+          main.appendChild(minute);
+
         } else {
           document.getElementById("num1").style.backgroundColor="#96d6ed";
           document.getElementById("num2").style.backgroundColor="#96d6ed";
@@ -148,53 +230,21 @@
           document.getElementById("num4").style.backgroundColor="#96d6ed";
         }
       }
+
     </script>
 
-    <?php
-      // $userid = (int) $_SESSION['userid'];
-
-      // //check if done button is clicked
-      // if (isset($_POST['done'])) {
-      //   if (isset($_POST['first'])) {
-      //     $starttimehour = $startHour;
-      //     $starttimemin = $startMin;
-      //     $endtimehour = $secondHour;
-      //     $endtimemin = $startMin; 
-      //   }
-      //   if (isset($_POST['second'])) {
-      //     $starttimehour = $secondHour;
-      //     $starttimemin = $startMin;
-      //     $endtimehour = $thirdHour;
-      //     $endtimemin = $startMin; 
-      //   }
-      //   if (isset($_POST['third'])) {
-      //     $starttimehour = $thirdHour;
-      //     $starttimemin = $startMin;
-      //     $endtimehour = $fourthHour;
-      //     $endtimemin = $startMin; 
-      //   }
-      //   if (isset($_POST['fourth'])) {
-      //     $starttimehour = $fourthHour;
-      //     $starttimemin = $startMin;
-      //     $endtimehour = $lastHour;
-      //     $endtimemin = $startMin; 
-      //   }
-
-      //   $sql = "INSERT INTO infoproductive(startTimeHour, startTimeMin, endTimeHour, endTimeMin, id) 
-      //   VALUES ($starttimehour, $starttimemin, $endtimehour, $endtimemin, $userid);";
-
-      //   mysqli_query($conn, $sql);
-
-      //   echo ("Let's head to the main schedule!");
-      //   header("location: ../main_schedule.php");
-      //   exit();
-
-      // } else {
-        // echo "Please fill up your productivity times!";
-        // header("location: ../inputProductivity.php?error=noneselected");
-        // exit();
-      // }
-    ?>
+    <h2>Select the timeslot(s) which you think you&nbsp;</h2>
+    <h2> are the most productive at:</h2>
+    <form id="mainForm" action="includes/inputProductivity.inc.php" method="POST">
+      <div class="btn-group">
+          <input type="button" id="num1" class="button" name="first" value="<?php printval($startHour); echo (":"); printval($startMin); echo (" - "); printval($secondHour); echo (":"); printval($startMin);?>" onclick="time(1);">
+          <input type="button" id="num2" class="button" name="second" value="<?php printval($secondHour); echo (":"); printval($startMin); echo (" - "); printval($thirdHour); echo (":"); printval($startMin);?>" onclick="time(2);">
+          <input type="button" id="num3" class="button" name="third" value="<?php printval($thirdHour); echo (":"); printval($startMin); echo (" - "); printval($fourthHour); echo (":"); printval($startMin);?>" onclick="time(3);">
+          <input type="button" id="num4" class="button" name="fourth" value="<?php printval($fourthHour); echo (":"); printval($startMin); echo (" - "); printval($lastHour); echo (":"); printval($startMin);?>" onclick="time(4);">
+        </div>
+        <button type="submit" name="done" id="done">Next</button>
+    </form>
+  
  
 </body>
 </html>

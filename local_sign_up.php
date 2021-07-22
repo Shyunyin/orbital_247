@@ -182,7 +182,7 @@
 
 		
  		<div class="login">
-			<form action="../includes/signup.inc.php" method="POST">
+			<form action="includes/signup.inc.php" method="POST">
 				<input type="text" name="username" id="name" placeholder="Username" >
 				<br />
 				<input type="text" placeholder="Email" name="email" id="email_id"><br />
@@ -223,91 +223,6 @@
 				<a class="member" href="http://localhost/login.php">Already have an account?</a>
 			</footer>
 	
-
-		<!-- <script language="javascript">
-			//to check if passwords keyed in are the same
-			function check(form) {
-				if (form.pwd.value == form.cfm_pwd.value) {
-					return register();
-				} else {
-					alert("Passwords do not match. Please re-enter them.");
-				}
-			}
-		</script> -->
-		 <!--The core Firebase JS SDK is always required and must be listed first -->
-        <!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script> -->
-
-
-        <!-- TODO: Add SDKs for Firebase products that you want to use
-            https://firebase.google.com/docs/web/setup#available-libraries -->
-        <!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script> -->
-        <!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script> -->
-		<!-- <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script> -->
-
-        <!-- <script>
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-			const firebaseConfig = {
-			apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-			authDomain: "orbital-24-7.firebaseapp.com",
-			databaseURL: "https://orbital-24-7-default-rtdb.asia-southeast1.firebasedatabase.app",
-			projectId: "orbital-24-7",
-			storageBucket: "orbital-24-7.appspot.com",
-			messagingSenderId: "459091456870",
-			appId: "1:459091456870:web:21134477e94d50e25ecea7",
-			measurementId: "G-WQMCMBMFCK"
-			};
-
-			// Initialize Firebase
-			firebase.initializeApp(firebaseConfig);
-			firebase.analytics();
-			let cloudDB = firebase.firestore();
-        
-            firebase.auth().onAuthStateChanged(function(user) {
-                //User is signed ni
-                if(user) {
-                
-                //User is signed out
-                } else {
-
-                }
-            });
-
-            function register() {
-                //Must use web v8
-                var userName = document.getElementById("name").value;
-				var userEmail = document.getElementById("email_id").value;
-				var userPassword = document.getElementById("pwd").value;
-
-				//Username can't be stored in firebase
-				
-				firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword)
-					.then((userCredential) => {
-						// Signed in 
-						var user = userCredential.user;
-
-						// Adding username and user's email to the database
-						cloudDB.collection("Users").doc(userName).collection("User Info").doc("User Info").set(
-							{
-								userName : String(userName),
-								userEmail : String(userEmail),
-							}
-						).then(function(){
-							console.log("Doc for user '" + userName + "' has been created.");
-						})
-						.catch(function(error) {
-							console.error("Error adding doc for user '" + userName + "'' : ", error);
-						});
-
-						window.alert("Welcome " + userName + "!")
-					})
-					.catch((error) => {
-						var errorCode = error.code;
-						var errorMessage = error.message;
-						window.alert("Error: " + errorMessage)
-					});
-            }
-        </script> -->
 
 	</body>
 	

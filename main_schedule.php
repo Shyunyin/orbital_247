@@ -30,10 +30,6 @@
 </head>
 
 <body>
-      <!--Importing Firebase and Cloud Firestore libraries*-->
-      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
 
     <!-- Main division for the background-->
     <div id="background">
@@ -44,6 +40,25 @@
         </div>
         <div class="main"></div>
     </div>
+
+    <script>
+    //PHP to get username from mysqli and let it be a javascript variable
+        <?php
+        $serverName = "localhost";
+        $dBUsername = "root";
+        $dBPassword = "";
+        $dBName = "orbital247";
+        $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
+
+        $userid = $_SESSION['userid'];
+        $sql = "SELECT * FROM users WHERE usersId=$userid;";
+        $result = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_row($result);
+        $username = $row[1];
+        echo "var username = '$username';";
+        ?>
+        console.log(username);
+    </script>
 
     <div class = logout>
         <?php
@@ -62,9 +77,9 @@
     </div>
 
     <!--Just a stand in rectangle for the progress bar-->
-    <div id="progress">
+    <!-- <div id="progress">
         <input type="text" id="progressBar" readonly="readonly" value="Progress Bar" onfocus="this.blur()">
-    </div>
+    </div> -->
 
     <!--Stand in for schedule-->
     <div id="schedule">
@@ -107,22 +122,6 @@
     <div id="textNextDay">Go to Next day's schedule</div>
 
     <script>
-         //------------------Defining of variables------------------//
-         //--------------- Configuration --------------------------//
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-        apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-        authDomain: "orbital-24-7.firebaseapp.com",
-        databaseURL: "https://orbital-24-7-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "orbital-24-7",
-        storageBucket: "orbital-24-7.appspot.com",
-        messagingSenderId: "459091456870",
-        appId: "1:459091456870:web:21134477e94d50e25ecea7",
-        measurementId: "G-WQMCMBMFCK"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        let cloudDB = firebase.firestore();
         //--------------------- Writing relevant functions ------------------//
         //--------------------- Retrieving post-it stick tasks from database ------------------//
         /*Function to get current date in format*/
@@ -187,36 +186,6 @@
             let ele = document.getElementById("postitContent");
             ele.appendChild(append);
             count += 1; //to increase the top margin for each input
-        }
-        function Retrieve_Doc_WithID() { //is called in onload and in main_schedule.js OpenPopupWindow();
-          var todayDate = formatDate(); //getting current date
-          console.log(formatDate());
-          var taskList;
-            console.log("I come here too");
-            cloudDB.collection('OneTimeTasks').where("date", "==", todayDate)
-            .get()
-            .then((snapshot) => {
-              snapshot.forEach((doc) => {
-                createPostIt(doc.data().taskName);
-              });
-            })
-            .catch((error) => {
-            console.log("Error getting documents: ", error);
-          });
-        }
-
-        //var result = JSON.parse(localStorage.getItem("test"));
-        //var result = localStorage.getItem("123");
-        //Window.testFunction();
-        //var result = JSON.parse(localStorage.getItem("test"));
-        //var result = localStorage.getItem("test");
-        //console.log("from main schedule - trying out localStorage");
-        //console.log(result);
-
-        function testFunction2() {
-            var result = JSON.parse(localStorage.getItem("newnewtest"));
-            console.log("from main schedule - trying out localStorage");
-            console.log(result);
         }
     </script>
 

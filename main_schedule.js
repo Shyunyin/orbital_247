@@ -2,10 +2,10 @@
  * To be changed if link changes
  */
 function statistics() {
-    window.location.href = "http://localhost/statistics.php";
+    window.location.href = "./statistics.php";
 }
 function routine() {
-    window.location.href = "http://localhost/routine.php";
+    window.location.href = "./routine.php";
 }
 
 let dayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -89,7 +89,7 @@ window.onload = function getHeading() {
 
     startTime();
 
-    let user = "Preshi & Shyun" //need to obtain from javascript login page to save their username!
+    let user = username; //obtained from php in main_schedule.php line 61
     let welcome = "Welcome, " + user;
     let currentUser = document.getElementById("currentUser");
     currentUser.setAttribute("value", welcome);
@@ -97,11 +97,10 @@ window.onload = function getHeading() {
     let day = textDay(today.getDay()) + ", " + wholeDate(today.getDate()) + " " + textMonth(today.getMonth()) + "'s Schedule";
     let currentSchedule = document.getElementById("currentSchedule");
     currentSchedule.setAttribute("value", day);
+}
 
     //Window.initialise();
     //initialise();
-    Retrieve_Doc_WithID(); //to call the function to read all the daily tasks to list in post-it
-} 
 //     /*For post-it stick tasks*/
 //     for (let i = 0; i < tasks.length; i++) {
 //         let append = document.createElement("input");
@@ -414,7 +413,7 @@ function OpenPopupWindow() {
     myRef.onunload = function(){
   // DOM unloaded, so the window is likely closed.
     clearPostit();
-    Retrieve_Doc_WithID();
+    // Retrieve_Doc_WithID();
     // console.log('window closed!');
     }
 }

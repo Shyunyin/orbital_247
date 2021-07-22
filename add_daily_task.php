@@ -1,6 +1,7 @@
 <?php
     session_start();
-    //include "../includes/add_daily_task.inc.php"
+    include "../includes/add_daily_task.inc.php";
+    include "../includes/insertWindow_helper.inc.php";
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +14,7 @@
     <!--<script type = "text/javascript" type="module" src="combine_add_daily_main.js"></script>-->
     <script type = "text/javascript" type="module" src="Time.js"></script>
     <script type = "text/javascript" type="module" src="OneTimeTasks_Final.js"></script>
-    <!--<script type = "text/javascript" type="module" src="Window.js"></script>-->
+    <script type = "text/javascript" type="module" src="Window.js"></script>
     <!--<script type = "text/javascript" type="module" src="main_schedule.js"></script>-->
     <!--<script type = "text/javascript" type="module" src="initialise.js"></script>-->
     <!--<script type = "text/javascript" type="module" src="CombinedTime_Final.js"></script>-->
@@ -26,6 +27,7 @@
   
   <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
   <form action="includes/add_daily_task.inc.php" method="POST" id="bigForm">
+  <!--<form onsubmit="return addTask();" action="add_daily_task.php" id="bigForm">-->
     <!-- Parent-child relationship for inline-->
     <fieldset id="myFieldset">
       <div id="title">
@@ -150,6 +152,13 @@
     </fieldset>
   </form>
     <script>
+        var ele = document.getElementById("bigForm");
+        // var ele1= "document.getElementById("bigForm")";
+        // var anotherEle = document.createElement("input");
+        // anotherEle.type = "hidden";
+        // anotherEle.value = ele1;
+        // anotherEle.name = "anotherEle";
+        // ele.appendChild(anotherEle);
         //------------------Defining of variables------------------//
 
         /*For referencing later on*/
@@ -182,7 +191,7 @@
         var dateNumber = 0;
  
         function Update(val, type) {
-          var ele = document.getElementById("bigForm");
+          //var ele = document.getElementById("bigForm");
           if (type=='name') {
             nameOfTask=val;
           } else if (type=='datein'){
@@ -241,7 +250,7 @@
           } else if (type=='followname'){
             followUpTask=val;
 
-            var jsFollowName = document.createElement("input");
+            var jsFollowUp = document.createElement("input");
             jsFollowUp.type = "hidden";
             jsFollowUp.value = followUpTask;
             jsFollowUp.name = "jsFollowUp";
@@ -487,16 +496,14 @@ function calculationTime() {
   finalDBMin = totalRemaining - totalToMinus;
 }
 
-/*
-function addTask() {
-  if (hour == null) {
-    console.log("I come to addTask() function");
-    let newWin = new Window(nameOfTask, parseInt(dateInput.substr(0, 4)), parseInt(dateInput.substr(5, 7)) - 1, parseInt(dateInput.substr(8, 10)), new Time(startArr[0], startArr[1]), new Time(endArr[0], endArr[1]), 1);
+// function scheduleTask() {
+//     console.log("I come to addTask() function");
+//     let newWin = new Window(nameOfTask, parseInt(dateInput.substr(0, 4)), parseInt(dateInput.substr(5, 7)) - 1, parseInt(dateInput.substr(8, 10)), new Time(startArr[0], startArr[1]), new Time(endArr[0], endArr[1]), 1);
 
-    newWin.insertWindow()
-  } 
-}
-*/
+//     insertWindowHelper(newWin);
+//     //ele.submit();
+// }
+
 // function update_totalRemaining_toDB() {
 //   cloudDB.collection("allArrays").doc("counter").collection(dateNumber.toString()).doc(dateNumber.toString()).update(
 //     {

@@ -1,11 +1,15 @@
 <?php
     session_start();
+    //include "../add_daily_task.php";
 ?>
 <!DOCTYPE HTML>
 <html>
+    <!--<div type="hidden" id="big" name="big"></div>-->
+    <form action = "../includes/add_to_DB.inc.php" id="big" name="big" method="POST"></form>
     <body>
         <script type = "text/javascript" type="module" src="../Time.js"></script>
         <script>
+            var big = document.getElementById("big");
             console.log("I come here too");
             // var plsWork;
             // console.log(plsWork);
@@ -263,9 +267,161 @@
                  * To insert a window into the correct array in chronological order
                  * @returns Errors if there are any clashes in the start and end timings of a given window with existing windows in the array
                  */
-                
+                //TODO: Do you want to convert the type in window to taskCat? Might as well right? Empty windows can be type -1 instead?
                 insertWindow() {
                     console.log("insertWindow is called");
+                    let currArr = [];
+                    let name, year, month, date, startTimeHour, startTimeMin, endTimeHour, endTimeMin, type, newWin;
+                    let shouldAdd = false;
+                    //TODO: Actually need to do the variable conversion for every window so better to do that here within the function instead of down there?
+                    <?php
+                        $taskName = $_POST['taskName'];
+                        $taskCat = (int) $_POST['jsCat'];
+                        $taskYear = (int) $_POST['jsYear'];
+                        $taskMonth = (int) $_POST['jsMonth'] - 1; // For javascript, months span from 0 - 11
+                        $taskDate = (int) $_POST['jsDate'];
+                        $startHour = (int) $_POST['jsStartHour'];
+                        $startMin = (int) $_POST['jsStartMin'];
+                        $endHour = (int) $_POST['jsEndHour'];
+                        $endMin = (int) $_POST['jsEndMin']; 
+                        $type = 1; //Type for fixed tasks is always 1
+                        $userid = -1;
+
+
+                        $sql = "SELECT * FROM fixedtaskwindow WHERE userid = $userid AND taskYear = $taskYear AND taskMonth = $taskMonth AND taskDate = $taskDate;";
+
+                        $user = 'root'; 
+                        $pass = '';
+                        $db='orbital247';
+                        $conn = mysqli_connect('localhost', $user, $pass, $db);
+                        $result = mysqli_query($conn, $sql);
+                        
+                        if ($result) {
+                            //echo 'console.log("this is correct");';
+                            $resultCheck = mysqli_num_rows($result);
+                            $data = array();
+                            if ($resultCheck > 0) {
+                                //echo 'console.log("I have at least 1 result");';
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $data[] = $row;   
+                                }   
+                            }
+                            foreach($data as $single) {
+                                $name = $single['taskName'];
+                                echo "name = '$name';";
+                                $year = $single['taskYear'];
+                                echo "year = parseInt($year);";
+                                $month = $single['taskMonth'];
+                                echo "month = parseInt($month);";
+                                $date = $single['taskDate'];
+                                echo "date = parseInt($date);";
+                                $startTimeHour = $single['startTimeHour'];
+                                echo "startTimeHour = parseInt($startTimeHour);";
+                                $startTimeMin = $single['startTimeMin'];
+                                echo "startTimeMin = parseInt($startTimeMin);";
+                                $endTimeHour = $single['endTimeHour'];
+                                echo "endTimeHour = parseInt($endTimeHour);";
+                                $endTimeMin = $single['endTimeMin'];
+                                echo "endTimeMin = parseInt($endTimeMin);";
+                                $type = $single['taskType'];
+                                echo "type = parseInt($type);";
+                                
+                                echo 'newWin = new Window(name, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);';
+
+                                echo 'currArr.push(newWin);';
+                            }
+                            //echo'console.log(currArr);' ;
+                        }
+                        echo "name = '$taskName';";
+                        echo "year = '$taskYear';";
+                        echo "month = '$taskMonth';";
+                        echo "date = '$taskDate';";
+                        echo "startTimeHour = '$startHour';";
+                        echo "startTimeMin = '$startMin';";
+                        echo "endTimeHour = '$endHour';";
+                        echo "endTimeMin = '$endMin';";
+                        echo "type = '$type';";
+                    ?>
+                    //console.log(currArr);
+                    console.log("I make it to after php block in insertWindow function");
+                    // Doing checks to ensure that task does not clash with any existing fixed, future tasks.
+                    let newIndex = 0;
+                    while (newIndex < currArr.length && !this.partiallyOverlaps(currArr[newIndex]) && !this.isCompletelyDuring(currArr[newIndex]) && !(currArr[newIndex]).isCompletelyDuring(this)) {
+                    //while (newIndex < currArr.length && this.isCompletelyAfter(currArr[newIndex])) {
+                        newIndex++;
+                    }
+                    // If all currently scheduled tasks take place before the current to-be scheduled task starts
+                    if (newIndex == currArr.length) {
+                    //if ((newIndex == currArr.length) || (currArr[newIndex]).isCompletelyAfter(this)) {
+
+                            let currName = document.createElement("input");
+                            currName.type = "hidden";
+                            currName.value = name;
+                            currName.name = "currName";
+                            big.appendChild(currName);
+
+                            let currCat = document.createElement("input");
+                            currCat.type = "hidden";
+                            currCat.value = type;
+                            currCat.name = "currCat";
+                            big.appendChild(currCat);
+
+                            let currYear = document.createElement("input");
+                            currYear.type = "hidden";
+                            currYear.value = year;
+                            currYear.name = "currYear";
+                            big.appendChild(currYear);
+
+                            let currMonth = document.createElement("input");
+                            currMonth.type = "hidden";
+                            currMonth.value = month;
+                            currMonth.name = "currMonth";
+                            big.appendChild(currMonth);
+
+                            let currDate = document.createElement("input");
+                            currDate.type = "hidden";
+                            currDate.value = date;
+                            currDate.name = "currDate";
+                            big.appendChild(currDate);
+
+                            let currStartHour = document.createElement("input");
+                            currStartHour.type = "hidden";
+                            currStartHour.value = startTimeHour;
+                            currStartHour.name = "currStartHour";
+                            big.appendChild(currStartHour);
+
+                            let currStartMin = document.createElement("input");
+                            currStartMin.type = "hidden";
+                            currStartMin.value = startTimeMin;
+                            currStartMin.name = "currStartMin";
+                            big.appendChild(currStartMin);
+
+                            let currEndHour = document.createElement("input");
+                            currEndHour.type = "hidden";
+                            currEndHour.value = endTimeHour;
+                            currEndHour.name = "currEndHour";
+                            big.appendChild(currEndHour);
+
+                            let currEndMin = document.createElement("input");
+                            currEndMin.type = "hidden";
+                            currEndMin.value = endTimeMin;
+                            currEndMin.name = "currEndMin";
+                            big.appendChild(currEndMin);
+
+                            console.log("inc.php is error free thus far");
+                            //currArr.push(this);
+                            //console.log("I come to the insert window if block");
+                            //big.submit();
+                            //if ((currArr[newIndex]).isCompletelyAfter(this)) {
+                            //currArr.splice(newIndex, 0, this);
+                            //console.log(currArr); //For testing
+                            //console.log("I come to the insert window else if block");
+                            big.submit();                       
+                    } else {
+                        console.error("Cannot schedule task as it clashes with an existing task!");
+                        //return;
+                        //window.alert("Cannot schedule task as it clashes with an existing task!");
+                    }
                 }
             }
 
@@ -297,24 +453,25 @@
                 $numOfSessions = (int) $_POST['jsNum'];
 
                 echo "let name = '$taskName';";
-                echo "let cat = '$taskCat';";
-                echo "let year = '$taskYear';";
-                echo "let month = '$taskMonth';";
-                echo "let date = '$taskDate';";
-                echo "let startHour = '$startHour';";
-                echo "let startMin = '$startMin';";
-                echo "let endHour = '$endHour';";
-                echo "let endMin = '$endMin';";
-                echo "let taskHour = $taskHour;";
-                echo "let taskMin = $taskMin;";
-                echo "let numOfSessions = $numOfSessions;";
-                if ($numOfSessions == 0) {
-                    echo 'let newWin = new Window(name, cat, year, month, date, startHour, startMin, endHour, endMin, 1);';
+                echo "let cat = $taskCat;";
+                echo "let year = $taskYear;";
+                echo "let month = $taskMonth;";
+                echo "let date = $taskDate;";
+                echo "let startHour = $startHour;";
+                echo "let startMin = $startMin;";
+                echo "let endHour = $endHour;";
+                echo "let endMin = $endMin;";
+                if ($numOfSessions == 0) { //Fixed task
+                    echo 'let newWin = new Window(name, year, month, date, new Time(startHour, startMin), new Time(endHour, endMin), 1);';
 
                     echo 'newWin.insertWindow();';
                 } else { 
                     echo 'let newWin = new Window(name, cat, year, month, date, numOfSessions, taskHour, taskMin, 2);';
                 }
+                //} else { //Non-fixed task
+                    //header("location: ../includes/nonfixed.inc.php");
+                    //echo 'var nonFixedForm = ';
+                //}
                 //echo('console.log("I made it to the end");');
                 // // For testing purposes
                 // echo "taskName in php is: " . $taskName . "<br>";

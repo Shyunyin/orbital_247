@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Routine Page</title>
-    <link rel="stylesheet" href="routine.css" />
+    <link rel="stylesheet" href="routine.css?v=<?php echo time(); ?>">
     <script type = "text/javascript" type="module" src="routine.js"></script>
     <!--Importing Firebase and Cloud Firestore libraries-->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>

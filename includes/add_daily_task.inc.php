@@ -297,7 +297,7 @@
                 $numOfSessions = (int) $_POST['jsNum'];
 
                 echo "let name = '$taskName';";
-                echo "let cat = '$taskCar';";
+                echo "let cat = '$taskCat';";
                 echo "let year = '$taskYear';";
                 echo "let month = '$taskMonth';";
                 echo "let date = '$taskDate';";
@@ -305,10 +305,15 @@
                 echo "let startMin = '$startMin';";
                 echo "let endHour = '$endHour';";
                 echo "let endMin = '$endMin';";
+                echo "let taskHour = $taskHour;";
+                echo "let taskMin = $taskMin;";
+                echo "let numOfSessions = $numOfSessions;";
                 if ($numOfSessions == 0) {
                     echo 'let newWin = new Window(name, cat, year, month, date, startHour, startMin, endHour, endMin, 1);';
 
                     echo 'newWin.insertWindow();';
+                } else { 
+                    echo 'let newWin = new Window(name, cat, year, month, date, numOfSessions, taskHour, taskMin, 2);';
                 }
                 //echo('console.log("I made it to the end");');
                 // // For testing purposes

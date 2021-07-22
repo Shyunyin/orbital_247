@@ -79,3 +79,8 @@
 #wakeup {
   font-family: "Signika Negative", sans-serif;
 }
+
+#routine {
+  position: absolute;
+  z-index: 10;
+}

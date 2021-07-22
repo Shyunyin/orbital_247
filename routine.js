@@ -26,3 +26,4 @@ function tempFixed() {
     //Replacing current iconsActions node w new iconActions node
     currentNode.replaceWith(newNode);
 }
+

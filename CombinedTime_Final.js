@@ -164,7 +164,7 @@ class Break {
      * @returns 
      */
     static calculateBreak(startTime, endTime) {
-        duration = Time.duration(startTime, endTime);
+        let duration = Time.duration(startTime, endTime);
         if (duration.getHours() >= 1) {
             let totalMins = (duration.getHours() * 60) + duration.getMins();
             let breakMins = totalMins / 6;

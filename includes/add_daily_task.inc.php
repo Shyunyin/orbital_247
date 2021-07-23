@@ -7,7 +7,9 @@
     <!--<div type="hidden" id="big" name="big"></div>-->
     <form action = "../includes/add_to_DB.inc.php" id="big" name="big" method="POST"></form>
     <body>
-        <script type = "text/javascript" type="module" src="../CombinedTime_Final.js"></script>
+        <!-- <script type = "text/javascript" type="module" src="../CombinedTime_Final.js"></script> -->
+    <script type = "text/javascript" type="module" src="../Time.js"></script>
+
         <script>
             var big = document.getElementById("big");
             console.log("I come here too");
@@ -461,8 +463,8 @@
                             big.submit();                       
                     } else {
                         let clashingTaskName = (currArr[newIndex]).getTaskName();
-                        let clashingStartTime = (currArr[newIndex]).getStartTime().toTwelveHourString();
-                        let clashingEndTime = (currArr[newIndex]).getEndTime().toTwelveHourString();
+                        let clashingStartTime = (currArr[newIndex]).getStartTime().toString();
+                        let clashingEndTime = (currArr[newIndex]).getEndTime().toString();
 
                         window.alert("Sorry we are unable to schedule this task as it clashes with the task '" + clashingTaskName + "' that takes place from " + clashingStartTime + " to " + clashingEndTime);
 
@@ -500,9 +502,9 @@
                 $type = 1; //Type for fixed tasks is always 1
                 $userid = -1;
                 //$userid = (int) $_SESSION["userid"];
-                $taskHour = (int) $_POST['jsHour'];
-                $taskMin = (int) $_POST['jsMin'];
-                $numOfSessions = (int) $_POST['jsNum'];
+                // $taskHour = (int) $_POST['jsHour'];
+                // $taskMin = (int) $_POST['jsMin'];
+                // $numOfSessions = (int) $_POST['jsNum'];
 
                 echo "let name = '$taskName';";
                 echo "let cat = $taskCat;";
@@ -513,11 +515,11 @@
                 echo "let startMin = $startMin;";
                 echo "let endHour = $endHour;";
                 echo "let endMin = $endMin;";
-                if ($numOfSessions == 0) { //Fixed task
+                // if ($numOfSessions == 0) { //Fixed task
                     echo 'let newWin = new Window(name, year, month, date, new Time(startHour, startMin), new Time(endHour, endMin), 1);';
 
                     echo 'newWin.insertWindow();';
-                }
+                // }
                 //} else { //Non-fixed task
                     //header("location: ../includes/nonfixed.inc.php");
                     //echo 'var nonFixedForm = ';

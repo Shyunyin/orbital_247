@@ -2,6 +2,8 @@
     session_start();
     include "./includes/add_daily_task.inc.php";
     // include "../includes/insertWindow_helper.inc.php";
+    $userid = $_SESSION['userid'];
+    echo $userid;
 ?>
 
 <!DOCTYPE html>
@@ -12,12 +14,12 @@
     <!--<script type = "text/javascript" type="module" src="main_schedule.js"></script>-->
     <script type = "text/javascript" type="module" src="add_daily_task.js"></script>
     <!--<script type = "text/javascript" type="module" src="combine_add_daily_main.js"></script>-->
-    <script type = "text/javascript" type="module" src="Time.js"></script>
+    <!-- <script type = "text/javascript" type="module" src="Time.js"></script> -->
     <script type = "text/javascript" type="module" src="OneTimeTasks_Final.js"></script>
     <script type = "text/javascript" type="module" src="Window.js"></script>
     <!--<script type = "text/javascript" type="module" src="main_schedule.js"></script>-->
     <!--<script type = "text/javascript" type="module" src="initialise.js"></script>-->
-    <!--<script type = "text/javascript" type="module" src="CombinedTime_Final.js"></script>-->
+    <script type = "text/javascript" type="module" src="CombinedTime_Final.js"></script>
     <link rel="stylesheet" href="add_daily_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">

@@ -132,8 +132,8 @@
     </div>
 
     <!--Add task pop-out-->
-    <button type="button" id="addTask" name="addTask">+</button>
-    <input type="button" id="addTask" value="+" onclick="OpenPopupWindow()">
+    <!-- <a href="http://localhost/orbital_247/add_daily_task.php" onclick="OpenPopupWindow(this);"><button id="addTask">+</button></a> -->
+    <input type="button" id="addTask" value="+" onclick="window.location.href='./add_daily_task.php'">
 
     <!--Link to pop up for add daily task page-->
     <!--<button id="generateSchedule" name="generateSchedule" onclick="clearPostit();printSchedule(generate());">Generate Schedule now!</button>-->

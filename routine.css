@@ -10,19 +10,19 @@
 */
 
 .main {
-  background-color: #f6f7f1;
+  /* background-color: #f6f7f1;
   border-color: #c4c4c4;
   border-width: 5px;
   height: 800px;
-  width: 1500px;
+  width: 1500px; */
 }
 #background {
   /* align-items: center; */
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
   position: absolute;
-  z-index: 1;
+  z-index: 1; */
 }
 .btn-group .button {
   font-family: "Signika Negative", sans-serif;
@@ -54,33 +54,101 @@
 }
 /*End of stuff that needs to be edited*/
 
+/*For the main blue box*/
+#box {
+  background-color: #96d6ed;
+  border-radius: 8px;
+  height: 400px;
+  width: 1000px;
+}
+
 /*Balance the left side out*/
 .instruction {
   position: absolute;
   z-index: 5;
   width: 200px;
   font-family: "Signika Negative", sans-serif;
-  margin-top: 300px;
-  margin-left: 100px;
+  margin-top: 250px;
+  margin-left: 1230px;
   font-weight: bold;
 }
 #instruction {
   position: absolute;
   z-index: 2;
-  height: 140px;
+  height: 120px;
   width: 210px;
   background-color: #c4c4c4;
   border-color: grey;
   border-width: 2px;
-  margin-top: 300px;
-  margin-left: 80px;
+  margin-top: 250px;
+  margin-left: 1200px;
+}
+
+#iconActions {
+  font-family: "Signika Negative", sans-serif;
+  position: absolute;
+  z-index: 10;
+  margin-top: 400px;
+  margin-left: 1200px;
 }
 
 #wakeup {
   font-family: "Signika Negative", sans-serif;
+  position: absolute;
+  z-index: 10;
+  margin-top: 550px;
+  margin-left: 20px;
+  display: inline;
+  height: 70px;
+  width: 1000px;
+}
+#displayWakeup {
+  font-family: "Signika Negative", sans-serif;
+  font-size: 20px;
+  background-color: #e3aba1;
+  height: 40px;
+  width: 300px;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 5px;
+  margin-top: -5px;
+  text-align: center;
+}
+
+#productive {
+  font-family: "Signika Negative", sans-serif;
+  position: absolute;
+  z-index: 10;
+  margin-top: 550px;
+  margin-left: 700px;
+  height: 50px;
+  width: 1000px;
+}
+#displayProductive {
+  font-family: "Signika Negative", sans-serif;
+  font-size: 20px;
+  background-color: #e3aba1;
+  height: 40px;
+  width: 300px;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 5px;
+  text-align: center;
 }
 
 #routine {
   position: absolute;
   z-index: 10;
+  margin-top: 50px;
+  margin-left: 20px;
+  font-family: "Signika Negative", sans-serif;
+}
+
+.btn {
+  /*for the wakeup time and productive time icons*/
+  margin-left: 5px;
+  margin-top: 5px;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 5px;
 }

@@ -1,6 +1,6 @@
 <?php
     session_start();
-    //if (isset($_POST["submit"]))
+
     $taskName = $_POST['currName'];
     $taskCat = (int) $_POST['currCat'];
     $taskYear = (int) $_POST['currYear'];
@@ -23,4 +23,6 @@
     $sql = "INSERT INTO fixedtaskwindow(taskName, taskCategory, taskYear, taskMonth, taskDate, startTimeHour, startTimeMin, endTimeHour, endTimeMin, taskType, userid) VALUES ('$taskName', $taskCat, $taskYear, $taskMonth, $taskDate, $startHour, $startMin, $endHour, $endMin, $type, $userid);";
 
     mysqli_query($conn, $sql);
+
+    //header("location: ../main_schedule.php");
 ?>

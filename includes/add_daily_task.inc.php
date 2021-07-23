@@ -7,18 +7,11 @@
     <!--<div type="hidden" id="big" name="big"></div>-->
     <form action = "../includes/add_to_DB.inc.php" id="big" name="big" method="POST"></form>
     <body>
-        <script type = "text/javascript" type="module" src="../Time.js"></script>
+        <script type = "text/javascript" type="module" src="../CombinedTime_Final.js"></script>
         <script>
             var big = document.getElementById("big");
             console.log("I come here too");
-            // var plsWork;
-            // console.log(plsWork);
-            /*
-            var plsWork;
-            //var plsWorkNum;
-            console.log(plsWork);
-            console.log("I come here too");
-            */
+
             class Window {
                 /**
                  * Constructor to create window objects
@@ -272,7 +265,6 @@
                     console.log("insertWindow is called");
                     let currArr = [];
                     let name, year, month, date, startTimeHour, startTimeMin, endTimeHour, endTimeMin, type, newWin;
-                    let shouldAdd = false;
                     //TODO: Actually need to do the variable conversion for every window so better to do that here within the function instead of down there?
                     <?php
                         $taskName = $_POST['taskName'];
@@ -289,6 +281,20 @@
 
 
                         $sql = "SELECT * FROM fixedtaskwindow WHERE userid = $userid AND taskYear = $taskYear AND taskMonth = $taskMonth AND taskDate = $taskDate;";
+
+                        $fullDate = $taskYear."-".($taskMonth + 1)."-".$taskDate;
+                        $timestamp = strtotime($fullDate);
+                        $dayNum = date('w', $timestamp);
+
+                        $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 0;";
+
+                        $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";
+
+                        $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2 AND taskDay = $dayNum AND taskWeek = 0;";
+
+                        $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 3 AND taskDate = $taskDate;";
+
+                        $routineChecks = [$dailySql, $weeklySql, $biweeklySql, $monthlySql];
 
                         $user = 'root'; 
                         $pass = '';
@@ -327,11 +333,52 @@
                                 echo "type = parseInt($type);";
                                 
                                 echo 'newWin = new Window(name, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);';
-
+    
                                 echo 'currArr.push(newWin);';
                             }
-                            //echo'console.log(currArr);' ;
                         }
+
+                        foreach($routineChecks as $check) {
+                            $result = mysqli_query($conn, $check);
+                        
+                            if ($result) {
+                                //echo 'console.log("this is correct");';
+                                $resultCheck = mysqli_num_rows($result);
+                                $data = array();
+                                if ($resultCheck > 0) {
+                                    //echo 'console.log("I have at least 1 result");';
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $data[] = $row;   
+                                    }   
+                                }
+                                foreach($data as $single) {
+                                    $name = $single['taskName'];
+                                    echo "name = '$name';";
+                                    // echo "year = $taskYear;";
+                                    // echo "month = $taskMonth;";
+                                    // echo "date = $taskDate;";
+                                    echo "year = $taskYear;";
+                                    echo "month = $taskMonth;";
+                                    echo "date = $taskDate;";
+                                    $startTimeHour = $single['startTimeHour'];
+                                    echo "startTimeHour = parseInt($startTimeHour);";
+                                    $startTimeMin = $single['startTimeMin'];
+                                    echo "startTimeMin = parseInt($startTimeMin);";
+                                    $endTimeHour = $single['endTimeHour'];
+                                    echo "endTimeHour = parseInt($endTimeHour);";
+                                    $endTimeMin = $single['endTimeMin'];
+                                    echo "endTimeMin = parseInt($endTimeMin);";
+                                    $type = $single['taskCategory'];
+                                    echo "type = parseInt($type);";
+                                    
+                                    echo 'newWin = new Window(name, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);';
+        
+                                    echo 'currArr.push(newWin);';
+                                }
+                            }
+                        }
+                        //echo'console.log(currArr);' ;
+                        
                         echo "name = '$taskName';";
                         echo "year = '$taskYear';";
                         echo "month = '$taskMonth';";
@@ -346,6 +393,7 @@
                     console.log("I make it to after php block in insertWindow function");
                     // Doing checks to ensure that task does not clash with any existing fixed, future tasks.
                     let newIndex = 0;
+
                     while (newIndex < currArr.length && !this.partiallyOverlaps(currArr[newIndex]) && !this.isCompletelyDuring(currArr[newIndex]) && !(currArr[newIndex]).isCompletelyDuring(this)) {
                     //while (newIndex < currArr.length && this.isCompletelyAfter(currArr[newIndex])) {
                         newIndex++;
@@ -409,16 +457,20 @@
                             big.appendChild(currEndMin);
 
                             console.log("inc.php is error free thus far");
-                            //currArr.push(this);
-                            //console.log("I come to the insert window if block");
-                            //big.submit();
-                            //if ((currArr[newIndex]).isCompletelyAfter(this)) {
-                            //currArr.splice(newIndex, 0, this);
-                            //console.log(currArr); //For testing
-                            //console.log("I come to the insert window else if block");
+
                             big.submit();                       
                     } else {
-                        console.error("Cannot schedule task as it clashes with an existing task!");
+                        let clashingTaskName = (currArr[newIndex]).getTaskName();
+                        let clashingStartTime = (currArr[newIndex]).getStartTime().toTwelveHourString();
+                        let clashingEndTime = (currArr[newIndex]).getEndTime().toTwelveHourString();
+
+                        window.alert("Sorry we are unable to schedule this task as it clashes with the task '" + clashingTaskName + "' that takes place from " + clashingStartTime + " to " + clashingEndTime);
+
+                        console.log("Sorry we are unable to schedule this task as it clashes with the task '" + clashingTaskName + "' that takes place from " + clashingStartTime + " to " + clashingEndTime);
+
+                        //TODO: How to redirect it back to the add task page?
+                        //console.error("Cannot schedule task as it clashes with an existing task!");
+
                         //return;
                         //window.alert("Cannot schedule task as it clashes with an existing task!");
                     }
@@ -465,8 +517,6 @@
                     echo 'let newWin = new Window(name, year, month, date, new Time(startHour, startMin), new Time(endHour, endMin), 1);';
 
                     echo 'newWin.insertWindow();';
-                } else { 
-                    echo 'let newWin = new Window(name, cat, year, month, date, numOfSessions, taskHour, taskMin, 2);';
                 }
                 //} else { //Non-fixed task
                     //header("location: ../includes/nonfixed.inc.php");

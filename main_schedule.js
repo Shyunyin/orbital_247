@@ -133,12 +133,14 @@ window.onload = function getHeading() {
 /*For when the 4 icons are clicked*/
 /*start button*/
 function clickPlay() {
+    //TODO: The clicking done can submit a form to collect the necessary info --> Need to discuss in greater detail
     var url = "http://127.0.0.1:5501/countdownTimer.html";
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=750, height=700, toolbar=1, resizable=0');
     myRef.focus();
 }
 /*reschedule button*/
 function clickReschedule() {
+    //TODO: Can submit a form with all the necessary info as well, how to obtain the task info? Minimally need userid and start time and end time --> They can choose when to reschedule it to? What will we do if there is a clash? And we will reschedule it to the same time of chose date? or ask for the timing? Regardless of whether it is a routine task or not, we will add it as a fixed task. And can automatically generate schedule
     var url = "http://127.0.0.1:5501/rescheduleIcon.html";
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
     myRef.focus();
@@ -146,12 +148,14 @@ function clickReschedule() {
 }
 /*edit button*/
 function clickEdit() {
+    //TODO: Only editing name or anything else? Bc I think it is possible to edit anything? Just delete and insert? And can automatically generate schedule
     var url = "http://127.0.0.1:5501/EditIcon.html";
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
     myRef.focus();
 }
 /*delete button*/
 function clickDelete() {
+    //TODO: Just submit a form if its true to delete from php. Then regenerate schedule
     var x = confirm("Are you sure you want to delete this task?");
     if (x) 
         return true;

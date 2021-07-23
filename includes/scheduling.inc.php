@@ -225,7 +225,9 @@
                     //STEP 5: Return the final array to be printed
                     return sortedArr;
             }
+
             generateSchedule();
+            
         </script>
     </body>
 </html>

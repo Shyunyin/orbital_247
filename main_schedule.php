@@ -30,7 +30,7 @@
 </head>
 
 <body>
-
+    <form action="../includes/scheduling.inc.php" method="POST" id="scheduleForm">
     <!-- Main division for the background-->
     <div id="background">
         <div class="btn-group">
@@ -58,6 +58,28 @@
         echo "var username = '$username';";
         ?>
         console.log(username);
+    </script>
+
+    <script>
+        let ele = document.getElementById("scheduleForm");
+
+        let jsYear = document.createElement("input");
+        jsYear.type = "hidden";
+        jsYear.value = new Date().getFullYear();
+        jsYear.name = "jsYear";
+        ele.appendChild(jsYear);
+
+        let jsMonth = document.createElement("input");
+        jsMonth.type = "hidden";
+        jsMonth.value = new Date().getMonth();
+        jsMonth.name = "jsMonth";
+        ele.appendChild(jsMonth);
+
+        let jsDate = document.createElement("input");
+        jsDate.type = "hidden";
+        jsDate.value = new Date().getDate();
+        jsDate.name = "jsDate";
+        ele.appendChild(jsDate);
     </script>
 
     <div class = logout>
@@ -114,13 +136,15 @@
     <input type="button" id="addTask" value="+" onclick="OpenPopupWindow()">
 
     <!--Link to pop up for add daily task page-->
-    <button id="generateSchedule" name="generateSchedule" onclick="clearPostit();printSchedule(generate());">Generate Schedule now!</button>
+    <!--<button id="generateSchedule" name="generateSchedule" onclick="clearPostit();printSchedule(generate());">Generate Schedule now!</button>-->
+
+    <button type="submit" id="generateSchedule" name="generateSchedule">Generate Schedule now!</button>
 
     <!--Buttons to go to previous and next-->
     <!--Probably must create previous button using javascript as it only appears if schedule day != current day-->
     <button type="button" id="nextDay" name="nextDay"></button>
     <div id="textNextDay">Go to Next day's schedule</div>
-
+    </form>
     <script>
         //--------------------- Writing relevant functions ------------------//
         //--------------------- Retrieving post-it stick tasks from database ------------------//

@@ -110,7 +110,7 @@
       <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
       <!-- QUESTION: idk how to include javascript element into html isit ${}?-->
       <div id="counter">
-        <p>Remaining</p>
+        <p>Estimated remaining time</p>
         <p id="counterOutput"></p>
       </div>
   

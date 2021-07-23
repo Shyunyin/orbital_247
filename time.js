@@ -128,6 +128,28 @@ class Time {
         }
         return hours.toString() + ":" + mins.toString();
     }
+
+    toTwelveHourString() {
+        let hours = this.getHours();
+        let mins = this.getMins();
+
+        if (mins < 10) {
+            mins = "0" + mins.toString()
+        }
+
+        if (hours > 12) {
+            hours = hours % 12;
+            if (hours < 10) {
+                hours = "0" + hours.toString()
+            }
+            return hours.toString() + ":" + mins.toString() + "PM";
+        } else {
+            if (hours < 10) {
+                hours = "0" + hours.toString()
+            }
+            return hours.toString() + ":" + mins.toString() + "AM";
+        }
+    }
 }
 
 

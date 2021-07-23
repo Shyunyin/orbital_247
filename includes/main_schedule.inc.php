@@ -15,7 +15,11 @@
             function printSchedule(scheduleArr) {
                 console.log("printSchedule is called");
                 /*To refresh schedule when generate button is clicked*/
-                var block = document.getElementById("schedule");
+                var block;
+                <?php
+                    echo 'block = $_POST["schedule"];';
+                ?>
+                //var block = document.getElementById("schedule");
                 var blockRefresh = document.createElement("div");
                 blockRefresh.id = "schedule";
                 blockRefresh.innerHTML="";

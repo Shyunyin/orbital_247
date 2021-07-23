@@ -247,73 +247,73 @@ function clickDelete() {
         return scheduleArr;
     };
    
-// /*When generate schedule button is pressed*/
-// /*printSchedule function is to create the html and css on the
-//  * window that will appear on the main schedule
-//  * MUST SPLIT INTO FIXED AND NON-FIXED TASK CREATION: BOTH FIXED AND NON-FIXED BUTTON
-//  */
-// function printSchedule(scheduleArr) {
-//     console.log("printSchedule is called");
-//     /*To refresh schedule when generate button is clicked*/
-//     var block = document.getElementById("schedule");
-//     var blockRefresh = document.createElement("div");
-//     blockRefresh.id = "schedule";
-//     blockRefresh.innerHTML="";
-//     block.replaceWith(blockRefresh)
-//     for (let i=0; i < scheduleArr.length; i++) {
-//          console.log("Schedule is printed"); //debugging: function is accessed
-//      let block = document.getElementById("schedule");
-//      let maindivision = document.createElement("div"); //will contain both timedivision and namedivision
-//      maindivision.classList.add("maindiv"); 
-//      maindivision.style.float="left";
-//      maindivision.style.display="inline-block";
-//      block.appendChild(maindivision); //append a new main division
-//      let timedivision = document.createElement("div"); //creating the new division to contain item in schedule
-//      timedivision.classList.add("container1"); //classname of each item 
-//      maindivision.appendChild(timedivision); //appending timedivision to maindivision
-// // //can continue adding css for division
-// // /*Below will be what is appended to division: Time and itemName*/
-// // /*Time*/
-//     let itemTime = document.createElement("input");
-//     itemTime.classList.add("time"); //time with class name time
-//     itemTime.setAttribute("readonly", "readonly"); //set to readonly
-//     itemTime.value = scheduleArr[i].getStartTimeHours() + ":" + scheduleArr[i].getStartTimeMins() + "-" + scheduleArr[i].getEndTimeHours() + ":" + scheduleArr[i].getEndTimeMins();
-//     itemTime.style.fontFamily = "'Signika Negative', sans-serif";
-//     itemTime.style.fontSize = "large";
-//     itemTime.style.position = "relative";
-//     itemTime.style.zIndex = "3";
-//     itemTime.style.backgroundColor = "#96d6ed";
-//     itemTime.style.float="left";
-//     itemTime.style.border="none";
-//     itemTime.style.marginTop = "10px";
-//     itemTime.style.marginLeft = "10px";
-//     //can continue adding css for the time
-//     timedivision.appendChild(itemTime); //adding the time part of the item
-// //     /*itemName*/
-//     let namedivision = document.createElement("div"); //creating the new division to contain item in schedule
-//     namedivision.classList.add("container2"); //classname of each item 
-//     namedivision.style.borderColor = "black";
-//     namedivision.style.position="relative";
-//     namedivision.style.display="inline-block";
-//     maindivision.appendChild(namedivision); //appending namedivision to maindivision
-//     let itemName = document.createElement("button");
-//     itemName.classList.add("itemName"); //class: itemName
-//     itemName.innerHTML = scheduleArr[i].getTaskName();
-//     itemName.style.fontFamily = "'Signika Negative', sans-serif";
-//     itemName.style.fontSize = "large";
-//     itemName.style.position = "absolute";
-//     itemName.style.zIndex = "3";
-//     itemName.style.cursor="pointer";
-//     itemName.style.border = "none";
-//     itemName.style.backgroundColor="#96d6ed";
-//     itemName.style.width = "200px";
-//     itemName.style.textAlign="center";             
-//     itemName.style.marginLeft= "200px";
-//     itemName.style.marginTop="-40px";
-//     //can continue adding css for itemName
-//     namedivision.appendChild(itemName); //adding the name part of the item
-//     } 
-// } 
+/*When generate schedule button is pressed*/
+/*printSchedule function is to create the html and css on the
+ * window that will appear on the main schedule
+ * MUST SPLIT INTO FIXED AND NON-FIXED TASK CREATION: BOTH FIXED AND NON-FIXED BUTTON
+ */
+function printSchedule(scheduleArr) {
+    console.log("printSchedule is called");
+    /*To refresh schedule when generate button is clicked*/
+    var block = document.getElementById("schedule");
+    var blockRefresh = document.createElement("div");
+    blockRefresh.id = "schedule";
+    blockRefresh.innerHTML="";
+    block.replaceWith(blockRefresh)
+    for (let i=0; i < scheduleArr.length; i++) {
+         console.log("Schedule is printed"); //debugging: function is accessed
+     let block = document.getElementById("schedule");
+     let maindivision = document.createElement("div"); //will contain both timedivision and namedivision
+     maindivision.classList.add("maindiv"); 
+     maindivision.style.float="left";
+     maindivision.style.display="inline-block";
+     block.appendChild(maindivision); //append a new main division
+     let timedivision = document.createElement("div"); //creating the new division to contain item in schedule
+     timedivision.classList.add("container1"); //classname of each item 
+     maindivision.appendChild(timedivision); //appending timedivision to maindivision
+// //can continue adding css for division
+// /*Below will be what is appended to division: Time and itemName*/
+// /*Time*/
+    let itemTime = document.createElement("input");
+    itemTime.classList.add("time"); //time with class name time
+    itemTime.setAttribute("readonly", "readonly"); //set to readonly
+    itemTime.value = scheduleArr[i].getStartTimeHours() + ":" + scheduleArr[i].getStartTimeMins() + "-" + scheduleArr[i].getEndTimeHours() + ":" + scheduleArr[i].getEndTimeMins();
+    itemTime.style.fontFamily = "'Signika Negative', sans-serif";
+    itemTime.style.fontSize = "large";
+    itemTime.style.position = "relative";
+    itemTime.style.zIndex = "3";
+    itemTime.style.backgroundColor = "#96d6ed";
+    itemTime.style.float="left";
+    itemTime.style.border="none";
+    itemTime.style.marginTop = "10px";
+    itemTime.style.marginLeft = "10px";
+    //can continue adding css for the time
+    timedivision.appendChild(itemTime); //adding the time part of the item
+//     /*itemName*/
+    let namedivision = document.createElement("div"); //creating the new division to contain item in schedule
+    namedivision.classList.add("container2"); //classname of each item 
+    namedivision.style.borderColor = "black";
+    namedivision.style.position="relative";
+    namedivision.style.display="inline-block";
+    maindivision.appendChild(namedivision); //appending namedivision to maindivision
+    let itemName = document.createElement("button");
+    itemName.classList.add("itemName"); //class: itemName
+    itemName.innerHTML = scheduleArr[i].getTaskName();
+    itemName.style.fontFamily = "'Signika Negative', sans-serif";
+    itemName.style.fontSize = "large";
+    itemName.style.position = "absolute";
+    itemName.style.zIndex = "3";
+    itemName.style.cursor="pointer";
+    itemName.style.border = "none";
+    itemName.style.backgroundColor="#96d6ed";
+    itemName.style.width = "200px";
+    itemName.style.textAlign="center";             
+    itemName.style.marginLeft= "200px";
+    itemName.style.marginTop="-40px";
+    //can continue adding css for itemName
+    namedivision.appendChild(itemName); //adding the name part of the item
+    } 
+} 
 
 // /*actions(): function that creates icons onclick of class name "division"
 //  * when any division/item is clicked, th icons will appear. For the following
@@ -410,7 +410,7 @@ function tempNonFixed() { //all 4 actions
 
 /*Open popup and close*/
 function OpenPopupWindow() {   
-    var url = "http://127.0.0.1:5501/add_daily_task.html"; 
+    var url = "../add_daily_task.php"; 
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=770, height=700, toolbar=1, resizable=0');
     myRef.focus();
     // console.log('window opened!');

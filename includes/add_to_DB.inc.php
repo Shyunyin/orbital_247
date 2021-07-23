@@ -25,5 +25,4 @@
     mysqli_query($conn, $sql);
 
     //header("location: ../main_schedule.php");
-
 ?>

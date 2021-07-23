@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include "../includes/add_daily_task.inc.php";
-    include "../includes/insertWindow_helper.inc.php";
+    include "./includes/add_daily_task.inc.php";
+    // include "../includes/insertWindow_helper.inc.php";
 ?>
 
 <!DOCTYPE html>

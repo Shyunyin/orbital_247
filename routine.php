@@ -11,7 +11,7 @@
 <html>
 <head>
     <title>Routine Page</title>
-    <link rel="stylesheet" href="routine.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="routine.css?v=<?php echo time();?>">
     <script type = "text/javascript" type="module" src="routine.js"></script>
     <!--Importing Firebase and Cloud Firestore libraries-->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
@@ -56,7 +56,7 @@
         $sql = "SELECT * FROM infowakeup WHERE id=$userid;";
         $result = mysqli_query($conn,$sql);
         if(!$result) {
-        echo "Could not run query:" . mysqli_error();
+        echo "Could not run query:" . mysqli_error($conn);
         exit();
         }
         $row = mysqli_fetch_row($result);
@@ -123,15 +123,15 @@
         //get current date, month and year to retrieve tasks
         $today = date("Y-m-d");
         echo $today;
-        $todaysDate = 
-        $todaysMonth = 
-        $todaysYear = 
+        // $todaysDate = 
+        // $todaysMonth = 
+        // $todaysYear = 
 
         //retrieving data
-        $data = "SELECT * FROM routinetask WHERE id=$userid AND "; 
+        $data = "SELECT * FROM routinetask WHERE id=$userid"; 
         $result = mysqli_query($conn,$data);
         if(!$result) {
-            echo "Could not run query:" . mysqli_error();
+            echo "Could not run query:" . mysqli_error($conn);
             exit();
         }
         $row = mysqli_fetch_row($result);

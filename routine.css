@@ -10,19 +10,19 @@
 */
 
 .main {
-  /* background-color: #f6f7f1;
+  background-color: #f6f7f1;
   border-color: #c4c4c4;
   border-width: 5px;
   height: 800px;
-  width: 1500px; */
+  width: 1500px;
 }
 #background {
-  /* align-items: center; */
-  /* display: flex;
+  align-items: center;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   position: absolute;
-  z-index: 1; */
+  z-index: 1;
 }
 .btn-group .button {
   font-family: "Signika Negative", sans-serif;
@@ -36,9 +36,6 @@
   cursor: pointer;
   float: left;
   width: 200px;
-  /* border-width: 1px;
-    border-color: #ECEDEA;
-    border-bottom: none; */
   border-top: none;
   border-left: none;
   border-bottom: none;

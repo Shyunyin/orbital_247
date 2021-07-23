@@ -406,7 +406,7 @@ function tempNonFixed() { //all 4 actions
 
 /*Open popup and close*/
 function OpenPopupWindow() {   
-    var url = "http://127.0.0.1:5501/add_daily_task.html"; 
+    var url = "http://localhost/orbital_247/add_daily_task.php"; 
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=770, height=700, toolbar=1, resizable=0');
     myRef.focus();
     // console.log('window opened!');

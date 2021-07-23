@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    // session_start();
     //include "../add_daily_task.php";
 ?>
 <!DOCTYPE HTML>

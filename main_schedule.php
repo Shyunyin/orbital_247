@@ -6,7 +6,7 @@
 
 <head>
     <title>Main Schedule Page</title>
-    <link rel="stylesheet" href="main_schedule.css" />
+    <link rel="stylesheet" href="main_schedule.css?v=<?php echo time(); ?>">
     <script type="text/javascript" type="module" src="main_schedule.js"></script>
     <script type="text/javascript" type="module" src="Scheduling.js"></script>
     <!-- Preshita added the following 3 lines bc they might be needed -->

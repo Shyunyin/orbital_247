@@ -30,7 +30,7 @@
 </head>
 
 <body>
-    <form action="../includes/scheduling.inc.php" method="POST" id="scheduleForm">
+    <form action="../includes/main_schedule.inc.php" method="POST" id="scheduleForm">
     <!-- Main division for the background-->
     <div id="background">
         <div class="btn-group">

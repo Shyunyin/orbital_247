@@ -159,3 +159,23 @@
   border-color: black;
   border-radius: 5px;
 }
+
+/*Buttons*/
+#addTask {
+  font-family: "Signika Negative", sans-serif;
+  font-size: 50px;
+  position: absolute;
+  z-index: 10;
+  background-color: #e3aba1;
+  color: #1e5353;
+  border-radius: 50%;
+  border-color: black;
+  border-width: 2px;
+  height: 70px;
+  width: 70px;
+  margin-left: 970px;
+  margin-top: -30px;
+}
+#addTask:hover {
+  background-color: #fedcce;
+}

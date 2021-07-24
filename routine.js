@@ -11,15 +11,28 @@ function statistics() {
 /*edit button for wake up time*/
 function clickEditWakeup() {
     var url = "http://localhost/orbital_247/wakeup.php"; //needs to be changed
-    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
+    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=700, toolbar=1, resizable=0');
     myRef.focus();
 }
 
 /*edit button for productive time*/
 function clickEditProductive() {
     var url = "http://localhost/orbital_247/inputProductivity.php"; //needs to be changed
-    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
+    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=1900, height=700, toolbar=1, resizable=0');
     myRef.focus();
+}
+
+function OpenPopupWindow() {   
+    var url = "http://localhost/orbital_247/add_routine_task.php"; 
+    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=770, height=700, toolbar=1, resizable=0');
+    myRef.focus();
+    // console.log('window opened!');
+    // myRef.onunload = function(){
+  // DOM unloaded, so the window is likely closed.
+    // clearPostit();
+    // Retrieve_Doc_WithID();
+    // console.log('window closed!');
+    }
 }
 
 /*To add fixed task select icons*/

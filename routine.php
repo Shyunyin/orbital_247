@@ -36,6 +36,7 @@
         <div id="box"></div> 
         <div id="tasklist">
         </div> <!-- To be edited using function in routine.js after retrieving array, currently in routine.js --> 
+        <input type="button" id="addTask" value="+" onclick="OpenPopupWindow();">
     </div>
     <div id="instruction">
         <!--For the background box-->
@@ -117,43 +118,6 @@
         <button class="btn" onclick="clickEditProductive()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>
     </div>    
 
-    <?php
-        //retrieving data for display in routine task box
-        $data = "SELECT * FROM routinetask WHERE id=$userid"; 
-        $result = mysqli_query($conn,$data);
-        if(!$result) {
-            echo "Could not run query:" . mysqli_error($conn);
-            exit();
-        }
-        $dataArr = array();
-        $indentCount = 0; //this number will increase when it enters the loop to indicate that an indentation or spacing has to be made
-        while ($row = mysqli_fetch_assoc($result)) { //for every row in the list of rows, print to routine task list
-            $taskName = $row[1];
-            $taskCategory = $row[2];
-            $startHour = $row[3];
-            $startMin = $row[4];
-            $endHour = $row[5];
-            $endMin = $row[6]; 
-            $freq = $row[7];
-            $taskDay = $row[8];
-            $taskWeek = $row[9];
-            $taskDate = $row[10];
-            $dataArr[] = $row;
-            // echo 'var taskName = $taskName;';
-            // echo 'var taskCategory = $taskCategory;';
-            // echo 'var startHour = $startHour;';
-            // echo 'var startMin = $startMin;';
-            // echo 'var endHour = $endHour;'; 
-            // echo 'var endMin = $endMin;';
-            // echo 'var freq = $freq;';
-            // echo 'var taskDay = $taskDay;';
-            // echo 'var taskWeek = $taskWeek;';
-            // echo 'var taskDate = $taskDate;'; 
-            // echo 'createRoutineList($indentCount);'; //trial to call javascript through php
-            // $indentCount = $indentCount + 1; 
-        }
-    ?>
-
     <script>
         /*redirect(x) takes in the task name and outputs a pop out window with the input fields updated when the edit button is created*/
         function redirect(x) {
@@ -197,6 +161,7 @@
 
         // /*createRoutinelist(): Create an option in the routine task list stick*/
         function createRoutineList(count) { 
+            console.log("I come to createRoutineList function");
             //to form the statement to be printed
             var statement;
             if (freq == 0) {
@@ -212,6 +177,8 @@
                 statement = "Monthly, date: " + taskDate + " " + printvaljs(convertjs(startHour)) + printwordjs(startHour) + " - " + printvaljs(convertjs(endHour)) + printwordjs(endHour) + " " +
                 taskName + " " + "(" + taskCategory + ")";
             }
+
+            console.log(statement); //debugging
 
             let append = document.createElement("input");
             append.setAttribute("type", "button");
@@ -240,5 +207,46 @@
             ele.appendChild(append);
         }
     </script>
+
+    <?php
+        //retrieving data for display in routine task box
+        $data = "SELECT * FROM routinetask WHERE id=$userid"; 
+        $result = mysqli_query($conn,$data);
+        if(!$result) {
+            echo "Could not run query:" . mysqli_error($conn);
+            exit();
+        }
+        $dataArr = array();
+        $indentCount = 0; //this number will increase when it enters the loop to indicate that an indentation or spacing has to be made
+        while ($row = mysqli_fetch_assoc($result)) { //for every row in the list of rows, print to routine task list
+            $dataArr[] = $row;
+        }
+    
+        foreach ($dataArr as $row) {
+            $taskName = $row[1];
+            $taskCategory = $row[2];
+            $startHour = $row[3];
+            $startMin = $row[4];
+            $endHour = $row[5];
+            $endMin = $row[6]; 
+            $freq = $row[7];
+            $taskDay = $row[8];
+            $taskWeek = $row[9];
+            $taskDate = $row[10];
+            $dataArr[] = $row;
+            echo 'var taskName = $taskName;';
+            echo 'var taskCategory = $taskCategory;';
+            echo 'var startHour = $startHour;';
+            echo 'var startMin = $startMin;';
+            echo 'var endHour = $endHour;'; 
+            echo 'var endMin = $endMin;';
+            echo 'var freq = $freq;';
+            echo 'var taskDay = $taskDay;';
+            echo 'var taskWeek = $taskWeek;';
+            echo 'var taskDate = $taskDate;'; 
+            echo 'createRoutineList($indentCount);'; //trial to call javascript through php
+            $indentCount = $indentCount + 1; 
+        }   
+    ?>
 </body>
 </html>

@@ -203,7 +203,8 @@
                     echo 'indentCount = $indentCount;';
                     echo 'createRoutineList($indentCount);'; //trial to call javascript through php
                     $indentCount = $indentCount + 1;
-            }  
+                }  
+            }
         ?>
 
         // /*createRoutinelist(): Create an option in the routine task list stick*/

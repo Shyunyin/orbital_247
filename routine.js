@@ -10,14 +10,14 @@ function statistics() {
 
 /*edit button for wake up time*/
 function clickEditWakeup() {
-    var url = "http://localhost/EditIcon.html"; //needs to be changed
+    var url = "http://localhost/orbital_247/wakeup.php"; //needs to be changed
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
     myRef.focus();
 }
 
 /*edit button for productive time*/
 function clickEditProductive() {
-    var url = "http://localhost/EditIcon.html"; //needs to be changed
+    var url = "http://localhost/orbital_247/inputProductivity.php"; //needs to be changed
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
     myRef.focus();
 }

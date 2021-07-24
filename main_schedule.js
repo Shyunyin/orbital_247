@@ -90,13 +90,15 @@ window.onload = function getHeading() {
     startTime();
 
     let user = username; //obtained from php in main_schedule.php line 61
-    let welcome = "Welcome, " + user;
+    let welcome = "Welcome, " + user + "!";
     let currentUser = document.getElementById("currentUser");
     currentUser.setAttribute("value", welcome);
 
     let day = textDay(today.getDay()) + ", " + wholeDate(today.getDate()) + " " + textMonth(today.getMonth()) + "'s Schedule";
     let currentSchedule = document.getElementById("currentSchedule");
     currentSchedule.setAttribute("value", day);
+
+    // printSchedule(generateSchedule());
 }
 
     //Window.initialise();
@@ -139,17 +141,16 @@ function clickPlay() {
     myRef.focus();
 }
 /*reschedule button*/
-function clickReschedule() {
-    //TODO: Can submit a form with all the necessary info as well, how to obtain the task info? Minimally need userid and start time and end time --> They can choose when to reschedule it to? What will we do if there is a clash? And we will reschedule it to the same time of chose date? or ask for the timing? Regardless of whether it is a routine task or not, we will add it as a fixed task. And can automatically generate schedule
-    var url = "http://127.0.0.1:5501/rescheduleIcon.html";
-    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
-    myRef.focus();
-
-}
+// function clickReschedule() {
+//     //TODO: Can submit a form with all the necessary info as well, how to obtain the task info? Minimally need userid and start time and end time --> They can choose when to reschedule it to? What will we do if there is a clash? And we will reschedule it to the same time of chose date? or ask for the timing? Regardless of whether it is a routine task or not, we will add it as a fixed task. And can automatically generate schedule
+//     var url = "http://127.0.0.1:5501/rescheduleIcon.html";
+//     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
+//     myRef.focus();
+// }
 /*edit button*/
 function clickEdit() {
     //TODO: Only editing name or anything else? Bc I think it is possible to edit anything? Just delete and insert? And can automatically generate schedule
-    var url = "http://127.0.0.1:5501/EditIcon.html";
+    var url = "http://127.0.0.1:5501/copy_add_daily_task.html"; //to redirect
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
     myRef.focus();
 }
@@ -372,9 +373,9 @@ function tempFixed() { //only reschedule, edit and delete
     newNode.id = "iconActions";
     newNode.innerHTML = 
     '<button class="btn" onclick="clickPlay()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-play-circle fa-2x" aria-hidden="true"></i></button>' +
-    '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
+    // '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
     '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>' +
-    '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
+    // '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
     //Replacing current iconsActions node w new iconActions node
     currentNode.replaceWith(newNode);
 }
@@ -387,9 +388,9 @@ function tempNonFixed() { //all 4 actions
     newNode.id = "iconActions";
     newNode.innerHTML = 
     '<button class="btn" onclick="clickPlay()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-play-circle fa-2x" aria-hidden="true"></i></button>' +
-    '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
+    // '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
     '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>' +
-    '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
+    // '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
     //Replacing current iconsActions node w new iconActions node
     currentNode.replaceWith(newNode);
 }
@@ -409,7 +410,7 @@ function tempNonFixed() { //all 4 actions
 // }
 
 /*Open popup and close*/
-function OpenPopupWindow(url) {   
+function OpenPopupWindow() {   
     var url = "http://localhost/orbital_247/add_daily_task.php"; 
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=770, height=700, toolbar=1, resizable=0');
     myRef.focus();

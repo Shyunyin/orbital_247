@@ -13,9 +13,6 @@
     <title>Routine Page</title>
     <link rel="stylesheet" href="routine.css?v=<?php echo time();?>">
     <script type = "text/javascript" type="module" src="routine.js"></script>
-    <!--Importing Firebase and Cloud Firestore libraries-->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
     <!-- For the icons --> 
@@ -32,7 +29,7 @@
             <button class="button">Routine</button>
         </div>
         <div class="main"></div>
-    </div>    
+    </div>     
 
     <div id="routine">
         <h2> List of routine tasks: </h2>
@@ -121,8 +118,8 @@
 
     <?php
         //get current date, month and year to retrieve tasks
-        $today = date("Y-m-d");
-        echo $today;
+        // $today = date("Y-m-d");
+        // echo $today;
         // $todaysDate = 
         // $todaysMonth = 
         // $todaysYear = 

@@ -300,6 +300,7 @@ function printSchedule(scheduleArr) {
     let itemName = document.createElement("button");
     itemName.classList.add("itemName"); //class: itemName
     itemName.innerHTML = scheduleArr[i].getTaskName();
+    localStorage.setItem("taskname", scheduleArr[i].getTaskName()); //to save the taskName in local storage so that when edit is clicked can link
     itemName.addEventListener('click', tempFixed);
     itemName.style.fontFamily = "'Signika Negative', sans-serif";
     itemName.style.fontSize = "large";

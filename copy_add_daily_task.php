@@ -107,7 +107,14 @@
           return [year, month, day].join('-');
         }
         
-        var nameoftask; //global variable
+        var nameoftask; //global js variable to store the task name 
+        /*Transferring of javascript variable to php*/
+        var main = document.getElementById("bigForm");
+        var namePhp = document.createElement("input")
+        namePhp.type = "hidden";
+        namePhp.value = nameoftask;
+        namePhp.name = "namePhp";
+        main.appendChild(nameEle);
 
         window.onload = function () {
           //getting the nameoftask from local storage

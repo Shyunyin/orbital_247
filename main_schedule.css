@@ -10,197 +10,198 @@
 */
 
 .main {
-  border-color: #c4c4c4;
-  border-width: 5px;
-  height: 800px;
-  width: 1500px;
-  background-color: #f6f7f1;
+	border-color: #c4c4c4;
+	border-width: 5px;
+	height: 800px;
+	width: 1500px;
+	background-color: #f6f7f1;
 }
 #background {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: absolute;
-  z-index: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: absolute;
+	z-index: 1;
 }
 #logout {
-  position: absolute;
-  z-index: 10;
-  font-family: "Signika Negative", sans-serif;
-  float: right;
+	position: absolute;
+	z-index: 10;
+	font-family: "Signika Negative", sans-serif;
+	float: right;
 }
 .btn-group .button {
-  font-family: "Signika Negative", sans-serif;
-  text-align: center;
-  text-decoration: none;
-  font-weight: bold;
-  color: #1e5353;
-  padding: 12px 29px;
-  display: inline-block;
-  font-size: 20px;
-  cursor: pointer;
-  float: left;
-  width: 200px;
-  border-top: none;
-  border-left: none;
-  border-bottom: none;
-  border-right-width: 2px;
-  border-right-color: #ecedea;
+	font-family: "Signika Negative", sans-serif;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	color: #1e5353;
+	padding: 12px 29px;
+	display: inline-block;
+	font-size: 20px;
+	cursor: pointer;
+	/*float: left;*/
+	width: 200px;
+	border-top: none;
+	border-left: none;
+	border-bottom: none;
+	border-right-width: 2px;
+	border-right-color: #ecedea;
 }
 /*To change for the different main pages*/
 .btn-group .button:first-child {
-  border-right: none;
-  background-color: #f6f7f1;
+	border-right: none;
+	background-color: #f6f7f1;
 }
 .btn-group .button:not(:first-child) {
-  background-color: #c4c4c4;
+	background-color: #c4c4c4;
 }
 .btn-group .button:last-child {
-  border-right: none;
+	border-right: none;
 }
 /*End of stuff that needs to be edited*/
 
 /*For headings*/
 #currentDate {
-  font-family: "Signika Negative", sans-serif;
-  font-size: 25px;
-  background-color: #f6f7f1;
-  border: none;
-  color: #1e5353;
-  position: absolute;
-  z-index: 5;
-  margin-top: 60px;
-  margin-left: 20px;
+	font-family: "Signika Negative", sans-serif;
+	font-size: 25px;
+	background-color: #f6f7f1;
+	border: none;
+	color: #1e5353;
+	position: absolute;
+	z-index: 5;
+	margin-top: 60px;
+	margin-left: 20px;
 }
 
 #currentTime {
-  font-family: "Signika Negative", sans-serif;
-  font-size: 25px;
-  background-color: #f6f7f1;
-  border: none;
-  color: #1e5353;
-  position: absolute;
-  z-index: 2;
-  margin-top: 90px; /*is currentDate top margin +30px*/
-  margin-left: 20px;
+	font-family: "Signika Negative", sans-serif;
+	font-size: 25px;
+	background-color: #f6f7f1;
+	border: none;
+	color: #1e5353;
+	position: absolute;
+	z-index: 2;
+	margin-top: 90px; /*is currentDate top margin +30px*/
+	margin-left: 20px;
 }
 #currentUser {
-  font-family: "Signika Negative", sans-serif;
-  font-size: 25px;
-  width: 300px;
-  background-color: #f6f7f1;
-  border: none;
-  color: #1e5353;
-  position: absolute;
-  z-index: 2;
-  margin-left: 580px;
-  margin-top: 75px; /*In the middle of currentDate and currentTime*/
+	font-family: "Signika Negative", sans-serif;
+	font-size: 25px;
+	width: 300px;
+	background-color: #f6f7f1;
+	border: none;
+	color: #1e5353;
+	position: absolute;
+	z-index: 2;
+	margin-left: 580px;
+	text-align: center;
+	margin-top: 75px; /*In the middle of currentDate and currentTime*/
 }
 #currentSchedule {
-  font-family: "Signika Negative", sans-serif;
-  font-size: 25px;
-  width: 450px;
-  background-color: #f6f7f1;
-  border: none;
-  color: #1e5353;
-  position: absolute;
-  z-index: 2;
-  margin-left: 580px; /*Same as current user*/
-  margin-top: 130px; /*In the middle of currentDate and currentTime*/
+	font-family: "Signika Negative", sans-serif;
+	font-size: 25px;
+	width: 450px;
+	background-color: #f6f7f1;
+	border: none;
+	color: #1e5353;
+	position: absolute;
+	z-index: 2;
+	margin-left: 580px; /*Same as current user*/
+	margin-top: 130px; /*In the middle of currentDate and currentTime*/
 }
 
 /*For progress bar*/
 #progress {
-  background-color: #c4c4c4;
-  border-color: black;
-  border-width: 2px;
-  height: 30px;
-  width: 720px;
-  position: absolute;
-  z-index: 2;
-  margin-left: 350px;
-  margin-top: 190px;
+	background-color: #c4c4c4;
+	border-color: black;
+	border-width: 2px;
+	height: 30px;
+	width: 720px;
+	position: absolute;
+	z-index: 2;
+	margin-left: 350px;
+	margin-top: 190px;
 }
 #progressBar {
-  font-family: "Signika Negative", sans-serif;
-  font-size: 20px;
-  background-color: #c4c4c4;
-  border: none;
-  position: absolute;
-  z-index: 5;
-  margin-left: 295px;
-  margin-top: 2px;
+	font-family: "Signika Negative", sans-serif;
+	font-size: 20px;
+	background-color: #c4c4c4;
+	border: none;
+	position: absolute;
+	z-index: 5;
+	margin-left: 295px;
+	margin-top: 2px;
 }
 
 /*For schedule*/
 #schedule {
-  height: 600px;
-  width: 720px; /*about same width as progress bar*/
-  background-color: #96d6ed;
-  position: absolute;
-  z-index: 2;
-  margin-left: 350px; /*about same as progress bar*/
-  margin-top: 240px; /*more than progress bar by 70px*/
-  overflow: auto; /* Enable scroll if needed */
-  float: left;
-  display: flex;
-  flex-direction: column;
-  overflow: auto; /*to make schedule vertically scrollable*/
+	height: 600px;
+	width: 720px; /*about same width as progress bar*/
+	background-color: #96d6ed;
+	position: absolute;
+	z-index: 2;
+	margin-left: 350px; /*about same as progress bar*/
+	margin-top: 240px; /*more than progress bar by 70px*/
+	overflow: auto; /* Enable scroll if needed */
+	float: left;
+	display: flex;
+	flex-direction: column;
+	overflow: auto; /*to make schedule vertically scrollable*/
 }
 
 /*For post-it page*/
 #postit {
-  height: 400px;
-  width: 320px;
-  background-color: #1e5353;
-  position: absolute;
-  z-index: 2;
-  margin-left: 1120px;
-  margin-top: 241px;
-  overflow: auto; /*to make schedule vertically scrollable*/
+	height: 400px;
+	width: 320px;
+	background-color: #1e5353;
+	position: absolute;
+	z-index: 2;
+	margin-left: 1120px;
+	margin-top: 241px;
+	overflow: auto; /*to make schedule vertically scrollable*/
 }
 #title {
-  font-family: "Signika Negative", sans-serif;
-  color: white;
-  font-size: 20px;
-  text-decoration: underline;
-  background: none;
-  border: none;
-  width: 300px;
-  margin-left: 10px;
-  margin-top: 5px;
+	font-family: "Signika Negative", sans-serif;
+	color: white;
+	font-size: 20px;
+	text-decoration: underline;
+	background: none;
+	border: none;
+	width: 300px;
+	margin-left: 10px;
+	margin-top: 5px;
 }
 
 /*Balance the left side out*/
 .instruction {
-  position: absolute;
-  z-index: 5;
-  width: 200px;
-  font-family: "Signika Negative", sans-serif;
-  margin-top: 300px;
-  margin-left: 100px;
-  font-weight: bold;
+	position: absolute;
+	z-index: 5;
+	width: 200px;
+	font-family: "Signika Negative", sans-serif;
+	margin-top: 300px;
+	margin-left: 100px;
+	font-weight: bold;
 }
 #instruction {
-  position: absolute;
-  z-index: 2;
-  height: 140px;
-  width: 210px;
-  background-color: #c4c4c4;
-  border-color: grey;
-  border-width: 2px;
-  margin-top: 300px;
-  margin-left: 80px;
+	position: absolute;
+	z-index: 2;
+	height: 140px;
+	width: 210px;
+	background-color: #c4c4c4;
+	border-color: grey;
+	border-width: 2px;
+	margin-top: 300px;
+	margin-left: 80px;
 }
 
 .actions {
-  position: absolute;
-  z-index: 5;
-  font-family: "Signika Negative", sans-serif;
-  font-size: large;
-  margin-top: 480px;
-  margin-left: 90px;
-  width: 100%;
+	position: absolute;
+	z-index: 5;
+	font-family: "Signika Negative", sans-serif;
+	font-size: large;
+	margin-top: 480px;
+	margin-left: 90px;
+	width: 100%;
 }
 
 /* #iconActions {
@@ -212,129 +213,129 @@
 
 /*Buttons*/
 #addTask {
-  font-family: "Signika Negative", sans-serif;
-  font-size: 50px;
-  position: absolute;
-  z-index: 10;
-  background-color: #e3aba1;
-  color: #1e5353;
-  border-radius: 50%;
-  border-color: black;
-  border-width: 2px;
-  height: 70px;
-  width: 70px;
-  margin-left: 1400px;
-  margin-top: 590px;
+	font-family: "Signika Negative", sans-serif;
+	font-size: 50px;
+	position: absolute;
+	z-index: 10;
+	background-color: #e3aba1;
+	color: #1e5353;
+	border-radius: 50%;
+	border-color: black;
+	border-width: 2px;
+	height: 70px;
+	width: 70px;
+	margin-left: 1400px;
+	margin-top: 590px;
 }
 #addTask:hover {
-  background-color: #fedcce;
+	background-color: #fedcce;
 }
 
 #generateSchedule {
-  font-family: "Signika Negative", sans-serif;
-  font-size: 20px;
-  position: absolute;
-  z-index: 10;
-  background-color: #e3aba1;
-  border-radius: 5px;
-  border-width: 2px;
-  border-color: black;
-  width: 200px;
-  height: 60px;
-  margin-left: 1180px;
-  margin-top: 660px;
+	font-family: "Signika Negative", sans-serif;
+	font-size: 20px;
+	position: absolute;
+	z-index: 10;
+	background-color: #e3aba1;
+	border-radius: 5px;
+	border-width: 2px;
+	border-color: black;
+	width: 200px;
+	height: 60px;
+	margin-left: 1180px;
+	margin-top: 660px;
 }
 #generateSchedule:hover {
-  background-color: #fedcce;
+	background-color: #fedcce;
 }
 
 #nextDay {
-  width: 0;
-  height: 0;
-  border-top: 40px solid transparent;
-  border-left: 70px solid #1e5353;
-  border-bottom: 40px solid transparent;
-  position: absolute;
-  z-index: 2;
-  margin-top: 750px;
-  margin-left: 1400px;
-  background: none;
-  cursor: pointer;
+	width: 0;
+	height: 0;
+	border-top: 40px solid transparent;
+	border-left: 70px solid #1e5353;
+	border-bottom: 40px solid transparent;
+	position: absolute;
+	z-index: 2;
+	margin-top: 750px;
+	margin-left: 1400px;
+	background: none;
+	cursor: pointer;
 }
 #nextDay:hover {
-  border-left-color: #52c4c4;
+	border-left-color: #52c4c4;
 }
 
 #textNextDay {
-  position: absolute;
-  z-index: 2;
-  font-family: "Signika Negative", sans-serif;
-  font-size: 20px;
-  margin-top: 750px;
-  margin-left: 1300px;
-  width: 90px;
+	position: absolute;
+	z-index: 2;
+	font-family: "Signika Negative", sans-serif;
+	font-size: 20px;
+	margin-top: 750px;
+	margin-left: 1300px;
+	width: 90px;
 }
 
 /*Temporary input for main schedule*/
 
 #container {
-  /*For fixed routine task container*/
-  /* border-color: black;
+	/*For fixed routine task container*/
+	/* border-color: black;
   height: 600px;
   width: 720px;
   border-width: 2px;
   position: relative;
   z-index: 5; */
-  margin-top: 15px;
-  margin-left: 10px;
+	margin-top: 15px;
+	margin-left: 10px;
 }
 #itemTime {
-  font-family: "Signika Negative", sans-serif;
-  font-size: large;
-  border: none;
-  background: none;
+	font-family: "Signika Negative", sans-serif;
+	font-size: large;
+	border: none;
+	background: none;
 }
 #itemName {
-  font-family: "Signika Negative", sans-serif;
-  font-size: large;
-  border: none;
-  background: none;
+	font-family: "Signika Negative", sans-serif;
+	font-size: large;
+	border: none;
+	background: none;
 }
 
 #fixed {
-  /*For fixed task container*/
-  margin-top: 15px;
-  margin-left: 10px;
+	/*For fixed task container*/
+	margin-top: 15px;
+	margin-left: 10px;
 }
 #fixedItemTime {
-  font-family: "Signika Negative", sans-serif;
-  font-size: large;
-  border: none;
-  background: none;
+	font-family: "Signika Negative", sans-serif;
+	font-size: large;
+	border: none;
+	background: none;
 }
 #selectFixedItem {
-  font-family: "Signika Negative", sans-serif;
-  font-size: large;
-  border: none;
-  background: none;
-  cursor: pointer;
+	font-family: "Signika Negative", sans-serif;
+	font-size: large;
+	border: none;
+	background: none;
+	cursor: pointer;
 }
 
 #nonFixed {
-  /*For non-fixed task container*/
-  margin-top: 15px;
-  margin-left: 10px;
+	/*For non-fixed task container*/
+	margin-top: 15px;
+	margin-left: 10px;
 }
 #nonFixedItemTime {
-  font-family: "Signika Negative", sans-serif;
-  font-size: large;
-  border: none;
-  background: none;
+	font-family: "Signika Negative", sans-serif;
+	font-size: large;
+	border: none;
+	background: none;
 }
 #selectNonFixedItem {
-  font-family: "Signika Negative", sans-serif;
-  font-size: large;
-  border: none;
-  background: none;
-  cursor: pointer;
+	font-family: "Signika Negative", sans-serif;
+	font-size: large;
+	border: none;
+	background: none;
+	cursor: pointer;
 }

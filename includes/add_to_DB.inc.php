@@ -1,5 +1,8 @@
 <?php
     session_start();
+    //require "../main_schedule.php";
+?>
+<?php
 
     $taskName = $_POST['currName'];
     $taskCat = (int) $_POST['currCat'];
@@ -13,7 +16,8 @@
     //$type = (int) $_POST['currCat']; //Type for fixed tasks is always 1
     //$userid = $_SESSION['userid'];
     $type = 1;
-    $userid = -1;
+    //$userid = -1;
+    $userid = $_SESSION["userid"];
 
     $user = 'root'; 
     $pass = '';
@@ -23,7 +27,17 @@
     $sql = "INSERT INTO fixedtaskwindow(taskName, taskCategory, taskYear, taskMonth, taskDate, startTimeHour, startTimeMin, endTimeHour, endTimeMin, taskType, userid) VALUES ('$taskName', $taskCat, $taskYear, $taskMonth, $taskDate, $startHour, $startMin, $endHour, $endMin, $type, $userid);";
 
     mysqli_query($conn, $sql);
+<<<<<<< HEAD
+?>
+<script>
+    //printSchedule(generateSchedule());
+    <?php
+        header("location: ../main_schedule.php");
+    ?>
+</script>
+=======
 
     echo ("Task $taskName has been added! Press x to close this pop up:)");
     //header("location: ../main_schedule.php");
 ?>
+>>>>>>> 340bfb5fba7e18a3bb1a05e6e5f8cec557c08f16

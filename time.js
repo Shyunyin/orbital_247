@@ -106,7 +106,7 @@ class Time {
         let durMins = duration[1]
         let newHours;
         let newMins;
-        if (startTime.getMins() + durMins > 60) {
+        if (startTime.getMins() + durMins >= 60) {
             durMins -= (60 - startTime.getMins());
             newHours = (startTime.getHours() + 1 + durHours) % 24;
             newMins = durMins; //TODO: Must change everything to 60

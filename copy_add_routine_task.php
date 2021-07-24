@@ -145,9 +145,9 @@
           <!--Buttons for ADD, DONE-->
         <div class="btn-group-actions">
             <!--<button id="add" onclick="Add(); newWindow();">Submit and Add another routine task</button>-->
-            <button type="submit" name="add" id="add">Submit and Add another routine task</button>
+            <button type="submit" name="add" id="add">Delete this routine task</button>
             
-            <button type="submit" name="done" id="done">Submit and Done adding ALL routine tasks</button>
+            <button type="submit" name="done" id="done">Done</button>
             <!--<button type ="submit" name="submit" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>-->
         </div>
         </form>

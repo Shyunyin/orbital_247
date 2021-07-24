@@ -69,16 +69,31 @@
             mysqli_query($conn, $sql);
         }
     }
+
+    //only access the wakeup page if routine page is empty
+    $data = "SELECT * FROM routinetask WHERE id=$userid"; 
+    $result = mysqli_query($conn,$data);
+        if(!$result) {
+            echo " No routine tasks added yet:" . mysqli_error($conn);
+            if (isset($_POST['done'])) {
+                echo ("We will move onto adding more information now!");
+                header("location: ../wakeup.php");
+                exit();
+            } else if (isset($_POST['add'])) {
+                header("location: ../add_routine_task.php");
+                exit();
+                //echo ("Need to continue adding other tasks");
+            }
+        } else { //if user has already set up before
     
-    if (isset($_POST['done'])) {
-        echo ("We will move onto adding more information now!");
-        header("location: ../wakeup.php");
-        exit();
-    } else if (isset($_POST['add'])) {
-        header("location: ../add_routine_task.php");
-        exit();
-        //echo ("Need to continue adding other tasks");
-    }
+            if (isset($_POST['done'])) {
+                echo ("Done adding task! Press the x to close the page");
+            } else if (isset($_POST['add'])) {
+                header("location: ../add_routine_task.php");
+                exit();
+                //echo ("Need to continue adding other tasks");
+            }
+        }
 
     //echo("I sucessfully exit");
 ?>

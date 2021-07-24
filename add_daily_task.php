@@ -2,6 +2,8 @@
     session_start();
     include "./includes/add_daily_task.inc.php";
     // include "../includes/insertWindow_helper.inc.php";
+    $userid = $_SESSION['userid'];
+    echo $userid;
 ?>
 
 <!DOCTYPE html>
@@ -12,13 +14,14 @@
     <!--<script type = "text/javascript" type="module" src="main_schedule.js"></script>-->
     <script type = "text/javascript" type="module" src="add_daily_task.js"></script>
     <!--<script type = "text/javascript" type="module" src="combine_add_daily_main.js"></script>-->
-    <script type = "text/javascript" type="module" src="Time.js"></script>
+    <!-- <script type = "text/javascript" type="module" src="Time.js"></script> -->
     <script type = "text/javascript" type="module" src="OneTimeTasks_Final.js"></script>
     <script type = "text/javascript" type="module" src="Window.js"></script>
     <!--<script type = "text/javascript" type="module" src="main_schedule.js"></script>-->
     <!--<script type = "text/javascript" type="module" src="initialise.js"></script>-->
-    <!--<script type = "text/javascript" type="module" src="CombinedTime_Final.js"></script>-->
-    <link rel="stylesheet" href="add_daily_task.css" />
+    <script type = "text/javascript" type="module" src="CombinedTime_Final.js"></script>
+    <link rel="stylesheet" href="add_daily_task.css?v=<?php echo time(); ?>">
+    <!-- <link rel="stylesheet" href="add_daily_task.css" /> -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
     <!--To allow for resizing according to screens-->
@@ -58,19 +61,20 @@
   
       <!-- Checkboxes for either TIME task or DURATION task-->
       <!-- Make checkboxes either or, have the same name to be in the same group, have diff values to make distinct--> 
-      <nav>
+       <!-- <nav> -->
         <element id="selectTime">
-          <input type="radio" id="timeTask" name="select" value="time" checked="checked" onchange="showOptions('timeOptions', this);reinitialise()"> 
-          <label for="timeTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Time</label><br>
-        </element>
-        <element id="or">
+          <!-- <input type="radio" id="timeTask" name="select" value="time" checked="checked" onchange="showOptions('timeOptions', this);reinitialise()">  -->
+          <!-- <label for="timeTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Time</label><br> -->
+          <h3>Time:</h3>
+        </element> 
+        <!-- <element id="or">
           <h3>OR</h3>
-        </element>
-        <element id="selectDuration">
+        </element> -->
+        <!-- <element id="selectDuration">
           <input type="radio" id="durationTask" name="select" value="duration" onchange="showOptions('durationOptions', this);reinitialise()">
           <label for="durationTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Duration (per session)</label><br>
-        </element>
-      </nav>
+        </element> -->
+      <!-- </nav> -->
   
       <!--Time options-->
       <div id="timeOptions">
@@ -86,25 +90,25 @@
       </div>
   
       <!--Duration options-->
-      <div id = "durationOptions" style="display: none">
+      <!-- <div id = "durationOptions" style="display: none"> -->
         <!--<form class="durationOption">-->
-        <div class="durationOption">
-          <input type="number" id="hour" name="hour" min="0" max="3" oninput="Update(this.value, 'hour')"> <!--I set max to 3 hours for health?-->
-          <label for="hour">hr</label>
+        <!-- <div class="durationOption">
+          <input type="number" id="hour" name="hour" min="0" max="3" oninput="Update(this.value, 'hour')"> I set max to 3 hours for health?-->
+          <!-- <label for="hour">hr</label>
           <input type="number" id="minute" name="minute" min="0" max="59" oninput="Update(this.value, 'min')">
-          <label for="minute">min</label>
+          <label for="minute">min</label> -->
         <!-- Number of sessions -->
-          <div id="sessions">
+          <!-- <div id="sessions">
             <h3>Number of Sessions:</h3>
-          </div>
+          </div> -->
           <!--<form class="numSessions">-->
-            <input type="button" id="onesession" onclick="sessionsFunction(1); Update(1,'one');" value="x1"></button>
+            <!-- <input type="button" id="onesession" onclick="sessionsFunction(1); Update(1,'one');" value="x1"></button>
             <input type="button" id="twosessions" onclick="sessionsFunction(2);Update(2,'two');" value="x2"></button>
-            <input type="button" id="threesessions" onclick="sessionsFunction(3);Update(3,'three');" value="x3"></button>
+            <input type="button" id="threesessions" onclick="sessionsFunction(3);Update(3,'three');" value="x3"></button> -->
         <!--</form>-->
-        </div>
+        <!-- </div>
         <input type="button" id="doneDurationBtn" value="Done!" onclick="calculationDuration()">
-      </div>
+      </div> -->
     
   
       <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
@@ -116,19 +120,19 @@
   
   
       <!-- For follow up task-->
-      <div class="followTask">
+      <!-- <div class="followTask">
         <br>
           <li><h3>Is this task followed by another task?</h3></li>
           <li><input type="radio" id="yes" name="check" value="A" onchange="showList('A', this); return false;" onclick="RetrieveWithID()">
             <label class="yes" for="yes">Yes</label></li>
           <li><input type="radio" id="no" name="check" checked="checked" value="B" onchange="showList('B', this); return false;">
             <label class="no" for="no">No</label><br></li>
-        </br>
+        </br> -->
   
         <!--Code for dropdown menu linked to javascript, database of other tasknames-->
-        <div id="A" style="display:none">
+        <!-- <div id="A" style="display:none"> -->
           <!--Container to contain the dynamically added elements-->
-          <div>
+          <!-- <div>
             <select id="dropdownList" oninput="Update(this.value, 'followname')">
               <option value="" selected disabled hidden>Select a task</option>
             </select>
@@ -136,8 +140,8 @@
           <h4 id="sequence">(Selected task will be scheduled after the created task)</h4>
         </div>
       
-        <div id="B" style="display:none">
-      </div>
+        <div id="B" style="display:none"> -->
+      <!-- </div> -->
 
   
       <!--Buttons for DELETE, ADD, DONE-->
@@ -170,9 +174,9 @@
         // let EndArr = [parseInt(End.value.substr(0, 2)), parseInt(End.value.substr(3, 4))]; //main array for end time
         let DateInput = document.getElementById("dateInput");
         let FollowUpTask = document.getElementById("dropdownList"); //value to get taskname
-        let Sequence = document.getElementById("sequence"); //value to get sequence
-        let Hour = document.getElementById("hour");
-        let Minute = document.getElementById("minute");
+        // let Sequence = document.getElementById("sequence"); //value to get sequence
+        // let Hour = document.getElementById("hour");
+        // let Minute = document.getElementById("minute");
         //numSessions can be gotten from numOfSessions in the other javascript file
         
         let nameOfTask = NameOfTask.value;
@@ -182,11 +186,11 @@
         let end = End.value;
         let endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
         let dateInput = DateInput.value;
-        let followUpTask = FollowUpTask.value;
-        let sequence = Sequence.value;
-        let hour = Hour.value;
-        let minute = Minute.value;
-        let numSessions = numOfSessions; //variable from other file
+        // let followUpTask = FollowUpTask.value;
+        // let sequence = Sequence.value;
+        // let hour = Hour.value;
+        // let minute = Minute.value;
+        // let numSessions = numOfSessions; //variable from other file
         // let nameOfTask, categoryNum, start, startArr, end, endArr, dateInput, followUpTask, sequence, hour, minute;
         var dateNumber = 0;
  
@@ -246,38 +250,36 @@
             jsEndMin.value = endArr[1];
             jsEndMin.name = "jsEndMin";
             ele.appendChild(jsEndMin);
+          // } else if (type=='followname'){
+          //   followUpTask=val;
 
-          } else if (type=='followname'){
-            followUpTask=val;
-
-            var jsFollowUp = document.createElement("input");
-            jsFollowUp.type = "hidden";
-            jsFollowUp.value = followUpTask;
-            jsFollowUp.name = "jsFollowUp";
-            ele.appendChild(jsFollowUp);
-
-          } else if (type=='followseq'){
-            sequence=val;
+          //   var jsFollowUp = document.createElement("input");
+          //   jsFollowUp.type = "hidden";
+          //   jsFollowUp.value = followUpTask;
+          //   jsFollowUp.name = "jsFollowUp";
+          //   ele.appendChild(jsFollowUp);
+          // } else if (type=='followseq'){
+          //   sequence=val;
             
-            // Still need this?
+          //   // Still need this?
 
-          } else if (type=='hour'){
-            hour=val;
+          // } else if (type=='hour'){
+          //   hour=val;
 
-            var jsHour = document.createElement("input");
-            jsHour.type = "hidden";
-            jsHour.value = hour;
-            jsHour.name = "jsHour";
-            ele.appendChild(jsHour);
+          //   var jsHour = document.createElement("input");
+          //   jsHour.type = "hidden";
+          //   jsHour.value = hour;
+          //   jsHour.name = "jsHour";
+          //   ele.appendChild(jsHour);
 
-          } else if (type=='min'){
-            minute=val;
+          // } else if (type=='min'){
+          //   minute=val;
 
-            var jsMin = document.createElement("input");
-            jsMin.type = "hidden";
-            jsMin.value = minute;
-            jsMin.name = "jsMin";
-            ele.appendChild(jsMin);
+          //   var jsMin = document.createElement("input");
+          //   jsMin.type = "hidden";
+          //   jsMin.value = minute;
+          //   jsMin.name = "jsMin";
+          //   ele.appendChild(jsMin);
 
           } else if (type=='work'){
             categoryNum=val;
@@ -305,35 +307,35 @@
             jsCat.value = categoryNum;
             jsCat.name = "jsCat";
             ele.appendChild(jsCat);
-
-          } else if (type=='one'){
-            numSessions=val;
-
-            var jsNum = document.createElement("input");
-            jsNum.type = "hidden";
-            jsNum.value = numSessions;
-            jsNum.name = "jsNum";
-            ele.appendChild(jsNum);
-
-          } else if (type=='two'){
-            numSessions=val;
-
-            var jsNum = document.createElement("input");
-            jsNum.type = "hidden";
-            jsNum.value = numSessions;
-            jsNum.name = "jsNum";
-            ele.appendChild(jsNum);
-
-          } else if (type=='three'){
-            numSessions=val;
-
-            var jsNum = document.createElement("input");
-            jsNum.type = "hidden";
-            jsNum.value = numSessions;
-            jsNum.name = "jsNum";
-            ele.appendChild(jsNum);
-
           }
+          // } else if (type=='one'){
+          //   numSessions=val;
+
+          //   var jsNum = document.createElement("input");
+          //   jsNum.type = "hidden";
+          //   jsNum.value = numSessions;
+          //   jsNum.name = "jsNum";
+          //   ele.appendChild(jsNum);
+
+          // } else if (type=='two'){
+          //   numSessions=val;
+
+          //   var jsNum = document.createElement("input");
+          //   jsNum.type = "hidden";
+          //   jsNum.value = numSessions;
+          //   jsNum.name = "jsNum";
+          //   ele.appendChild(jsNum);
+
+          // } else if (type=='three'){
+          //   numSessions=val;
+
+          //   var jsNum = document.createElement("input");
+          //   jsNum.type = "hidden";
+          //   jsNum.value = numSessions;
+          //   jsNum.name = "jsNum";
+          //   ele.appendChild(jsNum);
+
+          // }
         }
 
         /*function check(): to get document category*/

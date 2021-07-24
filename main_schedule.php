@@ -30,7 +30,6 @@
 </head>
 
 <body>
-    <!--<form action="../includes/main_schedule.inc.php" method="POST" id="scheduleForm">-->
     <!-- Main division for the background-->
     <div id="background">
         <div class="btn-group">
@@ -40,7 +39,7 @@
         </div>
         <div class="main"></div>
     </div>
-
+    <form action="../includes/main_schedule.inc.php" method="POST" id="scheduleForm">
     <script>
     //PHP to get username from mysqli and let it be a javascript variable
         <?php
@@ -132,8 +131,9 @@
     </div>
 
     <!--Add task pop-out-->
-    <button type="button" id="addTask" name="addTask">+</button>
-    <input type="button" id="addTask" value="+" onclick="OpenPopupWindow()">
+    <!-- <a href="http://localhost/orbital_247/add_daily_task.php" onclick="OpenPopupWindow(this);"><button id="addTask">+</button></a> -->
+    <input type="button" id="addTask" value="+" onclick="OpenPopupWindow();">
+    <!--onclick="window.location.href='./add_daily_task.php'"-->
 
     <!--Link to pop up for add daily task page-->
     <!--<button id="generateSchedule" name="generateSchedule" onclick="clearPostit();printSchedule(generate());">Generate Schedule now!</button>-->

@@ -27,6 +27,7 @@
     $sql = "INSERT INTO fixedtaskwindow(taskName, taskCategory, taskYear, taskMonth, taskDate, startTimeHour, startTimeMin, endTimeHour, endTimeMin, taskType, userid) VALUES ('$taskName', $taskCat, $taskYear, $taskMonth, $taskDate, $startHour, $startMin, $endHour, $endMin, $type, $userid);";
 
     mysqli_query($conn, $sql);
+<<<<<<< HEAD
 ?>
 <script>
     //printSchedule(generateSchedule());
@@ -34,3 +35,9 @@
         header("location: ../main_schedule.php");
     ?>
 </script>
+=======
+
+    echo ("Task $taskName has been added! Press x to close this pop up:)");
+    //header("location: ../main_schedule.php");
+?>
+>>>>>>> 340bfb5fba7e18a3bb1a05e6e5f8cec557c08f16

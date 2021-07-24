@@ -10,19 +10,24 @@
 */
 
 .main {
-  background-color: #f6f7f1;
   border-color: #c4c4c4;
   border-width: 5px;
   height: 800px;
   width: 1500px;
+  background-color: #f6f7f1;
 }
 #background {
-  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: absolute;
   z-index: 1;
+}
+#logout {
+  position: absolute;
+  z-index: 10;
+  font-family: "Signika Negative", sans-serif;
+  float: right;
 }
 .btn-group .button {
   font-family: "Signika Negative", sans-serif;
@@ -43,10 +48,15 @@
   border-right-color: #ecedea;
 }
 /*To change for the different main pages*/
-.btn-group .button:not(:last-child) {
+.btn-group .button:first-child {
   background-color: #c4c4c4;
 }
 .btn-group .button:not(:first-child) {
+  background-color: #c4c4c4;
+  border-right: none;
+}
+.btn-group .button:last-child {
+  background-color: #f6f7f1;
   border-right: none;
 }
 /*End of stuff that needs to be edited*/

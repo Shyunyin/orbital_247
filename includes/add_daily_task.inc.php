@@ -7,7 +7,9 @@
     <!--<div type="hidden" id="big" name="big"></div>-->
     <form action = "../includes/add_to_DB.inc.php" id="big" name="big" method="POST"></form>
     <body>
-        <script type = "text/javascript" type="module" src="../CombinedTime_Final.js"></script>
+        <!-- <script type = "text/javascript" type="module" src="../CombinedTime_Final.js"></script> -->
+    <script type = "text/javascript" type="module" src="../Time.js"></script>
+
         <script>
             var big = document.getElementById("big");
             console.log("I come here too");
@@ -393,8 +395,87 @@
                     //console.log(currArr);
                     console.log("I make it to after php block in insertWindow function");
                     // Doing checks to ensure that task does not clash with any existing fixed, future tasks.
+<<<<<<< HEAD
                     if (this.isPast()) {
                         window.alert("The selected time has already passed! Please re-select the timing.");
+=======
+                    let newIndex = 0;
+
+                    while (newIndex < currArr.length && !this.partiallyOverlaps(currArr[newIndex]) && !this.isCompletelyDuring(currArr[newIndex]) && !(currArr[newIndex]).isCompletelyDuring(this)) {
+                    //while (newIndex < currArr.length && this.isCompletelyAfter(currArr[newIndex])) {
+                        newIndex++;
+                    }
+                    // If all currently scheduled tasks take place before the current to-be scheduled task starts
+                    if (newIndex == currArr.length) {
+                    //if ((newIndex == currArr.length) || (currArr[newIndex]).isCompletelyAfter(this)) {
+
+                            let currName = document.createElement("input");
+                            currName.type = "hidden";
+                            currName.value = name;
+                            currName.name = "currName";
+                            big.appendChild(currName);
+
+                            let currCat = document.createElement("input");
+                            currCat.type = "hidden";
+                            currCat.value = type;
+                            currCat.name = "currCat";
+                            big.appendChild(currCat);
+
+                            let currYear = document.createElement("input");
+                            currYear.type = "hidden";
+                            currYear.value = year;
+                            currYear.name = "currYear";
+                            big.appendChild(currYear);
+
+                            let currMonth = document.createElement("input");
+                            currMonth.type = "hidden";
+                            currMonth.value = month;
+                            currMonth.name = "currMonth";
+                            big.appendChild(currMonth);
+
+                            let currDate = document.createElement("input");
+                            currDate.type = "hidden";
+                            currDate.value = date;
+                            currDate.name = "currDate";
+                            big.appendChild(currDate);
+
+                            let currStartHour = document.createElement("input");
+                            currStartHour.type = "hidden";
+                            currStartHour.value = startTimeHour;
+                            currStartHour.name = "currStartHour";
+                            big.appendChild(currStartHour);
+
+                            let currStartMin = document.createElement("input");
+                            currStartMin.type = "hidden";
+                            currStartMin.value = startTimeMin;
+                            currStartMin.name = "currStartMin";
+                            big.appendChild(currStartMin);
+
+                            let currEndHour = document.createElement("input");
+                            currEndHour.type = "hidden";
+                            currEndHour.value = endTimeHour;
+                            currEndHour.name = "currEndHour";
+                            big.appendChild(currEndHour);
+
+                            let currEndMin = document.createElement("input");
+                            currEndMin.type = "hidden";
+                            currEndMin.value = endTimeMin;
+                            currEndMin.name = "currEndMin";
+                            big.appendChild(currEndMin);
+
+                            console.log("inc.php is error free thus far");
+
+                            big.submit();                       
+                    } else {
+                        let clashingTaskName = (currArr[newIndex]).getTaskName();
+                        let clashingStartTime = (currArr[newIndex]).getStartTime().toString();
+                        let clashingEndTime = (currArr[newIndex]).getEndTime().toString();
+
+                        window.alert("Sorry we are unable to schedule this task as it clashes with the task '" + clashingTaskName + "' that takes place from " + clashingStartTime + " to " + clashingEndTime);
+
+                        console.log("Sorry we are unable to schedule this task as it clashes with the task '" + clashingTaskName + "' that takes place from " + clashingStartTime + " to " + clashingEndTime);
+
+>>>>>>> 340bfb5fba7e18a3bb1a05e6e5f8cec557c08f16
                         //TODO: How to redirect it back to the add task page?
                         <?php
                             //echo 'console.log("I behave");';
@@ -510,9 +591,9 @@
                 $type = 1; //Type for fixed tasks is always 1
                 $userid = -1;
                 //$userid = (int) $_SESSION["userid"];
-                $taskHour = (int) $_POST['jsHour'];
-                $taskMin = (int) $_POST['jsMin'];
-                $numOfSessions = (int) $_POST['jsNum'];
+                // $taskHour = (int) $_POST['jsHour'];
+                // $taskMin = (int) $_POST['jsMin'];
+                // $numOfSessions = (int) $_POST['jsNum'];
 
                 echo "let name = '$taskName';";
                 echo "let cat = $taskCat;";
@@ -523,11 +604,11 @@
                 echo "let startMin = $startMin;";
                 echo "let endHour = $endHour;";
                 echo "let endMin = $endMin;";
-                if ($numOfSessions == 0) { //Fixed task
+                // if ($numOfSessions == 0) { //Fixed task
                     echo 'let newWin = new Window(name, year, month, date, new Time(startHour, startMin), new Time(endHour, endMin), 1);';
 
                     echo 'newWin.insertWindow();';
-                }
+                // }
                 //} else { //Non-fixed task
                     //header("location: ../includes/nonfixed.inc.php");
                     //echo 'var nonFixedForm = ';

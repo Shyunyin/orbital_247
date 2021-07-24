@@ -287,7 +287,7 @@
                         $taskYear = date("Y");
                         $taskMonth = date("m") - 1; // For javascript, months span from 0 - 11. This is already accounted for in the main schedule page.
                         //$taskDate = (int) $_POST['jsDate'];
-                        $taskDate = date("d");; //Just for testing!!
+                        $taskDate = date("d"); //Just for testing!!
                         $type = 1; //Type for fixed tasks is always 1
                         //$userid = -1;
                         $userid = $_SESSION["userid"];

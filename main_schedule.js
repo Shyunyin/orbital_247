@@ -278,7 +278,7 @@ function printSchedule(scheduleArr) {
     let itemTime = document.createElement("input");
     itemTime.classList.add("time"); //time with class name time
     itemTime.setAttribute("readonly", "readonly"); //set to readonly
-    itemTime.value = scheduleArr[i].getStartTimeHours() + ":" + scheduleArr[i].getStartTimeMins() + "-" + scheduleArr[i].getEndTimeHours() + ":" + scheduleArr[i].getEndTimeMins();
+    itemTime.value = scheduleArr[i].getStartTime().toString() + " - " + scheduleArr[i].getEndTime().toString();
     itemTime.style.fontFamily = "'Signika Negative', sans-serif";
     itemTime.style.fontSize = "large";
     itemTime.style.position = "relative";
@@ -286,8 +286,8 @@ function printSchedule(scheduleArr) {
     itemTime.style.backgroundColor = "#96d6ed";
     itemTime.style.float="left";
     itemTime.style.border="none";
-    itemTime.style.marginTop = "10px";
-    itemTime.style.marginLeft = "10px";
+    itemTime.style.marginTop = "20px";
+    itemTime.style.marginLeft = "15px";
     //can continue adding css for the time
     timedivision.appendChild(itemTime); //adding the time part of the item
 //     /*itemName*/
@@ -312,7 +312,7 @@ function printSchedule(scheduleArr) {
     itemName.style.width = "200px";
     itemName.style.textAlign="center";             
     itemName.style.marginLeft= "200px";
-    itemName.style.marginTop="-40px";
+    itemName.style.marginTop="7px";
     //can continue adding css for itemName
     namedivision.appendChild(itemName); //adding the name part of the item
     } 
@@ -376,7 +376,7 @@ function tempFixed() { //only reschedule, edit and delete
     newNode.innerHTML = 
     '<button class="btn" onclick="clickPlay()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-play-circle fa-2x" aria-hidden="true"></i></button>' +
     // '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
-    '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>' +
+    '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>';
     // '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
     //Replacing current iconsActions node w new iconActions node
     currentNode.replaceWith(newNode);

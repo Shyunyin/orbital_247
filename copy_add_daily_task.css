@@ -75,15 +75,12 @@ input[type="text"]:hover {
 }
 #work:hover {
   background-color: #fedcce;
-  transition-duration: 0.3s;
 }
 #exercise:hover {
   background-color: #fedcce;
-  transition-duration: 0.3s;
 }
 #misc:hover {
   background-color: #fedcce;
-  transition-duration: 0.3s;
 }
 
 /*For date section*/
@@ -95,6 +92,7 @@ input[type="text"]:hover {
   margin-left: 67px;
 }
 #dateInput {
+  background-color: #96d6ed;
   border-radius: 5px; /*make button rounded*/
   border-width: 2px;
   border-color: black;
@@ -102,8 +100,12 @@ input[type="text"]:hover {
   text-align: center;
 }
 
+#dateInput:hover {
+  background-color: #a1e6ff;
+}
+
 /*For number of sections section*/
-#sessions {
+/* #sessions {
   font-family: "Signika Negative", sans-serif;
   margin-top: 5px;
   font-size: 13px;
@@ -111,8 +113,8 @@ input[type="text"]:hover {
 .numSessions {
   font-family: "Signika Negative", sans-serif;
   margin-right: 20px;
-}
-#onesession {
+} */
+/* #onesession {
   font-family: "Signika Negative", sans-serif;
   margin-left: 10px;
   background-color: #e3aba1;
@@ -120,11 +122,11 @@ input[type="text"]:hover {
   font-size: medium;
   padding: 8px;
   width: 50px;
-  border-radius: 5px; /*make button rounded*/
+  border-radius: 5px; 
   border-width: 2px;
   border-color: black;
-}
-#twosessions {
+} */
+/* #twosessions {
   font-family: "Signika Negative", sans-serif;
   margin-left: 10px;
   background-color: #e3aba1;
@@ -132,11 +134,11 @@ input[type="text"]:hover {
   font-size: medium;
   padding: 8px;
   width: 50px;
-  border-radius: 5px; /*make button rounded*/
+  border-radius: 5px;
   border-width: 2px;
   border-color: black;
-}
-#threesessions {
+} */
+/* #threesessions {
   font-family: "Signika Negative", sans-serif;
   margin-left: 10px;
   background-color: #e3aba1;
@@ -144,11 +146,11 @@ input[type="text"]:hover {
   font-size: medium;
   padding: 8px;
   width: 50px;
-  border-radius: 5px; /*make button rounded*/
+  border-radius: 5px;
   border-width: 2px;
   border-color: black;
-}
-#onesession:hover {
+} */
+/* #onesession:hover {
   background-color: #fedcce;
   transition-duration: 0.3s;
 }
@@ -159,42 +161,45 @@ input[type="text"]:hover {
 #threesessions:hover {
   background-color: #fedcce;
   transition-duration: 0.3s;
-}
+} */
 
 /*flexbox for TIME vs DURATION*/ /*in javascript have to link checkbox to content*/
-nav {
+/* nav {
   display: flex;
   align-items: center;
   width: 600px;
   margin: 0 -5px;
-}
-#or {
+} */
+/* #or {
   font-family: "Signika Negative", sans-serif;
   margin: 10px;
   padding-left: 80px;
-}
-#selectDuration {
-  margin-top: 7px;
-  padding-left: 80px;
+} */
+/* #selectDuration {
+	margin-top: 7px;
+	padding-left: 80px;
 }
 .durationOption {
-  font-family: "Signika Negative", sans-serif;
-  padding-left: 270px;
-  position: absolute;
-  top: 310px;
-}
-#doneDurationBtn {
-  font-family: "Signika Negative", sans-serif;
-  background-color: #317575ff;
-  color: white;
-  border-color: black;
-  border-width: 2px;
-  border-radius: 5px;
-  width: 60px;
-  height: 30px;
-  margin-left: 330px;
-  margin-top: 150px;
-}
+	font-family: "Signika Negative", sans-serif;
+	padding-left: 270px;
+	position: absolute;
+	top: 310px;
+} */
+/* #doneDurationBtn {
+	font-family: "Signika Negative", sans-serif;
+	background-color: #317575ff;
+	color: white;
+	border-color: black;
+	border-width: 2px;
+	border-radius: 5px;
+	width: 60px;
+	height: 30px;
+	margin-left: 330px;
+	margin-top: 150px;
+	cursor: pointer;
+	position: absolute;
+	z-index: 10;
+} */
 #doneTimeBtn {
   font-family: "Signika Negative", sans-serif;
   background-color: #317575ff;
@@ -204,16 +209,19 @@ nav {
   border-radius: 5px;
   width: 60px;
   height: 30px;
-  margin-left: 15px;
-  margin-top: 150px;
+  margin-left: 110px;
+  margin-top: 100px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
 }
-#doneDurationBtn:hover {
+/* #doneDurationBtn:hover {
   background-color: #52c4c4;
-}
+} */
 #doneTimeBtn:hover {
   background-color: #52c4c4;
 }
-#hour {
+/* #hour {
   font-size: large;
   font-family: Signika Negative, sans-serif;
   background-color: #fdfd96;
@@ -221,6 +229,9 @@ nav {
   border-width: 2px;
   border-color: black;
   width: 50px;
+}
+#hour:hover {
+  background-color: #ffffcc;
 }
 #minute {
   font-size: large;
@@ -231,24 +242,30 @@ nav {
   border-color: black;
   width: 50px;
 }
+#minute:hover {
+  background-color: #ffffcc;
+} */
 #counter {
   font-family: "Signika Negative", sans-serif;
   font-size: large;
   position: absolute;
-  margin-left: 500px;
-  top: 420px;
+  margin-left: 450px;
+  top: 400px;
   z-index: 2;
 }
+#selectTime {
+  font-family: "Signika Negative", sans-serif;
+}
 /* #counterOutput {
-    color: black;
-    font-size: large;
-    position: absolute;
-    z-index: 2;
-  } */
+  color: black;
+  font-size: large;
+  position: absolute;
+  z-index: 2;
+} */
 .startTime {
   font-family: Signika Negative, sans-serif;
   position: absolute;
-  top: 290px;
+  top: 300px;
   font-size: 13px;
 }
 #startTime {
@@ -260,12 +277,16 @@ nav {
   top: 40px;
   height: 25px;
   text-align: center;
-  z-index: 1; /*to bring to front of page*/
+  z-index: 99; /*to bring to front of page*/
+}
+#startTime:hover {
+  background-color: #ffffcc;
 }
 .endTime {
   font-family: Signika Negative, sans-serif;
   position: absolute;
-  top: 360px;
+  top: 300px;
+  left: 250px;
   font-size: 13px;
 }
 #endTime {
@@ -278,6 +299,9 @@ nav {
   height: 25px;
   text-align: center;
   z-index: 1; /*to bring to front of page*/
+}
+#endTime:hover {
+  background-color: #ffffcc;
 }
 
 /*Follow another task*/
@@ -303,7 +327,6 @@ nav {
 .no {
   font-size: 18px;
 }
-
 #sequence {
   font-family: Signika Negative, sans-serif;
   font-size: 15px;
@@ -343,8 +366,9 @@ nav {
   font-size: medium;
   height: 35px;
   cursor: pointer;
+  margin-top: 370px;
 }
-#add {
+/* #add {
   font-family: Signika Negative, sans-serif;
   background-color: #e3aba1;
   border-radius: 5px;
@@ -354,7 +378,7 @@ nav {
   margin-left: 100px;
   height: 35px;
   cursor: pointer;
-}
+} */
 #done {
   font-family: Signika Negative, sans-serif;
   background-color: #e3aba1;
@@ -367,19 +391,17 @@ nav {
   position: absolute;
   top: 1px;
   margin-left: 330px;
+  margin-top: 370px;
   cursor: pointer;
 }
 #delete:hover {
   background-color: #fedcce;
-  transition-duration: 0.3s;
 }
 #add:hover {
   background-color: #fedcce;
-  transition-duration: 0.3s;
 }
 #done:hover {
   background-color: #fedcce;
-  transition-duration: 0.3s;
 }
 
 /*For checkboxes*/

@@ -419,7 +419,7 @@ function OpenPopupWindow() {
     myRef.onunload = function(){
   // DOM unloaded, so the window is likely closed.
     clearPostit();
-    printSchedule(generateSchedule());
+    //printSchedule(generateSchedule());
     // Retrieve_Doc_WithID();
     // console.log('window closed!');
     }

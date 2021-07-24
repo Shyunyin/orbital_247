@@ -434,8 +434,8 @@
   function initial(x) { /*Loads when webpage is loaded*/
     // console.log("initial() is called"); //debug
     totalRemaining = x;
-    //let hours = (x / 60);
-    let hours = 16;
+    let hours = (x / 60);
+    //let hours = 16;
     let minutes = x- (hours * 60);
     let text = "Hour: " + hours + " " + "Minute: " + minutes;
     displayDuration(text); /*initial display*/  

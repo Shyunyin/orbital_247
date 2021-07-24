@@ -29,7 +29,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body>
+<body onload="printSchedule(generateSchedule());">
     <form action="../includes/main_schedule.inc.php" method="POST" id="scheduleForm">
     <!-- Main division for the background-->
     <div id="background">

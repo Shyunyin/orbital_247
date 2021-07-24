@@ -143,6 +143,8 @@ class Time {
                 hours = "0" + hours.toString()
             }
             return hours.toString() + ":" + mins.toString() + "PM";
+        } else if (hours == 12) {
+            return hours.toString() + ":" + mins.toString() + "PM";
         } else {
             if (hours < 10) {
                 hours = "0" + hours.toString()

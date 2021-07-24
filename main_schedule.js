@@ -97,6 +97,8 @@ window.onload = function getHeading() {
     let day = textDay(today.getDay()) + ", " + wholeDate(today.getDate()) + " " + textMonth(today.getMonth()) + "'s Schedule";
     let currentSchedule = document.getElementById("currentSchedule");
     currentSchedule.setAttribute("value", day);
+
+    printSchedule(generateSchedule());
 }
 
     //Window.initialise();
@@ -410,17 +412,14 @@ function tempNonFixed() { //all 4 actions
 
 /*Open popup and close*/
 function OpenPopupWindow() {   
-<<<<<<< HEAD
     var url = "../add_daily_task.php"; 
-=======
-    var url = "http://localhost/orbital_247/add_daily_task.php"; 
->>>>>>> 9e782908ff1d3dce740c3cc0b1973bd16be62f9e
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=770, height=700, toolbar=1, resizable=0');
     myRef.focus();
     // console.log('window opened!');
     myRef.onunload = function(){
   // DOM unloaded, so the window is likely closed.
     clearPostit();
+    printSchedule(generateSchedule());
     // Retrieve_Doc_WithID();
     // console.log('window closed!');
     }

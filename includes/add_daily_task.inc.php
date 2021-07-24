@@ -277,7 +277,8 @@
                         $endHour = (int) $_POST['jsEndHour'];
                         $endMin = (int) $_POST['jsEndMin']; 
                         $type = 1; //Type for fixed tasks is always 1
-                        $userid = -1;
+                        //$userid = -1;
+                        $userid = $_SESSION["userid"];
 
 
                         $sql = "SELECT * FROM fixedtaskwindow WHERE userid = $userid AND taskYear = $taskYear AND taskMonth = $taskMonth AND taskDate = $taskDate;";
@@ -391,6 +392,12 @@
                     ?>
                     //console.log(currArr);
                     console.log("I make it to after php block in insertWindow function");
+                    if (this.isPast()) {
+                        window.alert("The selected time has already passed! Please re-select the timing.");
+                        <?php
+                            header("location:../add_daily_task.php");
+                        ?>
+                    }
                     // Doing checks to ensure that task does not clash with any existing fixed, future tasks.
                     let newIndex = 0;
 

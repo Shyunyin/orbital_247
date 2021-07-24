@@ -6,22 +6,16 @@
 
 <head>
     <title>Add routine task</title>
-    <script type="text/javascript" type="module" src="add_routine_task.js"></script>
+    <script type="text/javascript" type="module" src="copy_add_routine_task.js"></script>
     <!--<script type="text/javascript" type="module" src="Routine_Final.js"></script>-->
     <script type="text/javascript" type="module" src="Window.js"></script>
-    <link rel="stylesheet" href="add_routine_task.css" />
+    <link rel="stylesheet" href="add_routine_task.css?v=<?php echo time();?>"> <!--Use stylesheet of add_routine_task--> 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<script>
-    function popupFunction() {
-        window.alert("Please input your routine tasks such as exercise times, meal times, daily, weekly, biweekly or monthly events!");
-    }    
-</script>
-
-<body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;" onload="popupFunction()">
+<body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
     <!-- Parent-child relationship for inline-->
     <form action="includes/add_routine_task.inc.php" method="POST" id="bigForm">
         <div id="title">
@@ -156,6 +150,9 @@
             <button type="submit" name="done" id="done">Submit and Done adding ALL routine tasks</button>
             <!--<button type ="submit" name="submit" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>-->
         </div>
+        </form>
+
+        <form action="" method="POST" id="hidden">
         </form>
 
         <script>
@@ -311,6 +308,93 @@
                     jsCat.name = "jsCat";
                     ele.appendChild(jsCat);
                 }
+            }
+        </script>
+
+        <!-- The below script will be loaded when the page loads and fill in the input fields by retrieving from php-->
+        <script>
+            window.onload = function() {
+                var startHour = localStorage.getItem("startTimeHour");
+                var startMin = localStorage.getItem("startTimeMin");
+
+                var main = document.getElementById("bigForm");
+
+                var hourPhp = document.createElement("input");
+                hourPhp.type = "hidden";
+                hourPhp.value = startHour;
+                hourPhp.name = "hourPhp";
+                main.appendChild(hourPhp);
+
+                var minPhp = document.createElement("input");
+                minPhp.type = "hidden";
+                minPhp.value = startMin;
+                minPhp.name = "minPhp";
+                main.appendChild(minPhp);
+
+                document.getElementById("hidden").submit(); //to submit the form to retrieve previous data
+
+                Retrieve_Database_Info(); //debugging: working
+            }
+
+            var taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, taskWeek, taskDate;
+
+            function Retrieve_Database_Info() {
+                <?php
+                    $userid = $_SESSION['userid'];
+                    $hourPhp = $_POST['hourPhp'];
+                    $minPhp = $_POST['minPhp'];
+                    $query = "SELECT * FROM fixedtaskwindow WHERE userid=$userid AND startTimeHour=$hourPhp AND startTimeMin=$minPhp;";
+                    $result = mysqli_query($conn,$query);
+                    if(!$result) {
+                    echo "Could not run query:" . mysqli_error($conn);
+                    exit();
+                    }
+                    $row = mysqli_fetch_row($result);
+                    $taskName = $row[1];
+                    $taskCategory = $row[2];
+                    $startTimeHour = $row[3];
+                    $startTimeMin = $row[4];
+                    $endTimeHour = $row[5];
+                    $endTimeMin = $row[6];
+                    $freq = $row[7];
+                    $taskDay = $row[8];
+                    $taskWeek = $row[9];
+                    $taskDate = $row[10];
+                    echo 'taskName = $taskName;';
+                    echo 'taskCategory = $taskCategory;';
+                    echo 'startTimeHour = $startTimeHour;';
+                    echo 'startTimeMin = $startTimeMin;';
+                    echo 'endTimeHour = $endTimeHour;';
+                    echo 'endTimeMin = $endTimeMin;';       
+                    echo 'freq = $freq;';       
+                    echo 'taskDay = $taskDay;';       
+                    echo 'taskWeek = $taskWeek;';       
+                    echo 'taskDate = $taskDate;';       
+                ?>
+                    // console.log("Retrieve data to fill up form");
+                    console.log(taskName + " is in retrieve database info!");
+
+                    /*For the setting of values to fill in the fields*/
+                    document.getElementById("taskName").value = taskName; 
+                    catFunction(taskCategory);//call function for change in colour of button
+                    //Logic to settle which radio button is clicked
+                    if (freq == 1) {
+                        document.querySelector("#daily").checked = true;
+                    } else if (freq == 2) {
+                        document.querySelector("#weekly").checked = true;
+                        document.getElementById("weeklydropdown").selectedIndex = taskDay;
+                    } else if (freq == 3) {
+                        document.querySelector("#biweekly").checked = true;          
+                        document.getElementById("biweeklydropdown").selectedIndex = taskDay;
+                        document.getElementById("chooseWeeks").selectedIndex = taskWeek;
+                    } else if (freq == 4) {
+                        document.querySelector("#monthly").checked = true;
+                        document.getElementById("date").value = taskDate;
+                    }
+                    ShowHideDiv(); //function to run to display the hidden dropdown
+                    document.getElementById("startTime").value = printvaljs(startTimeHour) + ":" + printvaljs(startTimeMin);
+                    document.getElementById("endTime").value = printvaljs(endTimeHour) + ":" + printvaljs(endTimeMin);
+                    console.log(taskName); //debugging
             }
         </script>
 </body>

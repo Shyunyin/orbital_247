@@ -136,7 +136,7 @@ window.onload = function getHeading() {
 /*start button*/
 function clickPlay() {
     //TODO: The clicking done can submit a form to collect the necessary info --> Need to discuss in greater detail
-    var url = "http://127.0.0.1:5501/countdownTimer.html";
+    var url = "http://localhost/orbital_247/countdownTimer.php";
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=750, height=700, toolbar=1, resizable=0');
     myRef.focus();
 }
@@ -150,7 +150,7 @@ function clickPlay() {
 /*edit button*/
 function clickEdit() {
     //TODO: Only editing name or anything else? Bc I think it is possible to edit anything? Just delete and insert? And can automatically generate schedule
-    var url = "http://127.0.0.1:5501/copy_add_daily_task.html"; //to redirect
+    var url = "http://localhost/orbital_247/copy_add_daily_task.php"; //to redirect
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
     myRef.focus();
 }
@@ -300,7 +300,8 @@ function printSchedule(scheduleArr) {
     let itemName = document.createElement("button");
     itemName.classList.add("itemName"); //class: itemName
     itemName.innerHTML = scheduleArr[i].getTaskName();
-    localStorage.setItem("taskname", scheduleArr[i].getTaskName()); //to save the taskName in local storage so that when edit is clicked can link
+    localStorage.setItem("startTimeHour", scheduleArr[i].getStartTimeHours()); //to save the taskName in local storage so that when edit is clicked can link
+    localStorage.setItem("startTimeMin", scheduleArr[i].getStartTimeMins()); //to save the taskName in local storage so that when edit is clicked can link
     itemName.addEventListener('click', tempFixed);
     itemName.style.fontFamily = "'Signika Negative', sans-serif";
     itemName.style.fontSize = "large";

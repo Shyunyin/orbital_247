@@ -1,5 +1,10 @@
 <?php
   session_start();
+  $serverName = "localhost";
+  $dBUsername = "root";
+  $dBPassword = "";
+  $dBName = "orbital247";
+  $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
 ?>
 <!DOCTYPE html>
 <html>
@@ -92,6 +97,9 @@
   </fieldset>
 </form>
 
+<form action="" method="POST" id="hidden">
+</form>
+
     <script>
         //------------------Using retrieving function to fill up inputs------------------//
         function formatDate() {
@@ -106,54 +114,82 @@
 
           return [year, month, day].join('-');
         }
-        
-        var nameoftask; //global js variable to store the task name 
-        /*Transferring of javascript variable to php*/
-        var main = document.getElementById("bigForm");
-        var namePhp = document.createElement("input")
-        namePhp.type = "hidden";
-        namePhp.value = nameoftask;
-        namePhp.name = "namePhp";
-        main.appendChild(nameEle);
 
         window.onload = function () {
-          //getting the nameoftask from local storage
-        nameoftask = localStorage.getItem("taskname");
+        var startHour = localStorage.getItem("startTimeHour"); //global js variable to store the task name
+        var startMin = localStorage.getItem("startTimeMin"); //global js variable to store the task name
+        /*Transferring of javascript variable to php*/
+        var main = document.getElementById("hidden");
+
+        var hourPhp = document.createElement("input");
+        hourPhp.type = "hidden";
+        hourPhp.value = startHour;
+        hourPhp.name = "hourPhp";
+        main.appendChild(hourPhp);
+
+        var minPhp = document.createElement("input");
+        minPhp.type = "hidden";
+        minPhp.value = startMin;
+        minPhp.name = "minPhp";
+        main.appendChild(minPhp);
+
+        document.getElementById("hidden").submit(); //to submit the form to retrieve previous data
         // console.log(nameoftask + " is gotten from local storage!") //used for debugging to check if local storage works
-        Retrieve_Database_Info(nameoftask); //debugging: working
+        Retrieve_Database_Info(); //debugging: working
         }        
 
-        var taskPlusName, categoryNum, startArr, endArr, startTime, endTime, dateInput, followTask, followSequence, hour, minute, numSessions;
-        
+        var taskName, taskCategory, taskYear, taskMonth, taskDate, startTimeHour, startTimeMin, endTimeHour, endTimeMin; //global variables for inputting into html
+      
+        function printvaljs(i){
+          if (i < 10) {
+              return "0" + i;
+          } else {
+              return i;
+          }
+      }
     
-        function Retrieve_Database_Info(nameoftask){ //pass in the taskname to retrieve the info to fill up the form
+        function Retrieve_Database_Info(){ //pass in the taskname to retrieve the info to fill up the form
           //retrieving values from php database from taskname and id
           <?php
-
+            $userid = $_SESSION['userid'];
+            $hourPhp = $_POST['hourPhp'];
+            $minPhp = $_POST['minPhp'];
+            $query = "SELECT * FROM fixedtaskwindow WHERE userid=$userid AND startTimeHour=$hourPhp AND startTimeMin=$minPhp;";
+            $result = mysqli_query($conn,$query);
+            if(!$result) {
+              echo "Could not run query:" . mysqli_error($conn);
+            exit();
+            }
+            $row = mysqli_fetch_row($result);
+            $taskName = $row[1];
+            $taskCategory = $row[2];
+            $taskYear = $row[3];
+            $taskMonth = $row[4];
+            $taskDate = $row[5];
+            $startTimeHour = $row[6];
+            $startTimeMin = $row[7];
+            $endTimeHour = $row[8];
+            $endTimeMin = $row[9];
+            echo 'taskName = $taskName;';
+            echo 'taskCategory = $taskCategory;';
+            echo 'taskYear = $taskYear;';
+            echo 'taskMonth = $taskMonth;';
+            echo 'taskDate = $taskDate;';
+            echo 'startTimeHour = $startTimeHour;';
+            echo 'startTimeMin = $startTimeMin;';
+            echo 'endTimeHour = $endTimeHour;';
+            echo 'endTimeMin = $endTimeMin;';          
           ?>
             // console.log("Retrieve data to fill up form");
-            console.log(nameoftask + " is in retrieve database info!")
+            console.log(nameoftask + " is in retrieve database info!");
 
               /*For the setting of values to fill in the fields*/
-              document.getElementById("taskName").value = taskPlusName; 
-              document.getElementById("startTime").value = startTime;
-              document.getElementById("endTime").value = endTime; 
-              document.getElementById("dateInput").value = dateInput;
-              var option = document.createElement("option"); //For dropdown list
-              option.classList.add("selectedTask");
-              option.value=followTask;
-              option.setAttribute("selected", "selected");
-              var dropdown = document.getElementById("dropdownList");
-              dropdown.appendChild(option); 
-              var ele = document.createElement("option"); //For sequence
-              ele.classList.add("seq");
-              ele.value=followSequence;
-              ele.setAttribute("selected", "selected");
-              var parent = document.getElementById("sequence");
-              parent.prepend(ele);
-              document.getElementById("hour").value = hour;
-              document.getElementById("minute").value = minute;
-              console.log(taskPlusName +", " +categoryNum+", "+startTime+", "+endTime+", "+dateInput+", "+followTask+", "+followSequence+", "+hour+", "+minute+", "+numSessions);
+              document.getElementById("taskName").value = taskName; 
+              catFunction(taskCategory);//call function for change in colour of button
+              document.getElementById("startTime").value = printvaljs(startTimeHour) + ":" + printvaljs(startTimeMin);
+              document.getElementById("endTime").value = printvaljs(endTimeHour) + ":" + printvaljs(endTimeMin);
+              document.getElementById("dateInput").value = printvaljs(taskYear) + "-" + printvaljs(taskMonth) + "-" + printvaljs(taskDate);
+              console.log(taskName);
         } 
 
     </script>

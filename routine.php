@@ -120,9 +120,10 @@
 
     <script>
         /*redirect(x) takes in the task name and outputs a pop out window with the input fields updated when the edit button is created*/
-        function redirect(x) {
-            localStorage.setItem("taskname", x);
-            var url = "../copy_add_routine_task.php";
+        function redirect(startHour, startMin) {
+            localStorage.setItem("startTimeHour", startHour);
+            localStorage.setItem("startTimeMin", startMin);
+            var url = "http://localhost/orbital_247/copy_add_routine_task.php";
             let myRef = window.open(url, 'mywin', 'left=20, top=20, width=770, height=700, toolbar=1, resizable=0');
             myRef.focus();
         }
@@ -233,7 +234,7 @@
             append.setAttribute("value", statement);
             // append.setAttribute("readonly", "readonly");
             append.addEventListener('click', function(){
-                redirect(taskName);
+                redirect(startHour, startMin);
             }); 
             // append.setAttribute("onclick", "redirect(name)"); //x is the variable that contains the taskname
             append.classList.add("task");

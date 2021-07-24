@@ -90,7 +90,7 @@
                         //$taskDate = (int) $_POST['jsDate'];
                         $taskDate = 24; //Just for testing!!
                         $type = 1; //Type for fixed tasks is always 1
-                        $userid = -1;
+                        $userid = $_SESSION['userid'];
 
 
                         $sql = "SELECT * FROM fixedtaskwindow WHERE userid = $userid AND taskYear = $taskYear AND taskMonth = $taskMonth AND taskDate = $taskDate;";

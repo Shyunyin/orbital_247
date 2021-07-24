@@ -39,7 +39,7 @@
         </div>
         <div class="main"></div>
     </div>
-    <form action="" method="POST" id="scheduleForm">
+    <!--<form action="../includes/main_schedule.inc.php" method="POST" id="scheduleForm">-->
     <script>
     //PHP to get username from mysqli and let it be a javascript variable
         <?php
@@ -182,7 +182,7 @@
         //         let itemTime = document.createElement("input");
         //         itemTime.classList.add("time"); //time with class name time
         //         itemTime.setAttribute("readonly", "readonly"); //set to readonly
-        //         itemTime.value = scheduleArr[i].getStartTime().toTwelveHourString() + " - " + scheduleArr[i].getEndTime().toTwelveHourString();
+        //         itemTime.value = scheduleArr[i].getStartTime().toString() + " - " + scheduleArr[i].getEndTime().toString();
         //         //itemTime.value = scheduleArr[i].getStartTimeHours() + ":" + scheduleArr[i].getStartTimeMins() + "-" + scheduleArr[i].getEndTimeHours() + ":" + scheduleArr[i].getEndTimeMins();
         //         itemTime.style.fontFamily = "'Signika Negative', sans-serif";
         //         itemTime.style.fontSize = "large";
@@ -231,7 +231,7 @@
                         $taskYear = date("Y");
                         $taskMonth = date("m") - 1; // For javascript, months span from 0 - 11. This is already accounted for in the main schedule page.
                         //$taskDate = (int) $_POST['jsDate'];
-                        $taskDate = date("d");; //Just for testing!!
+                        $taskDate = date("d"); //Just for testing!!
                         $type = 1; //Type for fixed tasks is always 1
                         //$userid = -1;
                         $userid = $_SESSION["userid"];
@@ -247,7 +247,7 @@
 
                         $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";
 
-                        $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2 AND taskDay = $dayNum AND taskWeek = 0;";
+                        $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2 AND taskDay = $dayNum AND week = 0;";
 
                         $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 3 AND taskDate = $taskDate;";
 
@@ -417,7 +417,7 @@
                             // } else if (((sortedArr[i].getEndTime().getHours() * 60) + sortedArr[i].getEndTime().getMins()) == ((sortedArr[i + 1].getStartTime().getHours() * 60) + sortedArr[i + 1].getStartTime().getMins())) {
 
                             }
-                        } else if (i == sortedArr.length - 1 && sortedArr[i].getEndTime() == endOfBreak) {
+                        } else if (i == sortedArr.length - 1 && sortedArr[i].getEndTime() != endOfBreak) {
                             // Just schedule the break for the last task
                             let newBreakWin = new Window("---- BREAK TIME ----", parseInt(year), parseInt(month), parseInt(date), sortedArr[i].getEndTime(), endOfBreak, -1); //TODO: Breaks can just be type -1?
 

@@ -34,7 +34,8 @@
     <div id="routine">
         <h2> List of routine tasks: </h2>
         <div id="box"></div> 
-        <div id="tasklist"></div> <!-- To be edited using function in routine.js after retrieving array, currently in routine.js --> 
+        <div id="tasklist">
+        </div> <!-- To be edited using function in routine.js after retrieving array, currently in routine.js --> 
     </div>
     <div id="instruction">
         <!--For the background box-->
@@ -44,9 +45,9 @@
         <h3>edit or delete it!</h3>
     </div>
 
-    <div id="iconActions">    
+    <!-- <div id="iconActions">    
         <h3>Actions:</h3>
-    </div>
+    </div> -->
 
     <?php 
         //extract wakeup time
@@ -117,39 +118,107 @@
     </div>    
 
     <?php
-        //get current date, month and year to retrieve tasks
-        // $today = date("Y-m-d");
-        // echo $today;
-        // $todaysDate = 
-        // $todaysMonth = 
-        // $todaysYear = 
-
-        //retrieving data
+        //retrieving data for display in routine task box
         $data = "SELECT * FROM routinetask WHERE id=$userid"; 
         $result = mysqli_query($conn,$data);
         if(!$result) {
             echo "Could not run query:" . mysqli_error($conn);
             exit();
         }
-        $row = mysqli_fetch_row($result);
-        $taskName = $row[1];
+        $dataArr = array();
+        $indentCount = 0; //this number will increase when it enters the loop to indicate that an indentation or spacing has to be made
+        while ($row = mysqli_fetch_assoc($result)) { //for every row in the list of rows, print to routine task list
+            $taskName = $row[1];
+            $taskCategory = $row[2];
+            $startHour = $row[3];
+            $startMin = $row[4];
+            $endHour = $row[5];
+            $endMin = $row[6]; 
+            $freq = $row[7];
+            $taskDay = $row[8];
+            $taskWeek = $row[9];
+            $taskDate = $row[10];
+            $dataArr[] = $row;
+            // echo 'var taskName = $taskName;';
+            // echo 'var taskCategory = $taskCategory;';
+            // echo 'var startHour = $startHour;';
+            // echo 'var startMin = $startMin;';
+            // echo 'var endHour = $endHour;'; 
+            // echo 'var endMin = $endMin;';
+            // echo 'var freq = $freq;';
+            // echo 'var taskDay = $taskDay;';
+            // echo 'var taskWeek = $taskWeek;';
+            // echo 'var taskDate = $taskDate;'; 
+            // echo 'createRoutineList($indentCount);'; //trial to call javascript through php
+            // $indentCount = $indentCount + 1; 
+        }
     ?>
+
     <script>
         /*redirect(x) takes in the task name and outputs a pop out window with the input fields updated when the edit button is created*/
         function redirect(x) {
             localStorage.setItem("taskname", x);
-            var url = "../copy_add_daily_task.php";
+            var url = "../copy_add_routine_task.php";
             let myRef = window.open(url, 'mywin', 'left=20, top=20, width=770, height=700, toolbar=1, resizable=0');
             myRef.focus();
         }
+
+        function convertjs(i) {
+            if (i > 12) {
+                return (i - 12);
+            } else {
+                return i;
+            }
+        }
+
+        //printword() to print am or pm 
+        function printwordjs(i) {
+            if (i >= 12) {
+                return "PM";
+            } else if (i == 24) { //special case of midnight
+                return "AM";
+            } else {
+                return "AM";
+            }
+        }
+        //printval() to print zero in front of single digit numbers
+        function printvaljs(i){
+                    if (i < 10) {
+                        return "0" + i;
+                    } else {
+                        return i;
+                    }
+                }
+        
+        function checkDay(i) {
+            var arr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            return arr[i];
+        }
+
         // /*createRoutinelist(): Create an option in the routine task list stick*/
-        function createRoutineList(name) { 
+        function createRoutineList(count) { 
+            //to form the statement to be printed
+            var statement;
+            if (freq == 0) {
+                statement = "Daily: " + printvaljs(convertjs(startHour)) + printwordjs(startHour) + " - " + printvaljs(convertjs(endHour)) + printwordjs(endHour) + " " +
+                taskName + " " + "(" + taskCategory + ")";
+            } else if (freq == 1) {
+                statement = "Weekly: " + checkDay(taskDay) + " " + printvaljs(convertjs(startHour)) + printwordjs(startHour) + " - " + printvaljs(convertjs(endHour)) + printwordjs(endHour) + " " +
+                taskName + " " + "(" + taskCategory + ")";
+            } else if (freq == 2) {
+                statement = "Bieekly: " + checkDay(taskDay) + " " + printvaljs(convertjs(startHour)) + printwordjs(startHour) + " - " + printvaljs(convertjs(endHour)) + printwordjs(endHour) + " " +
+                taskName + " " + "(" + taskCategory + ")";
+            } else (freq == 3) {
+                statement = "Monthly, date: " + taskDate + " " + printvaljs(convertjs(startHour)) + printwordjs(startHour) + " - " + printvaljs(convertjs(endHour)) + printwordjs(endHour) + " " +
+                taskName + " " + "(" + taskCategory + ")";
+            }
+
             let append = document.createElement("input");
             append.setAttribute("type", "button");
-            append.setAttribute("value", name);
+            append.setAttribute("value", statement);
             append.setAttribute("readonly", "readonly");
             append.addEventListener('click', function(){
-                redirect(name);
+                redirect(taskName));
             }); 
             // append.setAttribute("onclick", "redirect(name)"); //x is the variable that contains the taskname
             append.classList.add("task");
@@ -167,9 +236,8 @@
             let top = count * 30;
             let topText = top + "px";
             append.style.marginTop = topText;
-            let ele = document.getElementById("postitContent");
+            let ele = document.getElementById("tasklist");
             ele.appendChild(append);
-            count += 1; //to increase the top margin for each input
         }
     </script>
 </body>

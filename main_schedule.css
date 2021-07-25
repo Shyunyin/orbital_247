@@ -194,7 +194,7 @@
   margin-left: 80px;
 }
 
-.actions {
+#actions {
   position: absolute;
   z-index: 5;
   font-family: "Signika Negative", sans-serif;

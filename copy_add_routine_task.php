@@ -15,6 +15,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
+<!--Retrieve data of selected task-->
+<?php
+   $userid = $_SESSION['userid'];
+    if (isset($_POST['edit'])) {
+        $taskName = $_POST['taskName'];
+        $taskCategory = $_POST['taskCategory'];
+        echo "catFunction($taskCategory)"; //to run catFunction to make selected button white first
+        $startTime = $_POST['startTime'];
+        $endTime = $_POST['endTime'];
+        $freq = $_POST['freq'];
+        $taskDay = $_POST['taskDay'];
+        $taskWeek = $_POST['taskWeek'];
+        $taskDate = $_POST['taskDate']; 
+    }
+?>
+
 <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
     <!-- Parent-child relationship for inline-->
     <form action="includes/add_routine_task.inc.php" method="POST" id="bigForm">
@@ -24,7 +40,7 @@
             </li>
             <!-- INPUT for taskName-->
             <li>
-                <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value,'name')"><br>
+                <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value,'name')" value="<?php echo "$taskName";?>"><br>
             </li>
         </div>
 
@@ -89,8 +105,7 @@
             <!--Use javascript to replace??-->
             <div class="dropdown">
                 <li>
-                    <select id="weeklydropdown" name="weeklydropdown" oninput="Update(this.value,'weekly')" style="display: none;">
-                        <option value="" selected disabled hidden>Choose a day</option>
+                    <select id="weeklydropdown" name="weeklydropdown" oninput="Update(this.value,'weekly')" style="display: none;" value="<?php echo $taskDay;?>">
                         <option value="1">Monday</option>
                         <option value="2">Tuesday</option>
                         <option value="3">Wednesday</option>
@@ -101,9 +116,8 @@
                     </select>
                 </li>
                 <li>
-                    <select id="biweeklydropdown" name="biweeklydropdown" oninput="Update(this.value,'biweekly')" style="display: none;">
+                    <select id="biweeklydropdown" name="biweeklydropdown" oninput="Update(this.value,'biweekly')" style="display: none;" value="<?php echo $taskDay;?>">
                         <!--Can replace w javascript??-->
-                        <option value="" selected disabled hidden>Choose a day</option>
                         <option value="1">Monday</option>
                         <option value="2">Tuesday</option>
                         <option value="3">Wednesday</option>
@@ -113,14 +127,13 @@
                         <option value="0">Sunday</option>
                     </select>
     
-                    <select id="chooseWeeks" name="chooseWeeks" oninput="Update(this.value,'biweeklychoose')" style="display: none;">
-                        <option value="" selected disabled hidden>Current/Next</option>
+                    <select id="chooseWeeks" name="chooseWeeks" oninput="Update(this.value,'biweeklychoose')" style="display: none;" value="<?php echo $taskWeek;?>">
                         <option value="0">Current Week</option>
                         <option value="1">Next Week</option>
                     </select>
                 </li>
                 <li>
-                    <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')" style="display: none;">
+                    <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')" style="display: none;" value="<?php echo $taskDate;?>">
                     <!--<h5 id="instruction" class="instruction" style="display: none;">Please key in a number from 1-31</h5>-->
                 </li>
             </div>
@@ -131,13 +144,13 @@
             <li>
                 <div class="startTime">
                     <h3>Start time:</h3>
-                    <input type="time" id="startTime" name="startTime" oninput="Update(this.value, 'start')">
+                    <input type="time" id="startTime" name="startTime" oninput="Update(this.value, 'start')" value="<?php echo "$startTime";?>">
                 </div>
             </li>
             <li>
                 <div class="endTime">
                     <h3>End time:</h3>
-                    <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
+                    <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')" value="<?php echo "$endTime";?>">
                 </div>
             </li>
         </div>
@@ -339,38 +352,7 @@
             var taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, taskWeek, taskDate;
 
             function Retrieve_Database_Info() {
-                <?php
-                    $userid = $_SESSION['userid'];
-                    $hourPhp = $_POST['hourPhp'];
-                    $minPhp = $_POST['minPhp'];
-                    $query = "SELECT * FROM fixedtaskwindow WHERE userid=$userid AND startTimeHour=$hourPhp AND startTimeMin=$minPhp;";
-                    $result = mysqli_query($conn,$query);
-                    if(!$result) {
-                    echo "Could not run query:" . mysqli_error($conn);
-                    exit();
-                    }
-                    $row = mysqli_fetch_row($result);
-                    $taskName = $row[1];
-                    $taskCategory = $row[2];
-                    $startTimeHour = $row[3];
-                    $startTimeMin = $row[4];
-                    $endTimeHour = $row[5];
-                    $endTimeMin = $row[6];
-                    $freq = $row[7];
-                    $taskDay = $row[8];
-                    $taskWeek = $row[9];
-                    $taskDate = $row[10];
-                    echo 'taskName = $taskName;';
-                    echo 'taskCategory = $taskCategory;';
-                    echo 'startTimeHour = $startTimeHour;';
-                    echo 'startTimeMin = $startTimeMin;';
-                    echo 'endTimeHour = $endTimeHour;';
-                    echo 'endTimeMin = $endTimeMin;';       
-                    echo 'freq = $freq;';       
-                    echo 'taskDay = $taskDay;';       
-                    echo 'taskWeek = $taskWeek;';       
-                    echo 'taskDate = $taskDate;';       
-                ?>
+               
                     // console.log("Retrieve data to fill up form");
                     console.log(taskName + " is in retrieve database info!");
 

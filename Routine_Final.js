@@ -136,6 +136,34 @@ class RoutineTask {
             return RoutineTask.prototype.freq[index];
         }
     }
+
+    getTaskName() {
+        return this.taskName;
+    }
+
+    getTaskCategory() {
+        return this.taskCategory;
+    }
+
+    getStartTimeHours() {
+        return this.startTime.getHours();
+    }
+
+    getStartTimeMins() {
+        return this.startTime.getMins();
+    }
+
+    getEndTimeHours() {
+        return this.endTime.getHours();
+    }
+
+    getEndTimeMins() {
+        return this.endTime.getMins();
+    }
+
+    getFreq() {
+        return this.freq;
+    }
 }
 
 RoutineTask.prototype.freq = ['Daily', 'Weekly', 'Biweekly', 'Monthly'];
@@ -204,6 +232,10 @@ class WeeklyTask extends RoutineTask {
     constructor(taskName, taskCategory, startTime, endTime, day) {
         super(taskName, taskCategory, startTime, endTime, 1);
         this.day = day;
+    }
+
+    getDay() {
+        return this.day;
     }
 
     /**
@@ -276,6 +308,14 @@ class BiweeklyTask extends RoutineTask {
         super(taskName, taskCategory, startTime, endTime, 2);
         this.day = day;
         this.startWeek = startWeek; 
+    }
+
+    getDay() {
+        return this.day;
+    }
+
+    getWeek() {
+        return this.startWeek;
     }
 
     /**
@@ -392,6 +432,10 @@ class MonthlyTask extends RoutineTask {
     constructor(taskName, taskCategory, startTime, endTime, date) {
         super(taskName, taskCategory, startTime, endTime, 3);
         this.date = date;
+    }
+
+    getDate() {
+        return this.date;
     }
 
     /**

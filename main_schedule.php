@@ -60,28 +60,6 @@
         console.log(username);
     </script>
 
-    <script>
-        // let ele = document.getElementById("scheduleForm");
-
-        // let jsYear = document.createElement("input");
-        // jsYear.type = "hidden";
-        // jsYear.value = new Date().getFullYear();
-        // jsYear.name = "jsYear";
-        // ele.appendChild(jsYear);
-
-        // let jsMonth = document.createElement("input");
-        // jsMonth.type = "hidden";
-        // jsMonth.value = new Date().getMonth();
-        // jsMonth.name = "jsMonth";
-        // ele.appendChild(jsMonth);
-
-        // let jsDate = document.createElement("input");
-        // jsDate.type = "hidden";
-        // jsDate.value = new Date().getDate();
-        // jsDate.name = "jsDate";
-        // ele.appendChild(jsDate);
-    </script>
-
     <div class = logout>
         <?php
             if (isset($_SESSION["useruid"])) {

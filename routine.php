@@ -13,6 +13,8 @@
     <title>Routine Page</title>
     <link rel="stylesheet" href="routine.css?v=<?php echo time();?>">
     <script type = "text/javascript" type="module" src="routine.js"></script>
+    <script type = "text/javascript" type="module" src="Routine_Final.js"></script>
+    <script type = "text/javascript" type="module" src="CombinedTime_Final.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
     <!-- For the icons --> 
@@ -46,9 +48,11 @@
         <h3>edit or delete it!</h3>
     </div>
 
-    <!-- <div id="iconActions">    
+    <form action = "copy_add_routine_task.php" method="POST" id="actions">
+    <div id="iconActions">    
         <h3>Actions:</h3>
-    </div> -->
+    </div>
+    </form>
 
     <?php 
         //extract wakeup time
@@ -120,12 +124,75 @@
 
     <script>
         /*redirect(x) takes in the task name and outputs a pop out window with the input fields updated when the edit button is created*/
-        function redirect(startHour, startMin) {
-            localStorage.setItem("startTimeHour", startHour);
-            localStorage.setItem("startTimeMin", startMin);
-            var url = "http://localhost/orbital_247/copy_add_routine_task.php";
-            let myRef = window.open(url, 'mywin', 'left=20, top=20, width=770, height=700, toolbar=1, resizable=0');
-            myRef.focus();
+        function redirect(startHour, startMin, routineObject) {
+            var currentNode = document.getElementById("iconActions");
+            var newNode = document.createElement("div");
+            newNode.id = "iconActions";
+            newNode.innerHTML = 
+            '<button class="btn" onclick="clickPlay()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-play-circle fa-2x" aria-hidden="true"></i></button>' +
+            // '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
+            '<button class="btn" type="submit" name="edit" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>';
+            // '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
+            //Replacing current iconsActions node w new iconActions node
+            currentNode.replaceWith(newNode);
+            
+            var mainForm = document.getElementById("actions");
+
+            //task Name
+            var taskName = document.createElement("input");
+            taskName.type = "hidden";
+            taskName.value = routineObject.getTaskName();
+            taskName.name = "taskName";
+            mainForm.appendChild(taskName);
+
+            //taskCategory
+            var taskCategory = document.createElement("input");
+            taskCategory.type = "hidden";
+            taskCategory.value = routineObject.getTaskCategory();
+            taskCategory.name = "taskCategory";
+            mainForm.appendChild(taskCategory);
+
+            //startTime
+            var startTime = document.createElement("input");
+            startTime.type = "hidden";
+            startTime.value = printvaljs(routineObject.getStartTimeHours()) + ":" + printvaljs(routineObject.getStartTimeMins());
+            startTime.name = "startTime";
+            mainForm.appendChild(startTime);
+
+            //endTime
+            var endTime = document.createElement("input");
+            endTime.type = "hidden";
+            endTime.value = printvaljs(routineObject.getEndTimeHours()) + ":" + printvaljs(routineObject.getEndTimeMins());
+            endTime.name = "endTime";
+            mainForm.appendChild(endTime);
+
+            //frequency
+            var freq = document.createElement("input");
+            freq.type = "hidden";
+            freq.value = routineObject.getFreq();
+            freq.name = "freq";
+            mainForm.appendChild(freq);
+
+            //taskDay
+            var taskDay = document.createElement("input");
+            taskDay.type = "hidden";
+            taskDay.value = routineObject.getDay();
+            taskDay.name = "taskDay";
+            mainForm.appendChild(taskDay);
+
+            //taskWeek
+            var taskWeek = document.createElement("input");
+            taskWeek.type = "hidden";
+            taskWeek.value = routineObject.getWeek();
+            taskWeek.name = "taskWeek";
+            mainForm.appendChild(taskWeek);
+
+            //taskDate 
+            var taskDate  = document.createElement("input");
+            taskDate .type = "hidden";
+            taskDate .value = routineObject.getDate();
+            taskDate .name = "taskDate ";
+            mainForm.appendChild(taskDate);
         }
 
         function convertjs(i) {
@@ -160,13 +227,70 @@
             return arr[i];
         }
 
+        function checkCat(i) {
+            var arr = ['Work', 'Exercise', 'Miscellaneous', 'Meal Times'];
+            return arr[i];
+        }
         var taskName, taskCategory, startHour, startMin, endHour, endMin, freq, taskDay, taskWeek, taskDate, indentCount;
 
+        function createRoutineList(printArr) { 
+            console.log("I come to createRoutineList function");
+
+            var count = 0; //for spaces between tasks
+            //to form the statement to be printed
+
+            for (let i = 0; i < printArr.length; i++) {
+                var statement;
+                if (printArr[i].getFreq() == 0) {
+                    statement = "Daily: " + printvaljs(convertjs(printArr[i].getStartTimeHours())) + ":" + printvaljs(printArr[i].getStartTimeMins()) + printwordjs(printArr[i].getStartTimeHours()) + " - " + 
+                    printvaljs(convertjs(printArr[i].getEndTimeHours())) + ":" + printvaljs(printArr[i].getEndTimeMins()) + printwordjs(printArr[i].getEndTimeHours()) + " " + printArr[i].getTaskName() + " " + "(" + checkCat(printArr[i].getTaskCategory()) + ")";
+                } else if (printArr[i].getFreq() == 1) {
+                    statement = "Weekly: " + checkDay(printArr[i].getDay()) + " " + printvaljs(convertjs(printArr[i].getStartTimeHours())) + ":" + printvaljs(printArr[i].getStartTimeMins()) + printwordjs(printArr[i].getStartTimeHours()) + " - " + 
+                    printvaljs(convertjs(printArr[i].getEndTimeHours())) + ":" + printvaljs(printArr[i].getEndTimeMins()) + printwordjs(printArr[i].getEndTimeHours()) + " " + printArr[i].getTaskName() + " " + "(" + checkCat(printArr[i].getTaskCategory()) + ")";
+                } else if (printArr[i].getFreq() == 2) {
+                    statement = "Bieekly: " + checkDay(printArr[i].getDay()) + " " + printvaljs(convertjs(printArr[i].getStartTimeHours())) + ":" + printvaljs(printArr[i].getStartTimeMins()) + printwordjs(printArr[i].getStartTimeHours()) + " - " + 
+                    printvaljs(convertjs(printArr[i].getEndTimeHours())) + ":" + printvaljs(printArr[i].getEndTimeMins()) + printwordjs(printArr[i].getEndTimeHours()) + " " + printArr[i].getTaskName() + " " + "(" + checkCat(printArr[i].getTaskCategory()) + ")";
+                } else if (printArr[i].getFreq() == 3) {
+                    statement = "Monthly, date: " + printArr[i].getDate() + " " + printvaljs(convertjs(printArr[i].getStartTimeHours())) + ":" + printvaljs(printArr[i].getStartTimeMins()) + printwordjs(printArr[i].getStartTimeHours()) + " - " + 
+                    printvaljs(convertjs(printArr[i].getEndTimeHours())) + ":" + printvaljs(printArr[i].getEndTimeMins()) + printwordjs(printArr[i].getEndTimeHours()) + " " + printArr[i].getTaskName() + " " + "(" + checkCat(printArr[i].getTaskCategory()) + ")";
+                }
+                    console.log(statement); //debugging
+
+                    let append = document.createElement("input");
+                    append.setAttribute("type", "button");
+                    append.setAttribute("value", statement);
+                    // append.setAttribute("readonly", "readonly");
+                    append.addEventListener('click', function() {
+                        redirect(startHour, startMin, printArr[i]);
+                    }); 
+
+                    // append.setAttribute("onclick", "redirect(name)"); //x is the variable that contains the taskname
+                    append.classList.add("task");
+                    append.style.fontFamily = "'Signika Negative', sans-serif";
+                    append.style.fontSize = "large";
+                    append.style.position = "absolute";
+                    append.style.zIndex = "2";
+                    append.style.color = "blac";
+                    append.style.backgroundColor = "#96d6ed";
+                    append.style.border = "none";
+                    append.style.marginLeft = "15px";
+                    append.style.height = "25px";
+                    append.style.cursor="pointer";
+                    //calculation to ensure that tasks printed on top of each other
+                    let top = count * 30;
+                    let topText = top + "px";
+                    append.style.marginTop = topText;
+                    let ele = document.getElementById("tasklist");
+                    ele.appendChild(append);
+            }
+        }
+        
         window.onload = function() {
+            var printArr[]; //array to store 
             <?php
                 //retrieving data for display in routine task box
                 $data = "SELECT * FROM routinetask WHERE id=$userid"; 
-                $result = mysqli_query($conn,$data);
+                $result = mysqli_query($conn, $data);
                 if(!$result) {
                     echo "Could not run query:" . mysqli_error($conn);
                     exit();
@@ -177,85 +301,51 @@
                         //echo "console.log("I have at least 1 result")"
                         while ($row = mysqli_fetch_assoc($result)) { //for every row in the list of rows, print to routine task list
                             $dataArr[] = $row;
-                        } 
+                        }
                     }
-                    $indentCount = 0; //this number will increase when it enters the loop to indicate that an indentation or spacing has to be made
-                    foreach ($dataArr as $row) {
-                        $taskName = $row['taskName'];
-                        $taskCategory = $row['taskCategory'];
-                        $startHour = $row['startTimeHour'];
-                        $startMin = $row['startTimeMin'];
-                        $endHour = $row['endTimeHour'];
-                        $endMin = $row['endTimeMin']; 
-                        $freq = $row['freq'];
-                        $taskDay = $row['taskDay'];
-                        $taskWeek = $row['week'];
-                        $taskDate = $row['taskDate'];
-                        $dataArr[] = $row;
-                        echo "taskName = $taskName;";
-                        echo "taskCategory = $taskCategory;";
-                        echo "startHour = $startHour;";
-                        echo "startMin = $startMin;";
-                        echo "endHour = $endHour;"; 
-                        echo "endMin = $endMin;";
-                        echo "freq = $freq;";
-                        echo "taskDay = $taskDay;";
-                        echo "taskWeek = $taskWeek;";
-                        echo "taskDate = $taskDate;"; 
-                        echo "indentCount = $indentCount;";
-                        echo "createRoutineList(indentCount);"; //trial to call javascript through php
-                        $indentCount = $indentCount + 1;
-                    }  
-                }
+                        $arrLength = count($dataArr);
+                        $indentCount = 0; //this number will increase when it enters the loop to indicate that an indentation or spacing has to be made
+
+                        foreach ($dataArr as $row) {
+                            $taskName = $row['taskName'];
+                            echo "taskName = '$taskName';";
+                            $taskCategory = $row['taskCategory'];
+                            echo "taskCategory = parseInt($taskCategory);";
+                            $startHour = $row['startTimeHour'];
+                            echo "startHour = parseInt($startHour);";
+                            $startMin = $row['startTimeMin'];
+                            echo "startMin = parseInt($startMin);";
+                            $endHour = $row['endTimeHour'];
+                            echo "endHour = parseInt($endHour);"; 
+                            $endMin = $row['endTimeMin']; 
+                            echo "endMin = parseInt($endMin);";
+                            $freq = $row['freq'];
+                            echo "freq = parseInt($freq);";
+                            $taskDay = $row['taskDay'];
+                            echo "taskDay = parseInt($taskDay);";
+                            $taskWeek = $row['week'];
+                            echo "taskWeek = parseInt($taskWeek);";
+                            $taskDate = $row['taskDate'];
+                            echo "taskDate = parseInt($taskDate);";
+
+                            if ($freq == 0) {
+                                echo "new routine = DailyTask(taskName, taskCategory, new Time(startHour, startMin), new Time(endHour, endMin));";
+                            } else if ($freq == 1) {
+                                echo "new routine = WeeklyTask(taskName, taskCategory, new Time(startHour, startMin), new Time(endHour, endMin), taskDay);";
+                            } else if ($freq == 2) {
+                                echo "new routine = BiweeklyTask(taskName, taskCategory, new Time(startHour, startMin), new Time(endHour, endMin), taskDay, taskWeek);";
+                            } else if ($freq == 3) {
+                                echo "new routine = MonthlyTask(taskName, taskCategory, new Time(startHour, startMin), new Time(endHour, endMin), taskDate);";
+                            }
+
+                            echo "printArr.push(routine)";
+                        }                             
+
+                        echo "createRoutineList(printArr);"; //to send array as parameter to createRoutineList to print
+                    }
             ?>
-        function createRoutineList(count) { 
-            console.log("I come to createRoutineList function");
-            //to form the statement to be printed
-            var statement;
-            if (freq == 0) {
-                statement = "Daily: " + printvaljs(convertjs(startHour)) + printwordjs(startHour) + " - " + printvaljs(convertjs(endHour)) + printwordjs(endHour) + " " +
-                taskName + " " + "(" + taskCategory + ")";
-            } else if (freq == 1) {
-                statement = "Weekly: " + checkDay(taskDay) + " " + printvaljs(convertjs(startHour)) + printwordjs(startHour) + " - " + printvaljs(convertjs(endHour)) + printwordjs(endHour) + " " +
-                taskName + " " + "(" + taskCategory + ")";
-            } else if (freq == 2) {
-                statement = "Bieekly: " + checkDay(taskDay) + " " + printvaljs(convertjs(startHour)) + printwordjs(startHour) + " - " + printvaljs(convertjs(endHour)) + printwordjs(endHour) + " " +
-                taskName + " " + "(" + taskCategory + ")";
-            } else if (freq == 3) {
-                statement = "Monthly, date: " + taskDate + " " + printvaljs(convertjs(startHour)) + printwordjs(startHour) + " - " + printvaljs(convertjs(endHour)) + printwordjs(endHour) + " " +
-                taskName + " " + "(" + taskCategory + ")";
-            }
-
-            console.log(statement); //debugging
-
-            let append = document.createElement("input");
-            append.setAttribute("type", "button");
-            append.setAttribute("value", statement);
-            // append.setAttribute("readonly", "readonly");
-            append.addEventListener('click', function() {
-                redirect(startHour, startMin);
-            }); 
-
-            // append.setAttribute("onclick", "redirect(name)"); //x is the variable that contains the taskname
-            append.classList.add("task");
-            append.style.fontFamily = "'Signika Negative', sans-serif";
-            append.style.fontSize = "large";
-            append.style.position = "absolute";
-            append.style.zIndex = "2";
-            append.style.color = "white";
-            append.style.backgroundColor = "#1e5353";
-            append.style.border = "none";
-            append.style.marginLeft = "15px";
-            append.style.height = "25px";
-            append.style.cursor="pointer";
-            //calculation to ensure that tasks printed on top of each other
-            let top = count * 30;
-            let topText = top + "px";
-            append.style.marginTop = topText;
-            let ele = document.getElementById("tasklist");
-            ele.appendChild(append);
         }
-        }
+        
         // /*createRoutinelist(): Create an option in the routine task list stick*/
         
     

@@ -15,7 +15,7 @@
     $endMin = (int) $_POST['currEndMin']; 
     //$type = (int) $_POST['currCat']; //Type for fixed tasks is always 1
     //$userid = $_SESSION['userid'];
-    $type = 1;
+    $type = $taskCat;
     //$userid = -1;
     $userid = $_SESSION["userid"];
 

@@ -505,6 +505,7 @@
                 //     mysqli_query($conn, $insertSql);
                 // }
 
+                
                 // STEP 1: Retrieving all the relvant info for fixed tasks (and non-fixed tasks)
                 $taskName = $_POST['taskName'];
                 $taskCat = (int) $_POST['jsCat'];
@@ -518,7 +519,7 @@
                 $type = 1; //Type for fixed tasks is always 1
                 $userid = $_SESSION["userid"];
 
-                $remainingDuration = (int) $_POST['finalRemainingMins']; 
+                $remainingDuration = (int) $_POST['finalRemainingMins'];  
 
                 $selectSql = "SELECT * FROM remainingtime WHERE  userid = $userid AND currYear = $currYear AND currMonth = $currMonth AND currDate = $currDate;";
 

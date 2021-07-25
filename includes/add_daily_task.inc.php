@@ -7,9 +7,7 @@
     <!--<div type="hidden" id="big" name="big"></div>-->
     <form action = "../includes/add_to_DB.inc.php" id="big" name="big" method="POST"></form>
     <body>
-        <!-- <script type = "text/javascript" type="module" src="../CombinedTime_Final.js"></script> -->
-    <script type = "text/javascript" type="module" src="../Time.js"></script>
-
+        <script type = "text/javascript" type="module" src="../CombinedTime_Final.js"></script>
         <script>
             var big = document.getElementById("big");
             console.log("I come here too");
@@ -499,6 +497,14 @@
                 $db='orbital247';
                 $conn = mysqli_connect('localhost', $user, $pass, $db);
 
+                // $remainingTime = $_POST['jsRemainingTime'];
+
+                // if ($remainingTime== null) {
+                //     $insertSql = "INSERT INTO remainingtime(currYear, currMonth, currDate, remainder, userid) VALUES ($currYear, $currMonth, $currDate, $remainder, $userid);"; 
+
+                //     mysqli_query($conn, $insertSql);
+                // }
+
                 // STEP 1: Retrieving all the relvant info for fixed tasks (and non-fixed tasks)
                 $taskName = $_POST['taskName'];
                 $taskCat = (int) $_POST['jsCat'];
@@ -510,7 +516,26 @@
                 $endHour = (int) $_POST['jsEndHour'];
                 $endMin = (int) $_POST['jsEndMin']; 
                 $type = 1; //Type for fixed tasks is always 1
-                $userid = -1;
+                $userid = $_SESSION["userid"];
+
+                $remainingDuration = (int) $_POST['finalRemainingMins']; 
+
+                $selectSql = "SELECT * FROM remainingtime WHERE  userid = $userid AND currYear = $currYear AND currMonth = $currMonth AND currDate = $currDate;";
+
+                $results = mysqli_query($conn, $sql);
+                $resultsCheck = mysqli_num_rows($results);
+
+                // If the remaining time exists
+                if ($resultsCheck > 0) {
+                    echo 'console.log("I try to update");';
+                    $updateSql = "UPDATE remainingtime SET currYear=$taskYear, currMonth=$taskMonth, currDate=$taskDate, remainder=$remainingDuration, userid=$userid WHERE userid=$userid"; 
+
+                    mysqli_query($conn, $updateSql);
+                } else {
+                    $insertSql = "INSERT INTO remainingtime(currYear, currMonth, currDate, remainder, userid) VALUES ($taskYear, $taskMonth, $taskDate, $remainingDuration, $userid);"; 
+
+                    mysqli_query($conn, $insertSql);
+                }
                 //$userid = (int) $_SESSION["userid"];
                 // $taskHour = (int) $_POST['jsHour'];
                 // $taskMin = (int) $_POST['jsMin'];
@@ -525,6 +550,7 @@
                 echo "let startMin = $startMin;";
                 echo "let endHour = $endHour;";
                 echo "let endMin = $endMin;";
+                
                 // if ($numOfSessions == 0) { //Fixed task
                     echo 'let newWin = new Window(name, year, month, date, new Time(startHour, startMin), new Time(endHour, endMin), 1);';
 

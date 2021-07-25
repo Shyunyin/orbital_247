@@ -28,6 +28,6 @@
 
     mysqli_query($conn, $sql);
 
-    echo ("Task $taskName has been added! Press x to close this pop up:)");
-    //header("location: ../main_schedule.php");
+    //echo ("Task $taskName has been added! Press x to close this pop up:)");
+    header("location: ../main_schedule.php");
 ?>

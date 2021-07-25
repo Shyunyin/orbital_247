@@ -12,12 +12,12 @@
     <!--<script type = "text/javascript" type="module" src="main_schedule.js"></script>-->
     <script type = "text/javascript" type="module" src="add_daily_task.js"></script>
     <!--<script type = "text/javascript" type="module" src="combine_add_daily_main.js"></script>-->
-    <script type = "text/javascript" type="module" src="Time.js"></script>
+    <!--<script type = "text/javascript" type="module" src="Time.js"></script>-->
     <script type = "text/javascript" type="module" src="OneTimeTasks_Final.js"></script>
     <script type = "text/javascript" type="module" src="Window.js"></script>
     <!--<script type = "text/javascript" type="module" src="main_schedule.js"></script>-->
     <!--<script type = "text/javascript" type="module" src="initialise.js"></script>-->
-    <!--<script type = "text/javascript" type="module" src="CombinedTime_Final.js"></script>-->
+    <script type = "text/javascript" type="module" src="CombinedTime_Final.js"></script>
     <link rel="stylesheet" href="add_daily_task.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   
-  <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
+  <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;" onload="remainingTime();">
   <form action="includes/add_daily_task.inc.php" method="POST" id="bigForm">
   <!--<form onsubmit="return addTask();" action="add_daily_task.php" id="bigForm">-->
     <!-- Parent-child relationship for inline-->
@@ -82,7 +82,7 @@
         <h3>End time:</h3>
           <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
         </div>
-        <input type="button" id="doneTimeBtn" value="Done!" onclick="remainingTime()">
+        <input type="button" id="doneTimeBtn" value="Done!" onclick="updateRemainingTime()">
         <!--<input type="button" id="doneTimeBtn" value="Done!" onclick="calculationTime()">-->
       </div>
   
@@ -190,6 +190,7 @@
         let numSessions = numOfSessions; //variable from other file
         // let nameOfTask, categoryNum, start, startArr, end, endArr, dateInput, followUpTask, sequence, hour, minute;
         var dateNumber = 0;
+        var jsRemainingDuration = 0;
  
         function Update(val, type) {
           //var ele = document.getElementById("bigForm");
@@ -225,6 +226,7 @@
             jsStartHour.value = startArr[0];
             jsStartHour.name = "jsStartHour";
             ele.appendChild(jsStartHour);
+            //document.appendChild(jsStartHour);
 
             var jsStartMin = document.createElement("input");
             jsStartMin.type = "hidden";
@@ -500,48 +502,180 @@ function calculationTime() {
 }
 
 function remainingTime() {
-  let text;
-  
-  <?php
-  //Writing out remaining time program
-  $userid = $_SESSION["userid"];
-  date_default_timezone_set('Singapore');
-  $currYear = date("Y");
-  $currMonth = date("m") - 1;
-  $currDate = date("d");
+    let text;
+    let currArr = [];
+    let name, year, month, date, startTimeHour, startTimeMin, endTimeHour, endTimeMin, type, newWin;
+    let totalDuration;
 
-  $sql = "SELECT * FROM remainingtime WHERE userid = -2 AND currYear = $currYear AND currMonth = $currMonth AND currDate = $currDate;";
+    <?php
+    //Writing out remaining time program
+    $userid = $_SESSION["userid"];
+    date_default_timezone_set('Singapore');
+    $currYear = date("Y");
+    $currMonth = date("m") - 1;
+    $currDate = date("d");
 
-  $user = 'root'; 
-  $pass = '';
-  $db='orbital247';
-  $conn = mysqli_connect('localhost', $user, $pass, $db);
+    $sql = "SELECT * FROM remainingtime WHERE  userid = $userid AND currYear = $currYear AND currMonth = $currMonth AND currDate = $currDate;";
 
-  $results = mysqli_query($conn, $sql);
-  $resultCheck = mysqli_num_rows($results);
+    $user = 'root'; 
+    $pass = '';
+    $db='orbital247';
+    $conn = mysqli_connect('localhost', $user, $pass, $db);
 
-  //   // currently the remaining time is not stored
-    if ($resultCheck == 0) {
-        echo 'console.log("I come to if block");';
-        $insertSql = "INSERT INTO remainingtime(currYear, currMonth, currDate, remainder, userid) VALUES ($currYear, $currMonth, $currDate, 960, -3);"; 
+    $results = mysqli_query($conn, $sql);
+    $resultCheck = mysqli_num_rows($results);
 
-        mysqli_query($conn, $insertSql);
-        echo "text = 'Hour: 16' + '   ' + ' Minute: 0';";
-        echo 'displayDuration(text);';
-        //return [16, 0];
-        //TODO: Display 16 hours and 0 mins
-    } else {
+    // If the remaining time exists
+    if ($resultCheck > 0) {
       echo 'console.log("I come to else block");';
       foreach($results as $result) {
         $totalMin = $result["remainder"];
+        //echo "totalDuration = '$totalMin';";
       }
+      echo "jsRemainingDuration = '$totalMin';";
+      // echo 'let jsRemainingDuration = document.createElement("input");';
+      // echo 'jsRemainingDuration.type = "hidden";';
+      // echo "jsRemainingDuration.value = '$totalMin';";
+      // echo 'jsRemainingDuration.name = "jsRemainingDuration";';
+      // echo 'ele.appendChild(jsRemainingDuration);';
+
       $hours = ($totalMin - ($totalMin % 60)) / 60;
       $mins = $totalMin - ($hours * 60);
-      echo "text = 'Hour: ' + '$hours' + '   ' + ' Minute: ' + '$mins';";
+      echo "text = 'Hour: ' + '$hours' + '   ' + '         Minute: ' + '$mins';";
       echo 'displayDuration(text);';
-  //       //TODO: Display this hours and mins
     }
-  ?>
+
+    // If the remaining time does not exist
+    if ($resultCheck == 0) {
+        echo 'console.log("I come to if block");';
+        echo 'totalDuration = 0;';
+    // STEP 1: Obtain all the fixed tasks for the day
+        $type = 1; //Type for fixed tasks is always 1
+        $fullDate = $currYear."-".($currMonth + 1)."-".$currDate;
+        $timestamp = strtotime($fullDate);
+        $dayNum = date('w', $timestamp);
+
+        echo "console.log('DayNum is ' + '$dayNum');";
+        $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 0;";
+
+        $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";
+
+        $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2 AND taskDay = $dayNum AND week = 0;";
+
+        $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 3 AND taskDate = $taskDate;";
+
+        $routineChecks = [$dailySql, $weeklySql, $biweeklySql, $monthlySql];
+
+        $user = 'root'; 
+        $pass = '';
+        $db='orbital247';
+        $conn = mysqli_connect('localhost', $user, $pass, $db);
+
+        foreach($routineChecks as $check) {
+          $result = mysqli_query($conn, $check);
+      
+          if ($result) {
+              //echo 'console.log("this is correct");';
+              $resultCheck = mysqli_num_rows($result);
+              $data = array();
+              if ($resultCheck > 0) {
+                  //echo 'console.log("I have at least 1 result");';
+                  while ($row = mysqli_fetch_assoc($result)) {
+                      $data[] = $row;   
+                  }   
+              }
+              foreach($data as $single) {
+                  $name = $single['taskName'];
+                  echo "name = '$name';";
+                  echo "year = $currYear;";
+                  echo "month = $currMonth;";
+                  echo "date = $currDate;";
+                  $startTimeHour = $single['startTimeHour'];
+                  echo "startTimeHour = parseInt($startTimeHour);";
+                  $startTimeMin = $single['startTimeMin'];
+                  echo "startTimeMin = parseInt($startTimeMin);";
+                  $endTimeHour = $single['endTimeHour'];
+                  echo "endTimeHour = parseInt($endTimeHour);";
+                  $endTimeMin = $single['endTimeMin'];
+                  echo "endTimeMin = parseInt($endTimeMin);";
+                  $type = $single['taskCategory'];
+                  echo "type = parseInt($type);";
+                  
+                  echo 'newWin = new Window(name, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);';
+
+                  echo 'currArr.push(newWin);';
+              }
+
+          }
+      }
+    }
+    ?>
+    
+    // If a record of the remaining time alr exists, we won't enter this block
+    if (totalDuration == 0) {
+      for (let i = 0; i < currArr.length; i++) {
+        let duration = Time.duration(currArr[i].getStartTime(), currArr[i].getEndTime());
+        let breakDuration = Break.calculateBreak(currArr[i].getStartTime(), currArr[i].getEndTime());
+        totalDuration += (duration[0] * 60) + duration[1];
+        totalDuration += breakDuration;
+      }
+
+      let remainingDuration = Math.max(0, (960 - totalDuration));
+
+      let remainingHours = (remainingDuration - (remainingDuration % 60)) / 60;
+
+      let remainingMins = remainingDuration % 60;
+
+      jsRemainingDuration = remainingDuration;
+      // let jsRemainingDuration = document.createElement("input");
+      // jsRemainingDuration.type = "hidden";
+      // jsRemainingDuration.value = remainingDuration;
+      // jsRemainingDuration.name = "jsRemainingDuration";
+      // ele.appendChild(jsRemainingDuration);
+      //document.appendChild(jsRemainingDuration);
+
+      text = "Hour: " + remainingHours + "         Minute: " + remainingMins;
+
+      displayDuration(text);
+    }
+}
+
+function updateRemainingTime() {
+  // let startHour = ele.getElementsByName("jsStartHour").value;
+  // let startMin = ele.getElementsBysName("jsStartMin").value;
+  // let endHour = ele.getElementsBysName("jsEndHour").value;
+  // let endMin = ele.getElementsBysName("jsEndMin").value;
+
+  let startHour = startArr[0];
+  let startMin = startArr[1];
+  let endHour = endArr[0];
+  let endMin = endArr[1];
+
+  let durOfTask = Time.duration(new Time(startHour, startMin), new Time(endHour, endMin));
+  let breakDuration = Break.calculateBreak(new Time(startHour, startMin), new Time(endHour, endMin));
+
+  console.log("i come to updateRemainingTime");
+
+  let currRemainingTime = jsRemainingDuration;
+
+  currRemainingTime -= ((durOfTask[0] * 60) + durOfTask[1]);
+  currRemainingTime -= breakDuration;
+
+  currRemainingTime = Math.max(0, currRemainingTime);
+
+  let currRemainingHours = (currRemainingTime - (currRemainingTime % 60)) / 60;
+  let currRemainingMins = (currRemainingTime % 60);
+
+  let text = "Hour: " + currRemainingHours + "         Minute: " + currRemainingMins;
+  displayDuration(text);
+
+  let finalRemainingMins = document.createElement("input");
+  finalRemainingMins.type = "hidden";
+  finalRemainingMins.value = currRemainingTime;
+  finalRemainingMins.name = "finalRemainingMins";
+  ele.appendChild(finalRemainingMins);
+
+  //ele.getByElementName("jsRemainingDuration").value = currRemainingTime;
 }
 // function scheduleTask() {
 //     console.log("I come to addTask() function");

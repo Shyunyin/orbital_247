@@ -290,7 +290,7 @@
                 miscele.style.marginLeft= "370px";
                 miscmain.appendChild(miscele);
 
-                let prodPeriod = new Window("productive", Date.now().getFullYear(), Date.now().getMonth(), Date.now().getDate(), prodStart, prodEnd, -1);
+                prodPeriod = new Window("productive", Date.now().getFullYear(), Date.now().getMonth(), Date.now().getDate(), prodStart, prodEnd, -1);
 
                 //To be added in the for loop for the workduration, exercise duration and misc duration thing
                 if (currArr[i].isCompletelyDuring(prodPeriod) || currArr[i].partiallyOverlaps(prodPeriod) || prodPeriod.partiallyOverlaps(prodPeriod)) {

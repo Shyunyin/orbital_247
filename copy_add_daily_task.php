@@ -158,27 +158,30 @@
             $result = mysqli_query($conn,$query);
             if(!$result) {
               echo "Could not run query:" . mysqli_error($conn);
-            exit();
+              exit();
+            } else {
+              foreach($result as $row) {
+                $taskName = $row["taskName"];
+                $taskCategory = $row["taskCategory"];
+                $taskYear = $row["taskYear"];
+                $taskMonth = $row["taskMonth"];
+                $taskDate = $row["taskDate"];
+                $startTimeHour = $row["StartTimeHour"];
+                $startTimeMin = $row["StartTimeMin"];
+                $endTimeHour = $row["endTimeHour"];
+                $endTimeMin = $row["endTimeMin"];
+                echo "taskName = '$taskName';";
+                echo "taskCategory = $taskCategory;";
+                echo "taskYear = $taskYear;";
+                echo "taskMonth = $taskMonth;";
+                echo "taskDate = $taskDate;";
+                echo "startTimeHour = $startTimeHour;";
+                echo "startTimeMin = $startTimeMin;";
+                echo "endTimeHour = $endTimeHour;";
+                echo "endTimeMin = $endTimeMin;";
+              }
             }
-            $row = mysqli_fetch_row($result);
-            $taskName = $row[1];
-            $taskCategory = $row[2];
-            $taskYear = $row[3];
-            $taskMonth = $row[4];
-            $taskDate = $row[5];
-            $startTimeHour = $row[6];
-            $startTimeMin = $row[7];
-            $endTimeHour = $row[8];
-            $endTimeMin = $row[9];
-            echo 'taskName = $taskName;';
-            echo 'taskCategory = $taskCategory;';
-            echo 'taskYear = $taskYear;';
-            echo 'taskMonth = $taskMonth;';
-            echo 'taskDate = $taskDate;';
-            echo 'startTimeHour = $startTimeHour;';
-            echo 'startTimeMin = $startTimeMin;';
-            echo 'endTimeHour = $endTimeHour;';
-            echo 'endTimeMin = $endTimeMin;';          
+            //$row = mysqli_fetch_row($result);          
           ?>
             // console.log("Retrieve data to fill up form");
             console.log(nameoftask + " is in retrieve database info!");

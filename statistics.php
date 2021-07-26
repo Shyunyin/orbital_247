@@ -32,15 +32,23 @@
     
 
         <div id="work"> 
-            <h2>Total time spent on Work:</h2>
+            <h2>Total time spent on Work today:</h2>
         </div>
 
         <div id="exercise">
-            <h2>Total time spent on Exercising:</h2>
+            <h2>Total time spent on Exercising today:</h2>
         </div>
 
         <div id="misc">
-            <h2>Total time spent on Miscellaneous:</h2>
+            <h2>Total time spent on Miscellaneous today:</h2>
+        </div>
+
+        <div id="prodpercent">
+            <h2>Percentage of work tasks done during your selected productivity period today:</h2>
+        </div>
+
+        <div id="sleepDuration">
+            <h2>Your estimated sleep duration for today: </h2>
         </div>
 
     <script>
@@ -55,7 +63,7 @@
         let totalWork = 0;
         let totalTime = 0;
         let percentage = 0;
-        let totalSleep = 540;
+        let totalSleep = 480;
     // STEP 1: Obtain all the fixed tasks for the day
         <?php
             //TODO: We need to obtain the year, month and date from the html page that directs us here. So update these variables here accordingly later.
@@ -268,7 +276,7 @@
             workele.style.color = "#1e5353";
             workele.style.border = "black";
             workele.style.borderRadius = "5px";
-            workele.style.marginLeft= "370px";
+            workele.style.marginLeft= "400px";
             workele.style.marginTop= "-45px";
             workmain.appendChild(workele);
 
@@ -289,7 +297,7 @@
             exerciseele.style.color = "#1e5353";
             exerciseele.style.border = "black";
             exerciseele.style.borderRadius = "5px";
-            exerciseele.style.marginLeft= "370px";
+            exerciseele.style.marginLeft= "400px";
             exerciseele.style.marginTop= "-45px";
             exercisemain.appendChild(exerciseele);
 
@@ -311,7 +319,7 @@
             miscele.style.borderRadius = "5px";
             miscele.style.border = "black";
             miscele.style.marginTop= "-45px";
-            miscele.style.marginLeft= "370px";
+            miscele.style.marginLeft= "450px";
             miscmain.appendChild(miscele);
 
             if (totalTime != 0) {
@@ -319,8 +327,49 @@
             }   
             console.log("percentage " + percentage);
 
-        //To be added in the for loop for the workduration, exercise duration and misc duration thing
-        console.log("totalSleep " + totalSleep);
+            let percentmain = document.getElementById("prodpercent");
+            let prodPercent = document.createElement("input");
+            prodPercent.type = "text";
+            prodPercent.setAttribute("readonly", "readonly");
+            var line = percentage + "%";
+            prodPercent.value = line;
+            prodPercent.classList.add("prodpercent");
+            prodPercent.style.position="absolute";
+            prodPercent.style.zIndex="20";
+            prodPercent.style.fontFamily = "Signika Negative";
+            prodPercent.style.fontSize = "18px";
+            prodPercent.style.textAlign = "center";
+            prodPercent.style.backgroundColor = "#FDFD96";
+            prodPercent.style.color = "#1e5353";
+            prodPercent.style.borderRadius = "5px";
+            prodPercent.style.border = "black";
+            prodPercent.style.marginTop= "-45px";
+            prodPercent.style.marginLeft= "100px";
+            percentmain.appendChild(prodPercent);
+
+            //To be added in the for loop for the workduration, exercise duration and misc duration thing
+            console.log("totalSleep " + totalSleep);
+
+            totalSleep = [((totalSleep - (totalSleep % 60)) / 60), (totalSleep % 60)]; 
+            let sleepmain = document.getElementById("sleepDuration");
+            let sleep = document.createElement("input");
+            sleep.type = "text";
+            sleep.setAttribute("readonly", "readonly");
+            var line = "Hour: " + totalSleep [0] + " " + "Minute: " + totalSleep[1];
+            sleep.value = line;
+            sleep.classList.add("sleepDuration");
+            sleep.style.position="absolute";
+            sleep.style.zIndex="20";
+            sleep.style.fontFamily = "Signika Negative";
+            sleep.style.fontSize = "18px";
+            sleep.style.textAlign = "center";
+            sleep.style.backgroundColor = "#FDFD96";
+            sleep.style.color = "#1e5353";
+            sleep.style.borderRadius = "5px";
+            sleep.style.border = "black";
+            sleep.style.marginTop= "-45px";
+            sleep.style.marginLeft= "450px";
+            sleepmain.appendChild(sleep);
     }  
     </script>
 </body>

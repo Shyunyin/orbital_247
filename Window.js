@@ -154,6 +154,10 @@ class Window {
         return this.endTime.getMins();
     }
 
+    getType() {
+        return this.type;
+    }
+
     /**
      * To update the start time of an existing window to a new time
      * @param {Time} newStartTime The new time to which the start time of the existing window is to be changed to

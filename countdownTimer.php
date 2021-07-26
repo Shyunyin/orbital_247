@@ -3,6 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" type="module" src="countdownTimer.js"></script>
+<script type="text/javascript" type="module" src="CombinedTime_Final.js"></script>
 <!--Importing Firebase and Cloud Firestore libraries-->
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
@@ -49,7 +50,7 @@ body {
     <!--Temporary to be replaced by javascript, just put in place for milestone submission-->
     <div class="taskName">
       <h3>Task in progress:</h3>
-      <h3 id="taskName">Test1</h3>
+      <h3 id="taskName"></h3>
     </div>
 
     <p id="days"></p>
@@ -59,8 +60,49 @@ body {
     <h2 id="end"></h2>
     <button type="button" id="stop" onclick="endMe()">Stop</button>
     <script>
+       /*Setting up start and end time*/
+      var startTime = localStorage.getItem("startTime");
+      var endTime = localStorage.getItem("endTime");
+      var taskName = localStorage.getItem("name");
+      console.log("Taskname:" + taskName);
+
+      var ele = document.createElement("input");
+      ele.type = "text";    
+      ele.value = taskName;
+      ele.style.border = "none";
+      ele.style.backgroundColor = "#96d6ed";
+      ele.style.color = "black";
+      ele.style.position = "relative";
+      ele.style.zIndex = "10";
+      ele.style.fontFamily = "Signika Negative";
+      ele.style.fontSize = "25px";
+      ele.style.textAlign = "center";
+      ele.id = "name";
+      var main = document.getElementById("taskName");
+      main.appendChild(ele);
+
+      var startTimeHour = parseInt(startTime.substr(0,2));
+      console.log("Start time Hour: " + startTimeHour);
+      var startTimeMin = parseInt(startTime.substr(3,5));
+      console.log("Start time Min: " + startTimeMin);
+      var endTimeHour = parseInt(endTime.substr(0,2));
+      console.log("End time Hour: " + endTimeHour);
+
+      var endTimeMin = parseInt(endTime.substr(3,5));
+      console.log("End time Min: " + endTimeMin);
+
+    
+      var startTiming = new Time(startTimeHour, startTimeMin);
+      var endTiming = new Time(endTimeHour, endTimeMin);  
+
+      var duration = Time.duration(startTiming, endTiming);
+      console.log(duration);
+      console.log("Start time: " + startTime);
+      console.log("End time: " + endTime);
+
     // The data/time we want to countdown to
-    var countDownDate = new Date("Jul 28, 2021 13:04:00").getTime();
+    var countDownDate = Date.now() + (duration[0]*3600000) + (duration[1]*60000) + 2000;
+    // var countDownDate = new Date("Jul 28, 2021 13:04:00").getTime();
 
     // Run myfunc every second
     var myfunc = setInterval(function() {
@@ -100,20 +142,6 @@ body {
         self.close();
       } catch (e) { console.log(e) }
     }
-
-    /*Initialising firebase*/
-    var firebaseConfig = {
-            apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-            authDomain: "orbital-24-7.firebaseapp.com",
-            projectId: "orbital-24-7",
-            storageBucket: "orbital-24-7.appspot.com",
-            messagingSenderId: "459091456870",
-            appId: "1:459091456870:web:21134477e94d50e25ecea7",
-            measurementId: "G-WQMCMBMFCK"
-        };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
     </script>
 </body>
 </html>

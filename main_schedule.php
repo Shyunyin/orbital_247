@@ -6,7 +6,8 @@
 
 <head>
     <title>Main Schedule Page</title>
-    <link rel="stylesheet" href="main_schedule.css" />
+    <!-- <link rel="stylesheet" href="main_schedule.css" /> -->
+    <link rel="stylesheet" href="main_schedule.css?v=<?php echo time();?>"> 
     <script type="text/javascript" type="module" src="main_schedule.js"></script>
     <script type="text/javascript" type="module" src="Scheduling.js"></script>
     <!-- Preshita added the following 3 lines bc they might be needed -->
@@ -85,12 +86,12 @@
     </div>
 
     <!--For array of tasks-->
-    <div id="postit">
+    <!-- <div id="postit">
         <input type="text" id="title" readonly="readonly" value="Tasks not included in schedule yet">
         <br>
         <div id="postitContent">
         </div>
-    </div>
+    </div> -->
 
     <!--For the instructions on how to perform actions on tasks-->
     <div id="instruction">
@@ -116,7 +117,7 @@
     <!--Link to pop up for add daily task page-->
     <!--<button id="generateSchedule" name="generateSchedule" onclick="clearPostit();printSchedule(generate());">Generate Schedule now!</button>-->
 
-    <button id="generateSchedule" name="generateSchedule" onclick="printSchedule(generateSchedule());">Generate Schedule now!</button>
+    <!-- <button id="generateSchedule" name="generateSchedule" onclick="printSchedule(generateSchedule());">Generate Schedule now!</button> -->
 
     <!--Buttons to go to previous and next-->
     <!--Probably must create previous button using javascript as it only appears if schedule day != current day-->

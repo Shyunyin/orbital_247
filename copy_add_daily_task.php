@@ -28,20 +28,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
+  <form action="includes/editing_daily_task.inc.php" method="POST" id="bigForm">
+  <script>
+    var mainForm = document.getElementById("bigForm");
+    var oldStartHour, oldStartMin;
   <!--Retrieving previous fields from form = "actions" in main_schedule.php-->
   <?php
     if (isset($_POST['edit'])) { //when edit button is clicked, create variables that can possibly direct input in html
       $taskName = $_POST['taskName'];
       $taskCategory = $_POST['taskCategory'];
-      echo "catFunction($taskCategory)"; //to run catFunction to make selected button white first
+      // echo "catFunction($taskCategory);"; //to run catFunction to make selected button white first
       $startTime = $_POST['startTime'];
+      $startTimeHour = substr($startTime, 0, 2);
+      $startTimeMin = substr($startTime, 3, 5);
+
+      echo "oldStartHour = '$startTimeHour';";
+      echo "oldStartMin = '$startTimeMin';";
+
       $endTime = $_POST['endTime'];
       $dateInput = $_POST['dateInput'];
-    }
+    } 
   ?>
+     var oldHour = document.createElement('input');
+      oldHour.type = 'hidden';
+      oldHour.value = oldStartHour;
+      oldHour.name = 'oldStartHour';
+      mainForm.appendChild(oldHour);
+
+      var oldMin = document.createElement('input');
+      oldMin.type = 'hidden';
+      oldMin.value = oldStartMin;
+      oldMin.name = 'oldStartMin';
+      mainForm.appendChild(oldMin);
+  </script>
   
-  <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
-  <form action="includes/add_daily_task.inc.php" method="POST" id="bigForm">
+  <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;"> <!--onload="remainingTime();"-->
     <!--Importing Firebase and Cloud Firestore libraries-->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
@@ -50,10 +71,10 @@
     <!-- Parent-child relationship for inline-->
     <fieldset id="myFieldset">
       <div id="title">
-        <li><h3>Add a task:</h3></li>
+        <li><h3>Edit the task:</h3></li>
       <!-- INPUT for taskName-->
       <li><form>
-          <input type="text" id="taskName" name="taskName" size="70" value="<?php echo "$taskName";?>"><br>
+          <input type="text" id="taskName" name="taskName" size="70" value="<?php echo "$taskName";?>" oninput="Update(this.value, 'name')"><br>
       </form></li>
       </div>
   
@@ -72,7 +93,7 @@
       <!--Find a shorter way for numerical drop downs and how to link to javascript-->
       <div id="date">
         <li><h3>Date:</h3></li>
-        <li><input id="dateInput" type="date" style="background-color: #96d6ed" value="<?php echo "$dateInput";?>"></li>
+        <li><input id="dateInput" type="date" style="background-color: #96d6ed" value="<?php echo $dateInput;?>" oninput="Update(this.value,'datein')"></li>
       </div>
 
       <element id="selectTime">     
@@ -83,28 +104,28 @@
       <div id="timeOptions">
         <div class="startTime">
           <h3>Start time:</h3>
-          <input type="time" id="startTime" name="startTime" value="<?php echo "$startTime";?>">
+          <input type="time" id="startTime" name="startTime" value="<?php echo $startTime;?>" oninput="Update(this.value, 'start')">
         </div>
         <div class="endTime">
         <h3>End time:</h3>
-          <input type="time" id="endTime" name="endTime">
+          <input type="time" id="endTime" name="endTime" value="<?php echo $endTime;?>" oninput="Update(this.value, 'end')">
         </div>
-        <input type="button" id="doneTimeBtn" value="Done!" onclick="calculationTime()" value="<?php echo "$endTime";?>">
+        <input type="button" id="doneTimeBtn" value="Done!" onclick="updateRemainingTime()">
       </div>
       
       <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
       <!-- QUESTION: idk how to include javascript element into html isit ${}?-->
       <div id="counter">
-        <p>Remaining</p>
+        <p>Estimated remaining time</p>
         <p id="counterOutput"></p>
-</div>  
+      </div>
  
 
     <!--Buttons for DELETE, ADD, DONE-->
     <div class="btn-group-actions">
-      <li><input type="button" id="delete" value="Delete task" onclick="DeleteTask()"></li>
+      <li><input type="submit" id="delete" name="delete" value="Delete task"></li>
       <!-- <li><button id="add" >Add another task</button></li> -->
-      <li><input type="button" id="done" value="Submit" onclick="frontEndSubmit()"></li>
+      <li><input type="submit" id="done" name="done" value="Submit"></li>
     </div>
   </fieldset>
 </form>
@@ -112,7 +133,120 @@
 <form action="" method="POST" id="hidden">
 </form> -->
 
-    <script>
+<script>
+        var ele = document.getElementById("bigForm");
+        // var ele1= "document.getElementById("bigForm")";
+        // var anotherEle = document.createElement("input");
+        // anotherEle.type = "hidden";
+        // anotherEle.value = ele1;
+        // anotherEle.name = "anotherEle";
+        // ele.appendChild(anotherEle);
+        //------------------Defining of variables------------------//
+            /*For referencing later on*/
+        let NameOfTask = document.getElementById("taskName"); 
+        //category number can get from cat_num in the other javascript file
+        let Start = document.getElementById("startTime");
+        // let StartArr = [parseInt(Start.value.substr(0, 2)), parseInt(Start.value.substr(3, 4))]; //main array for start time
+        let End = document.getElementById("endTime"); 
+        // let EndArr = [parseInt(End.value.substr(0, 2)), parseInt(End.value.substr(3, 4))]; //main array for end time
+        let DateInput = document.getElementById("dateInput");
+        
+        let nameOfTask = NameOfTask.value;
+        let categoryNum = catNum; //variable from other file
+        let start = Start.value;
+        let startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
+        let end = End.value;
+        let endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
+        let dateInput = DateInput.value;
+        // let nameOfTask, categoryNum, start, startArr, end, endArr, dateInput, followUpTask, sequence, hour, minute;
+        var dateNumber = 0;
+        var jsRemainingDuration = 0;
+ 
+        function Update(val, type) {
+          if (type=='name') {
+            nameOfTask=val;
+          } else if (type=='datein'){
+            dateInput=val;
+            
+            var jsYear = document.createElement("input");
+            jsYear.type = "hidden";
+            jsYear.value = dateInput.substring(0, 4);
+            jsYear.name = "jsYear";
+            ele.appendChild(jsYear);
+
+            var jsMonth = document.createElement("input");
+            jsMonth.type = "hidden";
+            jsMonth.value = dateInput.substring(5, 7);
+            jsMonth.name = "jsMonth";
+            ele.appendChild(jsMonth);
+
+            var jsDate = document.createElement("input");
+            jsDate.type = "hidden";
+            jsDate.value = dateInput.substring(8, 10);
+            jsDate.name = "jsDate";
+            ele.appendChild(jsDate);
+            //insert formula to get number after dateInput is changed
+          } else if (type=='start'){
+            start=val;
+            startArr = [parseInt(start.substr(0, 2)), parseInt(start.substr(3, 4))];
+
+            var jsStartHour = document.createElement("input");
+            jsStartHour.type = "hidden";
+            jsStartHour.value = startArr[0];
+            jsStartHour.name = "jsStartHour";
+            ele.appendChild(jsStartHour);
+            //document.appendChild(jsStartHour);
+
+            var jsStartMin = document.createElement("input");
+            jsStartMin.type = "hidden";
+            jsStartMin.value = startArr[1];
+            jsStartMin.name = "jsStartMin";
+            ele.appendChild(jsStartMin);
+
+          } else if (type=='end'){
+            end=val;
+            endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
+
+            var jsEndHour = document.createElement("input");
+            jsEndHour.type = "hidden";
+            jsEndHour.value = endArr[0];
+            jsEndHour.name = "jsEndHour";
+            ele.appendChild(jsEndHour);
+
+            var jsEndMin = document.createElement("input");
+            jsEndMin.type = "hidden";
+            jsEndMin.value = endArr[1];
+            jsEndMin.name = "jsEndMin";
+            ele.appendChild(jsEndMin);
+
+          } else if (type=='work'){
+            categoryNum=val;
+
+            var jsCat = document.createElement("input");
+            jsCat.type = "hidden";
+            jsCat.value = categoryNum;
+            jsCat.name = "jsCat";
+            ele.appendChild(jsCat);
+
+          } else if (type=='exercise'){
+            categoryNum=val;
+
+            var jsCat = document.createElement("input");
+            jsCat.type = "hidden";
+            jsCat.value = categoryNum;
+            jsCat.name = "jsCat";
+            ele.appendChild(jsCat);
+
+          } else if (type=='misc'){
+            categoryNum=val;
+
+            var jsCat = document.createElement("input");
+            jsCat.type = "hidden";
+            jsCat.value = categoryNum;
+            jsCat.name = "jsCat";
+            ele.appendChild(jsCat);
+          }
+        }
         //------------------Using retrieving function to fill up inputs------------------//
         function formatDate() {
           var today = new Date();
@@ -126,6 +260,183 @@
 
           return [year, month, day].join('-');
         }
+
+        function remainingTime() {
+          let text;
+          let currArr = [];
+          let name, year, month, date, startTimeHour, startTimeMin, endTimeHour, endTimeMin, type, newWin;
+          let totalDuration;
+
+          <?php
+          //Writing out remaining time program
+          $userid = $_SESSION["userid"];
+          date_default_timezone_set('Singapore');
+          $currYear = date("Y");
+          $currMonth = date("m") - 1;
+          $currDate = date("d");
+
+          $sql = "SELECT * FROM remainingtime WHERE  userid = $userid AND currYear = $currYear AND currMonth = $currMonth AND currDate = $currDate;";
+
+          $user = 'root'; 
+          $pass = '';
+          $db='orbital247';
+          $conn = mysqli_connect('localhost', $user, $pass, $db);
+
+          $results = mysqli_query($conn, $sql);
+          $resultCheck = mysqli_num_rows($results);
+
+          // If the remaining time exists
+          if ($resultCheck > 0) {
+            echo 'console.log("I come to else block");';
+            foreach($results as $result) {
+              $totalMin = $result["remainder"];
+              //echo "totalDuration = '$totalMin';";
+            }
+            echo "jsRemainingDuration = '$totalMin';";
+            // echo 'let jsRemainingDuration = document.createElement("input");';
+            // echo 'jsRemainingDuration.type = "hidden";';
+            // echo "jsRemainingDuration.value = '$totalMin';";
+            // echo 'jsRemainingDuration.name = "jsRemainingDuration";';
+            // echo 'ele.appendChild(jsRemainingDuration);';
+
+            $hours = ($totalMin - ($totalMin % 60)) / 60;
+            $mins = $totalMin - ($hours * 60);
+            echo "text = 'Hour: ' + '$hours' + '   ' + '         Minute: ' + '$mins';";
+            echo 'displayDuration(text);';
+          }
+
+          // If the remaining time does not exist
+          if ($resultCheck == 0) {
+              echo 'console.log("I come to if block");';
+              echo 'totalDuration = 0;';
+          // STEP 1: Obtain all the fixed tasks for the day
+              $type = 1; //Type for fixed tasks is always 1
+              $fullDate = $currYear."-".($currMonth + 1)."-".$currDate;
+              $timestamp = strtotime($fullDate);
+              $dayNum = date('w', $timestamp);
+
+              echo "console.log('DayNum is ' + '$dayNum');";
+              $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 0;";
+
+              $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";
+
+              $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2 AND taskDay = $dayNum AND week = 0;";
+
+              $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 3 AND taskDate = $taskDate;";
+
+              $routineChecks = [$dailySql, $weeklySql, $biweeklySql, $monthlySql];
+
+              $user = 'root'; 
+              $pass = '';
+              $db='orbital247';
+              $conn = mysqli_connect('localhost', $user, $pass, $db);
+
+              foreach($routineChecks as $check) {
+                $result = mysqli_query($conn, $check);
+            
+                if ($result) {
+                    //echo 'console.log("this is correct");';
+                    $resultCheck = mysqli_num_rows($result);
+                    $data = array();
+                    if ($resultCheck > 0) {
+                        //echo 'console.log("I have at least 1 result");';
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $data[] = $row;   
+                        }   
+                    }
+                    foreach($data as $single) {
+                        $name = $single['taskName'];
+                        echo "name = '$name';";
+                        echo "year = $currYear;";
+                        echo "month = $currMonth;";
+                        echo "date = $currDate;";
+                        $startTimeHour = $single['startTimeHour'];
+                        echo "startTimeHour = parseInt($startTimeHour);";
+                        $startTimeMin = $single['startTimeMin'];
+                        echo "startTimeMin = parseInt($startTimeMin);";
+                        $endTimeHour = $single['endTimeHour'];
+                        echo "endTimeHour = parseInt($endTimeHour);";
+                        $endTimeMin = $single['endTimeMin'];
+                        echo "endTimeMin = parseInt($endTimeMin);";
+                        $type = $single['taskCategory'];
+                        echo "type = parseInt($type);";
+                        
+                        echo 'newWin = new Window(name, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);';
+
+                        echo 'currArr.push(newWin);';
+                    }
+
+                }
+            }
+          }
+          ?>
+          
+          // If a record of the remaining time alr exists, we won't enter this block
+          if (totalDuration == 0) {
+            for (let i = 0; i < currArr.length; i++) {
+              let duration = Time.duration(currArr[i].getStartTime(), currArr[i].getEndTime());
+              let breakDuration = Break.calculateBreak(currArr[i].getStartTime(), currArr[i].getEndTime());
+              totalDuration += (duration[0] * 60) + duration[1];
+              totalDuration += breakDuration;
+            }
+
+            let remainingDuration = Math.max(0, (960 - totalDuration));
+
+            let remainingHours = (remainingDuration - (remainingDuration % 60)) / 60;
+
+            let remainingMins = remainingDuration % 60;
+
+            jsRemainingDuration = remainingDuration;
+            // let jsRemainingDuration = document.createElement("input");
+            // jsRemainingDuration.type = "hidden";
+            // jsRemainingDuration.value = remainingDuration;
+            // jsRemainingDuration.name = "jsRemainingDuration";
+            // ele.appendChild(jsRemainingDuration);
+            //document.appendChild(jsRemainingDuration);
+
+            text = "Hour: " + remainingHours + "         Minute: " + remainingMins;
+
+            displayDuration(text);
+          }
+      }
+
+      function updateRemainingTime() {
+        // let startHour = ele.getElementsByName("jsStartHour").value;
+        // let startMin = ele.getElementsBysName("jsStartMin").value;
+        // let endHour = ele.getElementsBysName("jsEndHour").value;
+        // let endMin = ele.getElementsBysName("jsEndMin").value;
+
+        let startHour = startArr[0];
+        let startMin = startArr[1];
+        let endHour = endArr[0];
+        let endMin = endArr[1];
+
+        let durOfTask = Time.duration(new Time(startHour, startMin), new Time(endHour, endMin));
+        let breakDuration = Break.calculateBreak(new Time(startHour, startMin), new Time(endHour, endMin));
+
+        console.log("i come to updateRemainingTime");
+
+        let currRemainingTime = jsRemainingDuration;
+
+        currRemainingTime -= ((durOfTask[0] * 60) + durOfTask[1]);
+        currRemainingTime -= breakDuration;
+
+        currRemainingTime = Math.max(0, currRemainingTime);
+
+        let currRemainingHours = (currRemainingTime - (currRemainingTime % 60)) / 60;
+        let currRemainingMins = (currRemainingTime % 60);
+
+        let text = "Hour: " + currRemainingHours + "         Minute: " + currRemainingMins;
+        displayDuration(text);
+
+        let finalRemainingMins = document.createElement("input");
+        finalRemainingMins.type = "hidden";
+        finalRemainingMins.value = currRemainingTime;
+        finalRemainingMins.name = "finalRemainingMins";
+        ele.appendChild(finalRemainingMins);
+
+        //ele.getByElementName("jsRemainingDuration").value = currRemainingTime;
+      }
 
         // window.onload = function () {
         // var startHour = localStorage.getItem("startTimeHour"); //global js variable to store the task name

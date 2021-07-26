@@ -68,6 +68,8 @@
   border-radius: 8px;
   height: 400px;
   width: 1000px;
+  /* float: left; */
+  /* text-align: center; */
 }
 
 /*Balance the left side out*/
@@ -76,29 +78,36 @@
   z-index: 5;
   width: 200px;
   font-family: "Signika Negative", sans-serif;
-  margin-top: 250px;
+  margin-top: 280px;
   margin-left: 1230px;
   font-weight: bold;
 }
 #instruction {
   position: absolute;
   z-index: 2;
-  height: 120px;
+  height: 100px;
   width: 210px;
   background-color: #c4c4c4;
   border-color: grey;
   border-width: 2px;
-  margin-top: 250px;
+  margin-top: 280px;
   margin-left: 1200px;
 }
 
 #iconActions {
   font-family: "Signika Negative", sans-serif;
   position: absolute;
+  z-index: 99;
+  margin-top: 410px;
+  margin-left: 1250px;
+}
+/* #actions {
+  font-family: "Signika Negative", sans-serif;
+  position: absolute;
   z-index: 10;
   margin-top: 400px;
   margin-left: 1200px;
-}
+} */
 
 #wakeup {
   font-family: "Signika Negative", sans-serif;
@@ -179,4 +188,37 @@
 }
 #addTask:hover {
   background-color: #fedcce;
+}
+
+#cheat1 {
+  font-family: "Signika Negative", sans-serif;
+  font-size: 20px;
+  background-color: #96d6ed;
+  border: none;
+  color: black;
+  cursor: pointer;
+  width: 700px;
+  margin-top: 50px;
+}
+#cheat2 {
+  font-family: "Signika Negative", sans-serif;
+  font-size: 20px;
+  background-color: #96d6ed;
+  border: none;
+  color: black;
+  cursor: pointer;
+  margin-top: 60px;
+  width: 700px;
+
+  /* margin-left: -500px; */
+}
+#cheat3 {
+  font-family: "Signika Negative", sans-serif;
+  font-size: 20px;
+  background-color: #96d6ed;
+  border: none;
+  color: black;
+  cursor: pointer;
+  margin-top: 60px;
+  width: 700px;
 }

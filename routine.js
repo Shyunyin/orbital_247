@@ -24,7 +24,7 @@ function clickEditProductive() {
 
 function OpenPopupWindow() {   
     var url = "http://localhost/orbital_247/add_routine_task.php"; 
-    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=770, height=700, toolbar=1, resizable=0');
+    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=2000, height=800, toolbar=1, resizable=0');
     myRef.focus();
 }
 
@@ -40,3 +40,55 @@ function OpenPopupWindow() {
 //     currentNode.replaceWith(newNode);
 // }
 
+// function createRoutineList(printArr) { 
+//     console.log("I come to createRoutineList function");
+
+//     var count = 0; //for spaces between tasks
+//     //to form the statement to be printed
+
+//     for (let i = 0; i < printArr.length; i++) {
+//         var statement;
+//         if (printArr[i].getFreq() == 0) {
+//             statement = "Daily: " + printvaljs(convertjs(printArr[i].getStartTimeHours())) + ":" + printvaljs(printArr[i].getStartTimeMins()) + printwordjs(printArr[i].getStartTimeHours()) + " - " + 
+//             printvaljs(convertjs(printArr[i].getEndTimeHours())) + ":" + printvaljs(printArr[i].getEndTimeMins()) + printwordjs(printArr[i].getEndTimeHours()) + " " + printArr[i].getTaskName() + " " + "(" + checkCat(printArr[i].getTaskCategory()) + ")";
+//         } else if (printArr[i].getFreq() == 1) {
+//             statement = "Weekly: " + checkDay(printArr[i].getDay()) + " " + printvaljs(convertjs(printArr[i].getStartTimeHours())) + ":" + printvaljs(printArr[i].getStartTimeMins()) + printwordjs(printArr[i].getStartTimeHours()) + " - " + 
+//             printvaljs(convertjs(printArr[i].getEndTimeHours())) + ":" + printvaljs(printArr[i].getEndTimeMins()) + printwordjs(printArr[i].getEndTimeHours()) + " " + printArr[i].getTaskName() + " " + "(" + checkCat(printArr[i].getTaskCategory()) + ")";
+//         } else if (printArr[i].getFreq() == 2) {
+//             statement = "Bieekly: " + checkDay(printArr[i].getDay()) + " " + printvaljs(convertjs(printArr[i].getStartTimeHours())) + ":" + printvaljs(printArr[i].getStartTimeMins()) + printwordjs(printArr[i].getStartTimeHours()) + " - " + 
+//             printvaljs(convertjs(printArr[i].getEndTimeHours())) + ":" + printvaljs(printArr[i].getEndTimeMins()) + printwordjs(printArr[i].getEndTimeHours()) + " " + printArr[i].getTaskName() + " " + "(" + checkCat(printArr[i].getTaskCategory()) + ")";
+//         } else if (printArr[i].getFreq() == 3) {
+//             statement = "Monthly, date: " + printArr[i].getDate() + " " + printvaljs(convertjs(printArr[i].getStartTimeHours())) + ":" + printvaljs(printArr[i].getStartTimeMins()) + printwordjs(printArr[i].getStartTimeHours()) + " - " + 
+//             printvaljs(convertjs(printArr[i].getEndTimeHours())) + ":" + printvaljs(printArr[i].getEndTimeMins()) + printwordjs(printArr[i].getEndTimeHours()) + " " + printArr[i].getTaskName() + " " + "(" + checkCat(printArr[i].getTaskCategory()) + ")";
+//         }
+//             console.log(statement); //debugging
+
+//             let append = document.createElement("input");
+//             append.type = "button";
+//             append.value = statement;
+//             // append.setAttribute("readonly", "readonly");
+//             append.addEventListener('click', function() {
+//                 redirect(startHour, startMin, printArr[i]);
+//             }); 
+
+//             // append.setAttribute("onclick", "redirect(name)"); //x is the variable that contains the taskname
+//             append.classList.add("task");
+//             append.style.fontFamily = "'Signika Negative', sans-serif";
+//             append.style.fontSize = "large";
+//             append.style.position = "absolute";
+//             append.style.zIndex = "2";
+//             append.style.color = "black";
+//             append.style.backgroundColor = "#96d6ed";
+//             append.style.border = "none";
+//             append.style.marginLeft = "15px";
+//             append.style.height = "25px";
+//             append.style.cursor="pointer";
+//             //calculation to ensure that tasks printed on top of each other
+//             let top = count * 30;
+//             let topText = top + "px";
+//             append.style.marginTop = topText;
+//             let ele = document.getElementById("tasklist");
+//             ele.appendChild(append);
+//             count = count + 1;
+//     }
+// }               

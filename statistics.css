@@ -54,3 +54,41 @@
   background-color: #c4c4c4;
 }
 /*End of stuff that needs to be edited*/
+
+/*For the main blue box*/
+#box {
+  background-color: #96d6ed;
+  border-radius: 8px;
+  height: 400px;
+  width: 1000px;
+  position: absolute;
+  z-index: 10;
+  margin-top: 100px;
+  margin-left: 100px;
+  height: 500px;
+  width: 1000px;
+}
+
+#work {
+  font-family: "Signika Negative", sans-serif;
+  position: absolute;
+  z-index: 10;
+  margin-left: 120px;
+  margin-top: 100px;
+}
+
+#exercise {
+  font-family: "Signika Negative", sans-serif;
+  position: absolute;
+  z-index: 10;
+  margin-left: 120px;
+  margin-top: 150px;
+}
+
+#misc {
+  font-family: "Signika Negative", sans-serif;
+  position: absolute;
+  z-index: 10;
+  margin-left: 120px;
+  margin-top: 200px;
+}

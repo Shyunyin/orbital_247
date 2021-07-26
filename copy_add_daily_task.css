@@ -4,104 +4,104 @@ font-family: 'Signika Negative', sans-serif;
 
 /*For the title section*/
 #title {
-	font-family: "Signika Negative", sans-serif;
-	margin: 0px;
+  font-family: "Signika Negative", sans-serif;
+  margin: 0px;
 }
 #title > li {
-	display: inline-block;
-	font-family: "Signika Negative", sans-serif;
+  display: inline-block;
+  font-family: "Signika Negative", sans-serif;
 }
 #title > li:last-child {
-	margin-left: 20px;
-	align-content: center;
+  margin-left: 20px;
+  align-content: center;
 }
 #taskName {
-	align-content: center;
-	text-align: center;
-	font-family: "Signika Negative", sans-serif;
-	width: max-content;
-	border-radius: 7px; /*make button rounded*/
-	border-width: 2px;
-	border-color: black;
+  align-content: center;
+  text-align: center;
+  font-family: "Signika Negative", sans-serif;
+  width: max-content;
+  border-radius: 7px; /*make button rounded*/
+  border-width: 2px;
+  border-color: black;
 }
 input[type="text"] {
-	background-color: #96d6ed;
-	font-family: Signika Negative, sans-serif;
-	font-size: medium;
+  background-color: #96d6ed;
+  font-family: Signika Negative, sans-serif;
+  font-size: medium;
 }
 input[type="text"]:hover {
-	background-color: #a1e6ff;
+  background-color: #a1e6ff;
 }
 
 /*Make both parent and child have the same font*/
 #categories > li {
-	font-family: "Signika Negative", sans-serif;
-	display: inline-block;
+  font-family: "Signika Negative", sans-serif;
+  display: inline-block;
 }
 
 /*Code for category buttons, can try to shorten if possible!*/
 #work {
-	font-family: "Signika Negative", sans-serif;
-	margin-left: 30px;
-	background-color: #e3aba1;
-	font-weight: bold;
-	font-size: medium;
-	padding: 8px;
-	border-radius: 5px; /*make button rounded*/
-	border-width: 2px;
-	border-color: black;
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  border-radius: 5px; /*make button rounded*/
+  border-width: 2px;
+  border-color: black;
 }
 #exercise {
-	font-family: "Signika Negative", sans-serif;
-	margin-left: 30px;
-	background-color: #e3aba1;
-	font-weight: bold;
-	font-size: medium;
-	padding: 8px;
-	border-radius: 5px; /*make button rounded*/
-	border-width: 2px;
-	border-color: black;
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  border-radius: 5px; /*make button rounded*/
+  border-width: 2px;
+  border-color: black;
 }
 #misc {
-	font-family: "Signika Negative", sans-serif;
-	margin-left: 30px;
-	background-color: #e3aba1;
-	font-weight: bold;
-	font-size: medium;
-	padding: 8px;
-	border-radius: 5px; /*make button rounded*/
-	border-width: 2px;
-	border-color: black;
+  font-family: "Signika Negative", sans-serif;
+  margin-left: 30px;
+  background-color: #e3aba1;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px;
+  border-radius: 5px; /*make button rounded*/
+  border-width: 2px;
+  border-color: black;
 }
 #work:hover {
-	background-color: #fedcce;
+  background-color: #fedcce;
 }
 #exercise:hover {
-	background-color: #fedcce;
+  background-color: #fedcce;
 }
 #misc:hover {
-	background-color: #fedcce;
+  background-color: #fedcce;
 }
 
 /*For date section*/
 #date > li {
-	font-family: "Signika Negative", sans-serif;
-	display: inline-block;
+  font-family: "Signika Negative", sans-serif;
+  display: inline-block;
 }
 #date > li:last-child {
-	margin-left: 67px;
+  margin-left: 67px;
 }
 #dateInput {
-	background-color: #96d6ed;
-	border-radius: 5px; /*make button rounded*/
-	border-width: 2px;
-	border-color: black;
-	font-weight: bold;
-	text-align: center;
+  background-color: #96d6ed;
+  border-radius: 5px; /*make button rounded*/
+  border-width: 2px;
+  border-color: black;
+  font-weight: bold;
+  text-align: center;
 }
 
 #dateInput:hover {
-	background-color: #a1e6ff;
+  background-color: #a1e6ff;
 }
 
 /*For number of sections section*/
@@ -201,25 +201,25 @@ input[type="text"]:hover {
 	z-index: 10;
 } */
 #doneTimeBtn {
-	font-family: "Signika Negative", sans-serif;
-	background-color: #317575ff;
-	color: white;
-	border-color: black;
-	border-width: 2px;
-	border-radius: 5px;
-	width: 60px;
-	height: 30px;
-	margin-left: 110px;
-	margin-top: 100px;
-	cursor: pointer;
-	position: absolute;
-	z-index: 10;
+  font-family: "Signika Negative", sans-serif;
+  background-color: #317575ff;
+  color: white;
+  border-color: black;
+  border-width: 2px;
+  border-radius: 5px;
+  width: 60px;
+  height: 30px;
+  margin-left: 110px;
+  margin-top: 100px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
 }
 /* #doneDurationBtn:hover {
   background-color: #52c4c4;
 } */
 #doneTimeBtn:hover {
-	background-color: #52c4c4;
+  background-color: #52c4c4;
 }
 /* #hour {
   font-size: large;
@@ -246,15 +246,15 @@ input[type="text"]:hover {
   background-color: #ffffcc;
 } */
 #counter {
-	font-family: "Signika Negative", sans-serif;
-	font-size: large;
-	position: absolute;
-	margin-left: 450px;
-	top: 400px;
-	z-index: 2;
+  font-family: "Signika Negative", sans-serif;
+  font-size: large;
+  position: absolute;
+  margin-left: 450px;
+  top: 400px;
+  z-index: 2;
 }
 #selectTime {
-	font-family: "Signika Negative", sans-serif;
+  font-family: "Signika Negative", sans-serif;
 }
 /* #counterOutput {
   color: black;
@@ -263,110 +263,110 @@ input[type="text"]:hover {
   z-index: 2;
 } */
 .startTime {
-	font-family: Signika Negative, sans-serif;
-	position: absolute;
-	top: 300px;
-	font-size: 13px;
+  font-family: Signika Negative, sans-serif;
+  position: absolute;
+  top: 300px;
+  font-size: 13px;
 }
 #startTime {
-	background-color: #fdfd96;
-	border-radius: 5px;
-	border-width: 2px;
-	border-color: black;
-	position: absolute;
-	top: 40px;
-	height: 25px;
-	text-align: center;
-	z-index: 99; /*to bring to front of page*/
+  background-color: #fdfd96;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
+  position: absolute;
+  top: 40px;
+  height: 25px;
+  text-align: center;
+  z-index: 99; /*to bring to front of page*/
 }
 #startTime:hover {
-	background-color: #ffffcc;
+  background-color: #ffffcc;
 }
 .endTime {
-	font-family: Signika Negative, sans-serif;
-	position: absolute;
-	top: 300px;
-	left: 250px;
-	font-size: 13px;
+  font-family: Signika Negative, sans-serif;
+  position: absolute;
+  top: 300px;
+  left: 250px;
+  font-size: 13px;
 }
 #endTime {
-	background-color: #fdfd96;
-	border-radius: 5px;
-	border-width: 2px;
-	border-color: black;
-	position: absolute;
-	top: 40px;
-	height: 25px;
-	text-align: center;
-	z-index: 1; /*to bring to front of page*/
+  background-color: #fdfd96;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
+  position: absolute;
+  top: 40px;
+  height: 25px;
+  text-align: center;
+  z-index: 1; /*to bring to front of page*/
 }
 #endTime:hover {
-	background-color: #ffffcc;
+  background-color: #ffffcc;
 }
 
 /*Follow another task*/
 
 .followTask {
-	font-family: Signika Negative, sans-serif;
-	position: absolute;
-	top: 480px;
+  font-family: Signika Negative, sans-serif;
+  position: absolute;
+  top: 480px;
 }
 .followTask > li {
-	display: inline-block;
+  display: inline-block;
 }
 #yes {
-	margin-left: 30px;
+  margin-left: 30px;
 }
 .yes {
-	font-size: 18px;
+  font-size: 18px;
 }
 #no {
-	margin-left: 30px;
-	font-size: medium;
+  margin-left: 30px;
+  font-size: medium;
 }
 .no {
-	font-size: 18px;
+  font-size: 18px;
 }
 #sequence {
-	font-family: Signika Negative, sans-serif;
-	font-size: 15px;
-	margin-left: 360px;
-	margin-top: -18px;
+  font-family: Signika Negative, sans-serif;
+  font-size: 15px;
+  margin-left: 360px;
+  margin-top: -18px;
 }
 
 #dropdownList {
-	font-family: Signika Negative, sans-serif;
-	text-align: center;
-	font-size: 15px;
-	background-color: #96d6ed;
-	border-radius: 5px;
-	border-width: 2px;
-	border-color: black;
-	width: 350px;
-	height: 30px;
+  font-family: Signika Negative, sans-serif;
+  text-align: center;
+  font-size: 15px;
+  background-color: #96d6ed;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
+  width: 350px;
+  height: 30px;
 }
 #dropdownList:hover {
-	background-color: #a1e6ff;
+  background-color: #a1e6ff;
 }
 
 /*Buttons*/
 .btn-group-actions {
-	position: absolute;
-	top: 150px;
+  position: absolute;
+  top: 150px;
 }
 .btn-group-actions > li {
-	display: inline-block;
+  display: inline-block;
 }
 #delete {
-	font-family: Signika Negative, sans-serif;
-	background-color: #e3aba1;
-	border-radius: 5px;
-	border-width: 2px;
-	border-color: black;
-	font-size: medium;
-	height: 35px;
-	cursor: pointer;
-	margin-top: 370px;
+  font-family: Signika Negative, sans-serif;
+  background-color: #e3aba1;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
+  font-size: medium;
+  height: 35px;
+  cursor: pointer;
+  margin-top: 370px;
 }
 /* #add {
   font-family: Signika Negative, sans-serif;
@@ -380,37 +380,37 @@ input[type="text"]:hover {
   cursor: pointer;
 } */
 #done {
-	font-family: Signika Negative, sans-serif;
-	background-color: #e3aba1;
-	border-radius: 5px;
-	border-width: 2px;
-	border-color: black;
-	font-size: medium;
-	height: 35px;
-	width: 200px;
-	position: absolute;
-	top: 1px;
-	margin-left: 330px;
-	margin-top: 370px;
-	cursor: pointer;
+  font-family: Signika Negative, sans-serif;
+  background-color: #e3aba1;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
+  font-size: medium;
+  height: 35px;
+  width: 200px;
+  position: absolute;
+  top: 1px;
+  margin-left: 330px;
+  margin-top: 370px;
+  cursor: pointer;
 }
 #delete:hover {
-	background-color: #fedcce;
+  background-color: #fedcce;
 }
 #add:hover {
-	background-color: #fedcce;
+  background-color: #fedcce;
 }
 #done:hover {
-	background-color: #fedcce;
+  background-color: #fedcce;
 }
 
 /*For checkboxes*/
 input[type="checkbox"] {
-	zoom: 1.2;
-	border-width: 2px;
-	border-color: black;
+  zoom: 1.2;
+  border-width: 2px;
+  border-color: black;
 }
 
 #myFieldset {
-	border: none;
+  border: none;
 }

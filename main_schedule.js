@@ -302,7 +302,7 @@ function printSchedule(scheduleArr) {
     itemName.innerHTML = scheduleArr[i].getTaskName();
     itemName.addEventListener('click', function() {
         //tempFixed passes 3 paramenters: startHour, startMin, and scheduleArr[i] when task is clicked
-        tempFixed(parseInt(scheduleArr[i].getStartTime().toString().substr(0,2)), parseInt(scheduleArr[i].getStartTime().toString().substr(3,4)), scheduleArr[i]);
+        tempFixed(scheduleArr[i]);
     },false);
     itemName.style.fontFamily = "'Signika Negative', sans-serif";
     itemName.style.fontSize = "large";
@@ -378,7 +378,7 @@ function printvaljs(i){
 }
 
 /*To add fixed task select icons*/
-function tempFixed(startHour, startMin, windowObject) { //only reschedule, edit and delete
+function tempFixed(windowObject) { //only reschedule, edit and delete
     var currentNode = document.getElementById("iconActions");
     var newNode = document.createElement("div");
     newNode.id = "iconActions";
@@ -403,27 +403,32 @@ function tempFixed(startHour, startMin, windowObject) { //only reschedule, edit 
     //taskCategory
     var taskCategory = document.createElement("input");
     taskCategory.type = "hidden";
-    taskCategory.value = windowObject.getType();
+    taskCategory.value = 'windowObject.getType())';
     taskCategory.name = "taskCategory";
     mainForm.appendChild(taskCategory);
 
     //startTime
     var startTime = document.createElement("input");
     startTime.type = "hidden";
-    startTime.value = printvaljs(windowObject.getStartTimeHours()) + ":" + printvaljs(windowObject.getStartTimeMins());
+    startTime.value = printvaljs(windowObject.getStartTimeHours()).toString() + ":" + printvaljs(windowObject.getStartTimeMins()).toString();
     startTime.name = "startTime";
     mainForm.appendChild(startTime);
 
     //endTime
     var endTime = document.createElement("input");
     endTime.type = "hidden";
-    endTime.value = printvaljs(windowObject.getEndTimeHours()) + ":" + printvaljs(windowObject.getEndTimeMins());
+    endTime.value = printvaljs(windowObject.getEndTimeHours()).toString() + ":" + printvaljs(windowObject.getEndTimeMins()).toString();
     endTime.name = "endTime";
     mainForm.appendChild(endTime);
 
+    localStorage.setItem("startTime", startTime.value); //try
+    localStorage.setItem("endTime", endTime.value);
+    localStorage.setItem("name", taskName.value);
+
+    //dateInput
     var dateInput = document.createElement("input");
     dateInput.type = "hidden";
-    dateInput.value = printvaljs(windowObject.getYear()) + "-" + printvaljs(windowObject.getMonth()) + "-" + printvaljs(windowObject.getDate());
+    dateInput.value = printvaljs(windowObject.getYear()).toString() + "-" + printvaljs(windowObject.getMonth()).toString() + "-" + printvaljs(windowObject.getDate()).toString();
     dateInput.name = "dateInput";
     mainForm.appendChild(dateInput);
     
@@ -468,7 +473,7 @@ function tempFixed(startHour, startMin, windowObject) { //only reschedule, edit 
 
 /*Open popup and close*/
 function OpenPopupWindow() {   
-    var url = "../add_daily_task.php"; 
+    var url = "http://localhost/orbital_247/add_daily_task.php"; 
     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=770, height=700, toolbar=1, resizable=0');
     myRef.focus();
     // console.log('window opened!');

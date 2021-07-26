@@ -85,10 +85,7 @@
         <input type="button" id="doneTimeBtn" value="Done!" onclick="updateRemainingTime()">
         <!--<input type="button" id="doneTimeBtn" value="Done!" onclick="calculationTime()">-->
       </div>
-<<<<<<< HEAD
-=======
   
->>>>>>> df387795756397064f8f91d9d5f92b421d7ef2e9
     
   
       <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
@@ -98,8 +95,6 @@
         <p id="counterOutput"></p>
       </div>
   
-<<<<<<< HEAD
-=======
   
       <!-- For follow up task
       <div class="followTask">
@@ -126,7 +121,6 @@
       <!-- </div>  -->
 
   
->>>>>>> df387795756397064f8f91d9d5f92b421d7ef2e9
       <!--Buttons for DELETE, ADD, DONE-->
       <div class="btn-group-actions">
         <!-- <li><input type="submit" id="delete" value="Delete task" onclick="DeleteTask()"></li> -->

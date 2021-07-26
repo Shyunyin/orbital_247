@@ -283,10 +283,6 @@
 
                         $sql = "SELECT * FROM fixedtaskwindow WHERE userid = $userid AND taskYear = $taskYear AND taskMonth = $taskMonth AND taskDate = $taskDate;";
 
-                        $fullDate = $taskYear."-".($taskMonth + 1)."-".$taskDate;
-                        $timestamp = strtotime($fullDate);
-                        $dayNum = date('w', $timestamp);
-
                         $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 0;";
 
                         $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";

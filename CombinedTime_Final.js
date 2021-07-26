@@ -81,8 +81,8 @@ class Time {
      * @param {Number} duration Format: [hours, mins]
      */
     static findStartTime(endTime, duration) {
-        let durHours = duration[0]
-        let durMins = duration[1]
+        let durHours = duration[0];
+        let durMins = duration[1];
         let newHours;
         let newMins;
         if (endTime.getMins() < durMins) {

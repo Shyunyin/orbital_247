@@ -10,85 +10,101 @@
 */
 
 .main {
-  background-color: #f6f7f1;
-  border-color: #c4c4c4;
-  border-width: 5px;
-  height: 800px;
-  width: 1500px;
-  /* position: absolute;
+	background-color: #f6f7f1;
+	border-color: #c4c4c4;
+	border-width: 5px;
+	height: 800px;
+	width: 1500px;
+	/* position: absolute;
     z-index: 1; */
 }
 #background {
-  /* align-items: center; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: absolute;
-  z-index: 1;
+	/* align-items: center; */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: absolute;
+	z-index: 1;
 }
 .btn-group .button {
-  font-family: "Signika Negative", sans-serif;
-  text-align: center;
-  text-decoration: none;
-  font-weight: bold;
-  color: #1e5353;
-  padding: 12px 29px;
-  display: inline-block;
-  font-size: 20px;
-  cursor: pointer;
-  float: left;
-  width: 200px;
-  /* border-width: 1px;
+	font-family: "Signika Negative", sans-serif;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	color: #1e5353;
+	padding: 12px 29px;
+	display: inline-block;
+	font-size: 20px;
+	cursor: pointer;
+	float: left;
+	width: 200px;
+	/* border-width: 1px;
     border-color: #ECEDEA;
     border-bottom: none; */
-  border: none;
-  background-color: #f6f7f1;
+	border: none;
+	background-color: #f6f7f1;
 }
 /*To change for the different main pages*/
 .btn-group .button:first-child {
-  border-right: none;
-  background-color: #c4c4c4;
+	border-right: none;
+	background-color: #c4c4c4;
 }
 .btn-group .button:last-child {
-  border-right: none;
-  background-color: #c4c4c4;
+	border-right: none;
+	background-color: #c4c4c4;
 }
 /*End of stuff that needs to be edited*/
 
 /*For the main blue box*/
 #box {
-  background-color: #96d6ed;
-  border-radius: 8px;
-  height: 400px;
-  width: 1000px;
-  position: absolute;
-  z-index: 10;
-  margin-top: 100px;
-  margin-left: 100px;
-  height: 500px;
-  width: 1000px;
+	background-color: #96d6ed;
+	border-radius: 8px;
+	height: 400px;
+	width: 1000px;
+	position: absolute;
+	z-index: 10;
+	margin-top: 100px;
+	margin-left: 100px;
+	height: 500px;
+	width: 1000px;
 }
 
 #work {
-  font-family: "Signika Negative", sans-serif;
-  position: absolute;
-  z-index: 10;
-  margin-left: 120px;
-  margin-top: 100px;
+	font-family: "Signika Negative", sans-serif;
+	position: absolute;
+	z-index: 10;
+	margin-left: 120px;
+	margin-top: 100px;
 }
 
 #exercise {
-  font-family: "Signika Negative", sans-serif;
-  position: absolute;
-  z-index: 10;
-  margin-left: 120px;
-  margin-top: 150px;
+	font-family: "Signika Negative", sans-serif;
+	position: absolute;
+	z-index: 10;
+	margin-left: 120px;
+	margin-top: 150px;
 }
 
 #misc {
-  font-family: "Signika Negative", sans-serif;
-  position: absolute;
-  z-index: 10;
-  margin-left: 120px;
-  margin-top: 200px;
+	font-family: "Signika Negative", sans-serif;
+	position: absolute;
+	z-index: 10;
+	margin-left: 120px;
+	margin-top: 200px;
+}
+
+#prodpercent {
+	font-family: "Signika Negative", sans-serif;
+	position: absolute;
+	z-index: 10;
+	margin-left: 120px;
+	margin-top: 300px;
+}
+
+#sleepDuration {
+	font-family: "Signika Negative", sans-serif;
+	position: absolute;
+	z-index: 10;
+	margin-left: 120px;
+	margin-top: 430px;
 }

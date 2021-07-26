@@ -58,11 +58,11 @@
   
       <!-- Checkboxes for either TIME task or DURATION task-->
       <!-- Make checkboxes either or, have the same name to be in the same group, have diff values to make distinct--> 
-      <nav>
+      <!-- <nav>
         <element id="selectTime">
-          <input type="radio" id="timeTask" name="select" value="time" checked="checked" onchange="showOptions('timeOptions', this);reinitialise()"> 
-          <label for="timeTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Time</label><br>
-        </element>
+          <input type="radio" id="timeTask" name="select" value="time" checked="checked" onchange="showOptions('timeOptions', this);reinitialise()">  -->
+          <label for="timeTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Time: </label><br>
+        <!-- </element>
         <element id="or">
           <h3>OR</h3>
         </element>
@@ -70,7 +70,7 @@
           <input type="radio" id="durationTask" name="select" value="duration" onchange="showOptions('durationOptions', this);reinitialise()">
           <label for="durationTask" style="font-size:large;font-family:Signika Negative, sans-serif;">Duration (per session)</label><br>
         </element>
-      </nav>
+      </nav> -->
   
       <!--Time options-->
       <div id="timeOptions">
@@ -85,27 +85,6 @@
         <input type="button" id="doneTimeBtn" value="Done!" onclick="updateRemainingTime()">
         <!--<input type="button" id="doneTimeBtn" value="Done!" onclick="calculationTime()">-->
       </div>
-  
-      <!--Duration options-->
-      <div id = "durationOptions" style="display: none">
-        <!--<form class="durationOption">-->
-        <div class="durationOption">
-          <input type="number" id="hour" name="hour" min="0" max="3" oninput="Update(this.value, 'hour')"> <!--I set max to 3 hours for health?-->
-          <label for="hour">hr</label>
-          <input type="number" id="minute" name="minute" min="0" max="59" oninput="Update(this.value, 'min')">
-          <label for="minute">min</label>
-        <!-- Number of sessions -->
-          <div id="sessions">
-            <h3>Number of Sessions:</h3>
-          </div>
-          <!--<form class="numSessions">-->
-            <input type="button" id="onesession" onclick="sessionsFunction(1); Update(1,'one');" value="x1"></button>
-            <input type="button" id="twosessions" onclick="sessionsFunction(2);Update(2,'two');" value="x2"></button>
-            <input type="button" id="threesessions" onclick="sessionsFunction(3);Update(3,'three');" value="x3"></button>
-        <!--</form>-->
-        </div>
-        <input type="button" id="doneDurationBtn" value="Done!" onclick="calculationDuration()">
-      </div>
     
   
       <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
@@ -114,32 +93,6 @@
         <p>Estimated remaining time</p>
         <p id="counterOutput"></p>
       </div>
-  
-  
-      <!-- For follow up task-->
-      <div class="followTask">
-        <br>
-          <li><h3>Is this task followed by another task?</h3></li>
-          <li><input type="radio" id="yes" name="check" value="A" onchange="showList('A', this); return false;" onclick="RetrieveWithID()">
-            <label class="yes" for="yes">Yes</label></li>
-          <li><input type="radio" id="no" name="check" checked="checked" value="B" onchange="showList('B', this); return false;">
-            <label class="no" for="no">No</label><br></li>
-        </br>
-  
-        <!--Code for dropdown menu linked to javascript, database of other tasknames-->
-        <div id="A" style="display:none">
-          <!--Container to contain the dynamically added elements-->
-          <div>
-            <select id="dropdownList" oninput="Update(this.value, 'followname')">
-              <option value="" selected disabled hidden>Select a task</option>
-            </select>
-          </div>
-          <h4 id="sequence">(Selected task will be scheduled after the created task)</h4>
-        </div>
-      
-        <div id="B" style="display:none">
-      </div>
-
   
       <!--Buttons for DELETE, ADD, DONE-->
       <div class="btn-group-actions">

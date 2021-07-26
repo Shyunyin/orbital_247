@@ -160,45 +160,6 @@
       //     }
       // }
     
-<<<<<<< HEAD
-        function Retrieve_Database_Info(){ //pass in the taskname to retrieve the info to fill up the form
-          //retrieving values from php database from taskname and id
-          <?php
-            $userid = $_SESSION['userid'];
-            $hourPhp = $_POST['hourPhp'];
-            $minPhp = $_POST['minPhp'];
-            $query = "SELECT * FROM fixedtaskwindow WHERE userid=$userid AND startTimeHour=$hourPhp AND startTimeMin=$minPhp;";
-            $result = mysqli_query($conn,$query);
-            if(!$result) {
-              echo "Could not run query:" . mysqli_error($conn);
-              exit();
-            } else {
-              foreach($result as $row) {
-                $taskName = $row["taskName"];
-                $taskCategory = $row["taskCategory"];
-                $taskYear = $row["taskYear"];
-                $taskMonth = $row["taskMonth"];
-                $taskDate = $row["taskDate"];
-                $startTimeHour = $row["StartTimeHour"];
-                $startTimeMin = $row["StartTimeMin"];
-                $endTimeHour = $row["endTimeHour"];
-                $endTimeMin = $row["endTimeMin"];
-                echo "taskName = '$taskName';";
-                echo "taskCategory = $taskCategory;";
-                echo "taskYear = $taskYear;";
-                echo "taskMonth = $taskMonth;";
-                echo "taskDate = $taskDate;";
-                echo "startTimeHour = $startTimeHour;";
-                echo "startTimeMin = $startTimeMin;";
-                echo "endTimeHour = $endTimeHour;";
-                echo "endTimeMin = $endTimeMin;";
-              }
-            }
-            //$row = mysqli_fetch_row($result);          
-          ?>
-            // console.log("Retrieve data to fill up form");
-            console.log(nameoftask + " is in retrieve database info!");
-=======
       //   function Retrieve_Database_Info(){ //pass in the taskname to retrieve the info to fill up the form
       //     //retrieving values from php database from taskname and id
            <?php
@@ -233,7 +194,6 @@
              ?>
       //       // console.log("Retrieve data to fill up form");
       //       console.log(nameoftask + " is in retrieve database info!");
->>>>>>> b6173c274585d355f7af714974b395f5f9524542
 
       //         /*For the setting of values to fill in the fields*/
       //         document.getElementById("taskName").value = taskName; 

@@ -9,6 +9,7 @@
 
     $deleteSql = "DELETE FROM fixedtaskwindow WHERE userid = $userid AND startTimeHour = $startHour AND startTimeMin = $startMin AND endTimeHour = $endHour AND endTimeMin = $endMin";
 
+    //$additionalDuration = 'Time.duration(new Time('$startHour', '$startMin'), new Time('$endHour', '$endMin'))'
     $user = 'root'; 
     $pass = '';
     $db='orbital247';

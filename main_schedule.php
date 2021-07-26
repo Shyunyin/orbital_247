@@ -197,6 +197,10 @@
                 let name, year, month, date, startTimeHour, startTimeMin, endTimeHour, endTimeMin, type, newWin;
                     // STEP 1: Obtain all the fixed tasks for the day
                     <?php
+                        $user = 'root'; 
+                        $pass = '';
+                        $db='orbital247';
+                        $conn = mysqli_connect('localhost', $user, $pass, $db);
                         //TODO: We need to obtain the year, month and date from the html page that directs us here. So update these variables here accordingly later.
                         date_default_timezone_set('Singapore');
                         $taskYear = date("Y");
@@ -218,16 +222,36 @@
 
                         $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";
 
+                        //Biweekly update first
+                        $update1 = "UPDATE routinetask SET week = 0, taskStatus = 0 WHERE userid = $userid AND taskDay = $dayNum AND week = 0 AND taskStatus = 1;";
+
+                        $update2 = "UPDATE routinetask SET week = 1, taskStatus = 0 WHERE userid = $userid AND taskDay = $dayNum AND week = 1 AND taskStatus = 1;";
+
+                        mysqli_query($conn, $update1);
+                        mysqli_query($conn, $update2);
+
+                        if ($dayNum == 0) {
+                            $update3 = "UPDATE routinetask SET week = 1, taskStatus = 1 WHERE userid = $userid AND taskDay = 6 AND week = 0 AND taskStatus = 0;";
+
+                            $update4 = "UPDATE routinetask SET week = 0, taskStatus = 1 WHERE userid = $userid AND taskDay = 6 AND week = 1 AND taskStatus = 0;";
+
+                            mysqli_query($conn, $update3);
+                            mysqli_query($conn, $update4);
+                        } else {
+                            $update5 = "UPDATE routinetask SET week = 1, taskStatus = 1 WHERE userid = $userid AND taskDay = $dayNum - 1 AND week = 0 AND taskStatus = 0;";
+
+                            $update6 = "UPDATE routinetask SET week = 0, taskStatus = 1 WHERE userid = $userid AND taskDay = $dayNum - 1 AND week = 1 AND taskStatus = 0;";
+
+                            mysqli_query($conn, $update5);
+                            mysqli_query($conn, $update6);
+                        }
+
                         $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2 AND taskDay = $dayNum AND week = 0;";
 
                         $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 3 AND taskDate = $taskDate;";
 
                         $routineChecks = [$dailySql, $weeklySql, $biweeklySql, $monthlySql];
 
-                        $user = 'root'; 
-                        $pass = '';
-                        $db='orbital247';
-                        $conn = mysqli_connect('localhost', $user, $pass, $db);
                         $result = mysqli_query($conn, $sql);
                         
                         if ($result) {

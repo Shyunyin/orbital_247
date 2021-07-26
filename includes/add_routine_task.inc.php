@@ -51,10 +51,20 @@
             mysqli_query($conn, $sql);
         } else if ($freq == 2) {
             //echo ("I enter the biweekly freq block");
+            date_default_timezone_set('Singapore');
+            $fullDate = $taskYear."-".($taskMonth + 1)."-".$taskDate;
+            $timestamp = strtotime($fullDate);
+            $dayNum = date('w', $timestamp);
 
-            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDay, $week, $userid);";
+            if ($week == 0 && $dayNum > $taskDay + 1) { //If the day to update this task has also passed
+                $specialSql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskStatus, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDay, 1, 1, $userid);";
 
-            mysqli_query($conn, $sql);
+                mysqli_query($conn, $specialSql);
+            } else {
+                $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskStatus, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDay, $week, $week, $userid);";
+
+                mysqli_query($conn, $sql);
+            }
         } else if ($freq == 3) {
             //echo ("I enter the monthly freq block");
 

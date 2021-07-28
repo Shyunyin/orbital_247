@@ -12,21 +12,6 @@ class RoutineInfo {
         RoutineInfo.productiveSlot = productiveSlot;
         // Estimating sleep time (Assuming sleep time to be for 8 hours)
         RoutineInfo.sleepTime = new Time((RoutineInfo.wakeUpTime.getHours() + 16) % 24, RoutineInfo.wakeUpTime.getMins());
-        //Updating the database
-        cloudDB.collection("Users").doc(userName).collection("Routine Info").doc("Routine Info").set(
-            {
-                wakeUpTimeStart: RoutineInfo.wakeUpTime,
-                wakeUpTimeEnd: RoutineInfo.sleepTime,
-                productiveSlotStart: RoutineInfo.productiveSlot,
-                productiveSlotEnd: Time.findEndTime(RoutineInfo.productiveSlot, [4, 0]),
-            }
-        ).then(function(){
-            console.log("Routine info for for user '" + userName + "' has been created.");
-        })
-        .catch(function(error) {
-            console.error("Error adding routine info doc for user '" + userName + "'' : ", error);
-        });
-
     }
 
     /**

@@ -153,22 +153,3 @@ class Time {
         }
     }
 }
-
-
-
-//Time.timeRegistered = Math.round(Date.now()/10000) * 10000; //To the nearest minute (Need to double check calculation)
-
-// Testing
-/*
-let testTime = new Time(0, 1, 1, 1, 1, 0)
-let testTime2 = new Time(0, 1, 1, 1, 1, 0)
-let testTime3 = new Date(0, 1, 1, 1, 1, 0);
-let testTime4 = new Date(0, 1, 1, 1, 1, 0);
-
-testTime2.freeSlot()
-testTime2.scheduleTask()
-testTime2.freeSlot()
-testTime2.removeTask()
-testTime2.freeSlot()
-*/
-

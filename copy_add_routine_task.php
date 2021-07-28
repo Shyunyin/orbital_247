@@ -3,169 +3,156 @@
 ?>
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>Add routine task</title>
+        <script type="text/javascript" type="module" src="copy_add_routine_task.js"></script>
+        <script type="text/javascript" type="module" src="Window.js"></script>
 
-<head>
-    <title>Add routine task</title>
-    <script type="text/javascript" type="module" src="copy_add_routine_task.js"></script>
-    <!--<script type="text/javascript" type="module" src="Routine_Final.js"></script>-->
-    <script type="text/javascript" type="module" src="Window.js"></script>
-    <link rel="stylesheet" href="add_routine_task.css?v=<?php echo time();?>"> <!--Use stylesheet of add_routine_task--> 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+        <link rel="stylesheet" href="add_routine_task.css?v=<?php echo time();?>">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
 
-<!--Retrieve data of selected task-->
-<?php
-   $userid = $_SESSION['userid'];
-    if (isset($_POST['edit'])) {
-        $taskName = $_POST['taskName'];
-        $taskCategory = $_POST['taskCategory'];
-        echo "catFunction($taskCategory)"; //to run catFunction to make selected button white first
-        $startTime = $_POST['startTime'];
-        $endTime = $_POST['endTime'];
-        $freq = $_POST['freq'];
-        $taskDay = $_POST['taskDay'];
-        $taskWeek = $_POST['taskWeek'];
-        $taskDate = $_POST['taskDate']; 
-    }
-?>
+    <!--Retrieve data of selected task-->
+    <?php
+    $userid = $_SESSION['userid'];
+        if (isset($_POST['edit'])) {
+            $taskName = $_POST['taskName'];
+            $taskCategory = $_POST['taskCategory'];
+            echo "catFunction($taskCategory)"; //to run catFunction to make selected button white first
+            $startTime = $_POST['startTime'];
+            $endTime = $_POST['endTime'];
+            $freq = $_POST['freq'];
+            $taskDay = $_POST['taskDay'];
+            $taskWeek = $_POST['taskWeek'];
+            $taskDate = $_POST['taskDate']; 
+        }
+    ?>
 
-<body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
-    <!-- Parent-child relationship for inline-->
-    <form action="includes/add_routine_task.inc.php" method="POST" id="bigForm">
-        <div id="title">
-            <li>
-                <h3>Add a routine task:</h3>
-            </li>
-            <!-- INPUT for taskName-->
-            <li>
-                <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value,'name')" value="<?php echo "$taskName";?>"><br>
-            </li>
-        </div>
-
-        <!--include cat buttons!!-->
-        <div id="categories">
-            <li>
-                <h3>Category:</h3>
-            </li>
-            <!-- Buttons for categories-->
-            <li>
-                <input type="button" id="work" onclick="catFunction(0);Update(0,'category');" value="Work">
-                <input type="button" id="exercise" onclick="catFunction(1);Update(1,'category');" value="Exercise">
-                <input type="button" id="misc" onclick="catFunction(2);Update(2,'category');" value="Miscellaneous">
-                <input type="button" id="meal" onclick="catFunction(3);Update(3,'category');" value="Meal Times">
-            </li>
-        </div>
-    
-        <!-- For frequency-->
-        <div class="frequency">
-            <h3>Recurring frequency: </h3>
-            <div class="ul">
+    <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
+        <!-- Parent-child relationship for inline-->
+        <form action="includes/add_routine_task.inc.php" method="POST" id="bigForm">
+            <div id="title">
                 <li>
-                    <!--<input type="radio" id="daily" name="choose" value="daily">-->
-                    <input type="radio" id="daily" name="choose" value="daily" onchange="ShowHideDiv();" oninput="Update(0,'daily')">
-                    <label for="daily">Daily</label>
+                    <h3>Add a routine task:</h3>
                 </li>
+                <!-- INPUT for taskName-->
                 <li>
-                    <!--<input type="radio" id="weekly" name="choose" value="weekly" onchange="showList('weekly', this);">-->
-                    <input type="radio" id="weekly" name="choose" value="weekly" onchange="ShowHideDiv();">
-                    <label for="weekly">Weekly</label>
+                    <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value,'name')" value="<?php echo "$taskName";?>"><br>
                 </li>
-                <li>
-                    <!--<input type="radio" id="biweekly" name="choose" value="biweekly" onchange="showList('biweekly', this);">-->
-                    <input type="radio" id="biweekly" name="choose" value="biweekly" onchange="ShowHideDiv();">
-                    <label for="biweekly">Biweekly</label>
-                </li>
-                <script>
-                    function ShowHideDiv() {
-                        var instruction = document.getElementById("instruction");
-                        weeklydropdown.style.display = "none";
-                        biweeklydropdown.style.display = "none";
-                        instruction.style.display = "none";
+            </div>
 
-                        if (weekly.checked) {
-                            showList('weekly', this);
-                        } else if (biweekly.checked) {
-                            showList('biweekly', this);
-                        } else if (monthly.checked) {
-                            instruction.style.display = "block";
-                            showList('monthly', this);
+            <!--include cat buttons!!-->
+            <div id="categories">
+                <li>
+                    <h3>Category:</h3>
+                </li>
+                <!-- Buttons for categories-->
+                <li>
+                    <input type="button" id="work" onclick="catFunction(0);Update(0,'category');" value="Work">
+                    <input type="button" id="exercise" onclick="catFunction(1);Update(1,'category');" value="Exercise">
+                    <input type="button" id="misc" onclick="catFunction(2);Update(2,'category');" value="Miscellaneous">
+                    <input type="button" id="meal" onclick="catFunction(3);Update(3,'category');" value="Meal Times">
+                </li>
+            </div>
+        
+            <!-- For frequency-->
+            <div class="frequency">
+                <h3>Recurring frequency: </h3>
+                <div class="ul">
+                    <li>
+                        <input type="radio" id="daily" name="choose" value="daily" onchange="ShowHideDiv();" oninput="Update(0,'daily')">
+                        <label for="daily">Daily</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="weekly" name="choose" value="weekly" onchange="ShowHideDiv();">
+                        <label for="weekly">Weekly</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="biweekly" name="choose" value="biweekly" onchange="ShowHideDiv();">
+                        <label for="biweekly">Biweekly</label>
+                    </li>
+                    <script>
+                        function ShowHideDiv() {
+                            var instruction = document.getElementById("instruction");
+                            weeklydropdown.style.display = "none";
+                            biweeklydropdown.style.display = "none";
+                            instruction.style.display = "none";
+
+                            if (weekly.checked) {
+                                showList('weekly', this);
+                            } else if (biweekly.checked) {
+                                showList('biweekly', this);
+                            } else if (monthly.checked) {
+                                instruction.style.display = "block";
+                                showList('monthly', this);
+                            }
                         }
-                    }
-                </script>
+                    </script>
+                    <li>
+                        <input type="radio" id="monthly" name="choose" value="monthly" onchange="ShowHideDiv();">
+                        <label for="monthly">Monthly</label>
+                        <h5 id="instruction" class="instruction" style="display: none;">Please key in a number from 1-31</h5>
+                    </li>
+                </div>
+
+                <!--For the dropdown lists-->
+                <div class="dropdown">
+                    <li>
+                        <select id="weeklydropdown" name="weeklydropdown" oninput="Update(this.value,'weekly')" style="display: none;" value="<?php echo $taskDay;?>">
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                            <option value="6">Saturday</option>
+                            <option value="0">Sunday</option>
+                        </select>
+                    </li>
+                    <li>
+                        <select id="biweeklydropdown" name="biweeklydropdown" oninput="Update(this.value,'biweekly')" style="display: none;" value="<?php echo $taskDay;?>">
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                            <option value="6">Saturday</option>
+                            <option value="0">Sunday</option>
+                        </select>
+        
+                        <select id="chooseWeeks" name="chooseWeeks" oninput="Update(this.value,'biweeklychoose')" style="display: none;" value="<?php echo $taskWeek;?>">
+                            <option value="0">Current Week</option>
+                            <option value="1">Next Week</option>
+                        </select>
+                    </li>
+                    <li>
+                        <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')" style="display: none;" value="<?php echo $taskDate;?>">
+                    </li>
+                </div>
+            </div>
+
+            <!--Time options-->
+            <div id="timeOptions">
                 <li>
-                    <input type="radio" id="monthly" name="choose" value="monthly" onchange="ShowHideDiv();">
-                    <label for="monthly">Monthly</label>
-                    <h5 id="instruction" class="instruction" style="display: none;">Please key in a number from 1-31</h5>
+                    <div class="startTime">
+                        <h3>Start time:</h3>
+                        <input type="time" id="startTime" name="startTime" oninput="Update(this.value, 'start')" value="<?php echo "$startTime";?>">
+                    </div>
+                </li>
+                <li>
+                    <div class="endTime">
+                        <h3>End time:</h3>
+                        <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')" value="<?php echo "$endTime";?>">
+                    </div>
                 </li>
             </div>
 
-            <!--For the dropdown lists-->
-            <!--Use javascript to replace??-->
-            <div class="dropdown">
-                <li>
-                    <select id="weeklydropdown" name="weeklydropdown" oninput="Update(this.value,'weekly')" style="display: none;" value="<?php echo $taskDay;?>">
-                        <option value="1">Monday</option>
-                        <option value="2">Tuesday</option>
-                        <option value="3">Wednesday</option>
-                        <option value="4">Thursday</option>
-                        <option value="5">Friday</option>
-                        <option value="6">Saturday</option>
-                        <option value="0">Sunday</option>
-                    </select>
-                </li>
-                <li>
-                    <select id="biweeklydropdown" name="biweeklydropdown" oninput="Update(this.value,'biweekly')" style="display: none;" value="<?php echo $taskDay;?>">
-                        <!--Can replace w javascript??-->
-                        <option value="1">Monday</option>
-                        <option value="2">Tuesday</option>
-                        <option value="3">Wednesday</option>
-                        <option value="4">Thursday</option>
-                        <option value="5">Friday</option>
-                        <option value="6">Saturday</option>
-                        <option value="0">Sunday</option>
-                    </select>
-    
-                    <select id="chooseWeeks" name="chooseWeeks" oninput="Update(this.value,'biweeklychoose')" style="display: none;" value="<?php echo $taskWeek;?>">
-                        <option value="0">Current Week</option>
-                        <option value="1">Next Week</option>
-                    </select>
-                </li>
-                <li>
-                    <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')" style="display: none;" value="<?php echo $taskDate;?>">
-                    <!--<h5 id="instruction" class="instruction" style="display: none;">Please key in a number from 1-31</h5>-->
-                </li>
+            <!--Buttons for ADD, DONE-->
+            <div class="btn-group-actions">
+                <button type="submit" name="add" id="add">Delete this routine task</button>
+                <button type="submit" name="done" id="done">Done</button>
             </div>
-        </div>
-
-        <!--Time options-->
-        <div id="timeOptions">
-            <li>
-                <div class="startTime">
-                    <h3>Start time:</h3>
-                    <input type="time" id="startTime" name="startTime" oninput="Update(this.value, 'start')" value="<?php echo "$startTime";?>">
-                </div>
-            </li>
-            <li>
-                <div class="endTime">
-                    <h3>End time:</h3>
-                    <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')" value="<?php echo "$endTime";?>">
-                </div>
-            </li>
-        </div>
-
-          <!--Buttons for ADD, DONE-->
-        <div class="btn-group-actions">
-            <!--<button id="add" onclick="Add(); newWindow();">Submit and Add another routine task</button>-->
-            <button type="submit" name="add" id="add">Delete this routine task</button>
-            
-            <button type="submit" name="done" id="done">Done</button>
-            <!--<button type ="submit" name="submit" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>-->
-        </div>
-        </form>
-
-        <form action="" method="POST" id="hidden">
         </form>
 
         <script>
@@ -206,7 +193,6 @@
                 }
             }
 
-            //TODO: To be confirmed with Shyun Yin
             let nameOfTask, start, startArr, end, endArr, cat_num, startHour, startMin, endHour, endMin;
             //let freq = 0
             let date = null;
@@ -259,7 +245,7 @@
                     jsFreq.value = freq_num;
                     jsFreq.name = "jsFreq";
                     ele.appendChild(jsFreq);
-    
+
                 } else if(type=='weekly') {
                     day = val;
                     freq_num = 1;
@@ -352,32 +338,31 @@
             var taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, taskWeek, taskDate;
 
             function Retrieve_Database_Info() {
-               
-                    // console.log("Retrieve data to fill up form");
-                    console.log(taskName + " is in retrieve database info!");
+                // console.log("Retrieve data to fill up form");
+                console.log(taskName + " is in retrieve database info!");
 
-                    /*For the setting of values to fill in the fields*/
-                    document.getElementById("taskName").value = taskName; 
-                    catFunction(taskCategory);//call function for change in colour of button
-                    //Logic to settle which radio button is clicked
-                    if (freq == 1) {
-                        document.querySelector("#daily").checked = true;
-                    } else if (freq == 2) {
-                        document.querySelector("#weekly").checked = true;
-                        document.getElementById("weeklydropdown").selectedIndex = taskDay;
-                    } else if (freq == 3) {
-                        document.querySelector("#biweekly").checked = true;          
-                        document.getElementById("biweeklydropdown").selectedIndex = taskDay;
-                        document.getElementById("chooseWeeks").selectedIndex = taskWeek;
-                    } else if (freq == 4) {
-                        document.querySelector("#monthly").checked = true;
-                        document.getElementById("date").value = taskDate;
-                    }
-                    ShowHideDiv(); //function to run to display the hidden dropdown
-                    document.getElementById("startTime").value = printvaljs(startTimeHour) + ":" + printvaljs(startTimeMin);
-                    document.getElementById("endTime").value = printvaljs(endTimeHour) + ":" + printvaljs(endTimeMin);
-                    console.log(taskName); //debugging
+                /*For the setting of values to fill in the fields*/
+                document.getElementById("taskName").value = taskName; 
+                catFunction(taskCategory);//call function for change in colour of button
+                //Logic to settle which radio button is clicked
+                if (freq == 1) {
+                    document.querySelector("#daily").checked = true;
+                } else if (freq == 2) {
+                    document.querySelector("#weekly").checked = true;
+                    document.getElementById("weeklydropdown").selectedIndex = taskDay;
+                } else if (freq == 3) {
+                    document.querySelector("#biweekly").checked = true;          
+                    document.getElementById("biweeklydropdown").selectedIndex = taskDay;
+                    document.getElementById("chooseWeeks").selectedIndex = taskWeek;
+                } else if (freq == 4) {
+                    document.querySelector("#monthly").checked = true;
+                    document.getElementById("date").value = taskDate;
+                }
+                ShowHideDiv(); //function to run to display the hidden dropdown
+                document.getElementById("startTime").value = printvaljs(startTimeHour) + ":" + printvaljs(startTimeMin);
+                document.getElementById("endTime").value = printvaljs(endTimeHour) + ":" + printvaljs(endTimeMin);
+                console.log(taskName); //debugging
             }
         </script>
-</body>
+    </body>
 </html>

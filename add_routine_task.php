@@ -3,160 +3,150 @@
 ?>
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>Add routine task</title>
+        <script type="text/javascript" type="module" src="add_routine_task.js"></script>
+        <script type="text/javascript" type="module" src="Window.js"></script>
+        <link rel="stylesheet" href="add_routine_task.css" />
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
 
-<head>
-    <title>Add routine task</title>
-    <script type="text/javascript" type="module" src="add_routine_task.js"></script>
-    <!--<script type="text/javascript" type="module" src="Routine_Final.js"></script>-->
-    <script type="text/javascript" type="module" src="Window.js"></script>
-    <link rel="stylesheet" href="add_routine_task.css?v=<?php echo time();?>">
-    <!-- <link rel="stylesheet" href="add_routine_task.css" /> -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+    <script>
+        function popupFunction() {
+            window.alert("Please input your routine tasks such as exercise times, meal times, daily, weekly, biweekly or monthly events!");
+        }    
+    </script>
 
-<script>
-    function popupFunction() {
-        window.alert("Please input your routine tasks such as exercise times, meal times, daily, weekly, biweekly or monthly events!");
-    }    
-</script>
-
-<body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;" onload="popupFunction()">
+    <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;" onload="popupFunction()">
     <!-- Parent-child relationship for inline-->
-    <form action="includes/add_routine_task.inc.php" method="POST" id="bigForm">
-        <div id="title">
-            <li>
-                <h3>Add a routine task:</h3>
-            </li>
-            <!-- INPUT for taskName-->
-            <li>
-                <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value,'name')"><br>
-            </li>
-        </div>
+        <form action="includes/add_routine_task.inc.php" method="POST" id="bigForm">
+            <div id="title">
+                <li>
+                    <h3>Add a routine task:</h3>
+                </li>
+                <!-- INPUT for taskName-->
+                <li>
+                    <input type="text" id="taskName" name="taskName" size="70" oninput="Update(this.value,'name')"><br>
+                </li>
+            </div>
 
-        <!--include cat buttons!!-->
-        <div id="categories">
-            <li>
-                <h3>Category:</h3>
-            </li>
-            <!-- Buttons for categories-->
-            <li>
-                <input type="button" id="work" onclick="catFunction(0);Update(0,'category');" value="Work">
-                <input type="button" id="exercise" onclick="catFunction(1);Update(1,'category');" value="Exercise">
-                <input type="button" id="misc" onclick="catFunction(2);Update(2,'category');" value="Miscellaneous">
-                <input type="button" id="meal" onclick="catFunction(3);Update(3,'category');" value="Meal Times">
-            </li>
-        </div>
+            <!--include cat buttons!!-->
+            <div id="categories">
+                <li>
+                    <h3>Category:</h3>
+                </li>
+                <!-- Buttons for categories-->
+                <li>
+                    <input type="button" id="work" onclick="catFunction(0);Update(0,'category');" value="Work">
+                    <input type="button" id="exercise" onclick="catFunction(1);Update(1,'category');" value="Exercise">
+                    <input type="button" id="misc" onclick="catFunction(2);Update(2,'category');" value="Miscellaneous">
+                    <input type="button" id="meal" onclick="catFunction(3);Update(3,'category');" value="Meal Times">
+                </li>
+            </div>
     
-        <!-- For frequency-->
-        <div class="frequency">
-            <h3>Recurring frequency: </h3>
-            <div class="ul">
-                <li>
-                    <!--<input type="radio" id="daily" name="choose" value="daily">-->
-                    <input type="radio" id="daily" name="choose" value="daily" onchange="ShowHideDiv();" oninput="Update(0,'daily')">
-                    <label for="daily">Daily</label>
-                </li>
-                <li>
-                    <!--<input type="radio" id="weekly" name="choose" value="weekly" onchange="showList('weekly', this);">-->
-                    <input type="radio" id="weekly" name="choose" value="weekly" onchange="ShowHideDiv();">
-                    <label for="weekly">Weekly</label>
-                </li>
-                <li>
-                    <!--<input type="radio" id="biweekly" name="choose" value="biweekly" onchange="showList('biweekly', this);">-->
-                    <input type="radio" id="biweekly" name="choose" value="biweekly" onchange="ShowHideDiv();">
-                    <label for="biweekly">Biweekly</label>
-                </li>
-                <script>
-                    function ShowHideDiv() {
-                        var instruction = document.getElementById("instruction");
-                        weeklydropdown.style.display = "none";
-                        biweeklydropdown.style.display = "none";
-                        instruction.style.display = "none";
+            <!-- For frequency-->
+            <div class="frequency">
+                <h3>Recurring frequency: </h3>
+                <div class="ul">
+                    <li>
+                        <input type="radio" id="daily" name="choose" value="daily" onchange="ShowHideDiv();" oninput="Update(0,'daily')">
+                        <label for="daily">Daily</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="weekly" name="choose" value="weekly" onchange="ShowHideDiv();">
+                        <label for="weekly">Weekly</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="biweekly" name="choose" value="biweekly" onchange="ShowHideDiv();">
+                        <label for="biweekly">Biweekly</label>
+                    </li>
+                    <script>
+                        function ShowHideDiv() {
+                            var instruction = document.getElementById("instruction");
+                            weeklydropdown.style.display = "none";
+                            biweeklydropdown.style.display = "none";
+                            instruction.style.display = "none";
 
-                        if (weekly.checked) {
-                            showList('weekly', this);
-                        } else if (biweekly.checked) {
-                            showList('biweekly', this);
-                        } else if (monthly.checked) {
-                            instruction.style.display = "block";
-                            showList('monthly', this);
+                            if (weekly.checked) {
+                                showList('weekly', this);
+                            } else if (biweekly.checked) {
+                                showList('biweekly', this);
+                            } else if (monthly.checked) {
+                                instruction.style.display = "block";
+                                showList('monthly', this);
+                            }
                         }
-                    }
-                </script>
+                    </script>
+                    <li>
+                        <input type="radio" id="monthly" name="choose" value="monthly" onchange="ShowHideDiv();">
+                        <label for="monthly">Monthly</label>
+                        <h5 id="instruction" class="instruction" style="display: none;">Please key in a number from 1-31</h5>
+                    </li>
+                </div>
+
+                <!--For the dropdown lists-->
+                <div class="dropdown">
+                    <li>
+                        <select id="weeklydropdown" name="weeklydropdown" oninput="Update(this.value,'weekly')" style="display: none;">
+                            <option value="" selected disabled hidden>Choose a day</option>
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                            <option value="6">Saturday</option>
+                            <option value="0">Sunday</option>
+                        </select>
+                    </li>
+                    <li>
+                        <select id="biweeklydropdown" name="biweeklydropdown" oninput="Update(this.value,'biweekly')" style="display: none;">
+                            <option value="" selected disabled hidden>Choose a day</option>
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                            <option value="6">Saturday</option>
+                            <option value="0">Sunday</option>
+                        </select>
+        
+                        <select id="chooseWeeks" name="chooseWeeks" oninput="Update(this.value,'biweeklychoose')" style="display: none;">
+                            <option value="" selected disabled hidden>Current/Next</option>
+                            <option value="0">Current Week</option>
+                            <option value="1">Next Week</option>
+                        </select>
+                    </li>
+                    <li>
+                        <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')" style="display: none;">
+
+                    </li>
+                </div>
+            </div>
+
+            <!--Time options-->
+            <div id="timeOptions">
                 <li>
-                    <input type="radio" id="monthly" name="choose" value="monthly" onchange="ShowHideDiv();">
-                    <label for="monthly">Monthly</label>
-                    <h5 id="instruction" class="instruction" style="display: none;">Please key in a number from 1-31</h5>
+                    <div class="startTime">
+                        <h3>Start time:</h3>
+                        <input type="time" id="startTime" name="startTime" oninput="Update(this.value, 'start')">
+                    </div>
+                </li>
+                <li>
+                    <div class="endTime">
+                        <h3>End time:</h3>
+                        <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
+                    </div>
                 </li>
             </div>
 
-            <!--For the dropdown lists-->
-            <!--Use javascript to replace??-->
-            <div class="dropdown">
-                <li>
-                    <select id="weeklydropdown" name="weeklydropdown" oninput="Update(this.value,'weekly')" style="display: none;">
-                        <option value="" selected disabled hidden>Choose a day</option>
-                        <option value="1">Monday</option>
-                        <option value="2">Tuesday</option>
-                        <option value="3">Wednesday</option>
-                        <option value="4">Thursday</option>
-                        <option value="5">Friday</option>
-                        <option value="6">Saturday</option>
-                        <option value="0">Sunday</option>
-                    </select>
-                </li>
-                <li>
-                    <select id="biweeklydropdown" name="biweeklydropdown" oninput="Update(this.value,'biweekly')" style="display: none;">
-                        <!--Can replace w javascript??-->
-                        <option value="" selected disabled hidden>Choose a day</option>
-                        <option value="1">Monday</option>
-                        <option value="2">Tuesday</option>
-                        <option value="3">Wednesday</option>
-                        <option value="4">Thursday</option>
-                        <option value="5">Friday</option>
-                        <option value="6">Saturday</option>
-                        <option value="0">Sunday</option>
-                    </select>
-    
-                    <select id="chooseWeeks" name="chooseWeeks" oninput="Update(this.value,'biweeklychoose')" style="display: none;">
-                        <option value="" selected disabled hidden>Current/Next</option>
-                        <option value="0">Current Week</option>
-                        <option value="1">Next Week</option>
-                    </select>
-                </li>
-                <li>
-                    <input type="number" id="date" name="date" min="1" max="31" oninput="Update(this.value,'date')" style="display: none;">
-                    <!--<h5 id="instruction" class="instruction" style="display: none;">Please key in a number from 1-31</h5>-->
-                </li>
+            <!--Buttons for ADD, DONE-->
+            <div class="btn-group-actions">
+                <button type="submit" name="add" id="add">Submit and Add another routine task</button>
+                
+                <button type="submit" name="done" id="done">Submit and Done adding ALL routine tasks</button>
             </div>
-        </div>
-
-        <!--Time options-->
-        <div id="timeOptions">
-            <li>
-                <div class="startTime">
-                    <h3>Start time:</h3>
-                    <input type="time" id="startTime" name="startTime" oninput="Update(this.value, 'start')">
-                </div>
-            </li>
-            <li>
-                <div class="endTime">
-                    <h3>End time:</h3>
-                    <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
-                </div>
-            </li>
-        </div>
-
-          <!--Buttons for ADD, DONE-->
-        <div class="btn-group-actions">
-            <!--<button id="add" onclick="Add(); newWindow();">Submit and Add another routine task</button>-->
-            <button type="submit" name="add" id="add">Submit and Add another routine task</button>
-            
-            <button type="submit" name="done" id="done">Submit and Done adding ALL routine tasks</button>
-            <!--<button type ="submit" name="submit" id="done" onclick="Done();">Submit and Done adding ALL routine tasks</button>-->
-        </div>
         </form>
 
         <script>
@@ -167,6 +157,7 @@
             let End = document.getElementById("endTime"); 
             let EndArr = [parseInt(End.value.substr(0, 2)), parseInt(End.value.substr(3, 4))]; //main array for end time
             let Freq = 0;
+
             /*checkRadioValue() function returns the freq number:
             * Daily: 0, weekly: 1, biweekly: 2, monthly: 3
             */
@@ -314,5 +305,5 @@
                 }
             }
         </script>
-</body>
+    </body>
 </html>

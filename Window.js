@@ -1,39 +1,3 @@
-//In this class, we will be creating window objects which represent windows of time during which a particular task is to be done, a break is to be taken, etc. Empty windows are periods of time where nothing is schedule (no tasks or breaks) 
-/*
-Additional questions:
-
-1. What if the starting time of a window is in the past but the ending time is in the future?
-*/
-// import {Break} from './Break.js';
-
-//Importing relevant firebase libraries
-/*
-import {firebase} from "firebase/app";
-import "firebase/analytics";
-import "firebase/auth";
-import "firebase/firestore";
-*/
-//import Time from '../Time.js';
-/*
-const firebaseConfig = {
-    apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-    authDomain: "orbital-24-7.firebaseapp.com",
-    databaseURL: "https://orbital-24-7-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "orbital-24-7",
-    storageBucket: "orbital-24-7.appspot.com",
-    messagingSenderId: "459091456870",
-    appId: "1:459091456870:web:21134477e94d50e25ecea7",
-    measurementId: "G-WQMCMBMFCK"
-};
-
-// Initialize Firebase
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}else {
-    firebase.app(); // if already initialized, use that one
-}
-let cloudDB = firebase.firestore(); //TODO: Should be changed to the specific user's as well 
-*/
 class Window {
 //export class Window {
     /**

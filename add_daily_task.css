@@ -104,102 +104,6 @@ input[type="text"]:hover {
 	background-color: #a1e6ff;
 }
 
-/*For number of sections section*/
-/* #sessions {
-  font-family: "Signika Negative", sans-serif;
-  margin-top: 5px;
-  font-size: 13px;
-}
-.numSessions {
-  font-family: "Signika Negative", sans-serif;
-  margin-right: 20px;
-} */
-/* #onesession {
-  font-family: "Signika Negative", sans-serif;
-  margin-left: 10px;
-  background-color: #e3aba1;
-  font-weight: bold;
-  font-size: medium;
-  padding: 8px;
-  width: 50px;
-  border-radius: 5px; 
-  border-width: 2px;
-  border-color: black;
-} */
-/* #twosessions {
-  font-family: "Signika Negative", sans-serif;
-  margin-left: 10px;
-  background-color: #e3aba1;
-  font-weight: bold;
-  font-size: medium;
-  padding: 8px;
-  width: 50px;
-  border-radius: 5px;
-  border-width: 2px;
-  border-color: black;
-} */
-/* #threesessions {
-  font-family: "Signika Negative", sans-serif;
-  margin-left: 10px;
-  background-color: #e3aba1;
-  font-weight: bold;
-  font-size: medium;
-  padding: 8px;
-  width: 50px;
-  border-radius: 5px;
-  border-width: 2px;
-  border-color: black;
-} */
-/* #onesession:hover {
-  background-color: #fedcce;
-  transition-duration: 0.3s;
-}
-#twosessions:hover {
-  background-color: #fedcce;
-  transition-duration: 0.3s;
-}
-#threesessions:hover {
-  background-color: #fedcce;
-  transition-duration: 0.3s;
-} */
-
-/*flexbox for TIME vs DURATION*/ /*in javascript have to link checkbox to content*/
-/* nav {
-  display: flex;
-  align-items: center;
-  width: 600px;
-  margin: 0 -5px;
-} */
-/* #or {
-  font-family: "Signika Negative", sans-serif;
-  margin: 10px;
-  padding-left: 80px;
-} */
-/* #selectDuration {
-	margin-top: 7px;
-	padding-left: 80px;
-}
-.durationOption {
-	font-family: "Signika Negative", sans-serif;
-	padding-left: 270px;
-	position: absolute;
-	top: 310px;
-} */
-/* #doneDurationBtn {
-	font-family: "Signika Negative", sans-serif;
-	background-color: #317575ff;
-	color: white;
-	border-color: black;
-	border-width: 2px;
-	border-radius: 5px;
-	width: 60px;
-	height: 30px;
-	margin-left: 330px;
-	margin-top: 150px;
-	cursor: pointer;
-	position: absolute;
-	z-index: 10;
-} */
 #doneTimeBtn {
 	font-family: "Signika Negative", sans-serif;
 	background-color: #317575ff;
@@ -215,36 +119,11 @@ input[type="text"]:hover {
 	position: absolute;
 	z-index: 10;
 }
-/* #doneDurationBtn:hover {
-  background-color: #52c4c4;
-} */
+
 #doneTimeBtn:hover {
 	background-color: #52c4c4;
 }
-/* #hour {
-  font-size: large;
-  font-family: Signika Negative, sans-serif;
-  background-color: #fdfd96;
-  border-radius: 5px;
-  border-width: 2px;
-  border-color: black;
-  width: 50px;
-}
-#hour:hover {
-  background-color: #ffffcc;
-}
-#minute {
-  font-size: large;
-  font-family: Signika Negative, sans-serif;
-  background-color: #fdfd96;
-  border-radius: 5px;
-  border-width: 2px;
-  border-color: black;
-  width: 50px;
-}
-#minute:hover {
-  background-color: #ffffcc;
-} */
+
 #counter {
 	font-family: "Signika Negative", sans-serif;
 	font-size: large;
@@ -256,12 +135,7 @@ input[type="text"]:hover {
 #selectTime {
 	font-family: "Signika Negative", sans-serif;
 }
-/* #counterOutput {
-  color: black;
-  font-size: large;
-  position: absolute;
-  z-index: 2;
-} */
+
 .startTime {
 	font-family: Signika Negative, sans-serif;
 	position: absolute;
@@ -368,17 +242,7 @@ input[type="text"]:hover {
 	cursor: pointer;
 	margin-top: 370px;
 }
-/* #add {
-  font-family: Signika Negative, sans-serif;
-  background-color: #e3aba1;
-  border-radius: 5px;
-  border-width: 2px;
-  border-color: black;
-  font-size: medium;
-  margin-left: 100px;
-  height: 35px;
-  cursor: pointer;
-} */
+
 #done {
 	font-family: Signika Negative, sans-serif;
 	background-color: #e3aba1;

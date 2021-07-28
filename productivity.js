@@ -1,5 +1,4 @@
 class ProductivityStatistics {
-
     /**
      * Display of the total number of hours user spent on completing tasks for the day (accumulated based on the data retrieved from timers)
      * 
@@ -39,6 +38,7 @@ class ProductivityStatistics {
         }
             ProductivityStatistics.prototype.percentageCompletion += ProductivityStatistics.prototype.numOfTasksDone / ProductivityStatistics.prototype.numOfScheduledTasks; 
     }
+
     //TODO: If a user finishes their tasks earlier than they are meant to, then it should not be recorded as less productive! As long as user clicks completed button, it should just be taken as productive. If the user exceeds (?) --> how will the timer extend?
     categoryBreakdown(finalisedTaskArr) {
         let workMins = 0;
@@ -64,11 +64,6 @@ class ProductivityStatistics {
             }
 
         }
-        /*
-        let workPortion = ((ProductivityStatistics.prototype.workHours / ProductivityStatistics.prototype.totalHours) * 100);
-        let miscellaneousPortion = ((ProductivityStatistics.prototype.miscellaneousHours / ProductivityStatistics.prototype.totalHour) * 100);
-        let exercisePortion = ((ProductivityStatistics.prototype.exerciseHours / ProductivityStatistics.prototype.totalHours) * 100);
-        */
     }
 
     productivityCalculation(fixedTaskArr, counterArr) {
@@ -83,24 +78,6 @@ class ProductivityStatistics {
             }
             return ProductivityStatistics.prototype.prodSlots[i];
         }
-
-        /* 
-        ONLY FOR INITIALISATION!!!
-        let slot1EndTime = Time.findEndTime(RoutineInfo.getSleepTime(), [4, 0]);
-        let slot2EndTime = Time.findEndTime(slot1EndTime, [4, 0]);
-        let slot3EndTime = Time.findEndTime(slot2EndTime, [4, 0]);
-        let slot4EndTime = Time.findEndTime(slot3EndTime, [4, 0]);
-
-        let now = new Date();
-        let slot1 = new Window("Slot 1", now.getFullYear(), now.getMonth(), now.getDate(), RoutineInfo.getSleepTime(), slot1EndTime, 2); //TODO: Created new type 2 for this (I just don't want it to interfere with anything else)
-        ProductivityStatistics.prototype.prodSlots.push([slot1]);
-        let slot2 = new Window("Slot 2", now.getFullYear(), now.getMonth(), now.getDate(), slot1EndTime, slot2EndTime, 2);
-        ProductivityStatistics.prototype.prodSlots.push([slot2]);
-        let slot3 = new Window("Slot 3", now.getFullYear(), now.getMonth(), now.getDate(), slot2EndTime, slot3EndTime, 2);
-        ProductivityStatistics.prototype.prodSlots.push([slot3]);
-        let slot4 = new Window("Slot 4", now.getFullYear(), now.getMonth(), now.getDate(), slot3EndTime, slot4EndTime, 2);
-        ProductivityStatistics.prototype.prodSlots.push([slot4]);
-        */
 
         let j;
         for (j = 0; j < fixedTaskArr.length; j++) {
@@ -158,30 +135,4 @@ class ProductivityStatistics {
         }
         
     }
-
 }
-ProductivityStatistics.prototype.dayCount = 0;
-ProductivityStatistics.prototype.totalMinsForWeek;
-ProductivityStatistics.prototype.prodSlots = [];
-
-
-ProductivityStatistics.prototype.workHours;
-ProductivityStatistics.prototype.miscellaneousHours;
-ProductivityStatistics.prototype.exerciseHours;
-ProductivityStatistics.prototype.totalHours = [];
-ProductivityStatistics.prototype.categoryAvg = []; //Format: [[work, misc, exer], ...]
-ProductivityStatistics.prototype.productiveSlot1;
-ProductivityStatistics.prototype.productiveSlot2;
-ProductivityStatistics.prototype.productiveSlot3;
-ProductivityStatistics.prototype.productiveSlot4;
-// To increase every time a task is added
-// Reset at the end of every day
-// Change accordingly if user deletes and reschedules tasks
-ProductivityStatistics.prototype.numOfScheduledTasks;
-
-// Tracks the number of tasks done for the day (to increase if the counter completes)
-// Change accordingly if user deletes and reschedules tasks
-ProductivityStatistics.prototype.numOfTasksDone;
-
-ProductivityStatistics.prototype.percentageCompletion;
-

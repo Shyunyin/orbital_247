@@ -14,7 +14,7 @@
         $starttimehour = $_POST['startHour'];
         $starttimemin = $_POST['allMin'];
         $endtimehour = $_POST['endHour'];
-         $endtimemin = $_POST['allMin']; 
+        $endtimemin = $_POST['allMin']; 
 
         echo $starttimehour; //debugging
         echo $endtimehour; //debugging
@@ -26,4 +26,4 @@
         echo ("We will move onto adding more information now!");
         header("location: ../main_schedule.php");
         exit();
-      } 
+  } 

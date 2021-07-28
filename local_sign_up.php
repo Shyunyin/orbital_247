@@ -214,16 +214,10 @@
 				else if ($_GET["error"] == "usernametaken") {
 					echo "<p>Username already taken!</p>";
 				}
-				//else if ($_GET["error"] == "none") {
-				//	echo "<p>You have signed up!</p>";
-				//}
 			}
 		?>
-			<footer class="footer">
-				<a class="member" href="http://localhost/login.php">Already have an account?</a>
-			</footer>
-	
-
+		<footer class="footer">
+			<a class="member" href="http://localhost/login.php">Already have an account?</a>
+		</footer>
 	</body>
-	
 </html>

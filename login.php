@@ -45,8 +45,6 @@
 				padding: 10px;
 			}
 
-
-
 			/* For the username box. */
 			.login input[type="text"] {
 				width: 250px;
@@ -198,35 +196,31 @@
 		</div>
 		<br />
 
-
-		
-			<div class="login">
-                <!-- need to change type and name to email but need to update css accordingly-->
-				<form action="includes/login.inc.php" method="POST">
-					<input type="text" placeholder="Username/Email" name="uid" id="email_id"/><br />
-					<input type="password" placeholder="Password" name="pwd" id="pwd"/><br />
-					<button type="submit" name="submit" id="loginbtn">Log In</button>
-				</form>	
-			</div>
-			<!-- Error handling -->
-			<?php
-				if (isset($_GET["error"])) {
-					if ($_GET["error"] == "emptyinput") {
-						echo "<p>Fill in all fields!</p>";
-					}
-					else if ($_GET["error"] == "wronglogin") {
-						echo "<p>Incorrect login info!</p>";
-					}
+		<div class="login">
+			<div class="or">---- or ----</div>
+			<!-- need to change type and name to email but need to update css accordingly-->
+			<form action="includes/login.inc.php" method="POST">
+				<input type="text" placeholder="Username/Email" name="uid" id="email_id"/><br />
+				<input type="password" placeholder="Password" name="pwd" id="pwd"/><br />
+				<button type="submit" name="submit" id="loginbtn">Log In</button>
+			</form>	
+		</div>
+		<!-- Error handling -->
+		<?php
+			if (isset($_GET["error"])) {
+				if ($_GET["error"] == "emptyinput") {
+					echo "<p>Fill in all fields!</p>";
 				}
-			?>
-			<footer class="footer">
-				<a class="create" href="../local_sign_up.php"
-					>Don't have an account?</a
-				>
-				<a class="forgotten" href="../forgot_password.php">Forgot password?</a>
-			</footer>
+				else if ($_GET["error"] == "wronglogin") {
+					echo "<p>Incorrect login info!</p>";
+				}
+			}
+		?>
+		<footer class="footer">
+			<a class="create" href="../local_sign_up.php"
+				>Don't have an account?</a
+			>
+			<a class="forgotten" href="../forgot_password.php">Forgot password?</a>
+		</footer>
 	</body>
 </html>
-
-
-

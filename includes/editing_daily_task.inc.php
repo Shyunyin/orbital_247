@@ -10,8 +10,6 @@
     //Minimally need these details
     $oldStartHour = (int) $_POST["oldStartHour"];
     $oldStartMin = (int) $_POST["oldStartMin"];
-    // $oldEndHour = (int) $_POST[""];
-    // $oldEndMin = (int) $_POST[""];
 
     $newTask = $_POST["taskName"];
     $newCat = (int) $_POST["jsCat"];

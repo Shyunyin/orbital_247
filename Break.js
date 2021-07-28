@@ -1,4 +1,4 @@
-export class Break {
+class Break {
     /**
      * Calculates 
      * @param {Time} startTime 
@@ -37,17 +37,6 @@ export class Break {
             return 0;
         }
     }
-
-    static accumulateWorkTime(startTime, endTime) {
-        duration = Time.duration(startTime, endTime);
-        Break.prototype.accumulatedWorkTime += (duration.getHours() * 60) + duration.getMins();
-    }
-    
-    static clearAccumulatedWorkTime() {
-        Break.prototype.accumulatedWorkTime = 0;
-    }
 }
 
-Break.prototype.accumulatedWorkTime;
-Break.prototype.accumulatedBreakTime; //To be just in minutes
 

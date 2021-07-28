@@ -3,9 +3,6 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Local Sign Up</title>
-		<!--Importing Firebase and Cloud Firestore libraries-->
-		<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
 		<style>
 			@import url("https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap");
 
@@ -25,6 +22,7 @@
 				top: calc(50% - 35px);
 				left: calc(50% -255px);
 			}
+
 			/* This is for the big 24/7 symbol at the top left hand corner. */
 			.header div {
                 position: absolute;
@@ -181,9 +179,11 @@
 		<div class="header">
 			<div>24/7</div> <br>
 		</div>
+
         <div class="subheader">
             <div>Password Reset</div> <br>
         </div>
+
         <div class="instruction">
             <div>Enter the email address you use to log in to 24/7 and a link to reset your password will be sent.</div> <br>
         </div>
@@ -197,7 +197,6 @@
 			<footer class="footer">
 				<a class="back" href="http://localhost/login.php">Back</a>
 			</footer>
-
 		</form>
 
 		<script language="javascript">
@@ -207,7 +206,7 @@
                 return re.test(email);
             }
       
-			      function check(form) {
+			function check(form) {
                 if (form.email.value.length == 0) {
                     alert("Please enter your email address.");
                 } else if (validateEmail(form.email.value)){
@@ -215,24 +214,7 @@
                 } else {
                     alert("Please enter a valid email address.");
                 }
-            }   
-
-			/*Initialising of firebase*/
-			var firebaseConfig = {
-            apiKey: "AIzaSyBtFGTnYwEU5OgIa4SpKvMaGAa1ofEjs3U",
-            authDomain: "orbital-24-7.firebaseapp.com",
-            projectId: "orbital-24-7",
-            storageBucket: "orbital-24-7.appspot.com",
-            messagingSenderId: "459091456870",
-            appId: "1:459091456870:web:21134477e94d50e25ecea7",
-            measurementId: "G-WQMCMBMFCK"
-        	};
-        	// Initialize Firebase
-        	firebase.initializeApp(firebaseConfig);
-        	firebase.analytics();
-        
+            }           
 		</script>
-
 	</body>
-	
 </html>

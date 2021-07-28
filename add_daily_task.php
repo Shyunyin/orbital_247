@@ -80,12 +80,12 @@
         </div>
         <div class="endTime">
         <h3>End time:</h3>
-          <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
+
+        <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
         </div>
         <input type="button" id="doneTimeBtn" value="Done!" onclick="updateRemainingTime()">
         <!--<input type="button" id="doneTimeBtn" value="Done!" onclick="calculationTime()">-->
       </div>
-  
     
   
       <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
@@ -94,36 +94,10 @@
         <p>Estimated remaining time</p>
         <p id="counterOutput"></p>
       </div>
-  
-  
-      <!-- For follow up task
-      <div class="followTask">
-        <br>
-          <li><h3>Is this task followed by another task?</h3></li>
-          <li><input type="radio" id="yes" name="check" value="A" onchange="showList('A', this); return false;" onclick="RetrieveWithID()">
-            <label class="yes" for="yes">Yes</label></li>
-          <li><input type="radio" id="no" name="check" checked="checked" value="B" onchange="showList('B', this); return false;">
-            <label class="no" for="no">No</label><br></li>
-        </br>
-  
-        Code for dropdown menu linked to javascript, database of other tasknames-->
-        <!-- <div id="A" style="display:none">
-          <Container to contain the dynamically added elements-->
-          <!-- <div> -->
-            <!-- <select id="dropdownList" oninput="Update(this.value, 'followname')"> -->
-              <!-- <option value="" selected disabled hidden>Select a task</option> -->
-            <!-- </select> -->
-          <!-- </div> -->
-          <!-- <h4 id="sequence">(Selected task will be scheduled after the created task)</h4> -->
-        <!-- </div> -->
-      
-        <!-- <div id="B" style="display:none">  -->
-      <!-- </div>  -->
 
-  
       <!--Buttons for DELETE, ADD, DONE-->
       <div class="btn-group-actions">
-        <!-- <li><input type="submit" id="delete" value="Delete task" onclick="DeleteTask()"></li> -->
+        <li><input type="button" id="delete" value="Delete task" onclick="DeleteTask()"></li>
         <!-- <li><button id="add" >Add another task</button></li> -->
         <!--<li><input type="button" id="done" value="Submit" onclick="frontEndSubmit();check()"></li>-->
         <li><button type="submit" id="done" name="done">Submit</button></li>
@@ -150,6 +124,10 @@
         let End = document.getElementById("endTime"); 
         // let EndArr = [parseInt(End.value.substr(0, 2)), parseInt(End.value.substr(3, 4))]; //main array for end time
         let DateInput = document.getElementById("dateInput");
+        let FollowUpTask = document.getElementById("dropdownList"); //value to get taskname
+        let Sequence = document.getElementById("sequence"); //value to get sequence
+        let Hour = document.getElementById("hour");
+        let Minute = document.getElementById("minute");
         //numSessions can be gotten from numOfSessions in the other javascript file
         
         let nameOfTask = NameOfTask.value;
@@ -159,6 +137,11 @@
         let end = End.value;
         let endArr = [parseInt(end.substr(0, 2)), parseInt(end.substr(3, 4))];
         let dateInput = DateInput.value;
+        let followUpTask = FollowUpTask.value;
+        let sequence = Sequence.value;
+        let hour = Hour.value;
+        let minute = Minute.value;
+        let numSessions = numOfSessions; //variable from other file
         // let nameOfTask, categoryNum, start, startArr, end, endArr, dateInput, followUpTask, sequence, hour, minute;
         var dateNumber = 0;
         var jsRemainingDuration = 0;
@@ -221,6 +204,38 @@
             jsEndMin.name = "jsEndMin";
             ele.appendChild(jsEndMin);
 
+          } else if (type=='followname'){
+            followUpTask=val;
+
+            var jsFollowUp = document.createElement("input");
+            jsFollowUp.type = "hidden";
+            jsFollowUp.value = followUpTask;
+            jsFollowUp.name = "jsFollowUp";
+            ele.appendChild(jsFollowUp);
+
+          } else if (type=='followseq'){
+            sequence=val;
+            
+            // Still need this?
+
+          } else if (type=='hour'){
+            hour=val;
+
+            var jsHour = document.createElement("input");
+            jsHour.type = "hidden";
+            jsHour.value = hour;
+            jsHour.name = "jsHour";
+            ele.appendChild(jsHour);
+
+          } else if (type=='min'){
+            minute=val;
+
+            var jsMin = document.createElement("input");
+            jsMin.type = "hidden";
+            jsMin.value = minute;
+            jsMin.name = "jsMin";
+            ele.appendChild(jsMin);
+
           } else if (type=='work'){
             categoryNum=val;
 
@@ -247,6 +262,34 @@
             jsCat.value = categoryNum;
             jsCat.name = "jsCat";
             ele.appendChild(jsCat);
+
+          } else if (type=='one'){
+            numSessions=val;
+
+            var jsNum = document.createElement("input");
+            jsNum.type = "hidden";
+            jsNum.value = numSessions;
+            jsNum.name = "jsNum";
+            ele.appendChild(jsNum);
+
+          } else if (type=='two'){
+            numSessions=val;
+
+            var jsNum = document.createElement("input");
+            jsNum.type = "hidden";
+            jsNum.value = numSessions;
+            jsNum.name = "jsNum";
+            ele.appendChild(jsNum);
+
+          } else if (type=='three'){
+            numSessions=val;
+
+            var jsNum = document.createElement("input");
+            jsNum.type = "hidden";
+            jsNum.value = numSessions;
+            jsNum.name = "jsNum";
+            ele.appendChild(jsNum);
+
           }
         }
 

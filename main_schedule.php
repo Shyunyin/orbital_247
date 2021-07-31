@@ -110,63 +110,105 @@
             console.log("generateSchedule is called");
             let currArr = [];
             let name, year, month, date, startTimeHour, startTimeMin, endTimeHour, endTimeMin, type, newWin;
-                // STEP 1: Obtain all the fixed tasks for the day
-                <?php
-                    $user = 'root'; 
-                    $pass = '';
-                    $db='orbital247';
-                    $conn = mysqli_connect('localhost', $user, $pass, $db);
-                    //TODO: We need to obtain the year, month and date from the html page that directs us here. So update these variables here accordingly later.
-                    date_default_timezone_set('Singapore');
-                    $taskYear = date("Y");
-                    $taskMonth = date("m") - 1; // For javascript, months span from 0 - 11. This is already accounted for in the main schedule page.
-                    $taskDate = date("d"); //Just for testing!!
-                    $type = 1; //Type for fixed tasks is always 1
-                    $userid = $_SESSION["userid"];
+            // STEP 1: Obtain all the fixed tasks for the day
+            <?php
+                $user = 'root'; 
+                $pass = '';
+                $db='orbital247';
+                $conn = mysqli_connect('localhost', $user, $pass, $db);
+                //TODO: We need to obtain the year, month and date from the html page that directs us here. So update these variables here accordingly later.
+                date_default_timezone_set('Singapore');
+                $taskYear = date("Y");
+                $taskMonth = date("m") - 1; // For javascript, months span from 0 - 11. This is already accounted for in the main schedule page.
+                //$taskDate = (int) $_POST['jsDate'];
+                $taskDate = date("d"); //Just for testing!!
+                $type = 1; //Type for fixed tasks is always 1
+                //$userid = -1;
+                $userid = $_SESSION["userid"];
 
 
-                    $sql = "SELECT * FROM fixedtaskwindow WHERE userid = $userid AND taskYear = $taskYear AND taskMonth = $taskMonth AND taskDate = $taskDate;";
+                $sql = "SELECT * FROM fixedtaskwindow WHERE userid = $userid AND taskYear = $taskYear AND taskMonth = $taskMonth AND taskDate = $taskDate;";
 
-                    $fullDate = $taskYear."-".($taskMonth + 1)."-".$taskDate;
-                    $timestamp = strtotime($fullDate);
-                    $dayNum = date('w', $timestamp);
+                $fullDate = $taskYear."-".($taskMonth + 1)."-".$taskDate;
+                $timestamp = strtotime($fullDate);
+                $dayNum = date('w', $timestamp);
 
-                    $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 0;";
+                $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 0;";
 
-                    $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";
+                $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";
 
-                    //Biweekly update first
-                    $update1 = "UPDATE routinetask SET week = 0, taskStatus = 0 WHERE userid = $userid AND taskDay = $dayNum AND week = 0 AND taskStatus = 1;";
+                //Biweekly update first
+                // $update1 = "UPDATE routinetask SET week = 0, taskStatus = 0 WHERE userid = $userid AND taskDay = $dayNum AND week = 0 AND taskStatus = 1;";
 
-                    $update2 = "UPDATE routinetask SET week = 1, taskStatus = 0 WHERE userid = $userid AND taskDay = $dayNum AND week = 1 AND taskStatus = 1;";
+                // $update2 = "UPDATE routinetask SET week = 1, taskStatus = 0 WHERE userid = $userid AND taskDay = $dayNum AND week = 1 AND taskStatus = 1;";
 
-                    mysqli_query($conn, $update1);
-                    mysqli_query($conn, $update2);
+                // mysqli_query($conn, $update1);
+                // mysqli_query($conn, $update2);
 
-                    if ($dayNum == 0) {
-                        $update3 = "UPDATE routinetask SET week = 1, taskStatus = 1 WHERE userid = $userid AND taskDay = 6 AND week = 0 AND taskStatus = 0;";
+                // if ($dayNum == 0) {
+                //     $update3 = "UPDATE routinetask SET week = 1, taskStatus = 1 WHERE userid = $userid AND taskDay = 6 AND week = 0 AND taskStatus = 0;";
 
-                        $update4 = "UPDATE routinetask SET week = 0, taskStatus = 1 WHERE userid = $userid AND taskDay = 6 AND week = 1 AND taskStatus = 0;";
+                //     $update4 = "UPDATE routinetask SET week = 0, taskStatus = 1 WHERE userid = $userid AND taskDay = 6 AND week = 1 AND taskStatus = 0;";
 
-                        mysqli_query($conn, $update3);
-                        mysqli_query($conn, $update4);
-                    } else {
-                        $update5 = "UPDATE routinetask SET week = 1, taskStatus = 1 WHERE userid = $userid AND taskDay = $dayNum - 1 AND week = 0 AND taskStatus = 0;";
+                //     mysqli_query($conn, $update3);
+                //     mysqli_query($conn, $update4);
+                // } else {
+                //     $update5 = "UPDATE routinetask SET week = 1, taskStatus = 1 WHERE userid = $userid AND taskDay = $dayNum - 1 AND week = 0 AND taskStatus = 0;";
 
-                        $update6 = "UPDATE routinetask SET week = 0, taskStatus = 1 WHERE userid = $userid AND taskDay = $dayNum - 1 AND week = 1 AND taskStatus = 0;";
+                //     $update6 = "UPDATE routinetask SET week = 0, taskStatus = 1 WHERE userid = $userid AND taskDay = $dayNum - 1 AND week = 1 AND taskStatus = 0;";
 
-                        mysqli_query($conn, $update5);
-                        mysqli_query($conn, $update6);
+                //     mysqli_query($conn, $update5);
+                //     mysqli_query($conn, $update6);
+                // }
+
+                //$biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2 AND taskDay = $dayNum AND week = 0;";
+
+                $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2;";
+
+                $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 3 AND taskDate = $taskDate;";
+
+                $routineChecks = [$dailySql, $weeklySql, $biweeklySql, $monthlySql];
+
+                $result = mysqli_query($conn, $sql);
+                
+                if ($result) {
+                    $resultCheck = mysqli_num_rows($result);
+                    $data = array();
+                    if ($resultCheck > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $data[] = $row;   
+                        }   
                     }
+                    foreach($data as $single) {
+                        $name = $single['taskName'];
+                        echo "name = '$name';";
+                        $year = $single['taskYear'];
+                        echo "year = parseInt($year);";
+                        $month = $single['taskMonth'];
+                        echo "month = parseInt($month);";
+                        $date = $single['taskDate'];
+                        echo "date = parseInt($date);";
+                        $startTimeHour = $single['startTimeHour'];
+                        echo "startTimeHour = parseInt($startTimeHour);";
+                        $startTimeMin = $single['startTimeMin'];
+                        echo "startTimeMin = parseInt($startTimeMin);";
+                        $endTimeHour = $single['endTimeHour'];
+                        echo "endTimeHour = parseInt($endTimeHour);";
+                        $endTimeMin = $single['endTimeMin'];
+                        echo "endTimeMin = parseInt($endTimeMin);";
+                        $type = $single['taskType'];
+                        echo "type = parseInt($type);";
+                        
+                        echo 'newWin = new Window(name, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);';
 
-                    $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2 AND taskDay = $dayNum AND week = 0;";
+                        echo 'currArr.push(newWin);';
+                    }
+                }
+                echo 'console.log(currArr);';
 
-                    $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 3 AND taskDate = $taskDate;";
-
-                    $routineChecks = [$dailySql, $weeklySql, $biweeklySql, $monthlySql];
-
-                    $result = mysqli_query($conn, $sql);
-                    
+                foreach($routineChecks as $check) {
+                    $result = mysqli_query($conn, $check);
+                
                     if ($result) {
                         $resultCheck = mysqli_num_rows($result);
                         $data = array();
@@ -176,44 +218,35 @@
                             }   
                         }
                         foreach($data as $single) {
-                            $name = $single['taskName'];
-                            echo "name = '$name';";
-                            $year = $single['taskYear'];
-                            echo "year = parseInt($year);";
-                            $month = $single['taskMonth'];
-                            echo "month = parseInt($month);";
-                            $date = $single['taskDate'];
-                            echo "date = parseInt($date);";
-                            $startTimeHour = $single['startTimeHour'];
-                            echo "startTimeHour = parseInt($startTimeHour);";
-                            $startTimeMin = $single['startTimeMin'];
-                            echo "startTimeMin = parseInt($startTimeMin);";
-                            $endTimeHour = $single['endTimeHour'];
-                            echo "endTimeHour = parseInt($endTimeHour);";
-                            $endTimeMin = $single['endTimeMin'];
-                            echo "endTimeMin = parseInt($endTimeMin);";
-                            $type = $single['taskType'];
-                            echo "type = parseInt($type);";
-                            
-                            echo 'newWin = new Window(name, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);';
+                            if ($single['freq'] == 2) { // If biweely, need to do extra checks
+                                $startDate = date_create($single['startDate']);
+                                $today = date_create($taskYear . "-" . $taskMonth . "-" . $taskDate);
+                                $diff = date_diff($startDate,$today);
+                                $daysPassed = $diff->format("%a");
+                                $daysPassed = (int) $daysPassed;
 
-                            echo 'currArr.push(newWin);';
-                        }
-                    }
-                    echo 'console.log(currArr);';
+                                if ($daysPassed % 14 == 0) {
+                                    $name = $single['taskName'];
+                                    echo "name = '$name';";
+                                    echo "year = $taskYear;";
+                                    echo "month = $taskMonth;";
+                                    echo "date = $taskDate;";
+                                    $startTimeHour = $single['startTimeHour'];
+                                    echo "startTimeHour = parseInt($startTimeHour);";
+                                    $startTimeMin = $single['startTimeMin'];
+                                    echo "startTimeMin = parseInt($startTimeMin);";
+                                    $endTimeHour = $single['endTimeHour'];
+                                    echo "endTimeHour = parseInt($endTimeHour);";
+                                    $endTimeMin = $single['endTimeMin'];
+                                    echo "endTimeMin = parseInt($endTimeMin);";
+                                    $type = $single['taskCategory'];
+                                    echo "type = parseInt($type);";
+                                    
+                                    echo 'newWin = new Window(name, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);';
 
-                    foreach($routineChecks as $check) {
-                        $result = mysqli_query($conn, $check);
-                    
-                        if ($result) {
-                            $resultCheck = mysqli_num_rows($result);
-                            $data = array();
-                            if ($resultCheck > 0) {
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    $data[] = $row;   
-                                }   
-                            }
-                            foreach($data as $single) {
+                                    echo 'currArr.push(newWin);';
+                                }
+                            } else {
                                 $name = $single['taskName'];
                                 echo "name = '$name';";
                                 echo "year = $taskYear;";
@@ -231,99 +264,99 @@
                                 echo "type = parseInt($type);";
                                 
                                 echo 'newWin = new Window(name, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);';
-    
+
                                 echo 'currArr.push(newWin);';
                             }
                         }
                     }
-                    echo "year = '$taskYear';";
-                    echo "month = '$taskMonth';";
-                    echo "date = '$taskDate';";
-                ?>
-
-                console.log(currArr);
-                // STEP 2: Sort out the fixed tasks in chronological order
-                let sortedArr = [];
-                for (let i = 0; i < currArr.length; i++) {
-                    let innerIndex = 0
-                    for (let j = 0; j < sortedArr.length; j++) {
-                        if (!(currArr[i]).isCompletelyAfter(sortedArr[j])) {
-                            j = sortedArr.length
-                        } else {
-                            innerIndex++;
-                        }
-                    }
-                    sortedArr.splice(innerIndex, 0, currArr[i]);
                 }
-                console.log(sortedArr); //For testing
+                echo "year = '$taskYear';";
+                echo "month = '$taskMonth';";
+                echo "date = '$taskDate';";
+            ?>
 
-                //STEP 3: Inserting breaks
-                var totalBreakMins = 0;
-                let breakArr = [];
-                let startTaskStartTime, lastTaskEndTime;
-                //TODO: No breaks to be scheduled directly after meals! So check for the taskCat, do this after you have decided the cat system.
-                for (let i = 0; i < sortedArr.length; i++) {
-                    startTaskStartTime = sortedArr[i].getStartTime();
-                    // If there are back to back tasks
-                    if (i < sortedArr.length - 1 && (sortedArr[i].getEndTime()).equals(sortedArr[i + 1].getStartTime())) {
-                        let endIndex = i;
-                        while (endIndex < sortedArr.length - 1 && (sortedArr[endIndex].getEndTime()).equals((sortedArr[endIndex + 1]).getStartTime())) {
-                            endIndex++;
-                            i++;
-                        }
-                        lastTaskEndTime = sortedArr[endIndex].getEndTime();
+            console.log(currArr);
+            // STEP 2: Sort out the fixed tasks in chronological order
+            let sortedArr = [];
+            for (let i = 0; i < currArr.length; i++) {
+                let innerIndex = 0
+                for (let j = 0; j < sortedArr.length; j++) {
+                    if (!(currArr[i]).isCompletelyAfter(sortedArr[j])) {
+                        j = sortedArr.length
                     } else {
-                        lastTaskEndTime = sortedArr[i].getEndTime();
+                        innerIndex++;
                     }
+                }
+                sortedArr.splice(innerIndex, 0, currArr[i]);
+            }
+            console.log(sortedArr); //For testing
 
-                    let currBreakMins = Break.calculateBreak(startTaskStartTime, lastTaskEndTime);
+            //STEP 3: Inserting breaks
+            var totalBreakMins = 0;
+            let breakArr = [];
+            let startTaskStartTime, lastTaskEndTime;
+            //TODO: No breaks to be scheduled directly after meals! So check for the taskCat, do this after you have decided the cat system.
+            for (let i = 0; i < sortedArr.length; i++) {
+                startTaskStartTime = sortedArr[i].getStartTime();
+                // If there are back to back tasks
+                if (i < sortedArr.length - 1 && (sortedArr[i].getEndTime()).equals(sortedArr[i + 1].getStartTime())) {
+                    //let startIndex = i;
+                    let endIndex = i;
+                    while (endIndex < sortedArr.length - 1 && (sortedArr[endIndex].getEndTime()).equals((sortedArr[endIndex + 1]).getStartTime())) {
+                        endIndex++;
+                        i++;
+                    }
+                    lastTaskEndTime = sortedArr[endIndex].getEndTime();
+                } else {
+                    lastTaskEndTime = sortedArr[i].getEndTime();
+                }
 
-                    totalBreakMins += currBreakMins;
+                let currBreakMins = Break.calculateBreak(startTaskStartTime, lastTaskEndTime);
+                totalBreakMins += currBreakMins;
+                let toBeScheduled = Math.min(totalBreakMins, 30);
+                let endOfBreak = Time.findEndTime(lastTaskEndTime, [0, toBeScheduled]);
 
-                    let toBeScheduled = Math.min(totalBreakMins, 30);
+                // This check is to be done for all tasks except the last one
+                if (!endOfBreak.equals(lastTaskEndTime) && i < sortedArr.length - 1) {
+                    // If the break does end before the next fixed task
+                    if (((endOfBreak.getHours() * 60) + endOfBreak.getMins()) <= ((sortedArr[i + 1].getStartTime().getHours() * 60) + sortedArr[i + 1].getStartTime().getMins())) {
 
-                    let endOfBreak = Time.findEndTime(lastTaskEndTime, [0, toBeScheduled]);
-
-                    // This check is to be done for all tasks except the last one
-                    if (!endOfBreak.equals(lastTaskEndTime) && i < sortedArr.length - 1) {
-                        // If the break does end before the next fixed task
-                        if (((endOfBreak.getHours() * 60) + endOfBreak.getMins()) <= ((sortedArr[i + 1].getStartTime().getHours() * 60) + sortedArr[i + 1].getStartTime().getMins())) {
-                            let newBreakWin = new Window("---- BREAK TIME ----", parseInt(year), parseInt(month), parseInt(date), lastTaskEndTime, endOfBreak, -1); //TODO: Breaks can just be type -1?
-
-                            breakArr.push(newBreakWin);
-
-                            totalBreakMins -= toBeScheduled;
-                        // If the tasks are NOT back to back
-                        } else {
-                            let newBreakWin = new Window("---- BREAK TIME ----", parseInt(year), parseInt(month), parseInt(date), lastTaskEndTime, sortedArr[i + 1].getStartTime(), -1); //TODO: Breaks can just be type -1?
-
-                            breakArr.push(newBreakWin);
-
-                            let actualBreakMins = Time.duration(lastTaskEndTime, sortedArr[i + 1].getStartTime());
-
-                            totalBreakMins -= actualBreakMins;
-                        }
-                    } else if (i == sortedArr.length - 1 && sortedArr[i].getEndTime() != endOfBreak) {
-                        // Just schedule the break for the last task
-                        let newBreakWin = new Window("---- BREAK TIME ----", parseInt(year), parseInt(month), parseInt(date), sortedArr[i].getEndTime(), endOfBreak, -1); //TODO: Breaks can just be type -1?
+                        let newBreakWin = new Window("---- BREAK TIME ----", parseInt(year), parseInt(month), parseInt(date), lastTaskEndTime, endOfBreak, -1); //TODO: Breaks can just be type -1?
 
                         breakArr.push(newBreakWin);
 
                         totalBreakMins -= toBeScheduled;
+                    // If the tasks are NOT back to back
+                    } else {
+                        let newBreakWin = new Window("---- BREAK TIME ----", parseInt(year), parseInt(month), parseInt(date), lastTaskEndTime, sortedArr[i + 1].getStartTime(), -1); //TODO: Breaks can just be type -1?
+
+                        breakArr.push(newBreakWin);
+
+                        let actualBreakMins = Time.duration(lastTaskEndTime, sortedArr[i + 1].getStartTime());
+
+                        totalBreakMins -= actualBreakMins;
                     }
+                } else if (i == sortedArr.length - 1 && !(sortedArr[i].getEndTime()).equals(endOfBreak)) {
+                    // Just schedule the break for the last task
+                    let newBreakWin = new Window("---- BREAK TIME ----", parseInt(year), parseInt(month), parseInt(date), sortedArr[i].getEndTime(), endOfBreak, -1); //TODO: Breaks can just be type -1?
+
+                    breakArr.push(newBreakWin);
+
+                    totalBreakMins -= toBeScheduled;
                 }
-                //STEP 4: Insert the breaks into the final array so that it can be printed. 
-                for (let i = 0; i < breakArr.length; i++) {
-                    for (let j = 0; j < sortedArr.length; j++) {
-                        if ((breakArr[i].getStartTime()).equals(sortedArr[j].getEndTime())) {
-                            sortedArr.splice(j + 1, 0, breakArr[i]);
-                            j = sortedArr.length;
-                        }
-                    }
-                }
-                //STEP 5: Return the final array to be printed
-                return sortedArr;
             }
+            //STEP 4: Insert the breaks into the final array so that it can be printed. 
+            for (let i = 0; i < breakArr.length; i++) {
+                for (let j = 0; j < sortedArr.length; j++) {
+                    if ((breakArr[i].getStartTime()).equals(sortedArr[j].getEndTime())) {
+                        sortedArr.splice(j + 1, 0, breakArr[i]);
+                        j = sortedArr.length;
+                    }
+                }
+            }
+            //STEP 5: Return the final array to be printed
+            return sortedArr;
+        }
         </script>
     </body>
 </html>

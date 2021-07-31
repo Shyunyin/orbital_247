@@ -68,7 +68,7 @@ function printRoutineList(printArr) {
     console.log("I come to createRoutineList function");
     console.log(printArr);
 
-    var count = 0; //for spaces between tasks
+    // var count = 0; //for spaces between tasks
     //to form the statement to be printed
 
     for (let i = 0; i < printArr.length; i++) {
@@ -80,7 +80,7 @@ function printRoutineList(printArr) {
 
         if (printArr[i].getFreq() == 0) {
             statement = "Daily: " + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
-            printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + " " + printArr[i].taskName + " " + "(" + checkCat(printArr[i].taskCategory()) + ")";
+            printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + " " + printArr[i].taskName + " " + "(" + checkCat(printArr[i].taskCategory) + ")";
         } else if (printArr[i].getFreq() == 1) {
             statement = "Weekly: " + checkDay(printArr[i].day) + " " + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
             printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + " " + printArr[i].taskName + " " + "(" + checkCat(printArr[i].taskCategory) + ")";
@@ -114,12 +114,11 @@ function printRoutineList(printArr) {
             append.style.height = "25px";
             append.style.cursor="pointer";
             //calculation to ensure that tasks printed on top of each other
-            let top = count * 30;
-            let topText = top + "px";
-            append.style.marginTop = topText;
+            // let top = i * 30;
+            // let topText = top + "px";
+            append.style.marginTop = "5px";
             let ele = document.getElementById("box");
             ele.appendChild(append);
-            count = count + 1;
     }   
 }
 

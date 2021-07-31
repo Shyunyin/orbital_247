@@ -247,7 +247,7 @@
                             }
                             foreach($data as $row) {
                                 $name = $row['taskName'];
-                                echo "taskName = $name;";
+                                echo "taskName = '$name';";
                                 $cat = $row['taskCategory'];
                                 echo "taskCategory = $cat;";
                                 $startTimeHour = $row['startTimeHour'];
@@ -284,6 +284,7 @@
                             }
                         }
                     ?>
+                    return printArr;
                 }
         </script>
     </body>

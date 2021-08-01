@@ -23,7 +23,7 @@
   
   <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;" onload="remainingTime();">
   <form action="includes/add_daily_task.inc.php" method="POST" id="bigForm">
-
+    <input type="hidden" id="totalMinsLeft" name="totalMinsLeft" value=0>
     <!-- Parent-child relationship for inline-->
     <fieldset id="myFieldset">
       <div id="title">
@@ -198,6 +198,11 @@
       function displayDuration(text) { /*This function works*/
         console.log("displayDuration is called");
         document.getElementById("counterOutput").innerHTML = text;
+        if (document.getElementById("totalMinsLeft").value >= 0) {
+          document.getElementById("counterOutput").style.color = "black";
+        } else {
+          document.getElementById("counterOutput").style.color = "red";
+        }
       }
 
       function remainingTime() {
@@ -234,7 +239,7 @@
 
           $hours = ($totalMin - ($totalMin % 60)) / 60;
           $mins = $totalMin - ($hours * 60);
-          echo "text = 'Hour: ' + '$hours' + '   ' + ' Minute: ' + '$mins';";
+          echo "text = 'Hours: ' + '$hours' + '&nbsp &nbsp &nbsp &nbsp' + ' Minutes: ' + '$mins';";
           echo 'displayDuration(text);';
         }
 
@@ -311,7 +316,9 @@
             totalDuration += breakDuration;
           }
 
-          let remainingDuration = Math.max(0, (960 - totalDuration));
+          let remainingDuration = 960 - totalDuration;
+
+          document.getElementById("totalMinsLeft").value = remainingDuration;
 
           let remainingHours = (remainingDuration - (remainingDuration % 60)) / 60;
 
@@ -319,7 +326,7 @@
 
           jsRemainingDuration = remainingDuration;
 
-          text = "Hour: " + remainingHours + " Minute: " + remainingMins;
+          text = "Hours: " + remainingHours + '&nbsp &nbsp &nbsp &nbsp' + " Minutes: " + remainingMins;
 
           displayDuration(text);
         }
@@ -341,12 +348,13 @@
         currRemainingTime -= ((durOfTask[0] * 60) + durOfTask[1]);
         currRemainingTime -= breakDuration;
 
-        currRemainingTime = Math.max(0, currRemainingTime);
+        document.getElementById("totalMinsLeft").value = currRemainingTime;
 
         let currRemainingHours = (currRemainingTime - (currRemainingTime % 60)) / 60;
         let currRemainingMins = (currRemainingTime % 60);
 
-        let text = "Hour: " + currRemainingHours + " Minute: " + currRemainingMins;
+        let text = "Hours: " + currRemainingHours + '&nbsp &nbsp &nbsp &nbsp' + " Minutes: " + currRemainingMins;
+        
         displayDuration(text);
 
         let finalRemainingMins = document.createElement("input");

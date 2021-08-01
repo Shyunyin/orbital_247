@@ -102,7 +102,7 @@
     }
 
     //only access the wakeup page if routine page is empty
-    $data = "SELECT * FROM routinetask WHERE id=$userid"; 
+    $data = "SELECT * FROM infowakeup WHERE id=$userid"; 
     $result = mysqli_query($conn,$data);
         if(!$result) {
             echo " No routine tasks added yet:" . mysqli_error($conn);

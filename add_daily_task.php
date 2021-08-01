@@ -63,7 +63,8 @@
         </div>
         <div class="endTime">
         <h3>End time:</h3>
-          <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
+
+        <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
         </div>
         <input type="button" id="doneTimeBtn" value="Done!" onclick="updateRemainingTime()">
       </div>

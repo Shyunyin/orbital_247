@@ -1,202 +1,202 @@
 .main {
-	border-color: #c4c4c4;
-	border-width: 5px;
-	height: 800px;
-	width: 1500px;
-	background-color: #f6f7f1;
+  border-color: #c4c4c4;
+  border-width: 5px;
+  height: 800px;
+  width: 1500px;
+  background-color: #f6f7f1;
 }
 #background {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	position: absolute;
-	z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  z-index: 1;
 }
 #logout {
-	position: absolute;
-	z-index: 10;
-	font-family: "Signika Negative", sans-serif;
-	float: right;
+  position: absolute;
+  z-index: 10;
+  font-family: "Signika Negative", sans-serif;
+  float: right;
 }
 .btn-group .button {
-	font-family: "Signika Negative", sans-serif;
-	text-align: center;
-	text-decoration: none;
-	font-weight: bold;
-	color: #1e5353;
-	padding: 12px 29px;
-	display: inline-block;
-	font-size: 20px;
-	cursor: pointer;
-	float: left;
-	width: 200px;
-	border-top: none;
-	border-left: none;
-	border-bottom: none;
-	border-right-width: 2px;
-	border-right-color: #ecedea;
+  font-family: "Signika Negative", sans-serif;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  color: #1e5353;
+  padding: 12px 29px;
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+  float: left;
+  width: 200px;
+  border-top: none;
+  border-left: none;
+  border-bottom: none;
+  border-right-width: 2px;
+  border-right-color: #ecedea;
 }
 /*To change for the different main pages*/
 .btn-group .button:first-child {
-	background-color: #c4c4c4;
+  background-color: #c4c4c4;
 }
 .btn-group .button:not(:first-child) {
-	background-color: #c4c4c4;
-	border-right: none;
+  background-color: #c4c4c4;
+  border-right: none;
 }
 .btn-group .button:last-child {
-	background-color: #f6f7f1;
-	border-right: none;
+  background-color: #f6f7f1;
+  border-right: none;
 }
 
 /*End of stuff that needs to be edited*/
 
 /*For the main blue box*/
 #box {
-	background-color: #96d6ed;
-	border-radius: 8px;
-	height: 400px;
-	width: 1000px;
+  background-color: #96d6ed;
+  border-radius: 8px;
+  height: 400px;
+  width: 1000px;
 }
 
 /*Balance the left side out*/
 .instruction {
-	position: absolute;
-	z-index: 5;
-	width: 200px;
-	font-family: "Signika Negative", sans-serif;
-	margin-top: 280px;
-	margin-left: 1230px;
-	font-weight: bold;
+  position: absolute;
+  z-index: 5;
+  width: 200px;
+  font-family: "Signika Negative", sans-serif;
+  margin-top: 280px;
+  margin-left: 1230px;
+  font-weight: bold;
 }
 #instruction {
-	position: absolute;
-	z-index: 2;
-	height: 100px;
-	width: 210px;
-	background-color: #c4c4c4;
-	border-color: grey;
-	border-width: 2px;
-	margin-top: 280px;
-	margin-left: 1200px;
+  position: absolute;
+  z-index: 2;
+  height: 100px;
+  width: 210px;
+  background-color: #c4c4c4;
+  border-color: grey;
+  border-width: 2px;
+  margin-top: 280px;
+  margin-left: 1200px;
 }
 
 #iconActions {
-	font-family: "Signika Negative", sans-serif;
-	position: absolute;
-	z-index: 99;
-	margin-top: 410px;
-	margin-left: 1250px;
+  font-family: "Signika Negative", sans-serif;
+  position: absolute;
+  z-index: 99;
+  margin-top: 410px;
+  margin-left: 1250px;
 }
 
 #wakeup {
-	font-family: "Signika Negative", sans-serif;
-	position: absolute;
-	z-index: 10;
-	margin-top: 550px;
-	margin-left: 20px;
-	display: inline;
-	height: 70px;
-	width: 1000px;
+  font-family: "Signika Negative", sans-serif;
+  position: absolute;
+  z-index: 10;
+  margin-top: 550px;
+  margin-left: 20px;
+  display: inline;
+  height: 70px;
+  width: 1000px;
 }
 #displayWakeup {
-	font-family: "Signika Negative", sans-serif;
-	font-size: 20px;
-	background-color: #e3aba1;
-	height: 40px;
-	width: 300px;
-	border-width: 2px;
-	border-color: black;
-	border-radius: 5px;
-	margin-top: -5px;
-	text-align: center;
+  font-family: "Signika Negative", sans-serif;
+  font-size: 20px;
+  background-color: #e3aba1;
+  height: 40px;
+  width: 300px;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 5px;
+  margin-top: -5px;
+  text-align: center;
 }
 
 #productive {
-	font-family: "Signika Negative", sans-serif;
-	position: absolute;
-	z-index: 10;
-	margin-top: 550px;
-	margin-left: 700px;
-	height: 50px;
-	width: 1000px;
+  font-family: "Signika Negative", sans-serif;
+  position: absolute;
+  z-index: 10;
+  margin-top: 550px;
+  margin-left: 700px;
+  height: 50px;
+  width: 1000px;
 }
 #displayProductive {
-	font-family: "Signika Negative", sans-serif;
-	font-size: 20px;
-	background-color: #e3aba1;
-	height: 40px;
-	width: 300px;
-	border-width: 2px;
-	border-color: black;
-	border-radius: 5px;
-	text-align: center;
+  font-family: "Signika Negative", sans-serif;
+  font-size: 20px;
+  background-color: #e3aba1;
+  height: 40px;
+  width: 300px;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 5px;
+  text-align: center;
 }
 
 #routine {
-	position: absolute;
-	z-index: 10;
-	margin-top: 50px;
-	margin-left: 20px;
-	font-family: "Signika Negative", sans-serif;
+  position: absolute;
+  z-index: 10;
+  margin-top: 50px;
+  margin-left: 20px;
+  font-family: "Signika Negative", sans-serif;
 }
 
 .btn {
-	/*for the wakeup time and productive time icons*/
-	margin-left: 5px;
-	margin-top: 5px;
-	border-width: 2px;
-	border-color: black;
-	border-radius: 5px;
+  /*for the wakeup time and productive time icons*/
+  margin-left: 5px;
+  margin-top: 5px;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 5px;
 }
 
 /*Buttons*/
 #addTask {
-	font-family: "Signika Negative", sans-serif;
-	font-size: 50px;
-	position: absolute;
-	z-index: 10;
-	background-color: #e3aba1;
-	color: #1e5353;
-	border-radius: 50%;
-	border-color: black;
-	border-width: 2px;
-	height: 70px;
-	width: 70px;
-	margin-left: 970px;
-	margin-top: -30px;
+  font-family: "Signika Negative", sans-serif;
+  font-size: 50px;
+  position: absolute;
+  z-index: 10;
+  background-color: #e3aba1;
+  color: #1e5353;
+  border-radius: 50%;
+  border-color: black;
+  border-width: 2px;
+  height: 70px;
+  width: 70px;
+  margin-left: 970px;
+  margin-top: -30px;
 }
 #addTask:hover {
-	background-color: #fedcce;
+  background-color: #fedcce;
 }
 
 #test1 {
-	font-family: "Signika Negative", sans-serif;
-	font-size: 20px;
-	background-color: #96d6ed;
-	border: none;
-	color: black;
-	cursor: pointer;
-	width: 700px;
-	margin-top: 50px;
+  font-family: "Signika Negative", sans-serif;
+  font-size: 20px;
+  background-color: #96d6ed;
+  border: none;
+  color: black;
+  cursor: pointer;
+  width: 700px;
+  margin-top: 50px;
 }
 #test2 {
-	font-family: "Signika Negative", sans-serif;
-	font-size: 20px;
-	background-color: #96d6ed;
-	border: none;
-	color: black;
-	cursor: pointer;
-	margin-top: 60px;
-	width: 700px;
+  font-family: "Signika Negative", sans-serif;
+  font-size: 20px;
+  background-color: #96d6ed;
+  border: none;
+  color: black;
+  cursor: pointer;
+  margin-top: 60px;
+  width: 700px;
 }
 #test3 {
-	font-family: "Signika Negative", sans-serif;
-	font-size: 20px;
-	background-color: #96d6ed;
-	border: none;
-	color: black;
-	cursor: pointer;
-	margin-top: 60px;
-	width: 700px;
+  font-family: "Signika Negative", sans-serif;
+  font-size: 20px;
+  background-color: #96d6ed;
+  border: none;
+  color: black;
+  cursor: pointer;
+  margin-top: 60px;
+  width: 700px;
 }

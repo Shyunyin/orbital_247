@@ -53,7 +53,7 @@
     <div class = logout>
         <?php
             if (isset($_SESSION["useruid"])) {
-                echo "<li><a href='includes/logout.inc.php'>Log out</a></li>";
+                echo "<button id = 'logoutBtn'><a href='includes/logout.inc.php'>Log out</a></button>";
             }
         ?>
     </div>

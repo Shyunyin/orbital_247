@@ -64,6 +64,18 @@ function checkCat(i) {
     return arr[i];
 }
 
+function checkDate(i) {
+    if ((i % 10 == 2) && (i != 12)) {
+        return i + "nd";
+    } else if ((i % 10 == 3) && (i != 13)) {
+        return i + "rd";
+    } else if ((i % 10 == 1) && (i != 11)) {
+        return i + "st";
+    } else {
+        return i + "th";
+    }
+}
+
 function printRoutineList(printArr) { 
     console.log("I come to createRoutineList function");
     console.log(printArr);
@@ -79,17 +91,17 @@ function printRoutineList(printArr) {
         var endTimeMin = printArr[i].endTime.getMins();
 
         if (printArr[i].getFreq() == 0) {
-            statement = "Daily: " + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
-            printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + " " + printArr[i].taskName + " " + "(" + checkCat(printArr[i].taskCategory) + ")";
+            statement = "Daily: " + "[" + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
+            printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + "] " + printArr[i].taskName;
         } else if (printArr[i].getFreq() == 1) {
-            statement = "Weekly: " + checkDay(printArr[i].day) + " " + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
-            printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + " " + printArr[i].taskName + " " + "(" + checkCat(printArr[i].taskCategory) + ")";
+            statement = "Weekly " + "(" + checkDay(printArr[i].taskDay) + ")" + ": [" + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
+            printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + "] " + printArr[i].taskName;
         } else if (printArr[i].getFreq() == 2) {
-            statement = "Bieekly: " + checkDay(printArr[i].day) + " " + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
-            printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + " " + printArr[i].taskName + " " + "(" + checkCat(printArr[i].taskCategory) + ")";
+            statement = "Bieekly: " + "(" + checkDay(printArr[i].taskDay) + ")" + ": [" + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
+            printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + "] " + printArr[i].taskName;
         } else if (printArr[i].getFreq() == 3) {
-            statement = "Monthly, date: " + printArr[i].date + " " + printvaljs(startTimeHour) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
-            printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + " " + printArr[i].taskName + " " + "(" + checkCat(printArr[i].taskCategory) + ")";
+            statement = "Monthly, " + checkDate(printArr[i].taskDate) + ": [" + printvaljs(startTimeHour) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
+            printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + "] " + printArr[i].taskName;
         }
             console.log(statement); //debugging
             console.log(printArr[i].taskName);
@@ -108,15 +120,17 @@ function printRoutineList(printArr) {
             append.style.position = "relative";
             append.style.zIndex = "99";
             append.style.color = "black";
-            append.style.backgroundColor = "#A5E4FB";
+            append.style.backgroundColor = "#96d6ed";
             append.style.border = "none";
+            append.style.width = "900px";
             append.style.marginLeft = "15px";
             append.style.height = "25px";
             append.style.cursor="pointer";
             //calculation to ensure that tasks printed on top of each other
             // let top = i * 30;
             // let topText = top + "px";
-            append.style.marginTop = "5px";
+            append.style.marginTop = "10px";
+            append.style.textAlign = "left";
             let ele = document.getElementById("box");
             ele.appendChild(append);
     }   

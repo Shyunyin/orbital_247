@@ -72,17 +72,20 @@
 
             if ($week == 0 && $dayNum > $taskDay) { // Supposed to start this week and day has passed
                 $passed_days = ((string) (($dayNum - $taskDay) * -1)) . " days";
+            } else if ($week == 1 && $dayNum > $taskDay) {
+                $passed_days = ((string) (7 - ($dayNum - $taskDay))) . " days";
             } else if ($week == 1) {
-                $passed_days = ((string) (($taskDay - $dayNum) + 7)) . " days";
+            	$passed_days = ((string) (7 + ($taskDay - $dayNum))) . " days";
             } else {
                 $passed_days = ((string) ($taskDay - $dayNum)) . " days";
             }
 
             $today = date_create($fullDate);
             $start_date = date_add($today,date_interval_create_from_date_string($passed_days));
-            $result = date_format($start_date,"Y-m-d");
+            $curr_result = date_format($start_date,"Y-m-d");
 
-            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, startDate, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $result, $userid);";
+            //echo("console.log('$result')");
+            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, startDate, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $curr_result, $userid);";
         } else if ($freq == 3) {
             //echo ("I enter the monthly freq block");
 

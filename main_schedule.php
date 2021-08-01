@@ -126,7 +126,6 @@
                 //$userid = -1;
                 $userid = $_SESSION["userid"];
 
-
                 $sql = "SELECT * FROM fixedtaskwindow WHERE userid = $userid AND taskYear = $taskYear AND taskMonth = $taskMonth AND taskDate = $taskDate;";
 
                 $fullDate = $taskYear."-".($taskMonth + 1)."-".$taskDate;
@@ -136,32 +135,6 @@
                 $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 0;";
 
                 $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";
-
-                //Biweekly update first
-                // $update1 = "UPDATE routinetask SET week = 0, taskStatus = 0 WHERE userid = $userid AND taskDay = $dayNum AND week = 0 AND taskStatus = 1;";
-
-                // $update2 = "UPDATE routinetask SET week = 1, taskStatus = 0 WHERE userid = $userid AND taskDay = $dayNum AND week = 1 AND taskStatus = 1;";
-
-                // mysqli_query($conn, $update1);
-                // mysqli_query($conn, $update2);
-
-                // if ($dayNum == 0) {
-                //     $update3 = "UPDATE routinetask SET week = 1, taskStatus = 1 WHERE userid = $userid AND taskDay = 6 AND week = 0 AND taskStatus = 0;";
-
-                //     $update4 = "UPDATE routinetask SET week = 0, taskStatus = 1 WHERE userid = $userid AND taskDay = 6 AND week = 1 AND taskStatus = 0;";
-
-                //     mysqli_query($conn, $update3);
-                //     mysqli_query($conn, $update4);
-                // } else {
-                //     $update5 = "UPDATE routinetask SET week = 1, taskStatus = 1 WHERE userid = $userid AND taskDay = $dayNum - 1 AND week = 0 AND taskStatus = 0;";
-
-                //     $update6 = "UPDATE routinetask SET week = 0, taskStatus = 1 WHERE userid = $userid AND taskDay = $dayNum - 1 AND week = 1 AND taskStatus = 0;";
-
-                //     mysqli_query($conn, $update5);
-                //     mysqli_query($conn, $update6);
-                // }
-
-                //$biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2 AND taskDay = $dayNum AND week = 0;";
 
                 $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2;";
 

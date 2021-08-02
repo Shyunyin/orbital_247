@@ -60,45 +60,46 @@
 
       <script>
         /*Setting up start and end time*/
-        // var startTime = localStorage.getItem("startTime");
-        // var endTime = localStorage.getItem("endTime");
-        // var taskName = localStorage.getItem("name");
-        // console.log("Taskname:" + taskName);
+        var startTimeHour = localStorage.getItem("startTimeHour");
+        var startTimeMin = localStorage.getItem("startTimeMin");
+        var endTimeHour = localStorage.getItem("endTimeHour");
+        var endTimeMin = localStorage.getItem("endTimeMin");
+        var taskName = localStorage.getItem("taskname");
+        console.log("Taskname:" + taskName);
 
-        // var ele = document.createElement("input");
-        // ele.type = "text";    
-        // ele.value = taskName;
-        // ele.style.border = "none";
-        // ele.style.backgroundColor = "#96d6ed";
-        // ele.style.color = "black";
-        // ele.style.position = "relative";
-        // ele.style.zIndex = "10";
-        // ele.style.fontFamily = "Signika Negative";
-        // ele.style.fontSize = "25px";
-        // ele.style.textAlign = "center";
-        // ele.id = "name";
-        // var main = document.getElementById("taskName");
-        // main.appendChild(ele);
+        var ele = document.createElement("input");
+        ele.type = "text";    
+        ele.value = taskName;
+        ele.style.border = "none";
+        ele.style.backgroundColor = "#96d6ed";
+        ele.style.color = "black";
+        ele.style.position = "relative";
+        ele.style.zIndex = "10";
+        ele.style.fontFamily = "Signika Negative";
+        ele.style.fontSize = "25px";
+        ele.style.textAlign = "center";
+        ele.id = "name";
+        var main = document.getElementById("taskName");
+        main.appendChild(ele);
 
-        // var startTimeHour = parseInt(startTime.substr(0,2));
-        // console.log("Start time Hour: " + startTimeHour);
-        // var startTimeMin = parseInt(startTime.substr(3,5));
-        // console.log("Start time Min: " + startTimeMin);
-        // var endTimeHour = parseInt(endTime.substr(0,2));
-        // console.log("End time Hour: " + endTimeHour);
+        //var startTimeHour = parseInt(startTime.substr(0,2));
+        console.log("Start time Hour: " + startTimeHour);
+        //var startTimeMin = parseInt(startTime.substr(3,5));
+        console.log("Start time Min: " + startTimeMin);
+        //var endTimeHour = parseInt(endTime.substr(0,2));
+        console.log("End time Hour: " + endTimeHour);
 
-        // var endTimeMin = parseInt(endTime.substr(3,5));
-        // console.log("End time Min: " + endTimeMin);
+        //var endTimeMin = parseInt(endTime.substr(3,5));
+        console.log("End time Min: " + endTimeMin);
 
       
-        // var startTiming = new Time(startTimeHour, startTimeMin);
-        // var endTiming = new Time(endTimeHour, endTimeMin);  
+        var startTiming = new Time(startTimeHour, startTimeMin);
+        var endTiming = new Time(endTimeHour, endTimeMin);  
 
-        // var duration = Time.duration(startTiming, endTiming);
-        // console.log(duration);
-        // console.log("Start time: " + startTime);
-        // console.log("End time: " + endTime);
-
+        var duration = Time.duration(startTiming, endTiming);
+        console.log(duration);
+        console.log("Start time: " + startTiming);
+        console.log("End time: " + endTiming);
         // The data/time we want to countdown to
         var countDownDate = Date.now() + (duration[0]*3600000) + (duration[1]*60000) + 2000;
 

@@ -30,7 +30,7 @@ class Time {
      *                   second element represents the minutes
      */
      static duration(startTime, endTime) {
-        let elapsed = (endTime.getHours() * 60) + (endTime.getMins()) - (startTime.getHours() * 60) - (startTime.getMins()); 
+        let elapsed = parseInt(endTime.getHours() * 60) + parseInt(endTime.getMins()) - parseInt(startTime.getHours() * 60) - parseInt(startTime.getMins());
         if (elapsed < 0) {
             let firstHalf = Time.duration(startTime, new Time(23, 59));
             let secondHalf = Time.duration(new Time(0, 0), endTime);

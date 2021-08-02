@@ -63,8 +63,10 @@
         </div>
         <div class="endTime">
         <h3>End time:</h3>
-
         <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
+        </div>
+        <div class="warning">
+          <h3 id="warning"></h3>
         </div>
         <input type="button" id="doneTimeBtn" value="Done!" onclick="updateRemainingTime()">
       </div>
@@ -341,32 +343,39 @@
         let endHour = endArr[0];
         let endMin = endArr[1];
 
-        let durOfTask = Time.duration(new Time(startHour, startMin), new Time(endHour, endMin));
-        let breakDuration = Break.calculateBreak(new Time(startHour, startMin), new Time(endHour, endMin));
+        if (((startHour * 60) + startMin) == ((endHour * 60) + endMin)) {
+          document.getElementById("warning").innerHTML = "Start and end times are the same. Please choose another start/end time.";
+        } else if (((startHour * 60) + startMin) > ((endHour * 60) + endMin)) {
+          document.getElementById("warning").innerHTML = "Please choose an end time that is later than the start time.";
+        } else {
+          document.getElementById("warning").innerHTML = null;
+          
+          let durOfTask = Time.duration(new Time(startHour, startMin), new Time(endHour, endMin));
+          let breakDuration = Break.calculateBreak(new Time(startHour, startMin), new Time(endHour, endMin));
 
-        console.log("i come to updateRemainingTime");
+          console.log("i come to updateRemainingTime");
 
-        let currRemainingTime = jsRemainingDuration;
+          let currRemainingTime = jsRemainingDuration;
 
-        currRemainingTime -= ((durOfTask[0] * 60) + durOfTask[1]);
-        currRemainingTime -= breakDuration;
+          currRemainingTime -= ((durOfTask[0] * 60) + durOfTask[1]);
+          currRemainingTime -= breakDuration;
 
-        document.getElementById("totalMinsLeft").value = currRemainingTime;
+          document.getElementById("totalMinsLeft").value = currRemainingTime;
 
-        let currRemainingHours = (currRemainingTime - (currRemainingTime % 60)) / 60;
-        let currRemainingMins = (currRemainingTime % 60);
+          let currRemainingHours = (currRemainingTime - (currRemainingTime % 60)) / 60;
+          let currRemainingMins = (currRemainingTime % 60);
 
-        let text = "Hours: " + currRemainingHours + '&nbsp &nbsp &nbsp &nbsp' + " Minutes: " + currRemainingMins;
-        
-        displayDuration(text);
+          let text = "Hours: " + currRemainingHours + '&nbsp &nbsp &nbsp &nbsp' + " Minutes: " + currRemainingMins;
+          
+          displayDuration(text);
 
-        let finalRemainingMins = document.createElement("input");
-        finalRemainingMins.type = "hidden";
-        finalRemainingMins.value = currRemainingTime;
-        finalRemainingMins.name = "finalRemainingMins";
-        ele.appendChild(finalRemainingMins);
+          let finalRemainingMins = document.createElement("input");
+          finalRemainingMins.type = "hidden";
+          finalRemainingMins.value = currRemainingTime;
+          finalRemainingMins.name = "finalRemainingMins";
+          ele.appendChild(finalRemainingMins);
+        }
       }
-      
     </script>
    </body>
 </html>

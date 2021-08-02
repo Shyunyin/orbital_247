@@ -73,7 +73,7 @@
       <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
       <!-- QUESTION: idk how to include javascript element into html isit ${}?-->
       <div id="counter">
-        <p>Estimated remaining time</p>
+        <p id="estimatedTitle"></p>
         <p id="counterOutput"></p>
       </div>
 
@@ -198,10 +198,13 @@
       function displayDuration(text) { /*This function works*/
         console.log("displayDuration is called");
         document.getElementById("counterOutput").innerHTML = text;
+        document.getElementById("estimatedTitle").innerHTML = "Estimated remaining time";
         if (document.getElementById("totalMinsLeft").value >= 0) {
           document.getElementById("counterOutput").style.color = "black";
+          document.getElementById("estimatedTitle").style.color = "black";
         } else {
           document.getElementById("counterOutput").style.color = "red";
+          document.getElementById("estimatedTitle").style.color = "red";
         }
       }
 

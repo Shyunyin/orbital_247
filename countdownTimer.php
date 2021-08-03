@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" type="module" src="countdownTimer.js"></script>
     <script type="text/javascript" type="module" src="CombinedTime_Final.js"></script>
+    <!-- <script type="text/javascript" type="module" src="Time.js"></script> -->
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
     <style>
       p {
@@ -26,6 +27,32 @@
         background-color: #e3aba1;
       }
       #stop:hover {
+        background-color: #FEDCCE;
+      }
+      #pause {
+        font-family: "Signika Negative", sans-serif;
+        font-size: large;
+        border-color: black;
+        border-width: 2px;
+        border-radius: 5px;
+        width: 90px;
+        height: 30px;
+        background-color: #e3aba1;
+      }
+      #pause:hover {
+        background-color: #FEDCCE;
+      }
+      #reschedule {
+        font-family: "Signika Negative", sans-serif;
+        font-size: large;
+        border-color: black;
+        border-width: 2px;
+        border-radius: 5px;
+        width: 150px;
+        height: 30px;
+        background-color: #e3aba1;
+      }
+      #reschedule:hover {
         background-color: #FEDCCE;
       }
       /*Temporary*/
@@ -57,6 +84,8 @@
       <h2 id="end"></h2>
 
       <button type="button" id="stop" onclick="endMe()">Stop</button>
+      <button type="button" id="pause" onclick="pause()">Pause</button>
+      <button type="button" id="reschedule">Completed</button>
 
       <script>
         /*Setting up start and end time*/
@@ -100,37 +129,61 @@
         console.log(duration);
         console.log("Start time: " + startTiming);
         console.log("End time: " + endTiming);
-        // The data/time we want to countdown to
-        var countDownDate = Date.now() + (duration[0]*3600000) + (duration[1]*60000) + 2000;
 
-        // Run myfunc every second
-        var myfunc = setInterval(function() {
+        // Creating the countdown timer
+        //var countdown = (duration[0]*3600000) + (duration[1]*60000);
+        var countdown = 5000;
+        var current_time = Date.parse(new Date());
+        var deadline = new Date(current_time + countdown);
 
-        var now = new Date().getTime();
-        var timeleft = countDownDate - now;
-          
-        // Calculating the days, hours, minutes and seconds left
-        var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
-            
-        // Result is output to the specific element 
-        //TODO: Might need to change all of this according to what we intend to display
-        document.getElementById("hours").innerHTML = hours + "h " 
-        document.getElementById("mins").innerHTML = minutes + "m " 
-        document.getElementById("secs").innerHTML = seconds + "s " 
-            
-        // Display the message when countdown is over
-        if (timeleft < 0) {
-            clearInterval(myfunc);
-            document.getElementById("hours").innerHTML = "" 
-            document.getElementById("mins").innerHTML = ""
-            document.getElementById("secs").innerHTML = ""
-            //TODO: Might need to change all of this according to what we intend to display
-            document.getElementById("end").innerHTML = "TIME UP!!";
+        function time_remaining(endtime){
+          let t = Date.parse(endtime) - Date.parse(new Date());
+          let seconds = Math.floor( (t/1000) % 60 );
+          let minutes = Math.floor( (t/1000/60) % 60 );
+          let hours = Math.floor( (t/(1000*60*60)) % 24 );
+          return {'total':t, 'days':days, 'hours':hours, 'minutes':minutes, 'seconds':seconds};
         }
-        }, 1000);
+
+        var timeinterval;
+        function run_clock(endtime){
+
+          function update_clock(){
+            let t = time_remaining(endtime);
+            document.getElementById("hours").innerHTML = t.hours + "h " 
+            document.getElementById("mins").innerHTML = t.minutes + "m " 
+            document.getElementById("secs").innerHTML = t.seconds + "s "
+  
+            if(t.total <= 0) { 
+              clearInterval(timeinterval); 
+            }
+          }
+          update_clock(); // run function once at first to avoid delay
+          timeinterval = setInterval(update_clock,1000);
+        }
+        run_clock(deadline);
+
+        var paused = false; // is the clock paused?
+        var time_left; // time left on the clock when paused
+
+        function pause_clock(){
+          if(!paused) {
+            paused = true;
+            clearInterval(timeinterval); // stop the clock
+            time_left = time_remaining(deadline).total; // preserve remaining time
+          }
+        }
+
+        function resume_clock() {
+          if(paused){
+            paused = false;
+
+            // update the deadline to preserve the amount of time remaining
+            deadline = new Date(Date.parse(new Date()) + time_left);
+
+            // start the clock
+            run_clock(deadline);
+          }
+        }
 
         /*closeMe(): when End button is pressed, window will be closed*/
         function endMe() {
@@ -140,6 +193,18 @@
           try {
             self.close();
           } catch (e) { console.log(e) }
+        }
+
+        function pause() {
+          if (document.getElementById("pause").innerHTML == "Pause") {
+            document.getElementById("pause").innerHTML = "Resume";
+            document.getElementById("reschedule").innerHTML = "Reschedule";
+            pause_clock();
+          } else {
+            document.getElementById("pause").innerHTML = "Pause";
+            document.getElementById("reschedule").innerHTML = "Completed";
+            resume_clock();
+          }
         }
       </script>
   </body>

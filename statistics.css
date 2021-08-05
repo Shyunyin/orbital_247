@@ -48,7 +48,7 @@
 	z-index: 10;
 	margin-top: 100px;
 	margin-left: 100px;
-	height: 500px;
+	height: 600px;
 	width: 1000px;
 }
 
@@ -90,4 +90,17 @@
 	z-index: 10;
 	margin-left: 120px;
 	margin-top: 430px;
+}
+
+#container {
+	position: absolute;
+	z-index: 10;
+	margin-left: 660px;
+	margin-top: 300px;
+	height: 400px;
+	width: 400px;
+}
+
+.anychart-credits {
+	display: none;
 }

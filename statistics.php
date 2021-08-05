@@ -8,6 +8,12 @@
         <script type = "text/javascript" type="module" src="statistics.js"></script>
         <script type="text/javascript" type="module" src="CombinedTime_Final.js"></script>
         <script type = "text/javascript" type="module" src="Window.js"></script>
+        <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"></script>
+        <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"></script>
+
+        <!-- <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-base.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+        <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-exports.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+        <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-ui.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script> -->
 
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
@@ -27,9 +33,8 @@
 
     
         <div id="box"></div> 
-        
 
-            <div id="work"> 
+            <!-- <div id="work"> 
                 <h2>Total time spent on Work today:</h2>
             </div>
 
@@ -47,9 +52,94 @@
 
             <div id="sleepDuration">
                 <h2>Your estimated sleep duration for today: </h2>
-            </div>
+            </div> -->
+
+            <!-- Newly added for pie chart -->
+            <div id="container"></div>
 
         <script>
+        var test = 25;
+        var total = 85;
+        anychart.onDocumentReady(function() {
+
+            // set the data
+            var data = [
+                {x: "Work", value: test, percent: 76},
+                {x: "Exercise", value: 30, percent: 75},
+                {x: "Miscelleneous", value: 30, percent: 45},
+            ];
+
+            // create the chart
+            var chart = anychart.pie();
+
+            // set the chart title
+            chart.title("Today's Breakdown");
+            chart.title().fontFamily("Signika Negative");
+            chart.title().fontSize(23);
+            chart.title().fontWeight(700);
+            chart.title().fontColor("black");
+            chart.title().fontDecoration("underline");
+            chart.title().padding("0px");
+
+            // add the data
+            chart.data(data);
+
+            // set legend position
+            //chart.legend().position("right");
+            // set items layout
+            //chart.legend().itemsLayout("vertical");
+
+            // to remove the white box that was initally the chart's background
+            chart.background().enabled(false);
+            //chart.outline(true);
+            // chart.normal().outline().enabled(true);
+            // chart.normal().outline().width("5%");
+            // chart.hovered().outline().width("10%");
+            // chart.selected().outline().width("3");
+            // chart.selected().outline().fill("#455a64");
+            // chart.selected().outline().stroke(null);
+            // chart.selected().outline().offset(2);
+
+            chart.labels().format("{%x}");
+            chart.labels().fontFamily("Signika Negative");
+            chart.labels().fontSize(16);
+            chart.labels().fontWeight(900);
+            chart.labels().fontColor("black");
+            chart.labels().position("center");
+
+            chart.legend().enabled(false);
+            chart.legend().fontFamily("Signika Negative");
+            chart.legend().fontSize(20);
+            chart.legend().fontColor("black");
+
+            chart.radius("40%");
+
+            chart.palette(["#e3aba1", "white", "#93c9cc"]); // Should be in the order of the data input
+            //anychart.color.darken("#e3aba1", 0.2);
+
+            chart.tooltip().useHtml(true);
+
+            //chart.tooltip().displayMode("double");
+
+            //chart.tooltip().title();
+            //title.fontDecoration("underline");
+            chart.tooltip().title().fontFamily("Signika Negative");
+            chart.tooltip().title().fontSize(17);
+            chart.tooltip().title().fontWeight(400);
+
+            chart.tooltip().fontFamily("Signika Negative");
+            chart.tooltip().fontSize(15);
+            chart.tooltip().fontWeight(50);
+
+            //chart.tooltip().format("Hours spent: {%value}\nSales volume: <b>${%value}</b>");
+            chart.tooltip().format("Number of hours spent: {%value}<br><i>{%percent}% of the day was spent on '{%x}'</i>");
+
+            // display the chart in the container
+            chart.container('container');
+            chart.draw();
+
+        });
+
         window.onload = function() {
             var workDuration = 0; 
             var exerciseDuration=0;

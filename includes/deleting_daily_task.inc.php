@@ -2,21 +2,21 @@
     session_start();
 
     $userid = (int) $_SESSION["userid"];
-    $startHour = (int) $_POST[""];
-    $startMin = (int) $_POST[""];
-    $endHour = (int) $_POST[""];
-    $endMin = (int) $_POST[""];
+    $startHour = (int) $_POST["startTimeHour"];
+    $startMin = (int) $_POST["startTimeMin"];
 
-    $deleteSql = "DELETE FROM fixedtaskwindow WHERE userid = $userid AND startTimeHour = $startHour AND startTimeMin = $startMin AND endTimeHour = $endHour AND endTimeMin = $endMin";
-
-    //$additionalDuration = 'Time.duration(new Time('$startHour', '$startMin'), new Time('$endHour', '$endMin'))'
     $user = 'root'; 
     $pass = '';
     $db='orbital247';
     $conn = mysqli_connect('localhost', $user, $pass, $db);
 
     mysqli_query($conn, $deleteSql);
+    
+    if (isset($_POST['delete'])) {
+        $deleteSql = "DELETE FROM fixedtaskwindow WHERE userid = $userid AND startTimeHour = $startHour AND startTimeMin = $startMin";
+        mysqli_query($conn, $deleteSql);
+        header("location: ../main_schedule.php");
+        exit();
+    }
 
-    //TODO: Not sure if this is correct, but basically to trigger the regeneration of the schedule
-    header("location: ../includes/scheduling.php");
 ?>

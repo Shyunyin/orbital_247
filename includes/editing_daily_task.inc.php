@@ -31,13 +31,8 @@
         mysqli_query($conn, $updateSql);
         header("location: ../main_schedule.php");
         exit();
-    } else if (isset($_POST['delete'])) {
-        $deleteSql = "DELETE FROM fixedtaskwindow WHERE userid = $userid AND startTimeHour = $oldStartHour AND startTimeMin = $oldStartMin";
-        mysqli_query($conn, $deleteSql);
-        header("location: ../main_schedule.php");
-        exit();
     }
 
     //TODO: Not sure if this is correct, but basically to trigger the regeneration of the schedule
-    header("location: ../includes/scheduling.php");
+    // header("location: ../includes/scheduling.php");
 ?>

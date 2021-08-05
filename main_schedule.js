@@ -107,21 +107,18 @@ function clickPlay() {
     myRef.focus();
 }
 
-function clickEdit() {
-    //TODO: Only editing name or anything else? Bc I think it is possible to edit anything? Just delete and insert? And can automatically generate schedule
-    var url = "../copy_add_daily_task.php"; //to redirect
-    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
-    myRef.focus();
-}
+// function clickEdit() {
+//     //TODO: Only editing name or anything else? Bc I think it is possible to edit anything? Just delete and insert? And can automatically generate schedule
+//     var url = "../copy_add_daily_task.php"; //to redirect
+//     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
+//     myRef.focus();
+// }
 /*delete button*/
-function clickDelete() {
-    //TODO: Just submit a form if its true to delete from php. Then regenerate schedule
-    var x = confirm("Are you sure you want to delete this task?");
-    if (x) 
-        return true;
-    else 
-        return false; //to link to javascript when deleting tasks can check for this boolean function
-}
+// function clickDelete() {
+//     var url = "../deleting_daily_task.php"; //opens popup to confirm deletion page
+//     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
+//     myRef.focus();
+// }
     
 function generate() {
     console.log("generate is called");
@@ -190,7 +187,9 @@ function printSchedule(scheduleArr) {
     localStorage.setItem("endTimeHour", scheduleArr[i].getEndTimeHours());
     localStorage.setItem("endTimeMin", scheduleArr[i].getEndTimeMins());
     localStorage.setItem("taskname", scheduleArr[i].getTaskName());
-    itemName.addEventListener('click', tempFixed);
+    itemName.addEventListener('click',function() {
+        tempFixed(scheduleArr[i]);
+    });
     itemName.style.fontFamily = "'Signika Negative', sans-serif";
     itemName.style.fontSize = "large";
     itemName.style.position = "absolute";
@@ -208,17 +207,42 @@ function printSchedule(scheduleArr) {
 } 
 
 /*To add fixed task select icons*/
-function tempFixed() { //only reschedule, edit and delete
-    var currentNode = document.getElementById("iconActions");
-    var newNode = document.createElement("div");
-    newNode.id = "iconActions";
-    newNode.innerHTML = 
-    '<button class="btn" onclick="clickPlay()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-play-circle fa-2x" aria-hidden="true"></i></button>' +
-    // '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
-    '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>'+
-    '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
-    //Replacing current iconsActions node w new iconActions node
-    currentNode.replaceWith(newNode);
+function tempFixed(object) { //only reschedule, edit and delete
+    // var currentNode = document.getElementById("iconActions");
+    // var newNode = document.createElement("div");
+    // newNode.id = "iconActions";
+    // newNode.innerHTML = 
+    // '<button class="btn" onclick="clickPlay()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-play-circle fa-2x" aria-hidden="true"></i></button>' +
+    // // '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
+    // '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>'+
+    // '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
+    // //Replacing current iconsActions node w new iconActions node
+    // currentNode.replaceWith(newNode);
+    console.log("I come to tempFixed");
+
+    var currentPlay = document.getElementById("play");
+    var newPlay = document.createElement("div");
+    newPlay.id = "play";
+    newPlay.innerHTML = '<button class="btn" onclick="clickPlay()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-play-circle fa-2x" aria-hidden="true"></i></button>';
+    newPlay.style.marginTop = "480px";
+    newPlay.style.marginLeft = "100px";
+    currentPlay.replaceWith(newPlay);
+
+    var currentEdit = document.getElementById("edit");
+    var newEdit = document.createElement("div");
+    newEdit.id = "edit";
+    newEdit.innerHTML = '<button class="btn" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>';
+    newEdit.style.marginTop = "-32px";
+    newEdit.style.marginLeft = "145px";
+    currentEdit.replaceWith(newEdit);
+
+    var currentDelete = document.getElementById("delete");
+    var newDelete = document.createElement("div");
+    newDelete.id = "delete";
+    newDelete.innerHTML = '<button class="btn" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>';
+    newDelete.style.marginTop = "-32px";
+    newDelete.style.marginLeft = "195px";
+    currentDelete.replaceWith(newDelete);
 }
 
 /*Open popup and close*/

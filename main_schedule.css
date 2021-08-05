@@ -19,12 +19,14 @@
   float: right;
   margin-left: 800px;
   margin-top: 20px;
+  color: #1e5353;
 }
 #logoutBtn {
   border-color: black;
   border-radius: 5px;
   border-width: 1px;
   background-color: #e3aba1;
+  color: #1e5353;
   font-family: "Signika Negative", sans-serif;
 }
 a:link {
@@ -294,4 +296,26 @@ a:link {
   border: none;
   background: none;
   cursor: pointer;
+}
+
+/*For the icon buttons*/
+
+#iconActions {
+  position: absolute;
+  z-index: 10;
+}
+
+#play {
+  margin-top: 480px;
+  margin-left: 100px;
+}
+
+#edit {
+  margin-top: -32px;
+  margin-left: 145px;
+}
+
+#delete {
+  margin-top: -32px;
+  margin-left: 195px;
 }

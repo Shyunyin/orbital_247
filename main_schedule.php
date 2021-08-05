@@ -78,20 +78,31 @@
         <h3>Click on any task to</h3>
         <h3>start, reschedule,</h3>
         <h3> edit or delete a task</h3>
-    </div>
-
-    <form action="copy_add_daily_task.php" method="POST" id="actions">
         <h3>Actions:</h3>
-        <div id="iconActions">
+    </div>
+ 
+      
+        <div id="iconActions"> 
+                <div id="play">
+                </div>
+            <!-- So that once the edit button is clicked it will redirect but no other buttons will redirect -->
+            <form action="copy_add_daily_task.php" method="POST" id="actions1">
+                <div id="edit">
+                </div>
+            </form>
+            <form action="deleting_daily_task.php" method="POST" id="actions2">
+                <div id="delete">
+                </div>
+            </form>
         </div>
-    </form>
+  
 
     <!--Add task pop-out-->
     <input type="button" id="addTask" value="+" onclick="OpenPopupWindow();">
 
     <!--Buttons to go to previous and next-->
-    <button type="button" id="nextDay" name="nextDay"></button>
-    <div id="textNextDay">Go to Next day's schedule</div>
+    <!-- <button type="button" id="nextDay" name="nextDay"></button>
+    <div id="textNextDay">Go to Next day's schedule</div> -->
     <!--</form>-->
     <script>
         //--------------------- Writing relevant functions ------------------//

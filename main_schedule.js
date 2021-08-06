@@ -182,11 +182,6 @@ function printSchedule(scheduleArr) {
     let itemName = document.createElement("button");
     itemName.classList.add("itemName"); //class: itemName
     itemName.innerHTML = scheduleArr[i].getTaskName();
-    localStorage.setItem("startTimeHour", scheduleArr[i].getStartTimeHours()); //to save the taskName in local storage so that when edit is clicked can link
-    localStorage.setItem("startTimeMin", scheduleArr[i].getStartTimeMins()); //to save the taskName in local storage so that when edit is clicked can link
-    localStorage.setItem("endTimeHour", scheduleArr[i].getEndTimeHours());
-    localStorage.setItem("endTimeMin", scheduleArr[i].getEndTimeMins());
-    localStorage.setItem("taskname", scheduleArr[i].getTaskName());
     itemName.addEventListener('click',function() {
         tempFixed(scheduleArr[i]);
     });
@@ -219,6 +214,11 @@ function tempFixed(object) { //only reschedule, edit and delete
     // //Replacing current iconsActions node w new iconActions node
     // currentNode.replaceWith(newNode);
     console.log("I come to tempFixed");
+    localStorage.setItem("startTimeHour", object.getStartTimeHours()); //to save the taskName in local storage so that when edit is clicked can link
+    localStorage.setItem("startTimeMin", object.getStartTimeMins()); //to save the taskName in local storage so that when edit is clicked can link
+    localStorage.setItem("endTimeHour", object.getEndTimeHours());
+    localStorage.setItem("endTimeMin", object.getEndTimeMins());
+    localStorage.setItem("taskname", object.getTaskName());
 
     var currentPlay = document.getElementById("play");
     var newPlay = document.createElement("div");

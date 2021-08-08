@@ -35,7 +35,7 @@
         border-color: black;
         border-width: 2px;
         border-radius: 5px;
-        width: 90px;
+        width: 150px;
         height: 30px;
         background-color: #e3aba1;
       }
@@ -70,6 +70,9 @@
     </style>
   </head>
 
+  <audio src="../timer_3_beeps.mp3" id="end_audio"></audio> 
+  <audio src="../timer.mp3" id="countdown_audio"></audio> 
+
   <body>
       <!--Temporary to be replaced by javascript, just put in place for milestone submission-->
       <div class="taskName">
@@ -83,9 +86,9 @@
       <p id="secs"></p>
       <h2 id="end"></h2>
 
-      <button type="button" id="stop" onclick="endMe()">Stop</button>
+      <!-- <button type="button" id="stop" onclick="endMe()">Stop</button> -->
       <button type="button" id="pause" onclick="pause()">Pause</button>
-      <button type="button" id="reschedule">Completed</button>
+      <button type="button" id="reschedule" onclick="completed()">Completed Task</button>
 
       <script>
         /*Setting up start and end time*/
@@ -132,7 +135,7 @@
 
         // Creating the countdown timer
         //var countdown = (duration[0]*3600000) + (duration[1]*60000);
-        var countdown = 5000;
+        var countdown = 10000;
         var current_time = Date.parse(new Date());
         var deadline = new Date(current_time + countdown);
 
@@ -145,6 +148,10 @@
         }
 
         var timeinterval;
+        //var endAudio = new Audio('audio/beep.mp3'); 
+        //var endAudio = new Audio('https://interactive-examples.mdn.mozilla.net/media/examples/t-rex-roar.mp3');
+        //var endAudio = new Audio("../timer_3_beeps.mp3");
+
         function run_clock(endtime){
 
           function update_clock(){
@@ -153,8 +160,14 @@
             document.getElementById("mins").innerHTML = t.minutes + "m " 
             document.getElementById("secs").innerHTML = t.seconds + "s "
   
+            if (t.total <= 5000 && t.total > 0) {
+              document.getElementById("countdown_audio").play();
+            }
             if(t.total <= 0) { 
-              clearInterval(timeinterval); 
+                clearInterval(timeinterval); 
+                document.getElementById("end_audio").play();
+                document.getElementById("reschedule").innerHTML = "Cancel and exit";
+                document.getElementById("pause").innerHTML = "Completed Task";
             }
           }
           update_clock(); // run function once at first to avoid delay
@@ -195,15 +208,26 @@
           } catch (e) { console.log(e) }
         }
 
+        function completed() {
+          if (document.getElementById("reschedule").innerHTML == "Completed Task") {
+            // Need to update the database
+          } else { // Cancel and exit
+            endMe();
+          }
+        }
+
         function pause() {
           if (document.getElementById("pause").innerHTML == "Pause") {
             document.getElementById("pause").innerHTML = "Resume";
-            document.getElementById("reschedule").innerHTML = "Reschedule";
+            document.getElementById("reschedule").innerHTML = "Cancel and exit";
+            document.getElementById("countdown_audio").pause();
             pause_clock();
-          } else {
+          } else if (document.getElementById("pause").innerHTML == "Resume"){
             document.getElementById("pause").innerHTML = "Pause";
-            document.getElementById("reschedule").innerHTML = "Completed";
+            document.getElementById("reschedule").innerHTML = "Completed Task";
             resume_clock();
+          } else { // Completed Task so update database
+
           }
         }
       </script>

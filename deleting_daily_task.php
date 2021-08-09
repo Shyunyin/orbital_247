@@ -64,7 +64,7 @@
             <div id="buttons">
                 <form action="includes/deleting_daily_task.inc.php" method="POST" id="mainForm">
                     <input type="submit" name="delete" value="Yes" id="yes">
-                    <input type="button" value="No" id="no" onclick="close();">
+                    <input type="submit" value="No" id="no" name="close">
                 </form>
             </div>
         </div>

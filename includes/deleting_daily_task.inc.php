@@ -13,8 +13,10 @@
     if (isset($_POST['delete'])) {
         $deleteSql = "DELETE FROM fixedtaskwindow WHERE userid = $userid AND startTimeHour = $startHour AND startTimeMin = $startMin";
         mysqli_query($conn, $deleteSql);
-        echo "Task has been successfully deleted. Press the X button to close this window.";
+        echo "Task has been successfully deleted. Press X to close this window.";
         exit();
+    } else if (isset($_POST['close'])) {
+        echo "Task not deleted. Press X to close this window.";
     }
 
 ?>

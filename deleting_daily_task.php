@@ -52,12 +52,31 @@
             display: inline-block;
         }
     </style>
+    <head>
+        <title>Delete page</title>
+        <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body style="text-align: center; background-color: #f6f7f1; font-family: Signika Negative, sans-serif;">
+        <div id="main">
+            <h2>Are you sure you want to delete this task?</h2> 
+            <div id="buttons">
+                <form action="includes/deleting_daily_task.inc.php" method="POST" id="mainForm">
+                    <input type="submit" name="delete" value="Yes" id="yes">
+                    <input type="button" value="No" id="no" onclick="close();">
+                </form>
+            </div>
+        </div>
+    </body>
 
     <script>
         var startTimeHour = localStorage.getItem("startTimeHour");
         var startTimeMin = localStorage.getItem("startTimeMin");
+        console.log(startTimeHour); //debugging
+        console.log(startTimeMin); //debugging
 
-        var mainForm = document.getElementById("mainForm");
+        let mainForm = document.getElementById("mainForm");
 
         var input1 = document.createElement("input");
         input1.type = "hidden";
@@ -75,22 +94,4 @@
             window.close();
         }
     </script>
-
-    <head>
-        <title>Delete page</title>
-        <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-
-    <body style="text-align: center; background-color: #f6f7f1; font-family: Signika Negative, sans-serif;">
-        <div id="main">
-            <h2>Are you sure you want to delete this task?</h2> 
-            <div id="buttons">
-                <form action="../includes/deleting_daily_task.inc.php" method="POST" id="mainForm">
-                    <input type="submit" name="delete" value="Yes" id="yes">
-                </form>
-                <input type="button" value="No" id="no" onclick="close();">
-            </div>
-        </div>
-    </body>
 </html>

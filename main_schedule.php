@@ -90,10 +90,8 @@
                 <div id="edit">
                 </div>
             </form>
-            <form action="deleting_daily_task.php" method="POST" id="actions2">
-                <div id="delete">
-                </div>
-            </form>
+            <div id="delete">
+            </div>
         </div>
   
 
@@ -114,9 +112,7 @@
             let myRef = window.open(url, 'mywin', 'left=20, top=20, width=770, height=700, toolbar=1, resizable=0');
             myRef.focus();
         }
-    </script>
-    
-    <script>
+
         function generateSchedule() {
             console.log("generateSchedule is called");
             let currArr = [];

@@ -9,13 +9,11 @@
     $pass = '';
     $db='orbital247';
     $conn = mysqli_connect('localhost', $user, $pass, $db);
-
-    mysqli_query($conn, $deleteSql);
     
     if (isset($_POST['delete'])) {
         $deleteSql = "DELETE FROM fixedtaskwindow WHERE userid = $userid AND startTimeHour = $startHour AND startTimeMin = $startMin";
         mysqli_query($conn, $deleteSql);
-        header("location: ../main_schedule.php");
+        echo "Task has been successfully deleted. Press the X button to close this window.";
         exit();
     }
 

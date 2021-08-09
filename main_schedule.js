@@ -114,11 +114,12 @@ function clickPlay() {
 //     myRef.focus();
 // }
 /*delete button*/
-// function clickDelete() {
-//     var url = "../deleting_daily_task.php"; //opens popup to confirm deletion page
-//     let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=300, toolbar=1, resizable=0');
-//     myRef.focus();
-// }
+function clickDelete() {
+    console.log("I come to clickDelete()");
+    var url = "../deleting_daily_task.php"; //opens popup to confirm deletion page
+    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=500, toolbar=1, resizable=0');
+    myRef.focus();
+}
     
 function generate() {
     console.log("generate is called");
@@ -182,9 +183,11 @@ function printSchedule(scheduleArr) {
     let itemName = document.createElement("button");
     itemName.classList.add("itemName"); //class: itemName
     itemName.innerHTML = scheduleArr[i].getTaskName();
-    itemName.addEventListener('click',function() {
-        tempFixed(scheduleArr[i]);
-    });
+    if (scheduleArr[i].getType() != 3) {
+        itemName.addEventListener('click',function() {
+            tempFixed(scheduleArr[i]);
+        });
+    }
     itemName.style.fontFamily = "'Signika Negative', sans-serif";
     itemName.style.fontSize = "large";
     itemName.style.position = "absolute";
@@ -200,6 +203,8 @@ function printSchedule(scheduleArr) {
     namedivision.appendChild(itemName); //adding the name part of the item
     } 
 } 
+
+
 
 /*To add fixed task select icons*/
 function tempFixed(object) { //only reschedule, edit and delete
@@ -239,7 +244,7 @@ function tempFixed(object) { //only reschedule, edit and delete
     var currentDelete = document.getElementById("delete");
     var newDelete = document.createElement("div");
     newDelete.id = "delete";
-    newDelete.innerHTML = '<button class="btn" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>';
+    newDelete.innerHTML = '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>';
     newDelete.style.marginTop = "-32px";
     newDelete.style.marginLeft = "195px";
     currentDelete.replaceWith(newDelete);

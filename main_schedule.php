@@ -315,7 +315,7 @@
                     // If the break does end before the next fixed task
                     if (((endOfBreak.getHours() * 60) + endOfBreak.getMins()) <= ((sortedArr[i + 1].getStartTime().getHours() * 60) + sortedArr[i + 1].getStartTime().getMins())) {
 
-                        let newBreakWin = new Window("---- BREAK TIME ----", 2, parseInt(year), parseInt(month), parseInt(date), lastTaskEndTime, endOfBreak, falsed; //TODO: Breaks can just be type -1?
+                        let newBreakWin = new Window("---- BREAK TIME ----", 2, parseInt(year), parseInt(month), parseInt(date), lastTaskEndTime, endOfBreak, falsed); //TODO: Breaks can just be type -1?
 
                         breakArr.push(newBreakWin);
 

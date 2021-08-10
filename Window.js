@@ -1,5 +1,4 @@
 class Window {
-//export class Window {
     /**
      * Constructor to create window objects
      * @param {String} taskName Name of the task ('null' for empty windows)
@@ -10,14 +9,15 @@ class Window {
      * @param {Time} endTime Time at which the window ends
      * @param {Number} type 0 - Empty, 1 - A fixed task/Break, 2 - A non-fixed task, 3 - A non-fixed priority task
      */
-    constructor(taskName, year, month, date, startTime, endTime, type) {
+    constructor(taskName, taskCat, year, month, date, startTime, endTime, completed) {
         this.taskName = taskName;
+        this.taskCat = taskCat;
         this.year = year;
         this.month = month;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.type = type;
+        this.completed = completed;
     }
 
     /**
@@ -26,6 +26,10 @@ class Window {
      */
     getTaskName() {
         return this.taskName;
+    }
+
+    getTaskCat() {
+        return this.taskCar;
     }
 
     /**
@@ -118,8 +122,8 @@ class Window {
         return this.endTime.getMins();
     }
 
-    getType() {
-        return this.type;
+    getCompletedStatus() {
+        return this.completed;
     }
 
     /**
@@ -138,24 +142,6 @@ class Window {
         this.endTime = newEndTime;
     }
 
-    /**
-     * To update the accumulated duration of an existing window to a new duration
-     * @param {Number} newDuration The new accumulated duration in hours and minutes (Format: [hours, mins])
-     */
-    /*
-    changeAccumulateDuration(newDuration) {
-        this.accumulatedDuration = newDuration;
-    }
-    */
-    /**
-     * To update the group number fo an existing window to a new number
-     * @param {Number} newGroup The new group number (based on Window.prototype.group)
-     */
-    /*
-    changeGroup(newGroup) {
-        this.group = newGroup;
-    }
-    */
     /**
      * To check if 2 windows are exactly the same
      * @param {Window} window 
@@ -238,16 +224,16 @@ class Window {
      * Checks if a window falls during a user's sleeping hours so as to warn users against scheduling tasks at those timings
      * @returns {Boolean} True if window falls during user's sleeping hours, false if otherwise
      */
-     duringSleep() {
-        let sleepStartTime = new Time(RoutineInfo.getSleepTimeHours(), Info.getSleepTimeMins())
-        let sleepEndTime = new Time(RoutineInfo.getWakeUpTimeHours(), Info.getWakeUpTimeMins());
-
-        if (sleepEndTime.getHours() > sleepStartTime.getHours()) {
-            let sleepWindow = new Window(this.year, this.month, this.date, sleepStartTime, sleepEndTime);
+     duringSleep(sleepStartTime, sleepEndTime) {
+        //let sleepStartTime = new Time(RoutineInfo.getSleepTimeHours(), Info.getSleepTimeMins())
+        //let sleepEndTime = new Time(RoutineInfo.getWakeUpTimeHours(), Info.getWakeUpTimeMins());
+        if (sleepStartTime.getHours() + 8 == sleepEndTime.getHours()) {
+            let sleepWindow = new Window("Sleep", 2, this.year, this.month, this.date, sleepStartTime, sleepEndTime, false);
             return this.partiallyOverlaps(sleepWindow) || this.isCompletelyDuring(sleepWindow);
         } else {
-            let sleepWindow1 = new Window(this.year, this.month, this.date, sleepStartTime, new Time(23, 59));
-            let sleepWindow2 = new Window(this.year, this.month, this.date, new Time(0,0), sleepEndTime);
+            let sleepWindow1 = new Window("Sleep", 2, this.year, this.month, this.date, sleepStartTime, new Time(23, 59), false);
+            let sleepWindow2 = new Window("Sleep", 2, this.year, this.month, this.date, new Time(0,0), sleepEndTime, false);
+
             return this.partiallyOverlaps(sleepWindow1) || this.isCompletelyDuring(sleepWindow1) || this.partiallyOverlaps(sleepWindow2) || this.isCompletelyDuring(sleepWindow2);
         }
     }
@@ -256,7 +242,7 @@ class Window {
      * Checks if a given window is falls during user's productive slot
      * @returns True if a given window is falls during user's productive slot, false if otherwise
      */
-     duringProductivePeriod() {
+    duringProductivePeriod() {
         let productiveStartTime = new Time(RoutineInfo.getProductiveSlotHours(), RoutineInfo.getProductiveSlotMins())
         let productiveEndTime = Time.findEndTime(productiveStartTime, [4, 0]);
 

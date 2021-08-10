@@ -23,6 +23,22 @@ class Time {
     }
 
     /**
+     * To retrieve the number of hours for a given time
+     * @returns {Number} The number of hours for a given time
+     */
+     getHours() {
+        return this.hours;
+    }
+
+    /**
+     * To retrieve the number of minutes for a given time
+     * @returns {Number} The number of hours for a given time
+     */
+    getMins() {
+        return this.mins;
+    }
+    
+    /**
      * Calculates the duration of a task in hours and minutes
      * @param {Time} startTime Time at which the task starts
      * @param {Time} endTime   Time at which the task ends
@@ -48,22 +64,6 @@ class Time {
         let elapsedHours = Math.floor(elapsed / 60);
         let elapsedMins = elapsed - (elapsedHours * 60);
         return [elapsedHours, elapsedMins];
-    }
-
-    /**
-     * To retrieve the number of hours for a given time
-     * @returns {Number} The number of hours for a given time
-     */
-    getHours() {
-        return this.hours;
-    }
-
-    /**
-     * To retrieve the number of minutes for a given time
-     * @returns {Number} The number of hours for a given time
-     */
-    getMins() {
-        return this.mins;
     }
 
     /**

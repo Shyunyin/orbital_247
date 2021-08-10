@@ -211,7 +211,7 @@
       function remainingTime() {
         let text;
         let currArr = [];
-        let name, year, month, date, startTimeHour, startTimeMin, endTimeHour, endTimeMin, type, newWin;
+        let name, cat, year, month, date, startTimeHour, startTimeMin, endTimeHour, endTimeMin, completed, newWin;
         let totalDuration;
 
         <?php
@@ -250,20 +250,73 @@
         if ($resultCheck == 0) {
             echo 'console.log("I come to if block");';
             echo 'totalDuration = 0;';
-        // STEP 1: Obtain all the fixed tasks for the day
-            $type = 1; //Type for fixed tasks is always 1
-            $fullDate = $currYear."-".($currMonth + 1)."-".$currDate;
-            $timestamp = strtotime($fullDate);
-            $dayNum = date('w', $timestamp);
 
-            echo "console.log('DayNum is ' + '$dayNum');";
-            $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 0;";
+          // STEP 1: Obtain all the fixed tasks for the day
+            //$type = 1; //Type for fixed tasks is always 1
+            //$timestamp = strtotime($fullDate);
+            //$dayNum = date('w', $timestamp);
+            //echo "console.log('DayNum is ' + '$dayNum');";
 
-            $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";
+            $currSql = "SELECT * FROM fixedtaskwindow WHERE userid = $userid AND taskYear = $currYear AND taskMonth = $currMonth AND taskDate = $currDate;";
 
-            $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2 AND taskDay = $dayNum AND week = 0;";
+            $currResult = mysqli_query($conn, $currSql);
+                        
+            if ($currResult) {
+                //echo 'console.log("this is correct");';
+                $resultCheck = mysqli_num_rows($currResult);
+                $data = array();
+                if ($resultCheck > 0) {
+                    echo 'console.log("I have at least 1 result");';
+                    while ($row = mysqli_fetch_assoc($currResult)) {
+                        $data[] = $row;   
+                    }   
+                }
+                foreach($data as $single) {
+                    $name = $single['taskName'];
+                    echo "name = '$name';";
+                    $cat = $single['taskCategory'];
+                    echo "cat = parseInt($cat);";
+                    $year = $single['taskYear'];
+                    echo "year = parseInt($year);";
+                    $month = $single['taskMonth'];
+                    echo "month = parseInt($month);";
+                    $date = $single['taskDate'];
+                    echo "date = parseInt($date);";
+                    $startTimeHour = $single['startTimeHour'];
+                    echo "startTimeHour = parseInt($startTimeHour);";
+                    $startTimeMin = $single['startTimeMin'];
+                    echo "startTimeMin = parseInt($startTimeMin);";
+                    $endTimeHour = $single['endTimeHour'];
+                    echo "endTimeHour = parseInt($endTimeHour);";
+                    $endTimeMin = $single['endTimeMin'];
+                    echo "endTimeMin = parseInt($endTimeMin);";
+                    $completed = $single['completed'];
+                    echo "completed = '$completed';"; //TODO: Not sure if booleans can be printed like this
+                    
+                    echo 'newWin = new Window(name, cat, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), completed);';
 
-            $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 3 AND taskDate = $taskDate;";
+                    echo 'currArr.push(newWin);';
+                }
+            }
+            
+            if ((int)$currDate < 10) {
+              $currDate = (string) ("0" . ((string)$currDate));
+            }
+            if ((int)($currMonth + 1) < 10) {
+              $currMonth = (string) ("0" . ((string)($currMonth + 1)));
+            } else {
+              $currMonth = (string) ($currMonth + 1);
+            }
+
+            $fullDate = $currYear."-".($currMonth)."-".$currDate;
+
+            $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 0;";
+
+            $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 1;";
+
+            $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 2;";
+
+            $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 3;";
 
             $routineChecks = [$dailySql, $weeklySql, $biweeklySql, $monthlySql];
 
@@ -286,6 +339,8 @@
                   foreach($data as $single) {
                       $name = $single['taskName'];
                       echo "name = '$name';";
+                      $cat = $single['taskCategory'];
+                      echo "cat = parseInt($cat);";
                       echo "year = $currYear;";
                       echo "month = $currMonth;";
                       echo "date = $currDate;";
@@ -297,10 +352,10 @@
                       echo "endTimeHour = parseInt($endTimeHour);";
                       $endTimeMin = $single['endTimeMin'];
                       echo "endTimeMin = parseInt($endTimeMin);";
-                      $type = $single['taskCategory'];
-                      echo "type = parseInt($type);";
+                      $endTimeMin = $single['completed'];
+                      echo "endTimeMin = parseInt($endTimeMin);";
                       
-                      echo 'newWin = new Window(name, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);';
+                      echo 'newWin = new Window(name, cat, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), false);';
 
                       echo 'currArr.push(newWin);';
                   }
@@ -341,10 +396,42 @@
         let endHour = endArr[0];
         let endMin = endArr[1];
 
+        let sleepEndHour = -1;
+        let sleepEndMin = -1;
+
+        <?php
+          $sleepSql = "SELECT * FROM infowakeup WHERE id=$userid;";
+
+          $sleepResult = mysqli_query($conn, $sleepSql);
+                        
+            if ($sleepResult) {
+                //echo 'console.log("this is correct");';
+                $resultCheck = mysqli_num_rows($sleepResult);
+                $data = array();
+                if ($resultCheck > 0) {
+                    echo 'console.log("I have at least 1 result in sleep block");';
+                    while ($row = mysqli_fetch_assoc($sleepResult)) {
+                        $data[] = $row;   
+                    }   
+                }
+                foreach($data as $single) {
+                    $hour = $single['hour'];
+                    echo "sleepEndHour = parseInt($hour);";
+                    $min = $single['minute'];
+                    echo "sleepEndMin = parseInt($min);";
+                }
+            }
+        ?>
+        let sleepEnd = new Time(sleepEndHour, sleepEndMin);
+        let sleepStart = Time.findStartTime(sleepEnd, [8, 0]);
+        let taskWindow = new Window("task", 0, new Date().getYear(), new Date().getMonth(), new Date().getDate(), new Time(startHour, startMin), new Time(endHour, endMin), false);
+
         if (((startHour * 60) + startMin) == ((endHour * 60) + endMin)) {
           document.getElementById("warning").innerHTML = "Start and end times are the same. Please choose another start/end time.";
         } else if (((startHour * 60) + startMin) > ((endHour * 60) + endMin)) {
           document.getElementById("warning").innerHTML = "Please choose an end time that is later than the start time.";
+        } else if (taskWindow.duringSleep(sleepStart, sleepEnd)) {
+          document.getElementById("warning").innerHTML = "Are you sure you want to schedule a task during your sleep time?";
         } else {
           document.getElementById("warning").innerHTML = null;
           

@@ -23,14 +23,16 @@
                  * @param {Time} endTime Time at which the window ends
                  * @param {Number} type 0 - Empty, 1 - A fixed task/Break, 2 - A non-fixed task, 3 - A non-fixed priority task
                  */
-                constructor(taskName, year, month, date, startTime, endTime, type) {
+                constructor(taskName, taskCat, year, month, date, startTime, endTime, completed) {
                     this.taskName = taskName;
+                    this.taskCat = taskCat;
                     this.year = year;
                     this.month = month;
                     this.date = date;
                     this.startTime = startTime;
                     this.endTime = endTime;
                     this.type = type;
+                    this.completed = completed;
                 }
 
                 /**
@@ -39,6 +41,10 @@
                  */
                 getTaskName() {
                     return this.taskName;
+                }
+
+                getTaskCat() {
+                    return this.taskCar;
                 }
 
                 /**
@@ -129,6 +135,10 @@
                  */
                 getEndTimeMins() {
                     return this.endTime.getMins();
+                }
+
+                getCompletedStatus() {
+                    return this.completed;
                 }
 
                 /**
@@ -264,7 +274,7 @@
                 insertWindow() {
                     console.log("insertWindow is called");
                     let currArr = [];
-                    let name, year, month, date, startTimeHour, startTimeMin, endTimeHour, endTimeMin, type, newWin;
+                    let name, cat, year, month, date, startTimeHour, startTimeMin, endTimeHour, endTimeMin, completed, newWin;
                     //TODO: Actually need to do the variable conversion for every window so better to do that here within the function instead of down there?
                     <?php
                         $taskName = $_POST['taskName'];
@@ -276,20 +286,35 @@
                         $startMin = (int) $_POST['jsStartMin'];
                         $endHour = (int) $_POST['jsEndHour'];
                         $endMin = (int) $_POST['jsEndMin']; 
-                        $type = 1; //Type for fixed tasks is always 1
+                        $completed = 0;
                         //$userid = -1;
                         $userid = $_SESSION["userid"];
 
 
                         $sql = "SELECT * FROM fixedtaskwindow WHERE userid = $userid AND taskYear = $taskYear AND taskMonth = $taskMonth AND taskDate = $taskDate;";
 
-                        $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 0;";
+                        date_default_timezone_set('Singapore');
+                        $fullDate = date("Y-m-d");
 
-                        $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";
+                        //echo "console.log($fullDate);";
 
-                        $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2 AND taskDay = $dayNum AND taskWeek = 0;";
+                        $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 0;";
 
-                        $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 3 AND taskDate = $taskDate;";
+                        $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 1;";
+
+                        //$weeklySql = "SELECT * FROM routinetask WHERE userid = $userid;";
+
+                        $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 2;";
+
+                        $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 3;";
+
+                        //$dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 0;";
+
+                        // $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";
+
+                        // $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2 AND taskDay = $dayNum AND taskWeek = 0;";
+
+                        // $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 3 AND taskDate = $taskDate;";
 
                         $routineChecks = [$dailySql, $weeklySql, $biweeklySql, $monthlySql];
 
@@ -312,6 +337,8 @@
                             foreach($data as $single) {
                                 $name = $single['taskName'];
                                 echo "name = '$name';";
+                                $cat = $single['taskCategory'];
+                                echo "cat = '$cat';";
                                 $year = $single['taskYear'];
                                 echo "year = parseInt($year);";
                                 $month = $single['taskMonth'];
@@ -326,10 +353,10 @@
                                 echo "endTimeHour = parseInt($endTimeHour);";
                                 $endTimeMin = $single['endTimeMin'];
                                 echo "endTimeMin = parseInt($endTimeMin);";
-                                $type = $single['taskType'];
-                                echo "type = parseInt($type);";
+                                $completed = $single['completed'];
+                                echo "completed = '$completed';"; //TODO: Not sure if booleans can be printed like this
                                 
-                                echo 'newWin = new Window(name, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);';
+                                echo 'newWin = new Window(name, cat, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), completed);';
     
                                 echo 'currArr.push(newWin);';
                             }
@@ -343,7 +370,7 @@
                                 $resultCheck = mysqli_num_rows($result);
                                 $data = array();
                                 if ($resultCheck > 0) {
-                                    //echo 'console.log("I have at least 1 result");';
+                                    echo 'console.log("I have at least 1 result");';
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         $data[] = $row;   
                                     }   
@@ -351,6 +378,8 @@
                                 foreach($data as $single) {
                                     $name = $single['taskName'];
                                     echo "name = '$name';";
+                                    $cat = $single['taskCategory'];
+                                    echo "cat = '$cat';";
                                     // echo "year = $taskYear;";
                                     // echo "month = $taskMonth;";
                                     // echo "date = $taskDate;";
@@ -365,18 +394,44 @@
                                     echo "endTimeHour = parseInt($endTimeHour);";
                                     $endTimeMin = $single['endTimeMin'];
                                     echo "endTimeMin = parseInt($endTimeMin);";
-                                    $type = $single['taskCategory'];
-                                    echo "type = parseInt($type);";
-                                    
-                                    echo 'newWin = new Window(name, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), type);';
+                                    $freq = $single['freq'];
+                                    $completed = 0;
+                                    echo 'newWin = new Window(name, cat, year, month, date, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), 0);';
         
                                     echo 'currArr.push(newWin);';
+
+                                    //Adding it as a fixed task
+                                    $addingRoutine = "INSERT INTO fixedtaskwindow(taskName, taskCategory, taskYear, taskMonth, taskDate, startTimeHour, startTimeMin, endTimeHour, endTimeMin, completed, userid) VALUES ('$name', $cat, $taskYear, $taskMonth, $taskDate, $startTimeHour, $startTimeMin, $endTimeHour, $endTimeMin, $completed, $userid);";
+
+                                    mysqli_query($conn, $addingRoutine);
+
+                                    //Update start date
+                                    $today = date_create($fullDate);
+
+                                    if ($single['freq'] == 0) {
+                                        $next_date = date_add($today,date_interval_create_from_date_string("1 days"));
+                                    } else if ($single['freq'] == 1) {
+                                        $next_date = date_add($today,date_interval_create_from_date_string("7 days"));
+                                    } else if ($single['freq'] == 2) {
+                                        $next_date = date_add($today,date_interval_create_from_date_string("14 days"));
+                                    } else {
+                                        $next_date = date_add($today,date_interval_create_from_date_string("1 months"));
+                                        if ((int) substr(date_format($next_date,"Y-m-d"), 8, 2) != $taskDate) {
+                                            $next_date = date_add($today,date_interval_create_from_date_string("1 months"));
+                                        }
+                                    }
+                                    $new_date = date_format($next_date,"Y-m-d");
+
+                                    $updateDate = "UPDATE routinetask SET startDate='$new_date' WHERE startTimeHour=$startTimeHour AND startTimeMin=$startTimeMin AND endTimeHour=$endTimeHour AND endTimeMin=$endTimeMin AND freq=$freq AND startDate='$fullDate' AND userid=$userid;"; 
+
+                                    mysqli_query($conn, $updateDate);
                                 }
                             }
                         }
                         //echo'console.log(currArr);' ;
                         
                         echo "name = '$taskName';";
+                        echo "cat = '$taskCat';";
                         echo "year = '$taskYear';";
                         echo "month = '$taskMonth';";
                         echo "date = '$taskDate';";
@@ -384,7 +439,7 @@
                         echo "startTimeMin = '$startMin';";
                         echo "endTimeHour = '$endHour';";
                         echo "endTimeMin = '$endMin';";
-                        echo "type = '$type';";
+                        echo "completed = '$completed';";
                     ?>
                     //console.log(currArr);
                     console.log("I make it to after php block in insertWindow function");
@@ -415,7 +470,7 @@
 
                                 let currCat = document.createElement("input");
                                 currCat.type = "hidden";
-                                currCat.value = type;
+                                currCat.value = cat;
                                 currCat.name = "currCat";
                                 big.appendChild(currCat);
 
@@ -461,9 +516,17 @@
                                 currEndMin.name = "currEndMin";
                                 big.appendChild(currEndMin);
 
-                                console.log("inc.php is error free thus far");
+                                let currCompleted = document.createElement("input");
+                                currCompleted.type = "hidden";
+                                currCompleted.value = completed;
+                                //currCompleted.value = true;
+                                currCompleted.name = "currCompleted";
+                                big.appendChild(currCompleted);
+                                
+                                //console.log(completed);
+                                //console.log("inc.php is error free thus far");
 
-                                big.submit();                       
+                                //big.submit();                       
                         } else {
                             let clashingTaskName = (currArr[newIndex]).getTaskName();
                             let clashingStartTime = (currArr[newIndex]).getStartTime().toTwelveHourString();
@@ -512,7 +575,6 @@
                 $startMin = (int) $_POST['jsStartMin'];
                 $endHour = (int) $_POST['jsEndHour'];
                 $endMin = (int) $_POST['jsEndMin']; 
-                $type = 1; //Type for fixed tasks is always 1
                 $userid = $_SESSION["userid"];
 
                 $remainingDuration = (int) $_POST['finalRemainingMins'];  
@@ -525,7 +587,7 @@
                 // If the remaining time exists
                 if ($resultsCheck > 0) {
                     echo 'console.log("I try to update");';
-                    $updateSql = "UPDATE remainingtime SET currYear=$taskYear, currMonth=$taskMonth, currDate=$taskDate, remainder=$remainingDuration, userid=$userid WHERE userid=$userid"; 
+                    $updateSql = "UPDATE remainingtime SET currYear=$taskYear, currMonth=$taskMonth, currDate=$taskDate, remainder=$remainingDuration, userid=$userid WHERE currYear=$taskYear AND currMonth=$taskMonth AND currDate=$taskDate AND userid=$userid"; 
 
                     mysqli_query($conn, $updateSql);
                 } else {

@@ -338,7 +338,7 @@
                                 $name = $single['taskName'];
                                 echo "name = '$name';";
                                 $cat = $single['taskCategory'];
-                                echo "cat = '$cat';";
+                                echo "cat = parseInt($cat);";
                                 $year = $single['taskYear'];
                                 echo "year = parseInt($year);";
                                 $month = $single['taskMonth'];
@@ -379,7 +379,7 @@
                                     $name = $single['taskName'];
                                     echo "name = '$name';";
                                     $cat = $single['taskCategory'];
-                                    echo "cat = '$cat';";
+                                    echo "cat = parseInt($cat);";
                                     // echo "year = $taskYear;";
                                     // echo "month = $taskMonth;";
                                     // echo "date = $taskDate;";

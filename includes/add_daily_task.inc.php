@@ -526,7 +526,7 @@
                                 //console.log(completed);
                                 //console.log("inc.php is error free thus far");
 
-                                //big.submit();                       
+                                big.submit();                       
                         } else {
                             let clashingTaskName = (currArr[newIndex]).getTaskName();
                             let clashingStartTime = (currArr[newIndex]).getStartTime().toTwelveHourString();

@@ -19,6 +19,9 @@
         $taskDate = (int) $_POST['jsDate'];
     }
 
+    date_default_timezone_set('Singapore');
+    $fullDate = date("Y-m-d");
+
 // For testing purposes
     // echo "taskName in php is: " . $taskName . "<br>";
     // echo "cat in php is: " . $cat . "<br>";
@@ -34,70 +37,89 @@
     //echo "startHour in php is: " . $startHour . "<br>";
     //echo "taskName in php is: " . $taskName . "<br>";
 
-    if (isset($_POST['done']) || isset($_POST['add'])) {
-        $serverName = "localhost";
-        $dBUsername = "root";
-        $dBPassword = "";
-        $dBName = "orbital247";
-        $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
+    if ($taskName != "") {
+        if (isset($_POST['done']) || isset($_POST['add'])) {
+            $serverName = "localhost";
+            $dBUsername = "root";
+            $dBPassword = "";
+            $dBName = "orbital247";
+            $conn = mysqli_connect($serverName, $dBUsername, $dBPassword, $dBName);
 
-        //$sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskDate, userid) VALUES ('$taskName', 1, $startHour, $startMin, $endHour, $endMin, $freq, '$taskDay', '$week', '$taskDate', -1);";
+            //$sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskDate, userid) VALUES ('$taskName', 1, $startHour, $startMin, $endHour, $endMin, $freq, '$taskDay', '$week', '$taskDate', -1);";
 
-        if ($freq == 1) {
-            //echo ("I enter the weekly freq block");
+            if ($freq == 1) {
+                //echo ("I enter the weekly freq block");
 
-            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDay, $userid);";
+                $timestamp = strtotime($fullDate);
+                $dayNum = date('w', $timestamp);
 
-            mysqli_query($conn, $sql);
-        } else if ($freq == 2) {
-            //echo ("I enter the biweekly freq block");
-            // date_default_timezone_set('Singapore');
-            // $fullDate = $taskYear."-".($taskMonth + 1)."-".$taskDate;
-            // $timestamp = strtotime($fullDate);
-            // $dayNum = date('w', $timestamp);
+                if ($dayNum > $taskDay) { // Supposed to start this week and day has passed
+                    $passed_days = ((string) (7 - ($dayNum - $taskDay))) . " days";
+                } else {
+                    $passed_days = ((string) ($taskDay - $dayNum)) . " days";
+                }
 
-            // if ($week == 0 && $dayNum > $taskDay + 1) { //If the day to update this task has also passed
-            //     $specialSql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskStatus, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDay, 1, 1, $userid);";
+                $today = date_create($fullDate);
+                $start_date = date_add($today,date_interval_create_from_date_string($passed_days));
+                $curr_result = date_format($start_date,"Y-m-d");
 
-            //     mysqli_query($conn, $specialSql);
-            // } else {
-            //     $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDay, week, taskStatus, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDay, $week, $week, $userid);";
+                $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, startDate, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, '$curr_result', $userid);";
 
-            //     mysqli_query($conn, $sql);
-            // }
-            date_default_timezone_set('Singapore');
-            $fullDate = date("Y-m-d");
-            $timestamp = strtotime($fullDate);
-            $dayNum = date('w', $timestamp);
+                mysqli_query($conn, $sql);
+            } else if ($freq == 2) {
+                //echo ("I enter the biweekly freq block");
+                $timestamp = strtotime($fullDate);
+                $dayNum = date('w', $timestamp);
 
-            if ($week == 0 && $dayNum > $taskDay) { // Supposed to start this week and day has passed
-                $passed_days = ((string) (($dayNum - $taskDay) * -1)) . " days";
-            } else if ($week == 1 && $dayNum > $taskDay) {
-                $passed_days = ((string) (7 - ($dayNum - $taskDay))) . " days";
-            } else if ($week == 1) {
-            	$passed_days = ((string) (7 + ($taskDay - $dayNum))) . " days";
+                if ($week == 0 && $dayNum > $taskDay) { // Supposed to start this week and day has passed
+                    $passed_days = ((string) (14 - ($dayNum - $taskDay))) . " days";
+                } else if ($week == 1 && $dayNum > $taskDay) {
+                    $passed_days = ((string) (7 - ($dayNum - $taskDay))) . " days";
+                } else if ($week == 1) {
+                    $passed_days = ((string) (7 + ($taskDay - $dayNum))) . " days";
+                } else {
+                    $passed_days = ((string) ($taskDay - $dayNum)) . " days";
+                }
+
+                $today = date_create($fullDate);
+                $start_date = date_add($today,date_interval_create_from_date_string($passed_days));
+                $curr_result = date_format($start_date,"Y-m-d");
+                //$curr_result = "2021-08-01";
+                //echo($curr_result);
+
+                $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, startDate, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, '$curr_result', $userid);";
+
+                mysqli_query($conn, $sql);
+            } else if ($freq == 3) {
+                //echo ("I enter the monthly freq block");
+                $year = substr($fullDate, 0, 4);
+                $month = substr($fullDate, 5, 2);
+                //$result = $year . "-" . $month . "-" . $taskDate;
+                if (substr($fullDate, 8, 2) > $taskDate || date("t") < $taskDate) {
+                    $month = ((int)$month + 1);
+                    if ($taskDate < 10) {
+                        $taskDate = "0" . ((string) $taskDate);
+                    }
+                    if ($month < 10) {
+                        $month = "0" . ((string) $month);
+                    }
+                    $result = $year . "-" . $month . "-" . $taskDate;
+                } else {
+                    if ($taskDate < 10) {
+                        $taskDate = "0" . ((string) $taskDate);
+                    }
+                    $result = $year . "-" . $month . "-" . $taskDate;
+                }
+                $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, startDate, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, '$result', $userid);";
+
+                mysqli_query($conn, $sql);
             } else {
-                $passed_days = ((string) ($taskDay - $dayNum)) . " days";
+                //echo ("I enter the daily freq block");
+
+                $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, startDate, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, '$fullDate', $userid);";
+
+                mysqli_query($conn, $sql);
             }
-
-            $today = date_create($fullDate);
-            $start_date = date_add($today,date_interval_create_from_date_string($passed_days));
-            $curr_result = date_format($start_date,"Y-m-d");
-
-            //echo("console.log('$result')");
-            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, startDate, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $curr_result, $userid);";
-        } else if ($freq == 3) {
-            //echo ("I enter the monthly freq block");
-
-            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, taskDate, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $taskDate, $userid);";
-
-            mysqli_query($conn, $sql);
-        } else {
-            //echo ("I enter the daily freq block");
-
-            $sql = "INSERT INTO routinetask(taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, userid) VALUES ('$taskName', $cat, $startHour, $startMin, $endHour, $endMin, $freq, $userid);";
-
-            mysqli_query($conn, $sql);
         }
     }
 

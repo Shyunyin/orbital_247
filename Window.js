@@ -224,7 +224,7 @@ class Window {
      * Checks if a window falls during a user's sleeping hours so as to warn users against scheduling tasks at those timings
      * @returns {Boolean} True if window falls during user's sleeping hours, false if otherwise
      */
-     duringSleep(sleepStartTime, sleepEndTime) {
+    duringSleep(sleepStartTime, sleepEndTime) {
         //let sleepStartTime = new Time(RoutineInfo.getSleepTimeHours(), Info.getSleepTimeMins())
         //let sleepEndTime = new Time(RoutineInfo.getWakeUpTimeHours(), Info.getWakeUpTimeMins());
         if (sleepStartTime.getHours() + 8 == sleepEndTime.getHours()) {

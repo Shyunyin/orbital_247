@@ -21,5 +21,6 @@
     mysqli_query($conn, $deleteSql);
 
     //TODO: Not sure if this is correct, but basically to trigger the regeneration of the schedule
-    header("location: ../includes/scheduling.php");
+    //header("location: ../includes/scheduling.php");
+    header("location: ../main_schedule.php");
 ?>

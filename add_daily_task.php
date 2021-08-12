@@ -1,5 +1,7 @@
 <?php
     session_start();
+    include "../includes/add_daily_task.inc.php";
+    //include "../includes/insertWindow_helper.inc.php";
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +23,7 @@
   
   <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;" onload="remainingTime();">
   <form action="includes/add_daily_task.inc.php" method="POST" id="bigForm">
+    <!-- <script> var totalMinsLeft = 0; </script> -->
     <input type="hidden" id="totalMinsLeft" name="totalMinsLeft" value=0>
     <!-- Parent-child relationship for inline-->
     <fieldset id="myFieldset">
@@ -61,7 +64,7 @@
         </div>
         <div class="endTime">
         <h3>End time:</h3>
-        <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
+          <input type="time" id="endTime" name="endTime" oninput="Update(this.value, 'end')">
         </div>
         <div class="warning">
           <h3 id="warning"></h3>
@@ -69,7 +72,6 @@
         <input type="button" id="doneTimeBtn" value="Done!" onclick="updateRemainingTime()">
       </div>
     
-  
       <!-- Create box for counter with CALCULATIONS of time left that can be planned-->
       <!-- QUESTION: idk how to include javascript element into html isit ${}?-->
       <div id="counter">
@@ -424,7 +426,10 @@
         ?>
         let sleepEnd = new Time(sleepEndHour, sleepEndMin);
         let sleepStart = Time.findStartTime(sleepEnd, [8, 0]);
-        let taskWindow = new Window("task", 0, new Date().getYear(), new Date().getMonth(), new Date().getDate(), new Time(startHour, startMin), new Time(endHour, endMin), false);
+        let taskWindow = new Window("task", 0, new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Time(startHour, startMin), new Time(endHour, endMin), false);
+
+        console.log(new Time(startHour, startMin));
+        console.log(new Time(endHour, endMin));
 
         if (((startHour * 60) + startMin) == ((endHour * 60) + endMin)) {
           document.getElementById("warning").innerHTML = "Start and end times are the same. Please choose another start/end time.";
@@ -432,6 +437,8 @@
           document.getElementById("warning").innerHTML = "Please choose an end time that is later than the start time.";
         } else if (taskWindow.duringSleep(sleepStart, sleepEnd)) {
           document.getElementById("warning").innerHTML = "Are you sure you want to schedule a task during your sleep time?";
+        } else if (taskWindow.isPast()) {
+          document.getElementById("warning").innerHTML = "The selected time has already passed! Please re-select the timing.";
         } else {
           document.getElementById("warning").innerHTML = null;
           
@@ -459,7 +466,10 @@
           finalRemainingMins.value = currRemainingTime;
           finalRemainingMins.name = "finalRemainingMins";
           ele.appendChild(finalRemainingMins);
+
+          
         }
+
       }
     </script>
    </body>

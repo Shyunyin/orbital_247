@@ -6,10 +6,12 @@
 <html>
     <!--<div type="hidden" id="big" name="big"></div>-->
     <form action = "../includes/add_to_DB.inc.php" id="big" name="big" method="POST"></form>
+    <form action = "../includes/redirect.inc.php" id="redirect" name="redirect" method="POST"></form>
     <body>
         <script type = "text/javascript" type="module" src="../CombinedTime_Final.js"></script>
         <script>
             var big = document.getElementById("big");
+            var redirect = document.getElementById("redirect");
             console.log("I come here too");
 
             class Window {
@@ -31,7 +33,6 @@
                     this.date = date;
                     this.startTime = startTime;
                     this.endTime = endTime;
-                    this.type = type;
                     this.completed = completed;
                 }
 
@@ -444,14 +445,11 @@
                     //console.log(currArr);
                     console.log("I make it to after php block in insertWindow function");
                     // Doing checks to ensure that task does not clash with any existing fixed, future tasks.
-                    if (this.isPast()) {
-                        window.alert("The selected time has already passed! Please re-select the timing.");
-                        //TODO: How to redirect it back to the add task page?
-                        <?php
-                            //echo 'console.log("I behave");';
-                            header("location:../add_daily_task.php"); //Doesn't redirect
-                        ?>
-                    } else {
+                    //if (this.isPast()) {
+                        //window.alert("The selected time has already passed! Please re-select the timing.");
+                        
+                        //redirect.submit();
+                    //} else {
                         let newIndex = 0;
 
                         while (newIndex < currArr.length && !this.partiallyOverlaps(currArr[newIndex]) && !this.isCompletelyDuring(currArr[newIndex]) && !(currArr[newIndex]).isCompletelyDuring(this)) {
@@ -536,13 +534,33 @@
 
                             console.log("Sorry we are unable to schedule this task as it clashes with the task '" + clashingTaskName + "' that takes place from " + clashingStartTime + " to " + clashingEndTime);
 
-                            //TODO: How to redirect it back to the add task page?
-                            //console.error("Cannot schedule task as it clashes with an existing task!");
+                            let redirectYear = document.createElement("input");
+                            redirectYear.type = "hidden";
+                            redirectYear.value = year;
+                            redirectYear.name = "redirectYear";
+                            redirect.appendChild(redirectYear);
 
-                            //return;
-                            //window.alert("Cannot schedule task as it clashes with an existing task!");
+                            let redirectMonth = document.createElement("input");
+                            redirectMonth.type = "hidden";
+                            redirectMonth.value = month;
+                            redirectMonth.name = "redirectMonth";
+                            redirect.appendChild(redirectMonth);
+
+                            let redirectDate = document.createElement("input");
+                            redirectDate.type = "hidden";
+                            redirectDate.value = date;
+                            redirectDate.name = "redirectDate";
+                            redirect.appendChild(redirectDate);
+
+                            let currDuration = document.createElement("input");
+                            currDuration.type = "hidden";
+                            currDuration.value = (Time.duration(new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin))[0] * 60) + Time.duration(new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin))[1] + Break.calculateBreak(new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin));
+                            currDuration.name = "currDuration";
+                            redirect.appendChild(currDuration);
+
+                            redirect.submit();
                         }
-                    }
+                    //}
                 }
             }
 
@@ -587,7 +605,7 @@
                 // If the remaining time exists
                 if ($resultsCheck > 0) {
                     echo 'console.log("I try to update");';
-                    $updateSql = "UPDATE remainingtime SET currYear=$taskYear, currMonth=$taskMonth, currDate=$taskDate, remainder=$remainingDuration, userid=$userid WHERE currYear=$taskYear AND currMonth=$taskMonth AND currDate=$taskDate AND userid=$userid"; 
+                    $updateSql = "UPDATE remainingtime SET currYear=$taskYear, currMonth=$taskMonth, currDate=$taskDate, remainder=$remainingDuration, userid=$userid WHERE currYear=$taskYear AND currMonth=$taskMonth AND currDate=$taskDate AND userid=$userid;"; 
 
                     mysqli_query($conn, $updateSql);
                 } else {
@@ -611,7 +629,7 @@
                 echo "let endMin = $endMin;";
                 
                 // if ($numOfSessions == 0) { //Fixed task
-                    echo 'let newWin = new Window(name, year, month, date, new Time(startHour, startMin), new Time(endHour, endMin), 1);';
+                    echo 'let newWin = new Window(name, cat, year, month, date, new Time(startHour, startMin), new Time(endHour, endMin), 0);';
 
                     echo 'newWin.insertWindow();';
                 // }

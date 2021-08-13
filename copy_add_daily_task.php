@@ -22,21 +22,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   
-  <?php
-    if (isset($_POST['edit'])) {
-      $taskName = $_POST['taskName'];
-      $dateInput = $_POST['startDate'];
-      $startTime = $_POST['startTime'];
-      $endTime = $_POST['endTime'];
-      $taskCat = $_POST['taskCat'];
+  <script>
+    /*To read in previous values to be outputted AND to submit completed status*/
+    var completeStatus;
+    <?php
+      if (isset($_POST['edit'])) {
+        $taskName = $_POST['taskName'];
+        $dateInput = $_POST['startDate'];
+        $startTime = $_POST['startTime'];
+        $endTime = $_POST['endTime'];
+        $taskCat = $_POST['taskCat'];
+      }
+
+      $sql = "SELECT completed FROM fixedtaskwindow WHERE userid = $userid AND taskName = $taskName"; //Obtain all the routine task for the user
+
+      $result = mysqli_query($conn, $sql);
+      while($row = mysql_fetch_array($results)){
+        $completeStatus = (int) $row['completed'];
+        echo "completeStatus = $completeStatus;";
     }
-  ?>
+    ?>
+
+    var form = document.getElementById("bigForm");
+    var ele = document.createElement("input");
+    ele.type = "hidden";
+    ele.value = completeStatus;
+    ele.name = "completed"; //retrieve from PHP as 'completed'
+    form.appendChild(ele);
+
+  </script>
   
   <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
     <form action="../includes/editing_daily_task.inc.php" method="POST" id="bigForm">
       <!-- Parent-child relationship for inline-->
       <fieldset id="myFieldset">
       <div id="title">
+      <li><h3>Do fill in all fields even if they are already displayed!</h3></li>
         <li><h3>Add a task:</h3></li>
         <!-- INPUT for taskName-->
         <li><form>

@@ -22,12 +22,13 @@
     $newStartMin = (int) $_POST["jsStartMin"];
     $newEndHour = (int) $_POST["jsEndHour"];
     $newEndMin = (int) $_POST["jsEndMin"];
+    $completed = (int) $_POST['completed'];
 
     $newType = (int) $_POST["jsCat"];
     $userid = (int) $_SESSION["userid"];
 
     if (isset($_POST['done'])) {
-        $updateSql = "UPDATE fixedtaskwindow SET taskName = '$newTask', taskCategory = $newCat, taskYear = $newYear, taskMonth = $newMonth, taskDate = $newDate, startTimeHour = $newStartHour, startTimeMin = $newStartMin, endTimeHour = $newEndHour, endTimeMin = $newEndMin, taskType = $newType, userid = $userid WHERE userid = $userid AND startTimeHour = $oldStartHour AND startTimeMin = $oldStartMin";
+        $updateSql = "UPDATE fixedtaskwindow SET taskName = '$newTask', taskCategory = $newCat, taskYear = $newYear, taskMonth = $newMonth, taskDate = $newDate, startTimeHour = $newStartHour, startTimeMin = $newStartMin, endTimeHour = $newEndHour, endTimeMin = $newEndMin, completed = $completed, userid = $userid WHERE userid = $userid AND startTimeHour = $oldStartHour AND startTimeMin = $oldStartMin";
         mysqli_query($conn, $updateSql);
         header("location: ../main_schedule.php");
         exit();

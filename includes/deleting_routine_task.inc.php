@@ -2,25 +2,20 @@
     session_start();
 
     $userid = (int) $_SESSION["userid"];
-    $startHour = (int) $_POST[""];
-    $startMin = (int) $_POST[""];
-    $endHour = (int) $_POST[""];
-    $endMin = (int) $_POST[""];
-    $freq = (int) $_POST[""];
-    $taskDay = (int) $_POST[""];
-    $week = (int) $_POST[""];
-    $taskDate = (int) $_POST[""];
-
-    $deleteSql = "DELETE FROM fixedtaskwindow WHERE userid = $userid AND startTimeHour = $startHour AND startTimeMin = $startMin AND endTimeHour = $endHour AND endTimeMin = $endMin AND freq = $freq AND taskDay = $taskDay AND week = $week AND taskDate = $taskDate;";
+    $taskName = $_POST["taskName"];
 
     $user = 'root'; 
     $pass = '';
     $db='orbital247';
     $conn = mysqli_connect('localhost', $user, $pass, $db);
+    
+    if (isset($_POST['delete'])) {
+        $deleteSql = "DELETE FROM routinetask WHERE userid = $userid AND taskName = $taskName";
+        mysqli_query($conn, $deleteSql);
+        echo "Task has been successfully deleted. Press X to close this window.";
+        exit();
+    } else if (isset($_POST['close'])) {
+        echo "Task not deleted. Press X to close this window.";
+    }
 
-    mysqli_query($conn, $deleteSql);
-
-    //TODO: Not sure if this is correct, but basically to trigger the regeneration of the schedule
-    //header("location: ../includes/scheduling.php");
-    header("location: ../main_schedule.php");
 ?>

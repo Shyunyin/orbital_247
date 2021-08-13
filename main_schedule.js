@@ -247,7 +247,7 @@ function tempFixed(object) { //only reschedule, edit and delete
     mainForm.appendChild(taskName);
 
     var year = object.getYear();
-    var month = object.getMonth();
+    var month = object.getMonth() + 1;
     var date = object.getDate();
     var startdateval = year + "-" + month + "-" + date;
 

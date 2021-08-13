@@ -35,6 +35,7 @@
         <form action="includes/add_routine_task.inc.php" method="POST" id="bigForm">
             <div id="title">
                 <li>
+                <h3>Do fill in all fields even if they are already displayed!</h3>
                     <h3>Add a routine task:</h3>
                 </li>
                 <!-- INPUT for taskName-->

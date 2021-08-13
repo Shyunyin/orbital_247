@@ -116,7 +116,7 @@
         function generateSchedule() {
             console.log("generateSchedule is called");
             let currArr = [];
-            let name, cat, year, month, date, startTimeHour, startTimeMin, endTimeHour, endTimeMin, completed, newWin;
+            let name, year, month, date, startTimeHour, startTimeMin, endTimeHour, endTimeMin, type, newWin;
             // STEP 1: Obtain all the fixed tasks for the day
             <?php
                 $user = 'root'; 
@@ -125,35 +125,27 @@
                 $conn = mysqli_connect('localhost', $user, $pass, $db);
                 //TODO: We need to obtain the year, month and date from the html page that directs us here. So update these variables here accordingly later.
                 date_default_timezone_set('Singapore');
-                $taskYear = date("Y"); 
+                $taskYear = date("Y");
                 $taskMonth = date("m") - 1; // For javascript, months span from 0 - 11. This is already accounted for in the main schedule page.
                 //$taskDate = (int) $_POST['jsDate'];
                 $taskDate = date("d"); //Just for testing!!
-                //$type = 1; //Type for fixed tasks is always 1
+                // $type = 1; //Type for fixed tasks is always 1
                 //$userid = -1;
                 $userid = $_SESSION["userid"];
 
                 $sql = "SELECT * FROM fixedtaskwindow WHERE userid = $userid AND taskYear = $taskYear AND taskMonth = $taskMonth AND taskDate = $taskDate;";
 
-                $fullDate = date("Y-m-d");
-                //$timestamp = strtotime($fullDate);
-                //$dayNum = date('w', $timestamp);
+                $fullDate = $taskYear."-".($taskMonth + 1)."-".$taskDate;
+                // $timestamp = strtotime($fullDate);
+                // $dayNum = date('w', $timestamp);
 
-                $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 0;";
+                $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND  startDate = '$fullDate' AND freq = 0;";
 
-                $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 1;";
+                $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 1";
 
                 $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 2;";
 
-                $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 3;";
-
-                // $dailySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 0;";
-
-                // $weeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 1 AND taskDay = $dayNum;";
-
-                // $biweeklySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 2;";
-
-                // $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND freq = 3 AND taskDate = $taskDate;";
+                $monthlySql = "SELECT * FROM routinetask WHERE userid = $userid AND startDate = '$fullDate' AND freq = 3";
 
                 $routineChecks = [$dailySql, $weeklySql, $biweeklySql, $monthlySql];
 

@@ -22,15 +22,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   
+  <?php
+    if (isset($_POST['edit'])) {
+      $taskName = $_POST['taskName'];
+      $dateInput = $_POST['startDate'];
+      $startTime = $_POST['startTime'];
+      $endTime = $_POST['endTime'];
+      $taskCat = $_POST['taskCat'];
+    }
+  ?>
+  
   <body style="background-color: #f6f7f1; margin: 50px; border: 5px; border-color: #C4C4C4;">
-    <form action="includes/add_daily_task.inc.php" method="POST" id="bigForm">
+    <form action="../includes/editing_daily_task.inc.php" method="POST" id="bigForm">
       <!-- Parent-child relationship for inline-->
       <fieldset id="myFieldset">
       <div id="title">
         <li><h3>Add a task:</h3></li>
         <!-- INPUT for taskName-->
         <li><form>
-          <input type="text" id="taskName" name="taskName" size="70"><br>
+          <input type="text" id="taskName" name="taskName" size="70" value="<?php echo "$taskName";?>"><br>
         </form></li>
       </div>
     
@@ -49,7 +59,7 @@
         <!--Find a shorter way for numerical drop downs and how to link to javascript-->
         <div id="date">
           <li><h3>Date:</h3></li>
-          <li><input id="dateInput" type="date" style="background-color: #96d6ed"></li>
+          <li><input id="dateInput" type="date"  value="<?php echo $dateInput;?>" style="background-color: #96d6ed"></li>
         </div>
 
         <element id="selectTime">     
@@ -60,11 +70,11 @@
         <div id="timeOptions">
           <div class="startTime">
             <h3>Start time:</h3>
-            <input type="time" id="startTime" name="startTime">
+            <input type="time" id="startTime" value="<?php echo $startTime;?>" name="startTime">
           </div>
           <div class="endTime">
           <h3>End time:</h3>
-            <input type="time" id="endTime" name="endTime">
+            <input type="time" id="endTime" value="<?php echo $endTime;?>" name="endTime">
           </div>
           <input type="button" id="doneTimeBtn" value="Done!" onclick="calculationTime()">
         </div>
@@ -77,7 +87,7 @@
   
         <!--Buttons for DELETE, ADD, DONE-->
         <div class="btn-group-actions">
-          <li><input type="button" id="delete" value="Delete task" onclick="DeleteTask()"></li>
+          <!-- <li><input type="button" id="delete" value="Delete task" onclick="DeleteTask()"></li> -->
           <li><input type="button" id="done" value="Submit" onclick="frontEndSubmit()"></li>
         </div>
 

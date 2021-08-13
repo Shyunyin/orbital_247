@@ -183,11 +183,9 @@ function printSchedule(scheduleArr) {
     let itemName = document.createElement("button");
     itemName.classList.add("itemName"); //class: itemName
     itemName.innerHTML = scheduleArr[i].getTaskName();
-    if (scheduleArr[i].getType() != 3) {
-        itemName.addEventListener('click',function() {
-            tempFixed(scheduleArr[i]);
-        });
-    }
+    itemName.addEventListener('click',function() {
+        tempFixed(scheduleArr[i]);
+    });
     itemName.style.fontFamily = "'Signika Negative', sans-serif";
     itemName.style.fontSize = "large";
     itemName.style.position = "absolute";
@@ -208,16 +206,6 @@ function printSchedule(scheduleArr) {
 
 /*To add fixed task select icons*/
 function tempFixed(object) { //only reschedule, edit and delete
-    // var currentNode = document.getElementById("iconActions");
-    // var newNode = document.createElement("div");
-    // newNode.id = "iconActions";
-    // newNode.innerHTML = 
-    // '<button class="btn" onclick="clickPlay()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-play-circle fa-2x" aria-hidden="true"></i></button>' +
-    // // '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
-    // '<button class="btn" onclick="clickEdit()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>'+
-    // '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
-    // //Replacing current iconsActions node w new iconActions node
-    // currentNode.replaceWith(newNode);
     console.log("I come to tempFixed");
     localStorage.setItem("startTimeHour", object.getStartTimeHours()); //to save the taskName in local storage so that when edit is clicked can link
     localStorage.setItem("startTimeMin", object.getStartTimeMins()); //to save the taskName in local storage so that when edit is clicked can link
@@ -236,7 +224,7 @@ function tempFixed(object) { //only reschedule, edit and delete
     var currentEdit = document.getElementById("edit");
     var newEdit = document.createElement("div");
     newEdit.id = "edit";
-    newEdit.innerHTML = '<button class="btn" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>';
+    newEdit.innerHTML = '<button class="btn" type="submit" name="edit" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>';
     newEdit.style.marginTop = "-32px";
     newEdit.style.marginLeft = "145px";
     currentEdit.replaceWith(newEdit);
@@ -248,6 +236,54 @@ function tempFixed(object) { //only reschedule, edit and delete
     newDelete.style.marginTop = "-32px";
     newDelete.style.marginLeft = "195px";
     currentDelete.replaceWith(newDelete);
+
+    /*To append to form to be submitted*/
+    var mainForm = document.getElementById("actions1");
+
+    var taskName = document.createElement("input");
+    taskName.type = "hidden";
+    taskName.value = object.getTaskName();
+    taskName.name = "taskName";
+    mainForm.appendChild(taskName);
+
+    var year = object.getYear();
+    var month = object.getMonth();
+    var date = object.getDate();
+    var startdateval = year + "-" + month + "-" + date;
+
+    var startDate = document.createElement("input");
+    startDate.type = "hidden";
+    startDate.value = startdateval;
+    startDate.name = "startDate";
+    mainForm.appendChild(startDate);
+
+    var startHour = object.getStartTimeHours();
+    var startMin = object.getStartTimeMins();
+    var timeStart = startHour + ":" + startMin;
+
+    var startTime = document.createElement("input");
+    startTime.type = "hidden";
+    startTime.value = timeStart;
+    startTime.name = "startTime";
+    mainForm.appendChild(startTime);
+
+    var endHour = object.getEndTimeHours();
+    var endMin = object.getEndTimeMins();
+    var timeEnd = endHour + ":" + endMin;
+    
+    var endTime = document.createElement("input");
+    endTime.type = "hidden";
+    endTime.value = timeEnd;
+    endTime.name = "endTime";
+    mainForm.appendChild(endTime);
+
+    var taskCat = document.createElement("input");
+    taskCat.type = "hidden";
+    taskCat.value = object.getType();
+    taskCat.name = "taskCat";
+    mainForm.appendChild(taskCat);
+
+    mainForm.submit();
 }
 
 /*Open popup and close*/

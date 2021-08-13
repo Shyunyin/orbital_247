@@ -167,13 +167,13 @@ function printRoutineList(printArr) {
             statement = "Daily: " + "[" + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
             printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + "] " + printArr[i].taskName;
         } else if (printArr[i].getFreq() == 1) {
-            statement = "Weekly " + "(" + checkDay(printArr[i].taskDay) + ")" + ": [" + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
+            statement = "Weekly " + ": [" + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
             printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + "] " + printArr[i].taskName;
         } else if (printArr[i].getFreq() == 2) {
-            statement = "Bieekly: " + "(" + checkDay(printArr[i].taskDay) + ")" + ": [" + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
+            statement = "Bieekly: " + ": [" + printvaljs(convertjs(startTimeHour)) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
             printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + "] " + printArr[i].taskName;
         } else if (printArr[i].getFreq() == 3) {
-            statement = "Monthly, " + checkDate(printArr[i].taskDate) + ": [" + printvaljs(startTimeHour) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
+            statement = "Monthly"+ ": [" + printvaljs(startTimeHour) + ":" + printvaljs(startTimeMin) + printwordjs(startTimeHour) + " - " + 
             printvaljs(convertjs(endTimeHour)) + ":" + printvaljs(endTimeMin) + printwordjs(endTimeHour) + "] " + printArr[i].taskName;
         }
             console.log(statement); //debugging

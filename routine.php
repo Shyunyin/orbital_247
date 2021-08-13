@@ -52,12 +52,16 @@
             <h3>edit or delete it!</h3>
             <h3>Actions:</h3>
         </div>
-        <form action = "copy_add_routine_task.php" method="POST" id="action">
-            <div id="actions">
-                <div id="iconActions">    
+
+        <div id="iconActions">
+            <!-- So that once the edit button is clicked it will redirect but no other buttons will redirect -->
+            <form action="copy_add_routine_task.php" method="POST" id="actions">
+                <div id="edit">
                 </div>
+            </form>
+            <div id="delete">
             </div>
-        </form>
+        </div>
       
         <?php 
             //extract wakeup time
@@ -129,103 +133,12 @@
         </div>    
 
         <script>
-            function tempFixed() { //only reschedule, edit and delete
-                var currentNode = document.getElementById("iconActions");
-                var newNode = document.createElement("div");
-                newNode.id = "iconActions";
-                newNode.innerHTML = 
-                '<button class="btn" onclick="clickPlay()" style="cursor=pointer;background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-play-circle fa-2x" aria-hidden="true"></i></button>' +
-                // '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
-                '<button class="btn" type="submit" name="edit" style="cursor=pointer;background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>';
-                // '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
-                //Replacing current iconsActions node w new iconActions node
-                currentNode.replaceWith(newNode);
-            }
-
-            /*redirect(x) takes in the task name and outputs a pop out window with the input fields updated when the edit button is created*/
-            function redirect(routineObject) {
-                var startTimeHour = routineObject.startTime.getHours();
-                var startTimeMin = routineObject.startTime.getMins();
-                var endTimeHour = routineObject.endTime.getHours();
-                var endTimeMin = routineObject.endTime.getMins();
-
-                var currentNode = document.getElementById("iconActions");
-                var newNode = document.createElement("div");
-                newNode.id = "iconActions";
-                newNode.innerHTML = 
-                '<button class="btn" onclick="clickPlay()" style="cursor:pointer;background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-play-circle fa-2x" aria-hidden="true"></i></button>' +
-                // '<button class="btn" onclick="clickReschedule()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-calendar fa-2x" aria-hidden="true"></i></button>' +
-                '<button class="btn" type="submit" name="edit" style="cursor:pointer;background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>';
-                // '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>' ;
-                //Replacing current iconsActions node w new iconActions node
-                currentNode.replaceWith(newNode);
-                
-                let mainForm = document.getElementById("actions");
-
-                //task Name
-                var taskName = document.createElement("input");
-                taskName.type = "hidden";
-                taskName.value = routineObject.getTaskName();
-                taskName.name = "taskName";
-                mainForm.appendChild(taskName);
-
-                //taskCategory
-                var taskCategory = document.createElement("input");
-                taskCategory.type = "hidden";
-                taskCategory.value = routineObject.getTaskCategory();
-                taskCategory.name = "taskCategory";
-                mainForm.appendChild(taskCategory);
-
-                //startTime
-                var startTime = document.createElement("input");
-                startTime.type = "hidden";
-                startTime.value = printvaljs(startTimeHour) + ":" + printvaljs(startTimeMin);
-                startTime.name = "startTime";
-                mainForm.appendChild(startTime);
-
-                //endTime
-                var endTime = document.createElement("input");
-                endTime.type = "hidden";
-                endTime.value = printvaljs(endTimeHour) + ":" + printvaljs(endTimeMin);
-                endTime.name = "endTime";
-                mainForm.appendChild(endTime);
-
-                //frequency
-                var freq = document.createElement("input");
-                freq.type = "hidden";
-                freq.value = routineObject.getFreq();
-                freq.name = "freq";
-                mainForm.appendChild(freq);
-
-                //taskDay
-                var taskDay = document.createElement("input");
-                taskDay.type = "hidden";
-                taskDay.value = routineObject.getTaskDay();
-                taskDay.name = "taskDay";
-                mainForm.appendChild(taskDay);
-
-                //taskWeek
-                var taskWeek = document.createElement("input");
-                taskWeek.type = "hidden";
-                taskWeek.value = routineObject.getTaskWeek();
-                taskWeek.name = "taskWeek";
-                mainForm.appendChild(taskWeek);
-
-                //taskDate 
-                var taskDate  = document.createElement("input");
-                taskDate .type = "hidden";
-                taskDate .value = routineObject.getTaskDate();
-                taskDate .name = "taskDate ";
-                mainForm.appendChild(taskDate);
-            }
-
+            
 
              function generateRoutineList() { 
                 let printArr =[]; //array to store 
-                let taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq;
-                let taskDay = -1;
-                let taskWeek = -1;
-                let taskDate = -1;    
+                let taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, startDate;    
+                let routineWin;
                     <?php
                         $user = 'root'; 
                         $pass = '';
@@ -260,27 +173,32 @@
                                 echo "endTimeMin = parseInt($endTimeMin);";
                                 $freq = $row['freq'];
                                 echo "freq = $freq;";
-                                if ($freq == 0) { //daily
-                                    echo 'routineWin = new RoutineWindow(taskName, taskCategory, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), freq, -1, -1, -1);';
-                                    echo 'printArr.push(routineWin);';
-                                } else if ($freq == 1) { //weekly
-                                    $taskDay = $row['taskDay'];
-                                    echo "taskDay = $taskDay;";
-                                    echo 'routineWin = new RoutineWindow(taskName, taskCategory, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), freq, taskDay, -1, -1);';
-                                    echo 'printArr.push(routineWin);';
-                                } else if ($freq == 2) { //biweekly
-                                    $taskDay = $row['taskDay'];
-                                    echo "taskDay = $taskDay;";
-                                    $taskWeek = $row['week'];
-                                    echo "taskWeek = $taskWeek;";
-                                    echo 'routineWin = new RoutineWindow(taskName, taskCategory, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), freq, taskDay, taskWeek, -1);';
-                                    echo 'printArr.push(routineWin);';
-                                } else { //monthly
-                                    $taskDate = $row['taskDate'];
-                                    echo "taskDate = $taskDate;";
-                                    echo 'routineWin = new RoutineWindow(taskName, taskCategory, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), freq, -1, -1, taskDate);';
-                                    echo 'printArr.push(routineWin);';
-                                }
+                                $startDate = $row['startDate'];
+                                echo "startDate = '$startDate';";
+
+                                echo "routineWin = new RoutineWindow(taskName, taskCategory, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), freq, startDate);";
+                                echo 'printArr.push(routineWin);';
+                                // if ($freq == 0) { //daily
+                                //     echo 'routineWin = new RoutineWindow(taskName, taskCategory, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), freq, startDate);';
+                                //     echo 'printArr.push(routineWin);';
+                                // } else if ($freq == 1) { //weekly
+                                //     $taskDay = $row['taskDay'];
+                                //     echo "taskDay = $taskDay;";
+                                //     echo 'routineWin = new RoutineWindow(taskName, taskCategory, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), freq, );';
+                                //     echo 'printArr.push(routineWin);';
+                                // } else if ($freq == 2) { //biweekly
+                                //     $taskDay = $row['taskDay'];
+                                //     echo "taskDay = $taskDay;";
+                                //     $taskWeek = $row['week'];
+                                //     echo "taskWeek = $taskWeek;";
+                                //     echo 'routineWin = new RoutineWindow(taskName, taskCategory, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), freq, taskDay, taskWeek, -1);';
+                                //     echo 'printArr.push(routineWin);';
+                                // } else { //monthly
+                                //     $taskDate = $row['taskDate'];
+                                //     echo "taskDate = $taskDate;";
+                                //     echo 'routineWin = new RoutineWindow(taskName, taskCategory, new Time(startTimeHour, startTimeMin), new Time(endTimeHour, endTimeMin), freq, -1, -1, taskDate);';
+                                //     echo 'printArr.push(routineWin);';
+                                // }
                             }
                         }
                     ?>

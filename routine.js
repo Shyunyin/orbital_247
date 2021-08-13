@@ -46,13 +46,6 @@ function printwordjs(i) {
 }
 
 //printval() to print zero in front of single digit numbers
-function printvaljs(i){
-    if (i < 10) {
-        return "0" + i;
-    } else {
-        return i;
-    }
-}
 
 function checkDay(i) {
     var arr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -62,6 +55,14 @@ function checkDay(i) {
 function checkCat(i) {
     var arr = ['Work', 'Exercise', 'Miscellaneous', 'Meal Times'];
     return arr[i];
+}
+
+function printvaljs(i){
+    if (i < 10) {
+        return "0" + i;
+    } else {
+        return i;
+    }
 }
 
 function checkDate(i) {
@@ -75,6 +76,78 @@ function checkDate(i) {
         return i + "th";
     }
 }
+
+/*redirect(x) takes in the task name and outputs a pop out window with the input fields updated when the edit button is created*/
+function redirect(routineObject) {
+    localStorage.setItem("startTimeHour", routineObject.startTime.getHours());
+    localStorage.setItem("startTimeMin", routineObject.startTime.getMins());
+    localStorage.setItem("endTimeHour", routineObject.endTime.getHours());
+    localStorage.setItem("endTimeMin", routineObject.endTime.getMins());
+    localStorage.setItem("taskname", routineObject.getTaskName());
+
+    var currentEdit = document.getElementById("edit");
+    var newEdit = document.createElement("div");
+    newEdit.id = "edit";
+    newEdit.innerHTML = '<button class="btn" type="submit" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>';
+    newEdit.style.position = "abosolute";
+    newEdit.style.zIndex = "999";
+    newEdit.style.marginTop = "-32px";
+    newEdit.style.marginLeft = "95px";
+    currentEdit.replaceWith(newEdit);
+
+    var currentDelete = document.getElementById("delete");
+    var newDelete = document.createElement("div");
+    newDelete.id = "delete";
+    newDelete.innerHTML = '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>';
+    newDelete.style.marginTop = "-32px";
+    newDelete.style.marginLeft = "195px";
+    currentDelete.replaceWith(newDelete);
+    
+    let mainForm = document.getElementById("actions");
+
+    //task Name
+    var taskName = document.createElement("input");
+    taskName.type = "hidden";
+    taskName.value = routineObject.getTaskName();
+    taskName.name = "taskName";
+    mainForm.appendChild(taskName);
+
+    //taskCategory
+    var taskCategory = document.createElement("input");
+    taskCategory.type = "hidden";
+    taskCategory.value = routineObject.getTaskCategory();
+    taskCategory.name = "taskCategory";
+    mainForm.appendChild(taskCategory);
+
+    //startTime
+    var startTime = document.createElement("input");
+    startTime.type = "hidden";
+    startTime.value = printvaljs(startTimeHour) + ":" + printvaljs(startTimeMin);
+    startTime.name = "startTime";
+    mainForm.appendChild(startTime);
+
+    //endTime
+    var endTime = document.createElement("input");
+    endTime.type = "hidden";
+    endTime.value = printvaljs(endTimeHour) + ":" + printvaljs(endTimeMin);
+    endTime.name = "endTime";
+    mainForm.appendChild(endTime);
+
+    //frequency
+    var freq = document.createElement("input");
+    freq.type = "hidden";
+    freq.value = routineObject.getFreq();
+    freq.name = "freq";
+    mainForm.appendChild(freq);
+
+    //taskDay
+    var startDate = document.createElement("input");
+    startDate.type = "hidden";
+    startDate.value = routineObject.getStartDate();
+    startDate.name = "startDate";
+    mainForm.appendChild(startDate);
+}
+
 
 function printRoutineList(printArr) { 
     console.log("I come to createRoutineList function");
@@ -140,6 +213,12 @@ window.onload = function() {
     printRoutineList(generateRoutineList());
 }
 
+function clickDelete() {
+    console.log("I come to clickDelete()");
+    var url = "../deleting_routine_task.php"; //opens popup to confirm deletion page
+    let myRef = window.open(url, 'mywin', 'left=20, top=20, width=700, height=500, toolbar=1, resizable=0');
+    myRef.focus();
+}
 
 /*To add fixed task select icons*/
 // function tempFixed() { 

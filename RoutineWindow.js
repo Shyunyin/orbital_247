@@ -7,19 +7,15 @@ class RoutineWindow {
      * @param {Time} startTime       Time at which the task starts
      * @param {Time} endTime         Time at which the task ends
      * @param {Number} freq          Frequency of the recurring task
-     * @param {Number} taskDay       Day of the recurring task (0 - 6: Sunday - Saturday)
-     * @param {Number} taskWeek      Week of the recurring task (0: Current Week, 1: Next Week)
-     * @param {Number} taskDate      Date of the recurring task (0-30 or 31)
+     * @param {Date} startDate     yy-mm-dd
      */
-        constructor(taskName, taskCategory, startTime, endTime, freq, taskDay, taskWeek, taskDate) {
+        constructor(taskName, taskCategory, startTime, endTime, freq, startDate) {
             this.taskName = taskName;
             this.taskCategory = taskCategory;
             this.startTime = startTime;
             this.endTime = endTime;
             this.freq = freq;
-            this.taskDay = taskDay;
-            this.taskWeek = taskWeek;
-            this.taskDate = taskDate;
+            this.startDate = startDate;
         }
 
          /**
@@ -74,23 +70,16 @@ class RoutineWindow {
          * To retrieve the day of the routine task
          * @returns {Number} The day of the routine task
          */
-        getTaskDay() {
-            return this.taskDay;
+         getFreq() {
+            return this.freq;
         }
 
         /**
-         * To retrieve the day of the routine task
-         * @returns {Number} The day of the routine task
+         * To retrieve the date of the routine task
+         * @returns {Number} The date of the routine task
          */
-         getTaskWeek() {
-            return this.taskWeek;
+        getStartDate() {
+            return this.startDate;
         }
-
-        /**
-         * To retrieve the day of the routine task
-         * @returns {Number} The day of the routine task
-         */
-         getTaskDate() {
-            return this.taskDate;
-        }
+        
 }    

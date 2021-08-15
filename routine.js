@@ -79,28 +79,31 @@ function checkDate(i) {
 
 /*redirect(x) takes in the task name and outputs a pop out window with the input fields updated when the edit button is created*/
 function redirect(routineObject) {
-    localStorage.setItem("startTimeHour", routineObject.startTime.getHours());
-    localStorage.setItem("startTimeMin", routineObject.startTime.getMins());
-    localStorage.setItem("endTimeHour", routineObject.endTime.getHours());
-    localStorage.setItem("endTimeMin", routineObject.endTime.getMins());
+    localStorage.setItem("startTime", routineObject.startTime);
+    localStorage.setItem("endTime", routineObject.endTime);
     localStorage.setItem("taskname", routineObject.getTaskName());
+    // localStorage.setItem("startTimeHour", routineObject.startTime.getHours());
+    // localStorage.setItem("startTimeMin", routineObject.startTime.getMins());
+    // localStorage.setItem("endTimeHour", routineObject.endTime.getHours());
+    // localStorage.setItem("endTimeMin", routineObject.endTime.getMins());
 
     var currentEdit = document.getElementById("edit");
     var newEdit = document.createElement("div");
     newEdit.id = "edit";
     newEdit.innerHTML = '<button class="btn" type="submit" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></button>';
-    newEdit.style.position = "abosolute";
+    newEdit.style.position = "relative";
     newEdit.style.zIndex = "999";
-    newEdit.style.marginTop = "-32px";
-    newEdit.style.marginLeft = "95px";
+    newEdit.style.marginTop = "-27px";
+    newEdit.style.marginLeft = "0px";
     currentEdit.replaceWith(newEdit);
 
     var currentDelete = document.getElementById("delete");
     var newDelete = document.createElement("div");
     newDelete.id = "delete";
     newDelete.innerHTML = '<button class="btn" onclick="clickDelete()" style="background-color=#ECEDEA;border-radius=5px;border-width=2px;"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></button>';
-    newDelete.style.marginTop = "-32px";
-    newDelete.style.marginLeft = "195px";
+    newDelete.style.position = "relative";
+    newDelete.style.marginTop = "-37px";
+    newDelete.style.marginLeft = "70px";
     currentDelete.replaceWith(newDelete);
     
     let mainForm = document.getElementById("actions");
@@ -146,6 +149,8 @@ function redirect(routineObject) {
     startDate.value = routineObject.getStartDate();
     startDate.name = "startDate";
     mainForm.appendChild(startDate);
+
+    mainForm.submit();
 }
 
 

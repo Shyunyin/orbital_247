@@ -133,8 +133,6 @@
         </div>    
 
         <script>
-            
-
              function generateRoutineList() { 
                 let printArr =[]; //array to store 
                 let taskName, taskCategory, startTimeHour, startTimeMin, endTimeHour, endTimeMin, freq, startDate;    
